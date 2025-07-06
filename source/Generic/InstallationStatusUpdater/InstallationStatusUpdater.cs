@@ -444,20 +444,27 @@ namespace InstallationStatusUpdater
             {
                 foreach (var game in PlayniteApi.Database.Games)
                 {
-                    var detectedStatus = DetectGameInstallationStatus(game);
-                    if (game.IsInstalled && detectedStatus == DetectedInstallationStatus.Uninstalled)
+                    try
                     {
-                        game.IsInstalled = false;
-                        PlayniteApi.Database.Games.Update(game);
-                        markedUninstalled++;
-                        updateResults.AddSetAsUninstalledGame(game);
+                        var detectedStatus = DetectGameInstallationStatus(game);
+                        if (game.IsInstalled && detectedStatus == DetectedInstallationStatus.Uninstalled)
+                        {
+                            game.IsInstalled = false;
+                            PlayniteApi.Database.Games.Update(game);
+                            markedUninstalled++;
+                            updateResults.AddSetAsUninstalledGame(game);
+                        }
+                        else if (!game.IsInstalled && detectedStatus == DetectedInstallationStatus.Installed)
+                        {
+                            game.IsInstalled = true;
+                            PlayniteApi.Database.Games.Update(game);
+                            markedInstalled++;
+                            updateResults.AddSetAsInstalledGame(game);
+                        }
                     }
-                    else if (!game.IsInstalled && detectedStatus == DetectedInstallationStatus.Installed)
+                    catch (Exception e)
                     {
-                        game.IsInstalled = true;
-                        PlayniteApi.Database.Games.Update(game);
-                        markedInstalled++;
-                        updateResults.AddSetAsInstalledGame(game);
+                        logger.Error(e, $"Failed to process game '{game.Name}' with Id '{game.Id}'");
                     }
                 }
             }
