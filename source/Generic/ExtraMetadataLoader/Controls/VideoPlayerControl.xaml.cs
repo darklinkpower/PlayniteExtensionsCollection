@@ -262,6 +262,7 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 MediaPlay();
+                SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails = true;
             }, (a) => !SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
         }
 
@@ -281,6 +282,15 @@ namespace ExtraMetadataLoader
             {
                 MediaPause();
             }, () => SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
+        }
+
+        public RelayCommand HideCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                MediaPause();
+                SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails = !SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails;
+            });
         }
 
         public RelayCommand SwitchAutoPlayStatusCommand
