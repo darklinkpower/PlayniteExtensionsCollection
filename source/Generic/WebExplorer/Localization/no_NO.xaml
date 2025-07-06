@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCWebExplorer_WebLabel">Web</sys:String>
-    <sys:String x:Key="LOCWebExplorer_SettingShowLinksInContextMenu">Show game links in right click game menu to open them in Playnite's web browser</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegration">Themes web view integration</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegrationDesc" xml:space="preserve">Configures if the web view should be displayed in supported custom themes.
-Changes require restart.</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Desktop Mode (Details View)</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Desktop Mode (Grid View)</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCWebExplorer_GeneralSettings">General settings</sys:String>
-    <sys:String x:Key="LOCWebExplorer_SidebarWebView">Sidebar web view</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemesWebView">Themes integration web view</sys:String>
-    <sys:String x:Key="LOCWebExplorer_Bookmarks">Bookmarks</sys:String>
-    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Restore defaults</sys:String>
-    <sys:String x:Key="LOCWebExplorer_AddBookmark">Add</sys:String>
-    <sys:String x:Key="LOCWebExplorer_RemoveSelected">Remove Selected</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Bookmarks added here will be made available alongside the game links in the web browser.</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">Name:</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">Address:</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Icon:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SettingShowLinksInContextMenu">Vis spilllenker i høyeklikk-menyen, og åpne dem i Playnite's nettleser</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegration">Web-visningintegrasjon i temaer</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegrationDesc" xml:space="preserve">Konfigurerer om web-visningen skal vises i tilpassede temaer med støtte.
+Endringer vil kreve omstart.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Skrivebordsmodus (Detaljvisning)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Skrivebordsmodus (Rutenettvisning)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Fullskjermsmodus</sys:String>
+    <sys:String x:Key="LOCWebExplorer_GeneralSettings">Generelle innstillinger</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SidebarWebView">Web-visning i sidestolpe</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebView">Tema-integrert web-visning</sys:String>
+    <sys:String x:Key="LOCWebExplorer_Bookmarks">Bokmerker</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Gjenopprett standardinnstillinger</sys:String>
+    <sys:String x:Key="LOCWebExplorer_AddBookmark">Legg til</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RemoveSelected">Fjern valgte</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Bokmerker som legges til her vil bli gjort tilgjengelig sammen med spilllenkene i nettleseren.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">Navn:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">Adresse:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Ikon:</sys:String>
 </ResourceDictionary>
