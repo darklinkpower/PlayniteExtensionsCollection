@@ -17,14 +17,14 @@
     <sys:String x:Key="LOC_GogSecondClass_OtherIssuesLabel">Andre problemer</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingBuildsLabel">Manglende versjoner</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_RegionLockingLabel">Regionlåsing</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Kilde én</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Source two</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Release Year</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Achievements issues</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Missing all achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Missing some achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Broken achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Developer response on achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Source</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Open information window</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Kilde 1</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Kilde 2</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Utgivelsesår</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Problemer med prestasjoner</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Mangler alle prestasjoner</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Mangler noen prestasjoner</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Ikke-fungerende prestasjoner</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Utviklerrespons på prestasjoner</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Kilde</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Åpne informasjonsvindu</sys:String>
 </ResourceDictionary>
