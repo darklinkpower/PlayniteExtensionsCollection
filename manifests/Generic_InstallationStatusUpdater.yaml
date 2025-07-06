@@ -325,11 +325,3 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.16_5924b15b/Installation_Status_Updater_2_49.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support.'
-  - Version: 2.51
-    RequiredApiVersion: 6.9.0
-    ReleaseDate: 2025-07-06
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.06_2cb75a10/Installation_Status_Updater_2_51.pext
-    Changelog:
-    - 'Added: Icons to extension menu items'
-    - 'Changed: Starting manual installation detection from the main menu or automatically after a library update now shows a progress dialog'
-    - 'Fixed: Crash when games have invalid characters in their paths, including Play Actions, Roms or Installation directories. Games with this issue will now be skipped.'
