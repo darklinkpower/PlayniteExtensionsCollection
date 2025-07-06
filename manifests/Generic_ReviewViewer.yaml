@@ -379,3 +379,9 @@ Packages:
     - 'Changed: Extension icon'
     - 'Fixed: Changing setting to control how often should reviews be refreshed not taking effect until an application restart'
     - 'Fixed: Unecessarily fetching reviews data in some cases when a local cache is already available'
+  - Version: 2.56
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-07-06
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.06_2cb75a10/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_56.pext
+    Changelog:
+    - 'Fixed: Crash occurring when fetching review data for Steam games that are Source Engine mods.'
