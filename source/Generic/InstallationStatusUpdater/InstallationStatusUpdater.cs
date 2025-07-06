@@ -112,7 +112,8 @@ namespace InstallationStatusUpdater
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription"),
                     MenuSection = "@Installation Status Updater",
-                    Action = _ => _statusScanner.DetectInstallationStatus(true)
+                    Action = _ => _statusScanner.DetectInstallationStatus(true),
+                    Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEFD1')
                 },
                 new MainMenuItem
                 {
@@ -122,7 +123,8 @@ namespace InstallationStatusUpdater
                     {
                         _tagUpdater.UpdateTagsWithInstallationRoot(PlayniteApi.Database.Games);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage"), "Installation Status Updater");
-                    }
+                    },
+                    Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEFD1')
                 }
             };
         }
@@ -135,13 +137,15 @@ namespace InstallationStatusUpdater
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription"),
                     MenuSection = "Installation Status Updater",
-                    Action = a => AddIgnoreFeature(a.Games.Distinct())
+                    Action = a => AddIgnoreFeature(a.Games.Distinct()),
+                    Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEF22')
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
                     MenuSection = "Installation Status Updater",
-                    Action = a => RemoveIgnoreFeature(a.Games.Distinct())
+                    Action = a => RemoveIgnoreFeature(a.Games.Distinct()),
+                    Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEF21')
                 }
             };
         }
