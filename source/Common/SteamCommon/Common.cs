@@ -17,9 +17,17 @@ namespace SteamCommon
         private static Guid _steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         private static readonly Regex _steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.None);
 
-        public static string GetGameSteamId(Game game, bool useLinksDetection = false)
+        public static string GetGameSteamId(
+            Game game,
+            bool useLinksDetection = false,
+            bool ignoreSourceEngineModsGames = true)
         {
-            if (IsGameSteamGame(game))
+            // Most regular Steam games have AppIDs that fit within a 32-bit signed integer (Int32).
+            // Source engine mods and some unofficial content often use unusually large AppIDs,
+            // typically exceeding Int32.MaxValue, and are not valid for reliable matching.
+            // If 'ignoreSourceEngineModsGames' is true, those large IDs will be excluded.
+            if (IsGameSteamGame(game) &&
+                (!ignoreSourceEngineModsGames || int.TryParse(game.GameId, out int _)))
             {
                 return game.GameId;
             }
