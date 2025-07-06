@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -33,7 +34,36 @@ namespace InstallationStatusUpdater.Application
             _pathsResolver = pathResolver ?? throw new ArgumentNullException(nameof(pathResolver));
         }
 
-        public void DetectInstallationStatus(bool showResultsDialog)
+        public StatusUpdateResults DetectInstallationStatusWithProgressDialog(bool showResultsDialog)
+        {
+            var progressOptions = new GlobalProgressOptions(
+                ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage"))
+            {
+                Cancelable = true,
+                IsIndeterminate = true
+            };
+
+            StatusUpdateResults results = null;
+
+            _playniteApi.Dialogs.ActivateGlobalProgress(
+                args =>
+                {
+                    results = DetectInstallationStatusInternal(args.CancelToken);
+                },
+                progressOptions);
+
+            OpenWindowOrAddResultsNotification(showResultsDialog, results);
+            return results;
+        }
+
+        public StatusUpdateResults DetectInstallationStatus(bool showResultsDialog, CancellationToken cancelToken = default)
+        {
+            var results = DetectInstallationStatusInternal(cancelToken);
+            OpenWindowOrAddResultsNotification(showResultsDialog, results);
+            return results;
+        }
+
+        public StatusUpdateResults DetectInstallationStatusInternal(CancellationToken cancelToken)
         {
             int markedInstalled = 0;
             int markedUninstalled = 0;
@@ -43,6 +73,11 @@ namespace InstallationStatusUpdater.Application
             {
                 foreach (var game in _playniteApi.Database.Games)
                 {
+                    if (cancelToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
                     try
                     {
                         var detectedStatus = DetectGameInstallationStatus(game);
@@ -68,20 +103,25 @@ namespace InstallationStatusUpdater.Application
                 }
             }
 
+            return updateResults;
+        }
+
+        private void OpenWindowOrAddResultsNotification(bool showResultsDialog, StatusUpdateResults statusUpdateResults)
+        {
             if (showResultsDialog)
             {
-                OpenResultsWindow(updateResults);
+                OpenResultsWindow(statusUpdateResults);
             }
-            else if (markedInstalled > 0 || markedUninstalled > 0)
+            else if (statusUpdateResults.Installed.Count > 0 || statusUpdateResults.Uninstalled.Count > 0)
             {
                 var notificationMessage = new NotificationMessage(
                     Guid.NewGuid().ToString(),
                     string.Format(
                         ResourceProvider.GetString("LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults"),
-                        markedInstalled,
-                        markedUninstalled),
+                        statusUpdateResults.Installed.Count,
+                        statusUpdateResults.Uninstalled.Count),
                     NotificationType.Info,
-                    () => OpenResultsWindow(updateResults));
+                    () => OpenResultsWindow(statusUpdateResults));
                 _playniteApi.Notifications.Add(notificationMessage);
             }
         }

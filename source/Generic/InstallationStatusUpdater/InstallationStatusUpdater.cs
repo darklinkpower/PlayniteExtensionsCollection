@@ -82,7 +82,7 @@ namespace InstallationStatusUpdater
         {
             if (_settings.Settings.UpdateOnLibraryUpdate)
             {
-                _statusScanner.DetectInstallationStatus(false);
+                _statusScanner.DetectInstallationStatusWithProgressDialog(false);
             }
 
             if (_settings.Settings.UpdateLocTagsOnLibUpdate)
@@ -112,7 +112,7 @@ namespace InstallationStatusUpdater
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription"),
                     MenuSection = "@Installation Status Updater",
-                    Action = _ => _statusScanner.DetectInstallationStatus(true),
+                    Action = _ => _statusScanner.DetectInstallationStatusWithProgressDialog(true),
                     Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEFD1')
                 },
                 new MainMenuItem

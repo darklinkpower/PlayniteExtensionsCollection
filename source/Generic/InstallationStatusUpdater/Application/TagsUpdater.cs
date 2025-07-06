@@ -30,7 +30,8 @@ namespace InstallationStatusUpdater.Application
             var progressOptions = new GlobalProgressOptions(
                     ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage"))
             {
-                Cancelable = true
+                Cancelable = true,
+                IsIndeterminate = true
             };
 
             _playniteApi.Dialogs.ActivateGlobalProgress(
