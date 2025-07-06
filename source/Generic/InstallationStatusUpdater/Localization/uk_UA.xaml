@@ -12,7 +12,7 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Додано можливість ігнорування до {0} гри/ігор.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Прибрано можливість ігнорування до {0} гри/ігор.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Завершено оновлення тегів з диском, де встановлено ігри.</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">Updating installation status of games…</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">Оновлення статусу встановлення ігор…</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Оновлення тегів з диском, де встановлено ігри...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Визначати ігри з дією типу &quot;Посилання&quot; як встановлені</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Визначати ігри з дією типу &quot;Сценарій&quot; як встановлені</sys:String>
