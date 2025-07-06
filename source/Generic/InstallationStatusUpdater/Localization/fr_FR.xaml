@@ -12,6 +12,7 @@ Les jeux précédemment désinstallés ont été configurés comme installés : 
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Ajout de {0} jeu(x) à la liste des ignorés.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Suppression de {0} jeu(x) de la liste des ignorés.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Mise à jour des étiquettes avec le lecteur d'installation terminée.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">Updating installation status of games…</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Mise à jour en cours des étiquettes avec le lecteur d'installation terminée...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Détecter les jeux avec une action de type &quot;Lien&quot; comme installés</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Détecter les jeux avec une action de type &quot;Script&quot; comme installés</sys:String>
