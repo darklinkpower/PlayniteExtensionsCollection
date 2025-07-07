@@ -12,7 +12,7 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">为 {0} 个游戏添加了忽略的功能特色。</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">从 {0} 个游戏移除了忽略的功能特色。</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">已完成安装驱动器标签的更新。</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">Updating installation status of games…</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">正在更新游戏安装状态…</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">正在更新安装驱动器标签...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">将指令类型为“链接”的游戏检测为已安装</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">将指令类型为“脚本”的游戏检测为已安装</sys:String>
