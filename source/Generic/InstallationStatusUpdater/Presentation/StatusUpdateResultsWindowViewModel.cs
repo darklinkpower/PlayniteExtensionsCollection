@@ -9,13 +9,21 @@ namespace InstallationStatusUpdater.Presentation
 {
     public class StatusUpdateResultsWindowViewModel
     {
-        public StatusUpdateResults UpdateResults { get; }
-        public int TotalGamesSetAsInstalled => UpdateResults.Installed.Count;
-        public int TotalGamesSetAsUninstalled => UpdateResults.Uninstalled.Count;
+        public List<UpdatedEntryData> GamesSetAsInstalled { get; }
+        public List<UpdatedEntryData> GamesSetAsUninstalled { get; }
+
+        public int TotalGamesSetAsInstalled => GamesSetAsInstalled.Count;
+        public int TotalGamesSetAsUninstalled => GamesSetAsUninstalled.Count;
 
         public StatusUpdateResultsWindowViewModel(StatusUpdateResults updateResults)
         {
-            UpdateResults = updateResults ?? throw new ArgumentNullException(nameof(updateResults));
+            if (updateResults is null)
+            {
+                throw new ArgumentNullException(nameof(updateResults));
+            }
+
+            GamesSetAsInstalled = updateResults.Installed.OrderBy(x => x.Name).ToList();
+            GamesSetAsUninstalled = updateResults.Uninstalled.OrderBy(x => x.Name).ToList();
         }
     }
 }

@@ -31,7 +31,7 @@
             
             <TabControl DockPanel.Dock="Top" Margin="0,10,0,0">
                 <TabItem Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel}">
-                    <DataGrid SelectionMode="Single" ItemsSource="{Binding UpdateResults.Installed}"
+                    <DataGrid SelectionMode="Single" ItemsSource="{Binding GamesSetAsInstalled}"
                               CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="True" CanUserSortColumns="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel}" Binding="{Binding Name}" IsReadOnly="True" />
@@ -42,7 +42,7 @@
                 </TabItem>
 
                 <TabItem Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel}">
-                    <DataGrid SelectionMode="Single" ItemsSource="{Binding UpdateResults.Uninstalled}"
+                    <DataGrid SelectionMode="Single" ItemsSource="{Binding GamesSetAsUninstalled}"
                               CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="True" CanUserSortColumns="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel}" Binding="{Binding Name}" IsReadOnly="True" />
