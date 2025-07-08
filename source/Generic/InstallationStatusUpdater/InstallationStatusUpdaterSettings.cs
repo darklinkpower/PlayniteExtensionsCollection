@@ -21,6 +21,8 @@ namespace InstallationStatusUpdater
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
         public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
+        public bool DetectFilesFromLaunchArguments { get; set; } = true;
+
         private List<WatchedDirectory> _detectionDirectories = new List<WatchedDirectory>();
         public List<WatchedDirectory> DetectionDirectories
         {

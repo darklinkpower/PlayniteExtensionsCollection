@@ -115,6 +115,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericEntityJsonRepository
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoverCollageMaker", "Generic\CoverCollageMaker\CoverCollageMaker.csproj", "{3915E934-7B96-4331-B543-09C573629FB2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generic.Tests", "Generic.Tests", "{A94A7FEF-3AA0-42E2-BA9F-A32BD1623476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallationStatusUpdater.Tests", "GenericTests\InstallationStatusUpdater.Tests\InstallationStatusUpdater.Tests.csproj", "{2ECF5F66-4E17-4397-B560-8121FD58898F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -325,6 +329,10 @@ Global
 		{3915E934-7B96-4331-B543-09C573629FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3915E934-7B96-4331-B543-09C573629FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3915E934-7B96-4331-B543-09C573629FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ECF5F66-4E17-4397-B560-8121FD58898F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ECF5F66-4E17-4397-B560-8121FD58898F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ECF5F66-4E17-4397-B560-8121FD58898F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ECF5F66-4E17-4397-B560-8121FD58898F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -382,6 +390,7 @@ Global
 		{577FD1B8-3225-430A-8A32-7FC9709A98B6} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{A50B3291-225D-4928-8E33-DC7D410A6A0B} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{3915E934-7B96-4331-B543-09C573629FB2} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
+		{2ECF5F66-4E17-4397-B560-8121FD58898F} = {A94A7FEF-3AA0-42E2-BA9F-A32BD1623476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

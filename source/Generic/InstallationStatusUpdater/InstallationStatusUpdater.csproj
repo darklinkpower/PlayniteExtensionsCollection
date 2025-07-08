@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Application\DeviceEventWatcherService.cs" />
     <Compile Include="Application\DirectoryWatcherService.cs" />
+    <Compile Include="Application\StringPathsDetector.cs" />
     <Compile Include="Domain\Results\StatusUpdateResults.cs" />
     <Compile Include="Domain\Results\UpdatedEntryData.cs" />
     <Compile Include="Domain\ValueObjects\WatchedDirectory.cs" />

@@ -143,15 +143,52 @@ namespace InstallationStatusUpdater.Application
                         break;
 
                     case GameActionType.File:
-                        if (DetectIsFileActionInstalled(game, gameAction, resolvedInstallationDirectory))
+                        var isActionPathInstalled = DetectIsFileActionInstalled(game, gameAction, resolvedInstallationDirectory);
+                        if (!isActionPathInstalled)
+                        {
+                            return false;
+                        }
+
+                        if (!_settings.Settings.DetectFilesFromLaunchArguments ||  gameAction.Arguments.IsNullOrWhiteSpace())
                         {
                             return true;
                         }
+
+                        var arguments = gameAction.Arguments;
+                        if (arguments.Contains('{'))
+                        {
+                            arguments = _playniteApi.ExpandGameVariables(game, arguments);
+                        }
+
+                        if (DetectArePathsInArgumentsInstalled(arguments))
+                        {
+                            return true;
+                        }
+
                         break;
                 }
             }
 
             return false;
+        }
+
+        private static bool DetectArePathsInArgumentsInstalled(string arguments)
+        {
+            var pathsInArguments = StringPathsDetector.ExtractPathsFromArguments(arguments);
+            foreach (var path in pathsInArguments)
+            {
+                if (!Path.IsPathRooted(path))
+                {
+                    continue;
+                }
+
+                if (!FileSystem.FileExists(path))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool DetectIsFileActionInstalled(Game game, GameAction gameAction, string resolvedInstallationDirectory)
