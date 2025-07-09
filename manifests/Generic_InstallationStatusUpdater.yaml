@@ -333,3 +333,11 @@ Packages:
     - 'Added: Icons to extension menu items'
     - 'Changed: Starting manual installation detection from the main menu or automatically after a library update now shows a progress dialog'
     - 'Fixed: Crash when games have invalid characters in their paths, including Play Actions, Roms or Installation directories. Games with this issue will now be skipped.'
+  - Version: 2.52
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-07-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.08_70bdc177/Installation_Status_Updater_2_52.pext
+    Changelog:
+    - 'Added: Option to check if full file paths used in launch arguments (e.g. --target="C:\Game.exe" or --config="C:\MyGame\config.ini") exist to detect installation status, improving detection accuracy for tools like Locale Emulator and configuration files in general (Enabled by default).'
+    - 'Added: Option to configure if a notification containing scan results should be shown after performing an automatic scan (Enabled by default).'
+    - 'Changed: Results in results window displayed after manual scans will now be ordered alphabetically.'
