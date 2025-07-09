@@ -20,6 +20,7 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">Scan games from library plugins using their installation directory</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Используйте для обнаружения только действия, помеченные как «Играть»</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Обновить статус установки при запуске</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingShowAutoScanNotifications">Show a notification containing results after automatic installation scans</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Обновить статус установки при обновлении библиотеки</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Обновление тега с диском, на котором установлена игра при обновлении библиотеки</sys:String>
 
@@ -29,6 +30,10 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Каталоги обнаружения</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Включено</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Сканировать вложенные каталоги</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsUsePathsInArgumentsLabel">Check file paths in launch arguments</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsUsePathsInArgumentsTooltip">If enabled, the plugin will check whether full file paths used in launch arguments exist, such as Locale Emulator targets or configuration files.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSectionDetectionRules">Installation detection rules</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSectionAutoScanTriggers">Automatic scan triggers</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Путь</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Добавить</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Удалить</sys:String>
