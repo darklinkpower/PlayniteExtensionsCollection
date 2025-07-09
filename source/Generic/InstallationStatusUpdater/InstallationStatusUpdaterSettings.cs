@@ -22,6 +22,7 @@ namespace InstallationStatusUpdater
         public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
         public bool DetectFilesFromLaunchArguments { get; set; } = true;
+        public bool ShowNotificationOnAutomaticScans { get; set; } = true;
 
         private List<WatchedDirectory> _detectionDirectories = new List<WatchedDirectory>();
         public List<WatchedDirectory> DetectionDirectories

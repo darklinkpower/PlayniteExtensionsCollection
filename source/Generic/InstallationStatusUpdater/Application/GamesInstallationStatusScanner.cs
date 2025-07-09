@@ -65,10 +65,7 @@ namespace InstallationStatusUpdater.Application
 
         public StatusUpdateResults DetectInstallationStatusInternal(CancellationToken cancelToken)
         {
-            int markedInstalled = 0;
-            int markedUninstalled = 0;
             var updateResults = new StatusUpdateResults();
-
             using (_playniteApi.Database.BufferedUpdate())
             {
                 foreach (var game in _playniteApi.Database.Games)
@@ -85,14 +82,12 @@ namespace InstallationStatusUpdater.Application
                         {
                             game.IsInstalled = false;
                             _playniteApi.Database.Games.Update(game);
-                            markedUninstalled++;
                             updateResults.AddUninstalled(game);
                         }
                         else if (!game.IsInstalled && detectedStatus == InstallationDetectionResult.Installed)
                         {
                             game.IsInstalled = true;
                             _playniteApi.Database.Games.Update(game);
-                            markedInstalled++;
                             updateResults.AddInstalled(game);
                         }
                     }
@@ -112,7 +107,8 @@ namespace InstallationStatusUpdater.Application
             {
                 OpenResultsWindow(statusUpdateResults);
             }
-            else if (statusUpdateResults.Installed.Count > 0 || statusUpdateResults.Uninstalled.Count > 0)
+            else if (_settings.Settings.ShowNotificationOnAutomaticScans &&
+                (statusUpdateResults.Installed.Count > 0 || statusUpdateResults.Uninstalled.Count > 0))
             {
                 var notificationMessage = new NotificationMessage(
                     Guid.NewGuid().ToString(),
