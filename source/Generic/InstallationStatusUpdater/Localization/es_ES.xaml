@@ -20,6 +20,7 @@ Juegos desinstalados que se marcaron como instalados: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">Escanea juegos de plugins de biblioteca usando su directorio de instalación</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Usar sólo acciones marcadas como &quot;Acción de juego&quot; para la detección</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Actualizar el estado de instalación al iniciar</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingShowAutoScanNotifications">Show a notification containing results after automatic installation scans</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Actualizar estado de instalación al actualizar la biblioteca</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Actualizar etiqueta con la unidad que el juego está instalado durante la actualización de la biblioteca</sys:String>
 
@@ -29,6 +30,10 @@ Juegos desinstalados que se marcaron como instalados: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Directorios de detección</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Habilitado</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Escanear subdirectorios</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsUsePathsInArgumentsLabel">Check file paths in launch arguments</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsUsePathsInArgumentsTooltip">If enabled, the plugin will check whether full file paths used in launch arguments exist, such as Locale Emulator targets or configuration files.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSectionDetectionRules">Installation detection rules</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSectionAutoScanTriggers">Automatic scan triggers</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Ruta</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Añadir</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Quitar</sys:String>
