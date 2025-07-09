@@ -20,6 +20,7 @@ Daha önce kaldırılan oyunlar yüklü olarak ayarlandı: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">Kurulum dizinlerini kullanarak kütüphane eklentilerindeki oyunları tarayın</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Algılama için yalnızca &quot;Eylemi Oynat&quot; olarak işaretlenen Eylemleri kullanın</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Başlangıçta kurulum durumunu güncelle</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingShowAutoScanNotifications">Show a notification containing results after automatic installation scans</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Kitaplık güncellemesinde kurulum durumunu güncelleyin</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Oyunun kütüphane güncellemesinde yüklü olduğu sürücüyü içeren güncelleme etiketi</sys:String>
 
@@ -29,6 +30,10 @@ Daha önce kaldırılan oyunlar yüklü olarak ayarlandı: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Algılama dizinleri</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Etkinleştirildi</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Alt dizinleri tara</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsUsePathsInArgumentsLabel">Check file paths in launch arguments</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsUsePathsInArgumentsTooltip">If enabled, the plugin will check whether full file paths used in launch arguments exist, such as Locale Emulator targets or configuration files.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSectionDetectionRules">Installation detection rules</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSectionAutoScanTriggers">Automatic scan triggers</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Yol</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Ekle</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Kaldır</sys:String>
