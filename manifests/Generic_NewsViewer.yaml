@@ -238,3 +238,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.23_9dc54c33/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_37.pext
     Changelog:
     - 'Changed: Increase maximum possible height to configure the News control'
+  - Version: 1.38
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-07-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.13_0d5a78b7/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_38.pext
+    Changelog:
+    - 'Changed: Buttons to change to the next and previous news will not be displayed anymore when there is only a single review for the active game'
+    - 'Fixed: Buttons to open the active news not being clickable unless the control is interacted with before'

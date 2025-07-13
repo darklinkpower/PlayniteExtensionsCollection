@@ -385,3 +385,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.06_2cb75a10/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_56.pext
     Changelog:
     - 'Fixed: Crash occurring when fetching review data for Steam games that are Source Engine mods.'
+  - Version: 2.57
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-07-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.13_0d5a78b7/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_57.pext
+    Changelog:
+    - 'Changed: Decreased the delay to update the reviews after the active filter settings change'
