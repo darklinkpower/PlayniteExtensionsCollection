@@ -45,6 +45,11 @@ namespace PluginsCommon
             _updateDebounceTimer.Tick += OnDebounceTimerTick; 
         }
 
+        protected void SetUpdateDebounceInterval(TimeSpan interval)
+        {
+            _updateDebounceTimer.Interval = interval;
+        }
+
         private void SetControlTextBlockStyle()
         {
             // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle

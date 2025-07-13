@@ -507,6 +507,7 @@ namespace ReviewViewer.Presentation
                 return;
             }
 
+            base.SetUpdateDebounceInterval(TimeSpan.FromMilliseconds(300));
             base.ScheduleUpdate();
         }
 
@@ -707,6 +708,7 @@ namespace ReviewViewer.Presentation
             }
 
             RunOnUI(() => ControlVisibility = Visibility.Visible);
+            base.SetUpdateDebounceInterval(TimeSpan.FromMilliseconds(150));
             await UpdateReviewsContextAsync(token, false);
         }
 
