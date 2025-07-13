@@ -121,6 +121,28 @@ namespace NewsViewer.PluginControls
             }
         }
 
+        private bool _canExecuteOpenReviewCommands = false;
+        public bool CanExecuteOpenReviewCommands
+        {
+            get => _canExecuteOpenReviewCommands;
+            set
+            {
+                _canExecuteOpenReviewCommands = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _canExecuteSwitchReviewCommands = false;
+        public bool CanExecuteSwitchReviewCommands
+        {
+            get => _canExecuteSwitchReviewCommands;
+            set
+            {
+                _canExecuteSwitchReviewCommands = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RelayCommand OpenSelectedNewsInBrowserCommand { get; }
         public RelayCommand OpenSelectedNewsInSteamCommand { get; }
         public RelayCommand OpenSelectedNewsCommand { get; }
@@ -150,11 +172,11 @@ namespace NewsViewer.PluginControls
             _dateTimeConvertCulture = dateTimeConvertCulture;
             SetControlTextBlockStyle();
 
-            OpenSelectedNewsInBrowserCommand = new RelayCommand(OpenSelectedNewsInBrowser, () => SettingsModel.Settings.ReviewsAvailable);
-            OpenSelectedNewsInSteamCommand = new RelayCommand(OpenSelectedNewsInSteam, () => SettingsModel.Settings.ReviewsAvailable);
-            OpenSelectedNewsCommand = new RelayCommand(OpenSelectedNews, () => SettingsModel.Settings.ReviewsAvailable);
-            NextNewsCommand = new RelayCommand(NextNews, () => multipleNewsAvailable);
-            PreviousNewsCommand = new RelayCommand(PreviousNews, () => multipleNewsAvailable);
+            OpenSelectedNewsInBrowserCommand = new RelayCommand(OpenSelectedNewsInBrowser);
+            OpenSelectedNewsInSteamCommand = new RelayCommand(OpenSelectedNewsInSteam);
+            OpenSelectedNewsCommand = new RelayCommand(OpenSelectedNews);
+            NextNewsCommand = new RelayCommand(NextNews);
+            PreviousNewsCommand = new RelayCommand(PreviousNews);
         }
 
         private void NextNews()
@@ -375,7 +397,7 @@ namespace NewsViewer.PluginControls
             var cache = await _steamNewsService.GetNewsAsync(requestOptions);
             if (cache != null && currentGame != null && currentGame?.Id == contextId)
             {
-                UpdateControlData(cache);
+                _playniteApi.MainView.UIDispatcher.Invoke(() => UpdateControlData(cache));
             }
         }
 
@@ -384,26 +406,27 @@ namespace NewsViewer.PluginControls
             if (!channel.Items.HasItems())
             {
                 SettingsModel.Settings.ReviewsAvailable = false;
+                CanExecuteOpenReviewCommands = false;
                 ControlVisibility = Visibility.Collapsed;
                 return;
             }
 
-            if (channel.Items.Count > 0)
+            if (channel.Items.Count > 1)
             {
-                multipleNewsAvailable = true;
+                CanExecuteSwitchReviewCommands = true;
                 SwitchNewsVisibility = Visibility.Visible;
             }
             else
             {
-                multipleNewsAvailable = false;
+                CanExecuteSwitchReviewCommands = false;
+                SwitchNewsVisibility = Visibility.Collapsed;
             }
 
             SettingsModel.Settings.ReviewsAvailable = true;
+            CanExecuteOpenReviewCommands = true;
             ControlVisibility = Visibility.Visible;
             newsNodes = channel.Items;
             SelectedNewsIndex = 0;
-
-            NotifyCommandsChanged();
         }
 
         private static string CleanSteamNewsDescription(string str)
@@ -414,15 +437,6 @@ namespace NewsViewer.PluginControls
             }
 
             return Regex.Replace(str, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", string.Empty);
-        }
-
-        private void NotifyCommandsChanged()
-        {
-            OnPropertyChanged(nameof(PreviousNewsCommand));
-            OnPropertyChanged(nameof(NextNewsCommand));
-            OnPropertyChanged(nameof(OpenSelectedNewsCommand));
-            OnPropertyChanged(nameof(OpenSelectedNewsInBrowserCommand));
-            OnPropertyChanged(nameof(OpenSelectedNewsInSteamCommand));
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

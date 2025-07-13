@@ -12,8 +12,10 @@
             <DockPanel Margin="0,0,0,10">
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding SwitchNewsVisibility}">
                     <Button DockPanel.Dock="Right" Background="Transparent" BorderThickness="0" Content="&#xEAC9;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
+                            IsEnabled="{Binding CanExecuteSwitchReviewCommands}"
                             Command="{Binding PreviousNewsCommand}" Margin="10,0,0,0" Padding="0" VerticalAlignment="Center" />
                     <Button Background="Transparent" BorderThickness="0" Content="&#xEACA;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
+                            IsEnabled="{Binding CanExecuteSwitchReviewCommands}"
                             Command="{Binding NextNewsCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Left">
@@ -31,13 +33,16 @@
             </ScrollViewer>
             <DockPanel LastChildFill="False">
                 <Button Content="{DynamicResource LOC_NewsViewer_NewsViewerControl_OpenNewsLabel}"
+                        IsEnabled="{Binding CanExecuteOpenReviewCommands}"
                         Margin="10,0,0,0"
                         DockPanel.Dock="Right" Command="{Binding OpenSelectedNewsCommand}" />
                 <Button Content="&#xEC44;"
+                        IsEnabled="{Binding CanExecuteOpenReviewCommands}"
                         FontFamily="{DynamicResource FontIcoFont}"
                         Margin="10,0,0,0"
                         DockPanel.Dock="Right" Command="{Binding OpenSelectedNewsInBrowserCommand}" />
                 <Button Content="&#xED71;"
+                        IsEnabled="{Binding CanExecuteOpenReviewCommands}"
                         FontFamily="{DynamicResource FontIcoFont}"
                         Margin="10,0,0,0"
                         DockPanel.Dock="Right" Command="{Binding OpenSelectedNewsInSteamCommand}" />
