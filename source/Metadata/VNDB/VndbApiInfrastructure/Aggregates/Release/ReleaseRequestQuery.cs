@@ -18,6 +18,7 @@ namespace VndbApiInfrastructure.ReleaseAggregate
     {
         public ProducerRequestFields Producer = new ProducerRequestFields();
         public ExternalLinksRequestFields ExternalLinks = new ExternalLinksRequestFields();
+        public ImageRequestFields Images = new ImageRequestFields();
         public VnRequestFieldsFlags VisualNovelFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
 
         public void EnableAllFlags(bool enableSubfields)

@@ -79,6 +79,12 @@ namespace VndbApiDomain.ReleaseAggregate
         [JsonProperty("producers")]
         public List<ReleaseProducer> Producers { get; set; }
 
+        /// <summary>
+        /// Array of objects, possibly empty.
+        /// </summary>
+        [JsonProperty("images")]
+        public List<ReleaseImage> Images { get; set; }
+
         [JsonProperty("released")]
         [JsonConverter(typeof(VndbReleaseDateJsonConverter))]
         public VisualNovelReleaseDate ReleaseDate { get; set; }

@@ -8,7 +8,7 @@ using VndbApiDomain.SharedKernel;
 namespace VndbApiInfrastructure.ReleaseAggregate
 {
     [Flags]
-    public enum ReleaseRequestFieldsFlags
+    public enum ReleaseRequestFieldsFlags : ulong
     {
         None = 0,
         [StringRepresentation(ReleaseConstants.Fields.Id)]
@@ -39,39 +39,48 @@ namespace VndbApiInfrastructure.ReleaseAggregate
         ProducersDeveloper = 1 << 12,
         [StringRepresentation(ReleaseConstants.Fields.ProducersPublisher)]
         ProducersPublisher = 1 << 13,
+        [StringRepresentation(ReleaseConstants.Fields.ImagesType)]
+        ImagesType = 1 << 14,
+        [StringRepresentation(ReleaseConstants.Fields.ImagesVn)]
+        ImagesVn = 1 << 15,
+        [StringRepresentation(ReleaseConstants.Fields.ImagesLanguages)]
+        ImagesLanguages = 1 << 16,
+        [StringRepresentation(ReleaseConstants.Fields.ImagesPhoto)]
+        ImagesPhoto = 1 << 17,
         [StringRepresentation(ReleaseConstants.Fields.Released)]
-        Released = 1 << 14,
+        Released = 1 << 18,
         [StringRepresentation(ReleaseConstants.Fields.MinAge)]
-        MinimumAge = 1 << 15,
+        MinimumAge = 1 << 19,
         [StringRepresentation(ReleaseConstants.Fields.Patch)]
-        Patch = 1 << 16,
+        Patch = 1 << 20,
         [StringRepresentation(ReleaseConstants.Fields.Freeware)]
-        Freeware = 1 << 17,
+        Freeware = 1 << 21,
         [StringRepresentation(ReleaseConstants.Fields.Uncensored)]
-        Uncensored = 1 << 18,
+        Uncensored = 1 << 22,
         [StringRepresentation(ReleaseConstants.Fields.Official)]
-        Official = 1 << 19,
+        Official = 1 << 23,
         [StringRepresentation(ReleaseConstants.Fields.HasEro)]
-        HasErotic = 1 << 20,
+        HasErotic = 1 << 24,
         [StringRepresentation(ReleaseConstants.Fields.Resolution)]
-        Resolution = 1 << 21,
+        Resolution = 1 << 25,
         [StringRepresentation(ReleaseConstants.Fields.Engine)]
-        Engine = 1 << 22,
+        Engine = 1 << 26,
         [StringRepresentation(ReleaseConstants.Fields.Voiced)]
-        Voiced = 1 << 23,
+        Voiced = 1 << 27,
         [StringRepresentation(ReleaseConstants.Fields.Notes)]
-        Notes = 1 << 24,
+        Notes = 1 << 28,
         [StringRepresentation(ReleaseConstants.Fields.Gtin)]
-        Gtin = 1 << 25,
+        Gtin = 1UL << 29,
         [StringRepresentation(ReleaseConstants.Fields.Catalog)]
-        Catalog = 1 << 26,
+        Catalog = 1UL << 30,
         [StringRepresentation(ReleaseConstants.Fields.ExtLinksUrl)]
-        ExtLinksUrl = 1 << 27,
+        ExtLinksUrl = 1UL << 31,
         [StringRepresentation(ReleaseConstants.Fields.ExtLinksLabel)]
-        ExtLinksLabel = 1 << 28,
+        ExtLinksLabel = 1UL << 32,
         [StringRepresentation(ReleaseConstants.Fields.ExtLinksName)]
-        ExtLinksName = 1 << 29,
+        ExtLinksName = 1UL << 33,
         [StringRepresentation(ReleaseConstants.Fields.ExtLinksId)]
-        ExtLinksId = 1 << 30
+        ExtLinksId = 1UL << 34
     }
+
 }

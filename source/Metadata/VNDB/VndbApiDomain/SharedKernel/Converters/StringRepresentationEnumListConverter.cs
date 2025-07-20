@@ -29,6 +29,16 @@ namespace VndbApiDomain.SharedKernel
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
+            if (reader.TokenType != JsonToken.StartArray)
+            {
+                throw new JsonSerializationException($"Expected StartArray but got {reader.TokenType}");
+            }
+
             var list = new List<TEnum>();
             while (reader.Read())
             {

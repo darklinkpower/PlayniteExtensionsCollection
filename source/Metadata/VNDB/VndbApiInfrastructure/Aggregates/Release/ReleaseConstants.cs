@@ -213,6 +213,26 @@ namespace VndbApiInfrastructure.ReleaseAggregate
             public const string ProducersPublisher = "producers.publisher";
 
             /// <summary>
+            /// Image type, valid values are "pkgfront", "pkgback", "pkgcontent", "pkgside", "pkgmed" and "dig".
+            /// </summary>
+            public const string ImagesType = "images.type";
+
+            /// <summary>
+            /// Visual novel ID to which this image applies, usually null. This field is only useful for bundle releases that are linked to multiple VNs.
+            /// </summary>
+            public const string ImagesVn = "images.vn";
+
+            /// <summary>
+            /// Array of languages for which this image is valid, or null if the image is valid for all languages assigned to this release.
+            /// </summary>
+            public const string ImagesLanguages = "images.languages";
+
+            /// <summary>
+            /// Boolean.
+            /// </summary>
+            public const string ImagesPhoto = "images.photo";
+            
+            /// <summary>
             /// Release date.
             /// </summary>
             public const string Released = "released";

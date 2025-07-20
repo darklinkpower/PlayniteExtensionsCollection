@@ -69,6 +69,7 @@
     <Compile Include="Aggregates\Release\Release.cs" />
     <Compile Include="Aggregates\Release\ReleaseAvailableLanguageInfo.cs" />
     <Compile Include="Aggregates\Release\ReleaseConstants.cs" />
+    <Compile Include="Aggregates\Release\ReleaseImage.cs" />
     <Compile Include="Aggregates\Release\ReleaseMedia.cs" />
     <Compile Include="Aggregates\Release\ReleaseProducer.cs" />
     <Compile Include="Aggregates\Release\ReleaseTypeEnum.cs" />
