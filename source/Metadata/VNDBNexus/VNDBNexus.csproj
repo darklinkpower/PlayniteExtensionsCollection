@@ -295,6 +295,7 @@
     <Compile Include="Database\DatabaseDumpTraitWrapper.cs" />
     <Compile Include="Database\GroupedEnumerable.cs" />
     <Compile Include="Database\VisualNovelRelationList.cs" />
+    <Compile Include="HtmlDescriptionCleaner.cs" />
     <Compile Include="Enums\TagsDisplayOptionEnum.cs" />
     <Compile Include="VndbVisualNovelViewControl\InvokeVisualNovelDisplayEvent.cs" />
     <Compile Include="VndbVisualNovelViewControl\SemaphoreWithCount.cs" />

@@ -493,7 +493,9 @@ namespace VNDBNexus
                 return base.GetDescription(args);
             }
 
-            return _bbcodeProcessor.ToHtml(_matchedVisualNovel.Description);
+            var htmlDescription = _bbcodeProcessor.ToHtml(_matchedVisualNovel.Description);
+            htmlDescription = HtmlDescriptionCleaner.CleanHtml(htmlDescription);
+            return htmlDescription;
         }
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
