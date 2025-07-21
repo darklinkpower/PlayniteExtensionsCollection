@@ -59,6 +59,25 @@
                         <Separator Margin="0,10,0,0" />
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="Import Existing Notes">
+                    <StackPanel>
+                        <DockPanel Margin="0,10,0,0" LastChildFill="True">
+                            <TextBlock Text="File path override: " DockPanel.Dock="Left" VerticalAlignment="Center" />
+                            <TextBox Width="330" Margin="10,0,0,0" DockPanel.Dock="Left" Text="{Binding ExistingNotesImporter.OverrideFilePath}" />
+                            <Button Content="Browse" Width="75" Command="{Binding BrowseFile}" />
+                        </DockPanel>
+
+                        <CheckBox Margin="0,10,0,0" IsChecked="{Binding ExistingNotesImporter.UseOverride}"
+                            Content="Use override" />
+                        <CheckBox Margin="0,10,0,0" IsChecked="{Binding ExistingNotesImporter.ClearBaseNotes}"
+                            Content="{DynamicResource PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel}" />
+                        <Button Margin="0,15,0,0" HorizontalAlignment="Left"
+                            Content="{DynamicResource PlayNotes_ImportLabel}"
+                            Command="{Binding ImportExistingNotesCommand}" />
+
+                        <Separator Margin="0,10,0,0" />
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </StackPanel>
         
