@@ -85,3 +85,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_e73f06ac/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_11.pext
     Changelog:
     - 'Fixed: Crash caused by the plugin not supporting the newly introduced "Sexless" value for character sex in the VNDB API. (By yhdsl)'
+  - Version: 1.12
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-07-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.26_3fef3ed1/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_12.pext
+    Changelog:
+    - 'Changed: Descriptions obtained during metadata download will now be cleaned to remove source notes like [From ...], [Translated from ...] or [Partially taken from ...].'
