@@ -20,7 +20,7 @@ namespace MetacriticMetadata.Services
     public class MetacriticService : IMetacriticService
     {
         private const string _searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
-        private const string _searchGameApiTemplate = @"https://backend.metacritic.com/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
+        private const string SearchGameApiTemplate = @"https://backend.metacritic.com/finder/metacritic/search/{0}/web?apiKey={1}&componentName=search-tabs&componentDisplayName=Search+Page+Tab+Filters&componentType=FilterConfig&mcoTypeId=13&offset=0&limit=30";
         private readonly TimeLimiter _timeConstraint;
         private readonly Dictionary<string, string> _platformSpecIdToMetacriticId;
         private static readonly Dictionary<string, string> _defaultApiHeaders = new Dictionary<string, string>
@@ -100,7 +100,7 @@ namespace MetacriticMetadata.Services
 
         public async Task<List<MetacriticSearchResult>> GetGameSearchResultsAsync(string gameName, string apiKey, CancellationToken cancelToken = default)
         {
-            var requestUrl = string.Format(_searchGameApiTemplate, gameName.EscapeDataString(), apiKey);
+            var requestUrl = string.Format(SearchGameApiTemplate, gameName.EscapeDataString(), apiKey);
             return await GetSearchResultsAsync(requestUrl, apiKey, cancelToken);
         }
 
