@@ -15,7 +15,7 @@ namespace SteamCommon
     public static class Steam
     {
         private static Guid _steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
-        private static readonly Regex _steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.None);
+        private static readonly Regex _steamLinkRegex = new Regex(@"https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.None);
 
         public static string GetGameSteamId(
             Game game,
