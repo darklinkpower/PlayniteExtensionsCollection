@@ -50,14 +50,14 @@
             </StackPanel>
         </Border>
 
-        <Border Background="#BF000000" Padding="10,5,10,5"
+        <Border Background="#BF000000" Padding="5"
                 Margin="0,15,15,15"
                 CornerRadius="8"
                 VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button Command="{Binding CloseWindowCommand}"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="&#xEC4F;" FontFamily="{DynamicResource FontIcoFont}"
-                           FontSize="30" />
+                           FontSize="25" />
             </Button>
         </Border>
     </Grid>
