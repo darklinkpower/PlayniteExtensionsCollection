@@ -23,6 +23,7 @@ namespace CooperativeModesImporter
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string databasePath;
         private static readonly char arraySplitter = ';';
+        private static readonly IEqualityComparer<char> CaseInsensitiveCharComparer = new CaseInsensitiveCharComparer();
         private readonly Dictionary<string, string> specIdToSystemDictionary;
         private Dictionary<string, GameFeature> featuresDictionary;
 
@@ -304,14 +305,18 @@ namespace CooperativeModesImporter
             return gameUpdated;
         }
 
-        private List<GenericItemOption> GetCooptimusItemOptions(string gameName, string systemId, ISQLite db)
+        private List<GenericItemOption> GetCooptimusItemOptions(string searchTerm, string systemId, ISQLite db)
         {
             var selectOptions = new List<Tuple<int, DatabaseQueryItem>>();
             var queryResults = db.Query<DatabaseQueryItem>($"SELECT name, id, system FROM games WHERE system='{systemId}';", null);
             foreach (var dbGame in queryResults)
             {
-                var distance = gameName.GetLevenshteinDistance(dbGame.Name);
-                if (distance <= 5)
+                var distance = searchTerm.GetLevenshteinDistance(dbGame.Name, CaseInsensitiveCharComparer);
+                if (dbGame.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                {
+                    selectOptions.Add(Tuple.Create(distance, dbGame));
+                }
+                else if (distance <= 5)
                 {
                     selectOptions.Add(Tuple.Create(distance, dbGame));
                 }
@@ -415,5 +420,6 @@ namespace CooperativeModesImporter
                 .Replace("gameoftheyear", "")
                 .Replace("premiumedition", "");
         }
+
     }
 }

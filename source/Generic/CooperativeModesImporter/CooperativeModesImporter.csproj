@@ -95,6 +95,7 @@
     <Compile Include="..\..\Common\PluginsCommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="CaseInsensitiveCharComparer.cs" />
     <Compile Include="CooperativeModesImporter.cs" />
     <Compile Include="CooperativeModesImporterSettings.cs" />
     <Compile Include="CooperativeModesImporterSettingsView.xaml.cs">
