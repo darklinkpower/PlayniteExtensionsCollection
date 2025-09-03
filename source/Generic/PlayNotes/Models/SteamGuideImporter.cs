@@ -14,7 +14,7 @@ namespace PlayNotes.Models
 {
     public class SteamGuideImporter : ObservableObject
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _guideLinkMatchPattern = @"^https:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?id=\d+$";
         private const string _steamLinkFilterPrefix = @"https://steamcommunity.com/linkfilter/?url=";
         private readonly IPlayniteAPI _playniteApi;
@@ -66,6 +66,7 @@ namespace PlayNotes.Models
                     );
             }
 
+            _logger.Debug($"Steam guide url: {Url}");
             if (Url.IsNullOrWhiteSpace() ||
                 !Regex.IsMatch(Url, _guideLinkMatchPattern))
             {
@@ -76,25 +77,38 @@ namespace PlayNotes.Models
                 return false;
             }
 
-            var downloadResult = HttpRequestFactory.GetHttpRequest().WithUrl(Url).DownloadString(cancelToken);
-            if (downloadResult.IsCancelled)
+            var pageSource = string.Empty;
+            using (var webView = _playniteApi.WebViews.CreateOffscreenView())
+            {
+                webView.NavigateAndWait(Url);
+                var address = webView.GetCurrentAddress();
+                if (Regex.IsMatch(address, _guideLinkMatchPattern))
+                {
+                    pageSource = webView.GetPageSource();
+                }
+                else
+                {
+                    _logger.Debug($"Navigated address {address} did not match expected url.");
+                }
+            }
+
+            if (cancelToken.IsCancellationRequested)
             {
                 return false;
             }
 
-            if (!downloadResult.IsSuccess)
+            if (pageSource.IsNullOrWhiteSpace())
             {
                 ShowFailedMessage();
                 return false;
             }
 
-            logger.Debug($"Steam guide url: {Url}");
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(downloadResult.Content);
+            doc.LoadHtml(pageSource);
             var guideTitleDiv = doc.DocumentNode.SelectSingleNode("//div[@class='workshopItemTitle']");
             if (guideTitleDiv is null)
             {
-                logger.Debug($"guideTitleDiv not found");
+                _logger.Debug($"guideTitleDiv not found.");
                 ShowFailedMessage();
                 return false;
             }
@@ -103,7 +117,7 @@ namespace PlayNotes.Models
             var guideContentDiv = doc.DocumentNode.SelectSingleNode("//div[@class='guide subSections']");
             if (guideContentDiv is null)
             {
-                logger.Debug($"guideContentDiv not found");
+                _logger.Debug($"guideContentDiv not found");
                 ShowFailedMessage();
                 return false;
             }
@@ -111,7 +125,7 @@ namespace PlayNotes.Models
             var subsectionDivs = guideContentDiv.SelectNodes(".//div[@class='subSection detailBox']");
             if (subsectionDivs is null)
             {
-                logger.Debug($"subsectionDivs not found");
+                _logger.Debug($"subsectionDivs not found");
                 ShowFailedMessage();
                 return false;
             }
@@ -164,7 +178,7 @@ namespace PlayNotes.Models
 
             if (!notes.HasItems())
             {
-                logger.Debug($"Notes not found");
+                _logger.Debug($"Notes not found");
                 ShowFailedMessage();
                 return false;
             }
