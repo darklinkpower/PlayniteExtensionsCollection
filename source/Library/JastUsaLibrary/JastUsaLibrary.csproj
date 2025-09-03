@@ -236,6 +236,17 @@
     <Compile Include="Features\DownloadManager\Application\IDownloadDataPersistence.cs" />
     <Compile Include="Features\DownloadManager\Domain\Events\DownloadItemStatusChangedEventArgs.cs" />
     <Compile Include="Features\DownloadManager\Infrastructure\DownloadDataPersistenceJson.cs" />
+    <Compile Include="Features\InstallationHandler\Application\IInstallerDetector.cs" />
+    <Compile Include="Features\InstallationHandler\Application\IInstallerHandler.cs" />
+    <Compile Include="Features\InstallationHandler\Infrastructure\InstallerDetector.cs" />
+    <Compile Include="Features\InstallationHandler\Application\InstallerService.cs" />
+    <Compile Include="Features\InstallationHandler\Domain\InstallerType.cs" />
+    <Compile Include="Features\InstallationHandler\Domain\InstallRequest.cs" />
+    <Compile Include="Features\InstallationHandler\Infrastructure\ArchiveInstallerHandler.cs" />
+    <Compile Include="Features\InstallationHandler\Infrastructure\InnoSetupInstallerHandler.cs" />
+    <Compile Include="Features\InstallationHandler\Infrastructure\InstallShieldInstallerHandler.cs" />
+    <Compile Include="Features\InstallationHandler\Infrastructure\MsiInstallerHandler.cs" />
+    <Compile Include="Features\InstallationHandler\Infrastructure\NsisInstallerHandler.cs" />
     <Compile Include="Services\CompressionService\CompressionUtility.cs" />
     <Compile Include="Features\DownloadManager\Presentation\Converters\DownloadItemStatusToStringConverter.cs" />
     <Compile Include="Features\DownloadManager\Presentation\Converters\FileNameToExtensionGlyphCodeConverter.cs" />
