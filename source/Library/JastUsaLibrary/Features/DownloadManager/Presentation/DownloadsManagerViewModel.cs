@@ -230,29 +230,33 @@ namespace JastUsaLibrary.DownloadManager.Presentation
                 IsIndeterminate = true
             };
 
+            JastGameDownloads gameDownloads = null;
             _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 var downloadsId = gameWrapper?.GameCache?.JastGameData?.EnUsId;
-                if (downloadsId is null || !downloadsId.HasValue)
+                if (!downloadsId.HasValue)
                 {
                     return;
                 }
 
                 try
                 {
-                    var gameDownloads = _jastUsaAccountClient.GetGameTranslationsAsync(downloadsId.Value).GetAwaiter().GetResult();
-                    if (gameDownloads != null)
-                    {
-                        gameWrapper.GameCache.UpdateDownloads(gameDownloads);
-                        _libraryCacheService.SaveCache(gameWrapper.GameCache);
-                        gameWrapper.UpdateDownloads();
-                    }
+                    gameDownloads = _jastUsaAccountClient.GetGameTranslationsAsync(downloadsId.Value)
+                        .GetAwaiter()
+                        .GetResult();
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e, $"Error during GetGames while obtaining GameTranslations for {gameWrapper.GameCache.JastGameData.ProductName} with id {downloadsId}");
+                    _logger.Error(e, $"Error fetching GameTranslations for {gameWrapper.GameCache.JastGameData.ProductName} with id {downloadsId}");
                 }
             }, progressOptions);
+
+            if (gameDownloads != null)
+            {
+                gameWrapper.GameCache.UpdateDownloads(gameDownloads);
+                _libraryCacheService.SaveCache(gameWrapper.GameCache);
+                gameWrapper.UpdateDownloads();
+            }
         }
 
         private void OpenDirectoryIfExists(string directoryPath)
