@@ -1,17 +1,18 @@
 ﻿using FlowHttp;
 using FlowHttp.Constants;
-using JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs;
 using JastUsaLibrary.JastUsaIntegration.Domain.Exceptions;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.ValueObjects;
+using JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using JastUsaLibrary.Services.JastUsaIntegration.Domain.ValueObjects;
 
 namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
 {
@@ -30,6 +31,21 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             bool rememberMe,
             CancellationToken cancellationToken = default)
         {
+            if (email.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            }
+
+            if (password.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Password cannot be null or empty.", nameof(password));
+            }
+
+            if (!email.Contains('@'))
+            {
+                throw new ArgumentException("Email must be a valid address.", nameof(email));
+            }
+
             var headers = new Dictionary<string, string>
             {
                 ["Accept"] = "application/json",
@@ -65,6 +81,11 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
 
         public async Task<GameTranslationsResponse> GetGameTranslationsAsync(AuthenticationToken token, int translationId, CancellationToken cancellationToken = default)
         {
+            if (token is null || token.Token.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Authentication token cannot be null or empty.", nameof(token));
+            }
+
             var headers = new Dictionary<string, string>
             {
                 ["Authorization"] = $"Bearer {token.Token.UrlDecode()}",
@@ -77,11 +98,22 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 .WithHeaders(headers);
 
             var result = await request.DownloadStringAsync(cancellationToken);
-            return result.IsSuccess ? Serialization.FromJson<GameTranslationsResponse>(result.Content) : null;
+            if (!result.IsSuccess)
+            {
+                throw new HttpRequestException(
+                    $"API request failed. Status: {result.HttpStatusCode}, Message: {result.Content}");
+            }
+
+            return Serialization.FromJson<GameTranslationsResponse>(result.Content);
         }
 
         public async Task<List<Variant>> GetProductsAsync(AuthenticationToken token, CancellationToken cancellationToken = default)
         {
+            if (token is null || token.Token.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Authentication token cannot be null or empty.", nameof(token));
+            }
+
             var headers = new Dictionary<string, string>
             {
                 ["Authorization"] = $"Bearer {token.Token.UrlDecode()}",
@@ -98,10 +130,24 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                     .WithHeaders(headers);
 
                 var result = await request.DownloadStringAsync(cancellationToken);
+
                 if (!result.IsSuccess)
                 {
-                    _logger.Info($"Stopped retrieving games in page {page - 1}");
-                    break;
+                    // Expected "No more pages"
+                    if (result.HttpStatusCode == HttpStatusCode.NotFound)
+                    {
+                        _logger.Info($"No more games found, stopping at page {page - 1}.");
+                        break;
+                    }
+
+                    if (result.HttpStatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        throw new UnauthorizedAccessException("Authentication failed. Token may be invalid or expired.");
+                    }
+
+                    throw new HttpRequestException(
+                        $"Failed to fetch games from page {page}. " +
+                        $"Status: {result.HttpStatusCode}, Message: {result.Content}");
                 }
 
                 var response = Serialization.FromJson<GetGamesResponse>(result.Content);
@@ -124,6 +170,21 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             int gameLinkId,
             CancellationToken cancellationToken = default)
         {
+            if (token is null || token.Token.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Authentication token cannot be null or empty.", nameof(token));
+            }
+
+            if (gameId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(gameId), gameId, "Game ID must be a positive number.");
+            }
+
+            if (gameLinkId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(gameLinkId), gameLinkId, "Game Link ID must be a positive number.");
+            }
+
             var headers = new Dictionary<string, string>
             {
                 ["Authorization"] = $"Bearer {token.Token.UrlDecode()}",
@@ -141,8 +202,8 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             var result = await request.DownloadStringAsync(cancellationToken);
             if (!result.IsSuccess)
             {
-                _logger.Error(result.Error, "Failed to generate download link");
-                return null;
+                throw new HttpRequestException(
+                    $"API request failed. Status: {result.HttpStatusCode}, Message: {result.Content}");
             }
 
             return Serialization.FromJson<GenerateLinkResponse>(result.Content).Url;

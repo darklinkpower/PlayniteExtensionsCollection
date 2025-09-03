@@ -38,6 +38,21 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
 
         public bool Login(string email, string password, bool rememberMe)
         {
+            if (email.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            }
+
+            if (password.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Password cannot be null or empty.", nameof(password));
+            }
+
+            if (!email.Contains('@'))
+            {
+                throw new ArgumentException("Email must be a valid address.", nameof(email));
+            }
+
             _authenticationPersistence.DeleteAuthentication();
             var authRequest = new AuthenticationCredentials(email, password, rememberMe);
             var token = _apiClient.GetAuthenticationToken(authRequest.Email, authRequest.Password, authRequest.RememberMe);
@@ -65,12 +80,14 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
         public async Task<List<JastGameData>> GetGamesAsync(CancellationToken cancellationToken = default)
         {
             var token = GetAuthenticationToken(cancellationToken);
-            var products = await _apiClient.GetProductsAsync(token, cancellationToken);
-
-            var gamesData = new List<JastGameData>();
-            foreach (var product in products)
+            if (token is null || token.Token.IsNullOrWhiteSpace())
             {
-                var gameData = new JastGameData(
+                throw new ArgumentException("Authentication token cannot be null or empty.", nameof(token));
+            }
+
+            var products = await _apiClient.GetProductsAsync(token, cancellationToken);
+            var gamesData = products.Select(product =>
+                new JastGameData(
                     product.ProductName,
                     product.ProductCode,
                     product.GameId,
@@ -78,10 +95,8 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
                     product.Game.Translations.EnUs?.Id,
                     product.Game.Translations.Ja?.Id,
                     product.Game.Translations.ZhHans?.Id,
-                    product.Game.Translations.ZhHant?.Id);
-
-                gamesData.Add(gameData);
-            }
+                    product.Game.Translations.ZhHant?.Id
+                )).ToList();
 
             return gamesData;
         }
@@ -91,10 +106,15 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
             CancellationToken cancellationToken = default)
         {
             var token = GetAuthenticationToken(cancellationToken);
+            if (token is null)
+            {
+                throw new InvalidOperationException("Authentication token is missing. Cannot fetch translations.");
+            }
+
             var response = await _apiClient.GetGameTranslationsAsync(token, id, cancellationToken);
             if (response is null)
             {
-                return null;
+                throw new InvalidOperationException($"No translation data returned for game ID {id}.");
             }
 
             // We remove all the assets that are not for Windows because Playnite only supports windows after all
@@ -132,10 +152,26 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
                 GetDownloads(response.GameExtraLinks, JastDownloadType.Extra));
         }
 
-        public async Task<Uri> GetAssetDownloadLinkAsync(JastGameDownloadData downloadData, CancellationToken cancellationToken = default)
+        public async Task<Uri> GetAssetDownloadLinkAsync(
+            JastGameDownloadData downloadData,
+            CancellationToken cancellationToken = default)
         {
+            if (downloadData is null)
+            {
+                throw new ArgumentNullException(nameof(downloadData));
+            }
+
             var token = GetAuthenticationToken(cancellationToken);
-            return await _apiClient.GenerateDownloadLinkAsync(token, downloadData.GameId, downloadData.GameLinkId, cancellationToken);
+            if (token is null)
+            {
+                throw new InvalidOperationException("User must be logged in before requesting a download link.");
+            }
+
+            return await _apiClient.GenerateDownloadLinkAsync(
+                token,
+                downloadData.GameId,
+                downloadData.GameLinkId,
+                cancellationToken);
         }
     }
 }

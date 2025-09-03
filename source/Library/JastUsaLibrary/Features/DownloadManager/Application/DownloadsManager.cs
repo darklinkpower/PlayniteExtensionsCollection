@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -415,7 +416,17 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
 
         private Uri GetAssetUri(JastGameDownloadData downloadAsset, CancellationToken cancellationToken = default)
         {
-            return Task.Run(() => _jastAccountClient.GetAssetDownloadLinkAsync(downloadAsset, cancellationToken)).GetAwaiter().GetResult();
+            try
+            {
+                return Task.Run(() => _jastAccountClient.GetAssetDownloadLinkAsync(downloadAsset, cancellationToken))
+                           .GetAwaiter()
+                           .GetResult();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Unexpected error while generating asset URI.");
+                return null;
+            }
         }
 
         public bool GetExistsById(string Id)
