@@ -171,18 +171,20 @@ namespace SpecialKHelper
         {
             if (!_sidebarItemSwitcherViewModel.AllowSkUse)
             {
-                _logger.Info("Start of services is disabled by sidebar item");
+                _logger.Info($"Special K services start skipped: disabled by sidebar item.");
                 return false;
             }
 
             if (settings.Settings.OnlyExecutePcGames && !PlayniteUtilities.IsGamePcGame(game))
             {
+                _logger.Info($"Special K services start skipped: game '{game.Name}' is not a PC game.");
                 return false;
             }
 
             if (settings.Settings.StopExecutionIfVac &&
                 game.Features?.Any(x => x.Name.Equals("Valve Anti-Cheat Enabled", StringComparison.OrdinalIgnoreCase)) == true)
             {
+                _logger.Info($"Special K services start skipped: game '{game.Name}' has VAC enabled.");
                 return false;
             }
 
@@ -190,21 +192,24 @@ namespace SpecialKHelper
             if (executionMode == SpecialKExecutionMode.Selective &&
                 game.Features?.Any(x => x.Name.Equals(_selectiveModeEnableFeatureName, StringComparison.OrdinalIgnoreCase)) != true)
             {
+                _logger.Info($"Special K services start skipped: game '{game.Name}' not opted-in for selective execution mode.");
                 return false;
             }
 
             if (executionMode == SpecialKExecutionMode.Global &&
                 game.Features?.Any(x => x.Name.Equals(_globalModeDisableFeatureName, StringComparison.OrdinalIgnoreCase)) == true)
             {
+                _logger.Info($"Special K services start skipped: game '{game.Name}' opted out of global execution mode.");
                 return false;
             }
 
             if (settings.Settings.StopIfEasyAntiCheat && _easyAnticheatHelper.IsGameEacEnabled(game))
             {
-                _logger.Info($"Start of services disabled due to game {game.Name} using EasyAntiCheat");
+                _logger.Info($"Special K services start skipped: game '{game.Name}' uses EasyAntiCheat.");
                 return false;
             }
 
+            _logger.Info($"Special K services will start for game '{game.Name}'.");
             return true;
         }
 

@@ -40,9 +40,12 @@ namespace SpecialKHelper.SpecialKHandler.Application
 
         public SpecialKServiceManager(ILogger logger)
         {
+            _logger = logger;
             _service32BitsStatus = Is32BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
             _service64BitsStatus = Is64BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
-            _logger = logger;
+
+            _logger.Info($"Initialized SpecialKServiceManager. 32-bit: {_service32BitsStatus}, 64-bit: {_service64BitsStatus}");
+
             StartBackgroundServiceStatusCheck();
         }
 
@@ -52,43 +55,61 @@ namespace SpecialKHelper.SpecialKHandler.Application
             {
                 while (true)
                 {
-                    await Task.Delay(_backgroundServiceDelay);
-                    UpdateServiceStatus();
+                    try
+                    {
+                        await Task.Delay(_backgroundServiceDelay);
+                        UpdateServiceStatus();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex, "Error during background service status check.");
+                    }
                 }
             });
         }
 
         private void UpdateServiceStatus()
         {
-            var is32BitsServiceRunning = false;
-            var is64BitsServiceRunning = false;
-            foreach (var process in Process.GetProcesses())
+            try
             {
-                if (process.ProcessName == _32BitsServiceProcessName)
+                var is32BitsServiceRunning = false;
+                var is64BitsServiceRunning = false;
+
+                foreach (var process in Process.GetProcesses())
                 {
-                    is32BitsServiceRunning = true;
-                }
-                else if (process.ProcessName == _64BitsServiceProcessName)
-                {
-                    is64BitsServiceRunning = true;
+                    if (process.ProcessName == _32BitsServiceProcessName)
+                    {
+                        is32BitsServiceRunning = true;
+                    }
+                    else if (process.ProcessName == _64BitsServiceProcessName)
+                    {
+                        is64BitsServiceRunning = true;
+                    }
+
+                    if (is32BitsServiceRunning && is64BitsServiceRunning)
+                    {
+                        break;
+                    }
                 }
 
-                if (is32BitsServiceRunning && is64BitsServiceRunning)
+                var current32BitsStatus = is32BitsServiceRunning ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+                var current64BitsStatus = is64BitsServiceRunning ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+
+                if (current32BitsStatus != _service32BitsStatus)
                 {
-                    break;
+                    _logger.Info($"Detected change in 32-bit service: {_service32BitsStatus} -> {current32BitsStatus}");
+                    OnServiceStatusChanged(current32BitsStatus, CpuArchitecture.X86);
+                }
+
+                if (current64BitsStatus != _service64BitsStatus)
+                {
+                    _logger.Info($"Detected change in 64-bit service: {_service64BitsStatus} -> {current64BitsStatus}");
+                    OnServiceStatusChanged(current64BitsStatus, CpuArchitecture.X64);
                 }
             }
-
-            var current32BitsStatus = is32BitsServiceRunning ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
-            var current64BitsStatus = is64BitsServiceRunning ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
-            if (current32BitsStatus != _service32BitsStatus)
+            catch (Exception ex)
             {
-                OnServiceStatusChanged(current32BitsStatus, CpuArchitecture.X86);
-            }
-
-            if (current64BitsStatus != _service64BitsStatus)
-            {
-                OnServiceStatusChanged(current64BitsStatus, CpuArchitecture.X64);
+                _logger.Error(ex, "Failed to update Special K service statuses.");
             }
         }
 
@@ -103,17 +124,25 @@ namespace SpecialKHelper.SpecialKHandler.Application
             {
                 var installDir = GetInstallDirectory();
                 if (!installDir.IsNullOrEmpty())
+                { 
+                    _logger.Warn("Special K installation directory is null or empty.");
+                    return;
+                }
+
+                var exePath = Path.Combine(installDir, _specialKExecutableName);
+                if (FileSystem.FileExists(exePath))
                 {
-                    var exePath = Path.Combine(installDir, _specialKExecutableName);
-                    if (FileSystem.FileExists(exePath))
-                    {
-                        ProcessStarter.StartProcess(exePath);
-                    }
+                    _logger.Info($"Launching Special K at {exePath}");
+                    ProcessStarter.StartProcess(exePath);
+                }
+                else
+                {
+                    _logger.Warn($"Special K executable not found: {exePath}");
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to start Special K software");
+                _logger.Error(ex, "Failed to start Special K software.");
             }
         }
 
@@ -132,7 +161,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
             if (!_customSpecialKInstallationPath.IsNullOrEmpty())
             {
                 _customSpecialKInstallationPath = string.Empty;
-                _logger.Info($"Special K installation path has been reset");
+                _logger.Info("Special K installation path has been reset.");
             }
         }
 
@@ -140,14 +169,14 @@ namespace SpecialKHelper.SpecialKHandler.Application
         {
             if (customSpecialKPath.IsNullOrWhiteSpace() || !FileSystem.DirectoryExists(customSpecialKPath))
             {
-                _logger.Info($"Failed to set Special K installation path: {customSpecialKPath ?? "null"}. Directory does not exist.");
+                _logger.Warn($"Failed to set Special K installation path: '{customSpecialKPath ?? "null"}'. Directory does not exist.");
                 return false;
             }
 
             if (_customSpecialKInstallationPath != customSpecialKPath)
             {
                 _customSpecialKInstallationPath = customSpecialKPath;
-                _logger.Info($"Special K installation path successfully set to: {_customSpecialKInstallationPath}");
+                _logger.Info($"Special K installation path set to: {_customSpecialKInstallationPath}");
             }
 
             return true;
@@ -157,39 +186,46 @@ namespace SpecialKHelper.SpecialKHandler.Application
         {
             if (!_customSpecialKInstallationPath.IsNullOrEmpty() && FileSystem.DirectoryExists(_customSpecialKInstallationPath))
             {
+                _logger.Info($"Using custom Special K installation path: {_customSpecialKInstallationPath}");
                 return _customSpecialKInstallationPath;
             }
-            
+
             using (var key = Registry.CurrentUser.OpenSubKey(_specialKRegistryPath))
             {
                 if (key is null)
                 {
+                    _logger.Error($"Registry key not found: {_specialKRegistryPath}");
                     throw new SpecialKPathNotFoundException($"Registry key not found: {_specialKRegistryPath}");
                 }
 
                 var pathValue = key.GetValue("Path");
                 if (pathValue is null)
                 {
+                    _logger.Error("Path value not found in registry.");
                     throw new SpecialKPathNotFoundException("Path value not found in registry.");
                 }
 
                 var directory = pathValue.ToString();
                 if (!FileSystem.DirectoryExists(directory))
                 {
+                    _logger.Error($"Special K directory in registry does not exist: {directory}");
                     throw new SpecialKPathNotFoundException($"Special K directory {directory} in registry does not exist.");
                 }
 
+                _logger.Info($"Resolved Special K installation directory from registry: {directory}");
                 return directory;
             }
         }
 
         public bool Start32BitsService(CancellationToken cancellationToken = default)
         {
+            _logger.Info("Attempting to start 64-bit Special K service...");
             return StartService(CpuArchitecture.X86, _customSpecialKInstallationPath, cancellationToken);
         }
 
         public bool Start64BitsService(CancellationToken cancellationToken = default)
         {
+            _logger.Info("Attempting to start 64-bit Special K service...");
             return StartService(CpuArchitecture.X64, _customSpecialKInstallationPath, cancellationToken);
         }
 
@@ -200,10 +236,12 @@ namespace SpecialKHelper.SpecialKHandler.Application
                : Is64BitsServiceRunning();
             if (serviceAlreadyRunning)
             {
+                _logger.Info($"Special K {cpuArchitecture} service is already running, no need to start.");
                 return true;
             }
 
             var specialKInstallDir = GetSpecialKInstallDirectory(customSpecialKPath);
+            _logger.Info($"Resolved Special K install directory for starting {cpuArchitecture} service: {specialKInstallDir}");
             return StartServiceInternal(specialKInstallDir, cpuArchitecture, cancellationToken);
         }
 
@@ -220,6 +258,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 ? _32BitsPrefix
                 : _64BitsPrefix;
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + architectureName + ".exe");
+            _logger.Info($"Starting Special K {cpuArchitecture} service using executable: {servletExe}");
             StartServiceProcess(servletExe);
 
             return WaitForProcessToStart(cpuArchitecture, cancellationToken);
@@ -240,58 +279,80 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 _logger.Error(exception, $"Service validation failed: {fileDescription} is missing.");
                 throw exception;
             }
+
+            _logger.Info($"Validated {fileDescription} exists at {filePath}");
         }
 
         private void StartServiceProcess(string servletExe)
         {
-            var info = new ProcessStartInfo(servletExe)
+            try
             {
-                WorkingDirectory = Path.GetDirectoryName(servletExe),
-                UseShellExecute = true,
-                Arguments = "Start",
-            };
+                _logger.Info($"Startinng Special K service using: {servletExe}");
+                var info = new ProcessStartInfo(servletExe)
+                {
+                    WorkingDirectory = Path.GetDirectoryName(servletExe),
+                    UseShellExecute = true,
+                    Arguments = "Start",
+                };
 
-            Process.Start(info);
+                Process.Start(info);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Failed to start start process for Special K service: {servletExe}");
+            }
         }
 
         private bool WaitForProcessToStart(CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
+            _logger.Info($"Waiting for Special K {cpuArchitecture} service to start...");
             for (int i = 0; i < _startServiceMaxRetries; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-
                 Thread.Sleep(_startServiceSleepDurationMs);
-                var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
-                if (isProcessStarted)
+
+                var isStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
+                if (isStarted)
                 {
+                    _logger.Info($"Special K {cpuArchitecture} service started successfully.");
                     OnServiceStatusChanged(SpecialKServiceStatus.Running, cpuArchitecture);
                     return true;
                 }
             }
 
-            _logger.Info($"Special K {cpuArchitecture} did not start after set time.");
+            _logger.Warn($"Special K {cpuArchitecture} service did not start after {_startServiceMaxRetries * _startServiceSleepDurationMs}ms.");
             return false;
         }
 
         private void StopServiceProcess(string servletExe)
         {
-            var info = new ProcessStartInfo(servletExe)
+            try
             {
-                WorkingDirectory = Path.GetDirectoryName(servletExe),
-                UseShellExecute = true,
-                Arguments = "Stop",
-            };
+                _logger.Info($"Stopping Special K service using: {servletExe}");
+                var info = new ProcessStartInfo(servletExe)
+                {
+                    WorkingDirectory = Path.GetDirectoryName(servletExe),
+                    UseShellExecute = true,
+                    Arguments = "Stop",
+                };
 
-            Process.Start(info);
+                Process.Start(info);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Failed to start stop process for Special K service: {servletExe}");
+            }
         }
 
         public bool Stop32BitsService(CancellationToken cancellationToken = default)
         {
+            _logger.Info("Attempting to stop 32-bit Special K service...");
             return StopService(CpuArchitecture.X86, _customSpecialKInstallationPath, cancellationToken);
         }
 
         public bool Stop64BitsService(CancellationToken cancellationToken = default)
         {
+            _logger.Info("Attempting to stop 64-bit Special K service...");
             return StopService(CpuArchitecture.X64, _customSpecialKInstallationPath, cancellationToken);
         }
 
@@ -300,41 +361,54 @@ namespace SpecialKHelper.SpecialKHandler.Application
             var serviceAlreadyRunning = cpuArchitecture == CpuArchitecture.X86
                 ? Is32BitsServiceRunning()
                 : Is64BitsServiceRunning();
+
             if (!serviceAlreadyRunning)
             {
+                _logger.Info($"Special K {cpuArchitecture} service is not running, no need to stop.");
                 return true;
             }
 
             var specialKInstallDir = GetSpecialKInstallDirectory(customSpecialKPath);
+            _logger.Info($"Resolved Special K install directory for stopping {cpuArchitecture} service: {specialKInstallDir}");
+
             return StopServiceInternal(specialKInstallDir, cpuArchitecture, cancellationToken);
         }
 
         private bool StopServiceInternal(string skifPath, CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
-            var architectureName = cpuArchitecture == CpuArchitecture.X86
-                ? _32BitsPrefix
-                : _64BitsPrefix;
+            var architectureName = cpuArchitecture == CpuArchitecture.X86 ? _32BitsPrefix : _64BitsPrefix;
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + architectureName + ".exe");
+
+            _logger.Info($"Stopping Special K {cpuArchitecture} service using executable: {servletExe}");
             StopServiceProcess(servletExe);
-            return WaitForProcessToStop(cpuArchitecture, cancellationToken);
+
+            var stopped = WaitForProcessToStop(cpuArchitecture, cancellationToken);
+            _logger.Info(stopped
+                ? $"Special K {cpuArchitecture} service stopped successfully."
+                : $"Special K {cpuArchitecture} service failed to stop in the expected time.");
+
+            return stopped;
         }
 
         private bool WaitForProcessToStop(CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
+            _logger.Info($"Waiting for Special K {cpuArchitecture} service to stop...");
+
             for (int i = 0; i < _stopServiceMaxRetries; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-
                 Thread.Sleep(_stopServiceSleepDurationMs);
-                var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
-                if (!isProcessStarted)
+
+                var isRunning = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
+                if (!isRunning)
                 {
+                    _logger.Info($"Special K {cpuArchitecture} service stopped successfully.");
                     OnServiceStatusChanged(SpecialKServiceStatus.Stopped, cpuArchitecture);
                     return true;
                 }
             }
 
-            _logger.Info($"Special K {cpuArchitecture} did not stop after set time.");
+            _logger.Warn($"Special K {cpuArchitecture} service did not stop after {_stopServiceMaxRetries * _stopServiceSleepDurationMs}ms.");
             return false;
         }
 
