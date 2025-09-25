@@ -173,3 +173,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_25.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.26
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-09-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_26.pext
+    Changelog:
+    - 'Fixed: Error preventing refreshing downloads for games in the Downloads manager view'

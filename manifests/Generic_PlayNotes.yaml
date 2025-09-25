@@ -59,3 +59,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.05.30_4ec9ef88/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_9.pext
     Changelog:
     - 'Fixed: Crash on startup if Notes database is corrupted.'
+  - Version: 1.10
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-09-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_10.pext
+    Changelog:
+    - 'Fixed: Being unable to obtain Steam guides for games marked as Adult. This requires for the user to have logged into Steam in the Steam library plugin or any other plugin.'

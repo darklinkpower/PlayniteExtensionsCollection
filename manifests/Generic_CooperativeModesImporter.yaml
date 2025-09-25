@@ -162,3 +162,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.27_eec1fd34/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_24.pext
     Changelog:
     - 'Changed: Updated database to latest information available in Co-Optimus'
+  - Version: 1.25
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-09-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_25.pext
+    Changelog:
+    - 'Improved: Improvements to matching procedures of games with entries in the database'

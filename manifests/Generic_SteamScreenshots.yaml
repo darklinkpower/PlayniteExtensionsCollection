@@ -100,3 +100,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.23_9dc54c33/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_14.pext
     Changelog:
     - 'Changed: Reduced delay to display screenshots control from 1100ms to 700ms'
+  - Version: 1.15
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-09-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_15.pext
+    Changelog:
+    - 'Improved: Detection of Steam ids for non-Steam games by supporting additional types of links'
+    - 'Changed: Reduced size of close button in Screenshots fullscreen view'

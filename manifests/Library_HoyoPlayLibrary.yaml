@@ -1,2 +1,8 @@
 AddonId: HoYoPlayLibrary_faaf4c1f-14ca-487e-8f32-d7a40c6b9c9a
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.12.0
+    ReleaseDate: 2025-09-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/HoYoPlayLibrary_faaf4c1f-14ca-487e-8f32-d7a40c6b9c9a_1_0.pext
+    Changelog:
+    - 'Initial Release'

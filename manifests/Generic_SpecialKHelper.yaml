@@ -272,3 +272,9 @@ Packages:
     Changelog:
     - 'Fixed: Detection of EasyAntiCheat being performed in cases where it is not needed due to execution being prevented by other settings'
     - 'Fixed: EasyAntiCheat detection for blocking Special K services startup was being triggered on every game start instead of only once'
+  - Version: 1.42
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-09-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_42.pext
+    Changelog:
+    - 'Improved: Added additional logging to help diagnose issues and troubleshooting for users'
