@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsCommon", "Common\PluginsCommon\PluginsCommon.csproj", "{CBED3B97-8FB8-4CA4-8827-13065AB64113}"
 EndProject
@@ -124,6 +124,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VNDBNexus.Tests", "MetadataTests\VNDBNexus.Tests\VNDBNexus.Tests.csproj", "{31D34989-1D06-4EE4-B75A-9609C42EACEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNDB.Tests", "MetadataTests\VNDB.Tests\VNDB.Tests.csproj", "{8AD58A5D-BC33-44B2-9ACF-E7D0ACA2BEE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoYoPlayLibrary", "Library\HoYoPlayLibrary\HoYoPlayLibrary.csproj", "{27F33F55-C75D-4FCD-90C3-13E7DAA5B67E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -347,6 +349,10 @@ Global
 		{8AD58A5D-BC33-44B2-9ACF-E7D0ACA2BEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD58A5D-BC33-44B2-9ACF-E7D0ACA2BEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AD58A5D-BC33-44B2-9ACF-E7D0ACA2BEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F33F55-C75D-4FCD-90C3-13E7DAA5B67E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F33F55-C75D-4FCD-90C3-13E7DAA5B67E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F33F55-C75D-4FCD-90C3-13E7DAA5B67E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F33F55-C75D-4FCD-90C3-13E7DAA5B67E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -407,6 +413,7 @@ Global
 		{2ECF5F66-4E17-4397-B560-8121FD58898F} = {A94A7FEF-3AA0-42E2-BA9F-A32BD1623476}
 		{31D34989-1D06-4EE4-B75A-9609C42EACEF} = {5BD80D42-B072-4BAB-9F61-D250CCCA4450}
 		{8AD58A5D-BC33-44B2-9ACF-E7D0ACA2BEE2} = {5BD80D42-B072-4BAB-9F61-D250CCCA4450}
+		{27F33F55-C75D-4FCD-90C3-13E7DAA5B67E} = {4168396D-8C15-4892-A09B-95E94B24B510}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

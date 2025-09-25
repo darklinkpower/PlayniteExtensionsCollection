@@ -1,0 +1,16 @@
+﻿Id: HoYoPlayLibrary_faaf4c1f-14ca-487e-8f32-d7a40c6b9c9a
+Name: HoyoPlay Library
+Author: darklinkpower
+Version: 1.0
+Module: HoYoPlayLibrary.dll
+Type: GameLibrary
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Issues Tracker
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/issues?q=state%3Aopen%20label%3A%22HoyoPlay%20Library%22
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
+    - Name: Ko-fi (Tips and Donations)
+      Url: https://ko-fi.com/darklinkpower
