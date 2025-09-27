@@ -144,11 +144,26 @@ namespace ExtraMetadataLoader
                 return;
             }
 
-            var adjustedBitmap = CreateResizedBitmapImageFromPath(logoPath, Convert.ToInt32(_settings.LogoMaxWidth), Convert.ToInt32(_settings.LogoMaxHeight));
-            LogoImage.Source = adjustedBitmap;
-            _settings.IsLogoAvailable = true;
-            ControlVisibility = Visibility.Visible;
-            StartLogoAnimation();
+            try
+            {
+                var adjustedBitmap = CreateResizedBitmapImageFromPath(logoPath, Convert.ToInt32(_settings.LogoMaxWidth), Convert.ToInt32(_settings.LogoMaxHeight));
+                LogoImage.Source = adjustedBitmap;
+                _settings.IsLogoAvailable = true;
+                ControlVisibility = Visibility.Visible;
+                StartLogoAnimation();
+            }
+            catch (FileFormatException)
+            {
+                FileSystem.DeleteFileSafe(logoPath);
+            }
+            catch (NotSupportedException)
+            {
+                FileSystem.DeleteFileSafe(logoPath);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void StartLogoAnimation()
