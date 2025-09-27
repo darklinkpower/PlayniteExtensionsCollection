@@ -97,6 +97,7 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 |Icon⠀⠀|Name|Description|Database|Help|
 | ------------ | ------------ | ------------ | ------------ | ------------ |
+| <img src="source/Library/HoYoPlayLibrary/icon.png" width="50" height="50"> | HoYoPlay Library | Import and manage games installed through the HoYoPlay launcher. | [Link](https://playnite.link/addons.html#HoYoPlayLibrary_faaf4c1f-14ca-487e-8f32-d7a40c6b9c9a "Database") | N/A |
 | <img src="source/Library/ImporterforAnilist/icon.png" width="50" height="50"> | Importer for Anilist | This plugin imports your anime and manga lists from AniList for viewing in Playnite. | [Link](https://playnite.link/addons.html#ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3 "Database") | [Help](../../wiki/Importer-for-Anilist "Help") |
 | <img src="source/Library/JastUsaLibrary/icon.png" width="50" height="50"> | JAST USA Library | Import and manage your JAST USA store library directly within Playnite, including downloading your games. | [Link](https://playnite.link/addons.html#JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381 "Database") | N/A |
 | <img src="source/Library/NVIDIAGeForceNowLibrary/icon.png" width="50" height="50"> | NVIDIA GeForce NOW Library | Plugin for Playnite that checks for games enabled in the NVIDIA GeForce NOW service that are in your library and imports them. | [Link](https://playnite.link/addons.html#NVIDIA_GeForce_Now_Enabler "Database") | [Help](../../wiki/NVIDIA-GeForce-NOW-Enabler "Help") |
