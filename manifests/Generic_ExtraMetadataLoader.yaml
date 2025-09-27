@@ -562,3 +562,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_80.pext
     Changelog:
     - 'Fixed: Failing to correctly match to games to Steam results in some circumstances'
+  - Version: 1.81
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-09-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_81.pext
+    Changelog:
+    - 'Fixed: Crash when streaming Steam trailers caused by an incompatibility in the media player with recent changes on Steam videos'
