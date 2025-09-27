@@ -547,12 +547,12 @@ namespace ExtraMetadataLoader
             {
                 if (microVideoPath != null)
                 {
-                    VideoSource = microVideoPath;
+                    VideoSource = NormalizeVideoUri(microVideoPath);
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
                 else if (trailerVideoPath != null && SettingsModel.Settings.FallbackVideoSource)
                 {
-                    VideoSource = trailerVideoPath;
+                    VideoSource = NormalizeVideoUri(trailerVideoPath);
                     activeVideoType = ActiveVideoType.Trailer;
                 }
             }
@@ -560,15 +560,38 @@ namespace ExtraMetadataLoader
             {
                 if (trailerVideoPath != null)
                 {
-                    VideoSource = trailerVideoPath;
+                    VideoSource = NormalizeVideoUri(trailerVideoPath);
                     activeVideoType = ActiveVideoType.Trailer;
                 }
                 else if (microVideoPath != null && SettingsModel.Settings.FallbackVideoSource)
                 {
-                    VideoSource = microVideoPath;
+                    VideoSource = NormalizeVideoUri(microVideoPath);
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
             }
+        }
+
+        private static Uri NormalizeVideoUri(Uri original)
+        {
+            if (original.Scheme == Uri.UriSchemeHttps)
+            {
+                // Workaround for MediaElement crash when playing Steam videos over HTTPS (#677).
+                // The crash occurs inside WPF’s internal OpenMedia method at:
+                //   if (!SecurityHelper.AreStringTypesEqual(uri2.Scheme, Uri.UriSchemeHttps))
+                // where `uri2` is null.
+                //
+                // Switching to HTTP avoids this code path and resolves the issue.
+                // This is safe in our case since Steam trailers are public/non-sensitive content.
+                var builder = new UriBuilder(original)
+                {
+                    Scheme = Uri.UriSchemeHttp,
+                    Port = -1 // reset to default
+                };
+
+                return builder.Uri;
+            }
+
+            return original;
         }
 
         private string GetSteamId(Game game)
