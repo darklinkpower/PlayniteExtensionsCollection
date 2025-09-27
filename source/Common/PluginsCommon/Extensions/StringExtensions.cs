@@ -375,7 +375,7 @@ namespace System
             return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
         }
 
-        internal static string Normalize(this string str)
+        internal static string Satinize(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
