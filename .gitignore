@@ -37,3 +37,4 @@ packages/
 
 # Ignore everything else in release folders
 **/bin/[Rr]elease*/
+/.stfolder/
