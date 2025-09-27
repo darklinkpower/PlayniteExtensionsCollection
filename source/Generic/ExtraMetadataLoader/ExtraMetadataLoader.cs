@@ -799,8 +799,8 @@ namespace ExtraMetadataLoader
                     {
                         if (settings.Settings.MaxLogoProcessWidth < image.Width || settings.Settings.MaxLogoProcessHeight < image.Height)
                         {
-                            var targetWidth = settings.Settings.MaxLogoProcessWidth;
-                            var targetHeight = settings.Settings.MaxLogoProcessHeight;
+                            var targetWidth = (uint)settings.Settings.MaxLogoProcessWidth;
+                            var targetHeight = (uint)settings.Settings.MaxLogoProcessHeight;
                             MagickGeometry size = new MagickGeometry(targetWidth, targetHeight)
                             {
                                 IgnoreAspectRatio = false
