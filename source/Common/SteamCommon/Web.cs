@@ -60,9 +60,14 @@ namespace SteamCommon
                     }
 
                     // Game Data
-                    var title = gameElem.QuerySelector(".title").InnerHtml;
-                    var releaseDate = gameElem.QuerySelector(".search_released").InnerHtml;
                     var gameId = gameElem.GetAttribute("data-ds-appid");
+                    if (gameId.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    var title = gameElem.QuerySelector(".title")?.InnerHtml ?? string.Empty;
+                    var releaseDate = gameElem.QuerySelector(".search_released")?.InnerHtml ?? string.Empty;
 
                     // Prices Data
                     var discountPercentage = 0;
@@ -74,18 +79,21 @@ namespace SteamCommon
                     var isFree = false;
 
                     var priceData = gameElem.QuerySelector(".search_discount_and_price");
-                    if (!priceData.InnerHtml.IsNullOrWhiteSpace())
+                    if (priceData != null && !priceData.InnerHtml.IsNullOrWhiteSpace())
                     {
                         // Game has pricing data
                         var discountBlock = priceData.QuerySelector(".discount_block");
-                        if (discountBlock.HasAttribute("data-discount"))
+                        if (discountBlock != null)
                         {
-                            discountPercentage = int.Parse(discountBlock.GetAttribute("data-discount"));
-                        }
+                            if (discountBlock.HasAttribute("data-discount"))
+                            {
+                                discountPercentage = int.Parse(discountBlock.GetAttribute("data-discount"));
+                            }
 
-                        if (discountBlock.HasAttribute("data-price-final"))
-                        {
-                            priceFinal = int.Parse(discountBlock.GetAttribute("data-price-final")) * 0.01;
+                            if (discountBlock.HasAttribute("data-price-final"))
+                            {
+                                priceFinal = int.Parse(discountBlock.GetAttribute("data-price-final")) * 0.01;
+                            }
                         }
 
                         priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
@@ -95,7 +103,9 @@ namespace SteamCommon
 
                     //Urls
                     var storeUrl = gameElem.GetAttribute("href");
-                    var capsuleUrl = gameElem.QuerySelector(".search_capsule").Children[0].GetAttribute("src");
+                    var capsuleUrl = gameElem.QuerySelector(".search_capsule")?
+                        .Children.FirstOrDefault()?
+                        .GetAttribute("src");
 
                     results.Add(new StoreSearchResult
                     {
@@ -119,31 +129,35 @@ namespace SteamCommon
             return results;
         }
 
-        private static void GetCurrencyFromSearchPriceDiv(AngleSharp.Dom.IElement priceBlock, out string currency, out bool isReleased, out bool isFree)
+        private static void GetCurrencyFromSearchPriceDiv(
+            AngleSharp.Dom.IElement priceBlock,
+            out string currency,
+            out bool isReleased,
+            out bool isFree)
         {
-            currency = GetCurrencyFromPriceString(priceBlock.QuerySelector(".discount_final_price").InnerHtml);
-            var noDiscount = priceBlock.QuerySelector(".search_discount_block no_discount");
+            isReleased = false;
+            isFree = false;
+
+            var priceEl = priceBlock.QuerySelector(".discount_final_price");
+            currency = priceEl != null ? GetCurrencyFromPriceString(priceEl.InnerHtml) : null;
+
+            var noDiscount = priceBlock.QuerySelector(".search_discount_block.no_discount");
             if (noDiscount != null)
             {
                 // Non discounted item
                 isReleased = true;
-                isFree = currency == null;
+                isFree = currency.IsNullOrEmpty();
                 return;
             }
 
             var discountDiv = priceBlock.QuerySelector(".search_discount_block");
-            if (discountDiv != null)
+            if (discountDiv != null && !discountDiv.InnerHtml.IsNullOrEmpty())
             {
-                // Non discounted item
+                // Discounted item
                 isReleased = true;
-                isFree = currency == null;
+                isFree = currency.IsNullOrEmpty();
                 return;
             }
-
-            isReleased = false;
-            currency = null;
-            isFree = false;
-            return;
         }
 
         private static string GetCurrencyFromPriceString(string priceString)
