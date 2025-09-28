@@ -72,3 +72,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_11.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.12
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2025-09-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.28_8af7249b/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_12.pext
+    Changelog:
+    - 'Fixed: Failing to display results when obtained results include an unreleased item'
