@@ -14,15 +14,15 @@ namespace SteamSearch
     public class SteamSearcher : SearchContext
     {
         private readonly SteamSearchSettingsViewModel _settings;
-        private const string _steamUriOpenUrlMask = @"steam://openurl/{0}";
+        private const string SteamUriOpenUrlMask = @"steam://openurl/{0}";
 
         public SteamSearcher(SteamSearchSettingsViewModel settings)
         {
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
             Description = ResourceProvider.GetString("LOCSteam_Search_SearcherDescriptionLabel");
             Label = ResourceProvider.GetString("LOCSteam_Search_SteamStoreLabel");
             Hint = ResourceProvider.GetString("LOCSteam_Search_SearcherHint");
-            Delay = 600;
-            this._settings = settings;
+            Delay = 400;
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -55,7 +55,7 @@ namespace SteamSearch
 
             searchItem.SecondaryAction = new SearchItemAction(
                 ResourceProvider.GetString("LOCSteam_Search_ItemActionLabelOpenOnSteam"),
-                () => { ProcessStarter.StartUrl(string.Format(_steamUriOpenUrlMask, searchResult.StoreUrl));});
+                () => { ProcessStarter.StartUrl(string.Format(SteamUriOpenUrlMask, searchResult.StoreUrl));});
 
             return searchItem;
         }
