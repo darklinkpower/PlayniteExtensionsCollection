@@ -8,5 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Button Visibility="{Binding ControlVisibility}"
             Command="{Binding OpenSteamDbGraphsCommand}"
-            Content="{Binding InGamePlayersCount}" />
+           Content="{Binding InGamePlayersCount}" ContentStringFormat="{}{0:N0}" Language="fr-FR">
+       
+    </Button>
 </PluginUserControl>
