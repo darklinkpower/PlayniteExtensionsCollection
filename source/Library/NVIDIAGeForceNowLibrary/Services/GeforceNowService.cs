@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using FlowHttp;
+using FlowHttp.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,13 +52,13 @@ namespace NVIDIAGeForceNowEnabler.Services
             var geforceNowItems = new List<GeforceNowItem>();
             while (true)
             {
-                var queryString = string.Format(queryBaseString, afterValue)
-                    .Replace("\r", "")
-                    .Replace("\n", "")
-                    .Replace(" ", "")
-                    .UrlEncode();
-                var uri = graphQlEndpoint + queryString;
-                var downloadedString = HttpRequestFactory.PostHttpRequest().WithUrl(uri).DownloadString();
+                var query = string.Format(queryBaseString, afterValue);
+                var json = Serialization.ToJson(new { query });
+                var downloadedString = HttpRequestFactory.GetHttpRequest()
+                    .WithUrl(graphQlEndpoint)
+                    .WithContent(json, HttpContentTypes.Json)
+                    .WithPostHttpMethod()
+                    .DownloadString();
                 if (!downloadedString.IsSuccess)
                 {
                     break;
