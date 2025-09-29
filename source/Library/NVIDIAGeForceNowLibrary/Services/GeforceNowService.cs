@@ -18,7 +18,7 @@ namespace NVIDIAGeForceNowEnabler.Services
         private const string graphQlEndpoint = @"https://api-prod.nvidia.com/services/gfngames/v1/gameList";
         private const string queryBaseString = @"
         {{
-            apps(country:""US"" language:""en_US"", after: ""{0}"") {{
+            apps(country:""US"", language:""en_US"", after: ""{0}"") {{
               numberReturned,
               pageInfo {{
                 hasNextPage,
@@ -57,7 +57,7 @@ namespace NVIDIAGeForceNowEnabler.Services
                     .Replace(" ", "")
                     .UrlEncode();
                 var uri = graphQlEndpoint + queryString;
-                var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(uri).DownloadString();
+                var downloadedString = HttpRequestFactory.PostHttpRequest().WithUrl(uri).DownloadString();
                 if (!downloadedString.IsSuccess)
                 {
                     break;
