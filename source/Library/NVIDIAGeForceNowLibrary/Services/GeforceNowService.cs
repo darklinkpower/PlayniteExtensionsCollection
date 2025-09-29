@@ -15,10 +15,10 @@ namespace NVIDIAGeForceNowEnabler.Services
     public static class GeforceNowService
     {
         private static ILogger logger = LogManager.GetLogger();
-        private const string graphQlEndpoint = @"https://public.games.geforce.com/graphql?query=";
+        private const string graphQlEndpoint = @"https://api-prod.nvidia.com/services/gfngames/v1/gameList";
         private const string queryBaseString = @"
         {{
-            apps(vpcId: ""NP-SEA-01"", language: ""en_US"", first: 1300, after: ""{0}"") {{
+            apps(country:""US"" language:""en_US"", after: ""{0}"") {{
               numberReturned,
               pageInfo {{
                 hasNextPage,
@@ -47,7 +47,7 @@ namespace NVIDIAGeForceNowEnabler.Services
         public static List<GeforceNowItem> GetGeforceNowDatabase()
         {
             logger.Debug($"Get GeForce Now database start");
-            var afterValue = "0".Base64Encode();
+            var afterValue = "750".Base64Encode();
             var geforceNowItems = new List<GeforceNowItem>();
             while (true)
             {
