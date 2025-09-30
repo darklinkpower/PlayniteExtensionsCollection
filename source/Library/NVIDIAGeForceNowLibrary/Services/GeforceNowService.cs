@@ -1,18 +1,19 @@
-﻿using NVIDIAGeForceNowEnabler.Models;
+﻿using FlowHttp;
+using FlowHttp.Constants;
+using NVIDIAGeForceNowEnabler.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using FlowHttp;
-using FlowHttp.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NVIDIAGeForceNowEnabler.Services
 {
-    
+
     public static class GeforceNowService
     {
         private static ILogger logger = LogManager.GetLogger();
@@ -26,7 +27,7 @@ namespace NVIDIAGeForceNowEnabler.Services
                 endCursor
               }},
               items {{
-                id,
+                id, 
                 cmsId,
                 title,
                 type,
@@ -35,7 +36,6 @@ namespace NVIDIAGeForceNowEnabler.Services
                   title,
                   appStore,
                   gfn {{
-                    status,
                     releaseDate
                   }}
                   osType,
@@ -48,17 +48,19 @@ namespace NVIDIAGeForceNowEnabler.Services
         public static List<GeforceNowItem> GetGeforceNowDatabase()
         {
             logger.Debug($"Get GeForce Now database start");
-            var afterValue = "750".Base64Encode();
+            var afterValue = "";
             var geforceNowItems = new List<GeforceNowItem>();
             while (true)
             {
                 var query = string.Format(queryBaseString, afterValue);
-                var json = Serialization.ToJson(new { query });
+                //var json = Serialization.ToJson(new { query });
+                //logger.Debug($"json request gfn: " + json);
                 var downloadedString = HttpRequestFactory.GetHttpRequest()
                     .WithUrl(graphQlEndpoint)
-                    .WithContent(json, HttpContentTypes.Json)
+                    .WithContent(query, HttpContentTypes.Json)
                     .WithPostHttpMethod()
                     .DownloadString();
+
                 if (!downloadedString.IsSuccess)
                 {
                     break;
