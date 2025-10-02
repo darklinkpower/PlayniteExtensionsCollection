@@ -107,3 +107,11 @@ Packages:
     Changelog:
     - 'Improved: Detection of Steam ids for non-Steam games by supporting additional types of links'
     - 'Changed: Reduced size of close button in Screenshots fullscreen view'
+  - Version: 1.16
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-10-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.02_82676418/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_16.pext
+    Changelog:
+    - 'Added: Support to cycle between screenshots in Screenshots fullscreen view by using the mouse scroll'
+    - 'Added: Support to close the Screenshots fullscreen view by right-clicking'
+    - 'Added: Support to cycle between screenshots in the themes control by using the mouse scroll while hovering the screenshots list'

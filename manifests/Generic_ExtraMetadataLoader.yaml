@@ -568,3 +568,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_81.pext
     Changelog:
     - 'Fixed: Crash when streaming Steam trailers caused by an incompatibility in the media player with recent changes on Steam videos'
+  - Version: 1.82
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-10-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.28_8af7249b/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_82.pext
+    Changelog:
+    - 'Fixed: Unable to download videos and logos from Steam for non-Steam games'
