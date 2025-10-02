@@ -160,6 +160,7 @@ namespace SteamScreenshots.ScreenshotsControl
 
             InitializeComponent();
             InitializeAnimations();
+            AddKeyBindings();
 
             DataContext = this;
         }
@@ -182,6 +183,47 @@ namespace SteamScreenshots.ScreenshotsControl
                 Duration = TimeSpan.FromSeconds(0.4),
                 FillBehavior = FillBehavior.HoldEnd
             };
+        }
+
+        private void AddKeyBindings()
+        {
+            var leftKeyBinding = new KeyBinding
+            {
+                Key = Key.Left,
+                Command = SelectPreviousScreenshotCommand
+            };
+            InputBindings.Add(leftKeyBinding);
+
+            var rightKeyBinding = new KeyBinding
+            {
+                Key = Key.Right,
+                Command = SelectNextScreenshotCommand
+            };
+            InputBindings.Add(rightKeyBinding);
+
+            ScreenshotsListBox.PreviewMouseWheel += WheelHandler;
+        }
+
+        private void WheelHandler(object s, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0) // Scroll up
+            {
+                if (SelectPreviousScreenshotCommand?.CanExecute(null) == true)
+                {
+                    SelectPreviousScreenshotCommand.Execute(null);
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Delta < 0) // Scroll down
+            {
+                if (SelectNextScreenshotCommand?.CanExecute(null) == true)
+                {
+                    SelectNextScreenshotCommand.Execute(null);
+                }
+
+                e.Handled = true;
+            }
         }
 
         private void FadeImages()

@@ -225,6 +225,19 @@ namespace SteamScreenshots.Screenshots
                 Command = CloseWindowCommand
             };
             _window.InputBindings.Add(escapeKeyBinding);
+            _window.PreviewMouseWheel += WheelHandler;
+
+            _window.MouseRightButtonUp += Window_MouseRightButtonUp;
+            _window.Closed += (s, e) =>
+            {
+                _window.PreviewMouseWheel -= WheelHandler;
+                _window.MouseRightButtonUp -= Window_MouseRightButtonUp;
+            };
+        }
+
+        private void Window_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CloseWindowCommand?.Execute(null);
         }
 
         private void InitializeAnimations()
@@ -247,6 +260,28 @@ namespace SteamScreenshots.Screenshots
 
             Storyboard.SetTargetProperty(_fadeOutAnimation, new PropertyPath("Opacity"));
             Storyboard.SetTargetProperty(_fadeInAnimation, new PropertyPath("Opacity"));
+        }
+
+        private void WheelHandler(object s, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0) // Scroll up
+            {
+                if (BackCommand?.CanExecute(null) == true)
+                {
+                    BackCommand.Execute(null);
+                }
+
+                e.Handled = true;
+            }
+            else if (e.Delta < 0) // Scroll down
+            {
+                if (NextCommand?.CanExecute(null) == true)
+                {
+                    NextCommand.Execute(null);
+                }
+
+                e.Handled = true;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

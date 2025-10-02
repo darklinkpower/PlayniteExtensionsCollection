@@ -9,10 +9,6 @@
                    mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Focusable="True">
-    <PluginUserControl.InputBindings>
-        <KeyBinding Key="Left" Command="{Binding SelectPreviousScreenshotCommand}" />
-        <KeyBinding Key="Right" Command="{Binding SelectNextScreenshotCommand}" />
-    </PluginUserControl.InputBindings>
     <PluginUserControl.Resources>
         <DataTemplate x:Key="ScreenshotHorizontalTemplate">
             <Image Source="{Binding ThumbnailImage}"
