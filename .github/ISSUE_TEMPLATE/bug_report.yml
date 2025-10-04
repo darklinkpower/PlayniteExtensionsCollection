@@ -43,7 +43,7 @@ body:
         - For the portable version of Playnite, the files are located in the Playnite installation directory.
         - For the installed version, you can find them in **%AppData%\Playnite** (type this in the Explorer address bar).
     validations:
-      required: false
+      required: true
   - type: textarea
     attributes:
       label: Screenshots
