@@ -1,31 +1,33 @@
-﻿using NVIDIAGeForceNowEnabler.Models;
+﻿using FlowHttp;
+using FlowHttp.Constants;
+using NVIDIAGeForceNowEnabler.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using FlowHttp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NVIDIAGeForceNowEnabler.Services
 {
-    
+
     public static class GeforceNowService
     {
         private static ILogger logger = LogManager.GetLogger();
-        private const string graphQlEndpoint = @"https://public.games.geforce.com/graphql?query=";
+        private const string graphQlEndpoint = @"https://api-prod.nvidia.com/services/gfngames/v1/gameList";
         private const string queryBaseString = @"
         {{
-            apps(vpcId: ""NP-SEA-01"", language: ""en_US"", first: 1300, after: ""{0}"") {{
+            apps(country:""US"", language:""en_US"", after: ""{0}"") {{
               numberReturned,
               pageInfo {{
                 hasNextPage,
                 endCursor
               }},
               items {{
-                id,
+                id, 
                 cmsId,
                 title,
                 type,
@@ -34,7 +36,6 @@ namespace NVIDIAGeForceNowEnabler.Services
                   title,
                   appStore,
                   gfn {{
-                    status,
                     releaseDate
                   }}
                   osType,
@@ -47,17 +48,19 @@ namespace NVIDIAGeForceNowEnabler.Services
         public static List<GeforceNowItem> GetGeforceNowDatabase()
         {
             logger.Debug($"Get GeForce Now database start");
-            var afterValue = "0".Base64Encode();
+            var afterValue = "";
             var geforceNowItems = new List<GeforceNowItem>();
             while (true)
             {
-                var queryString = string.Format(queryBaseString, afterValue)
-                    .Replace("\r", "")
-                    .Replace("\n", "")
-                    .Replace(" ", "")
-                    .UrlEncode();
-                var uri = graphQlEndpoint + queryString;
-                var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(uri).DownloadString();
+                var query = string.Format(queryBaseString, afterValue);
+                //var json = Serialization.ToJson(new { query });
+                //logger.Debug($"json request gfn: " + json);
+                var downloadedString = HttpRequestFactory.GetHttpRequest()
+                    .WithUrl(graphQlEndpoint)
+                    .WithContent(query, HttpContentTypes.Json)
+                    .WithPostHttpMethod()
+                    .DownloadString();
+
                 if (!downloadedString.IsSuccess)
                 {
                     break;
