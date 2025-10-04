@@ -22,6 +22,12 @@ body:
           required: true
         - label: "I have modified the placeholder issue title according to this issue"
           required: true
+  - type: input
+    attributes:
+      label: Extension name
+      description: Indicate the extension for which extension this issue is for
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Bug Description

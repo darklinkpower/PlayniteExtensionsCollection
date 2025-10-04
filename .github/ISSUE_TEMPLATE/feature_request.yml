@@ -28,8 +28,6 @@ body:
       description: Indicate the extension for which extension this issue is for
     validations:
       required: true
-    validations:
-      required: true
   - type: textarea
     attributes:
       label: Feature Description
