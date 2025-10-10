@@ -72,9 +72,6 @@ namespace NVIDIAGeForceNowEnabler.Models
 
     public class Gfn
     {
-        //[SerializationPropertyName("status")]
-        //public Status Status { get; set; }
-
         [SerializationPropertyName("releaseDate")]
         public string ReleaseDate { get; set; }
     }
