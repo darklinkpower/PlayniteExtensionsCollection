@@ -125,7 +125,7 @@ namespace HoYoPlayLibrary
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
         {
             var game = args.Game;
-            if (args.Game.PluginId == Id)
+            if (args.Game.PluginId == Id && _hoyoPlayClient.IsInstalled)
             {
                 return new List<InstallController>
                 {
@@ -139,7 +139,7 @@ namespace HoYoPlayLibrary
         public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
         {
             var game = args.Game;
-            if (args.Game.PluginId == Id)
+            if (args.Game.PluginId == Id && _hoyoPlayClient.IsInstalled)
             {
                 return new List<UninstallController>
                 {
