@@ -28,7 +28,7 @@ namespace NVIDIAGeForceNowEnabler.Models
         public PageInfo PageInfo { get; set; }
 
         [SerializationPropertyName("items")]
-        public GeforceNowItem[] Items { get; set; }
+        public List<GeforceNowItem> Items { get; set; }
     }
 
     public class GeforceNowItem
@@ -46,7 +46,12 @@ namespace NVIDIAGeForceNowEnabler.Models
         public AppType Type { get; set; }
 
         [SerializationPropertyName("variants")]
-        public GeforceNowItemVariant[] Variants { get; set; }
+        public List<GeforceNowItemVariant> Variants { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Title} ({Id})";
+        }
     }
 
     public class GeforceNowItemVariant
@@ -72,9 +77,6 @@ namespace NVIDIAGeForceNowEnabler.Models
 
     public class Gfn
     {
-        [SerializationPropertyName("status")]
-        public Status Status { get; set; }
-
         [SerializationPropertyName("releaseDate")]
         public string ReleaseDate { get; set; }
     }

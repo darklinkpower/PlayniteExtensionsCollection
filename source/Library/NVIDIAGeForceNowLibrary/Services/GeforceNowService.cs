@@ -1,7 +1,8 @@
-﻿using NVIDIAGeForceNowEnabler.Models;
+﻿using FlowHttp;
+using FlowHttp.Constants;
+using NVIDIAGeForceNowEnabler.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using FlowHttp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,73 +15,75 @@ namespace NVIDIAGeForceNowEnabler.Services
     
     public static class GeforceNowService
     {
-        private static ILogger logger = LogManager.GetLogger();
-        private const string graphQlEndpoint = @"https://public.games.geforce.com/graphql?query=";
-        private const string queryBaseString = @"
-        {{
-            apps(vpcId: ""NP-SEA-01"", language: ""en_US"", first: 1300, after: ""{0}"") {{
-              numberReturned,
-              pageInfo {{
-                hasNextPage,
-                endCursor
-              }},
-              items {{
+        private static readonly ILogger _logger = LogManager.GetLogger();
+        private const string GraphQlEndpoint = @"https://api-prod.nvidia.com/services/gfngames/v1/gameList";
+
+        private static string GetQuery(
+            string after,
+            string country = "US",
+            string language = "en_US") => $@"
+{{
+    apps(country:""{country}"", language:""{language}"", after: ""{after}"") {{
+        numberReturned,
+        pageInfo {{
+            hasNextPage,
+            endCursor
+        }},
+        items {{
+            id,
+            cmsId,
+            title,
+            type,
+            variants {{
                 id,
-                cmsId,
                 title,
-                type,
-                variants {{
-                  id,
-                  title,
-                  appStore,
-                  gfn {{
-                    status,
+                appStore,
+                gfn {{
                     releaseDate
-                  }}
-                  osType,
-                  storeId
-                }}
-              }}
+                }},
+                osType,
+                storeId
             }}
-        }}";
+        }}
+    }}
+}}";
 
         public static List<GeforceNowItem> GetGeforceNowDatabase()
         {
-            logger.Debug($"Get GeForce Now database start");
-            var afterValue = "0".Base64Encode();
+            var afterValue = string.Empty;
             var geforceNowItems = new List<GeforceNowItem>();
+            int pageCount = 0;
+
+            _logger.Info("Fetching GeForce NOW database...");
             while (true)
             {
-                var queryString = string.Format(queryBaseString, afterValue)
-                    .Replace("\r", "")
-                    .Replace("\n", "")
-                    .Replace(" ", "")
-                    .UrlEncode();
-                var uri = graphQlEndpoint + queryString;
-                var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(uri).DownloadString();
+                pageCount++;
+                var query = GetQuery(afterValue);
+                var downloadedString = HttpRequestFactory.GetHttpRequest()
+                    .WithUrl(GraphQlEndpoint)
+                    .WithContent(query, HttpContentTypes.Json)
+                    .WithPostHttpMethod()
+                    .DownloadString();
+
                 if (!downloadedString.IsSuccess)
                 {
+                    _logger.Warn($"Request failed at page {pageCount}. Stopping fetch.");
                     break;
                 }
 
                 var response = Serialization.FromJson<GfnGraphQlResponse>(downloadedString.Content);
-                foreach (var geforceNowItem in response.Data.Apps.Items)
-                {
-                    geforceNowItems.Add(geforceNowItem);
-                }
+                geforceNowItems.AddRange(response.Data.Apps.Items);
+                _logger.Debug($"Fetched page {pageCount}: {response.Data.Apps.Items.Count} items");
 
-                if (response.Data.Apps.PageInfo.HasNextPage)
-                {
-                    afterValue = response.Data.Apps.PageInfo.EndCursor;
-                    continue;
-                }
-                else
+                if (!response.Data.Apps.PageInfo.HasNextPage)
                 {
                     break;
                 }
+
+                afterValue = response.Data.Apps.PageInfo.EndCursor;
             }
 
-            logger.Debug($"Returning GeForce NOW database with {geforceNowItems.Count} items");
+            _logger.Info($"Finished fetching GeForce NOW database. Total pages: {pageCount}, Total items: {geforceNowItems.Count}");
             return geforceNowItems;
         }
     }
