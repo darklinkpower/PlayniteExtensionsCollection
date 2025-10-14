@@ -333,3 +333,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.04_2719a10d/NVIDIA_GeForce_Now_Enabler_2_53.pext
     Changelog:
     - 'Fixed: Plugin failing to load if local GeForce Now database becomes corrupted for any circumstance'
+  - Version: 2.54
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-10-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.13_d84ecf06/NVIDIA_GeForce_Now_Enabler_2_54.pext
+    Changelog:
+    - 'Fixed: Being unable to update GeForce Now database due to recent changes in the service'

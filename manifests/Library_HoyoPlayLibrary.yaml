@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/HoYoPlayLibrary_faaf4c1f-14ca-487e-8f32-d7a40c6b9c9a_1_0.pext
     Changelog:
     - 'Initial Release'
+  - Version: 1.1
+    RequiredApiVersion: 6.12.0
+    ReleaseDate: 2025-10-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.13_d84ecf06/HoYoPlayLibrary_faaf4c1f-14ca-487e-8f32-d7a40c6b9c9a_1_1.pext
+    Changelog:
+    - 'Fixed: Extension no longer allows to install or uninstall if the HoYoPlay client is not installed'
