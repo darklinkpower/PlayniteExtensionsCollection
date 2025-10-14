@@ -49,7 +49,12 @@ namespace JastUsaLibrary.Features.InstallationHandler.Application
             {
                 _logger.Info($"Handler '{handler.Type}' will be used to install file: {request.FilePath}");
                 var success = handler.Install(request);
-                if (!success)
+
+                if (success)
+                {
+                    _logger.Info($"Handler '{handler.Type}' successfully installed file: {request.FilePath}");
+                }
+                else
                 {
                     _logger.Warn($"Handler '{handler.Type}' failed to install file: {request.FilePath}");
                 }
