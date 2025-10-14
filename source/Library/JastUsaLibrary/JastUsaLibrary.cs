@@ -1,34 +1,38 @@
-﻿using Playnite.SDK;
+﻿using JastUsaLibrary.DownloadManager.Domain.Events;
+using JastUsaLibrary.DownloadManager.Presentation;
+using JastUsaLibrary.DownloadManager.Views;
+using JastUsaLibrary.Features.DownloadManager.Application;
+using JastUsaLibrary.Features.DownloadManager.Infrastructure;
+using JastUsaLibrary.Features.InstallationHandler.Application;
+using JastUsaLibrary.Features.InstallationHandler.Domain;
+using JastUsaLibrary.Features.InstallationHandler.Infrastructure;
+using JastUsaLibrary.Features.MetadataProvider;
+using JastUsaLibrary.JastLibraryCacheService.Application;
+using JastUsaLibrary.JastUsaIntegration.Application.Services;
+using JastUsaLibrary.JastUsaIntegration.Infrastructure.External;
+using JastUsaLibrary.JastUsaIntegration.Infrastructure.Persistence;
+using JastUsaLibrary.ProgramsHelper;
+using JastUsaLibrary.Services.GameInstallationManager.Application;
+using JastUsaLibrary.Services.GameInstallationManager.Infrastructure;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
+using JastUsaLibrary.Services.JastLibraryCacheService.Infrastructure;
+using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Reflection;
-using Playnite.SDK.Events;
-using JastUsaLibrary.DownloadManager.Views;
-using JastUsaLibrary.ProgramsHelper;
-using PlayniteUtilitiesCommon;
-using JastUsaLibrary.JastUsaIntegration.Infrastructure.Persistence;
-using JastUsaLibrary.JastUsaIntegration.Application.Services;
-using JastUsaLibrary.JastUsaIntegration.Infrastructure.External;
-using JastUsaLibrary.DownloadManager.Domain.Events;
-using JastUsaLibrary.JastLibraryCacheService.Application;
-using JastUsaLibrary.DownloadManager.Presentation;
-using JastUsaLibrary.Features.MetadataProvider;
-using JastUsaLibrary.Features.DownloadManager.Application;
-using JastUsaLibrary.Features.DownloadManager.Infrastructure;
-using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
-using JastUsaLibrary.Services.GameInstallationManager.Application;
-using JastUsaLibrary.Services.GameInstallationManager.Infrastructure;
-using JastUsaLibrary.Services.JastLibraryCacheService.Infrastructure;
 
 namespace JastUsaLibrary
 {
@@ -49,6 +53,7 @@ namespace JastUsaLibrary
         public override LibraryClient Client { get; } = new JastUsaLibraryClient();
         private readonly JastUsaAccountClient _jastUsaAccountClient;
         private readonly ILibraryCacheService _jastUsaCacheService;
+        private readonly InstallerService _installService;
         private readonly DownloadsManager _downloadsManager;
         private DownloadsManagerViewModel _downloadsManagerViewModel;
 
@@ -60,7 +65,30 @@ namespace JastUsaLibrary
             settings = new JastUsaLibrarySettingsViewModel(this, PlayniteApi, _jastUsaAccountClient);
             _gameInstallationManagerService = new GameInstallationManagerService(PlayniteApi, new GameInstallationManagerPersistenceJson(GetPluginUserDataPath(), _logger));
             _jastUsaCacheService = new LibraryCacheService(PlayniteApi, new LibraryCachePersistenceJson(GetPluginUserDataPath(), _logger), Id);
-            _downloadsManager = new DownloadsManager(this, _jastUsaAccountClient, settings, _logger, PlayniteApi, new DownloadDataPersistenceJson(_logger, GetPluginUserDataPath()), _jastUsaCacheService, _gameInstallationManagerService);
+
+            var installerDetector = new InstallerDetector();
+            var installerHandlers = new List<IInstallerHandler>
+            {
+                new InnoSetupInstallerHandler(),
+                new InstallShieldInstallerHandler(),
+                new MsiInstallerHandler(),
+                new NullSoftInstallerHandler(),
+                new SetupFactoryInstallerHandler(),
+                new ArchiveInstallerHandler(installerDetector)
+            };
+
+            _installService = new InstallerService(installerHandlers, installerDetector, new ExecutableMetadataReader(), _logger);
+            _downloadsManager = new DownloadsManager(
+                this,
+                _jastUsaAccountClient,
+                settings,
+                _logger,
+                PlayniteApi,
+                new DownloadDataPersistenceJson(_logger, GetPluginUserDataPath()),
+                _jastUsaCacheService,
+                _gameInstallationManagerService,
+                _installService);
+
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
@@ -285,6 +313,83 @@ namespace JastUsaLibrary
                 _ = Task.Run(() => _downloadsManager.StartDownloadsAsync(false, false));
             }
         }
+
+#if DEBUG
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            var debugSection = "JAST USA Debug";
+            return new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    Description = "PrintExe manifest",
+                    MenuSection = $"{debugSection}",
+                    Action = (a) => {
+                        try
+                        {
+                            var selectedExe = PlayniteApi.Dialogs.SelectFile("Executables (*.exe)|*.exe");
+                            if (selectedExe.IsNullOrEmpty())
+                            {
+                                return;
+                            }
+
+                            var executableMetadataReader = new ExecutableMetadataReader();
+                            var exeMetadata = executableMetadataReader.ReadMetadata(selectedExe);
+
+                            var sb = new StringBuilder();
+                            sb.AppendLine("=== Executable Metadata ===");
+                            sb.AppendLine($"ProductName: {exeMetadata.ProductName}");
+                            sb.AppendLine($"CompanyName: {exeMetadata.CompanyName}");
+                            sb.AppendLine($"FileDescription: {exeMetadata.FileDescription}");
+                            sb.AppendLine($"AssemblyName: {exeMetadata.AssemblyName}");
+                            sb.AppendLine($"AssemblyVersion: {exeMetadata.AssemblyVersion}");
+
+                            if (exeMetadata.ManifestAssemblyIdentity != null && exeMetadata.ManifestAssemblyIdentity.Count > 0)
+                            {
+                                sb.AppendLine("--- Manifest Assembly Identity ---");
+                                foreach (var kvp in exeMetadata.ManifestAssemblyIdentity)
+                                {
+                                    sb.AppendLine($"{kvp.Key}: {kvp.Value}");
+                                }
+                            }
+
+                            var metadataString = sb.ToString();
+
+                            _logger.Debug(metadataString);
+                            PlayniteApi.Dialogs.ShowSelectableString(selectedExe, "Exe metadata", metadataString);
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.Error(e, "");
+                            PlayniteApi.Dialogs.ShowErrorMessage(e.Message);
+                        }
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = "Try to install exe",
+                    MenuSection = $"{debugSection}",
+                    Action = (a) => {
+
+                            var selectedExe = PlayniteApi.Dialogs.SelectFile("Executables (*.exe)|*.exe");
+                            if (selectedExe.IsNullOrEmpty())
+                            {
+                                return;
+                            }
+
+                            var selectedInstallDir = PlayniteApi.Dialogs.SelectFolder();
+                            if (selectedInstallDir.IsNullOrEmpty())
+                            {
+                                return;
+                            }
+
+                            var installRequest = new InstallRequest(selectedExe, selectedInstallDir);
+                            _installService.Install(installRequest);
+                    }
+                }
+            };
+        }
+#endif
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {

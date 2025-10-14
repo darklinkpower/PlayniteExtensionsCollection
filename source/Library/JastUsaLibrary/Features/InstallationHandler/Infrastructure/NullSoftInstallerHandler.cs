@@ -3,15 +3,16 @@ using JastUsaLibrary.Features.InstallationHandler.Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
 {
-    public class InnoSetupInstallerHandler : IInstallerHandler
+    public class NullSoftInstallerHandler : IInstallerHandler
     {
-        public InstallerType Type => InstallerType.InnoSetup;
+        public InstallerType Type => InstallerType.NullSoft;
 
         public bool CanHandle(string filePath, string content, ExecutableMetadata executableMetadata)
         {
@@ -20,14 +21,14 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
                 return false;
             }
 
-            if (content.Contains("Inno Setup"))
+            if (content.Contains("Nullsoft"))
             {
                 return true;
             }
 
             if (executableMetadata?.ManifestAssemblyIdentity != null &&
                 executableMetadata.ManifestAssemblyIdentity.TryGetValue("assemblyIdentity", out var value) &&
-                value.Contains("Inno", StringComparison.OrdinalIgnoreCase))
+                value.Contains("NSIS", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
@@ -40,9 +41,11 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
             var startInfo = new ProcessStartInfo
             {
                 FileName = request.FilePath,
-                Arguments = $"/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR=\"{request.TargetDirectory}\"",
-                UseShellExecute = false,
-                CreateNoWindow = true
+                Arguments = $"/S /D={request.TargetDirectory.TrimEnd('\\')}", // /D= must be last, with no quotes and trailing backlash
+                UseShellExecute = true, // Must be true for Verb="runas"
+                //CreateNoWindow = true, // will not work with UseShellExecute = true
+                Verb = "runas", // Seems to require elevation, e.g. Katawa Shoujo
+                WorkingDirectory = Path.GetDirectoryName(request.FilePath)
             };
 
             using (var process = Process.Start(startInfo))

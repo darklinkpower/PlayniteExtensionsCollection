@@ -11,8 +11,9 @@ namespace JastUsaLibrary.Features.InstallationHandler.Domain
         Unknown,
         Msi,
         InnoSetup,
-        Nsis,
+        NullSoft,
         InstallShield,
-        Archive
+        Archive,
+        SetupFactory
     }
 }

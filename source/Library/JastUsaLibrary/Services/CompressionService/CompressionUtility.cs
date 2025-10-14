@@ -14,21 +14,32 @@ namespace JastUsaLibrary
 {
     public static class CompressionUtility
     {
-        public static bool ExtractZipFile(string filePath, string extractDirectory, CancellationToken cancellationToken = default)
+        public class ExtractionResult
+        {
+            public bool Success { get; set; }
+            public List<string> ExtractedFiles { get; } = new List<string>();
+        }
+
+
+        public static ExtractionResult ExtractZipFile(
+            string filePath,
+            string extractDirectory,
+            CancellationToken cancellationToken = default)
         {
             if (!FileSystem.DirectoryExists(extractDirectory))
             {
                 FileSystem.CreateDirectory(extractDirectory);
             }
-            
-            var extractionFinished = true;
+
+            var result = new ExtractionResult { Success = true };
+
             using (var archive = ZipArchive.Open(filePath))
             {
                 foreach (var entry in archive.Entries)
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        extractionFinished = false;
+                        result.Success = false;
                         break;
                     }
 
@@ -42,6 +53,7 @@ namespace JastUsaLibrary
                         }
 
                         entry.WriteToFile(destinationPath);
+                        result.ExtractedFiles.Add(destinationPath);
                     }
                     else
                     {
@@ -54,24 +66,28 @@ namespace JastUsaLibrary
                 }
             }
 
-            return extractionFinished;
+            return result;
         }
 
-        public static bool ExtractRarFile(string downloadPath, string extractDirectory, CancellationToken cancellationToken = default)
+        public static ExtractionResult ExtractRarFile(
+            string downloadPath,
+            string extractDirectory,
+            CancellationToken cancellationToken = default)
         {
             if (!FileSystem.DirectoryExists(extractDirectory))
             {
                 FileSystem.CreateDirectory(extractDirectory);
             }
 
-            var extractionFinished = true;
+            var result = new ExtractionResult { Success = true };
+
             using (var archive = RarArchive.Open(downloadPath))
             {
                 foreach (var entry in archive.Entries)
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        extractionFinished = false;
+                        result.Success = false;
                         break;
                     }
 
@@ -85,6 +101,7 @@ namespace JastUsaLibrary
                         }
 
                         entry.WriteToFile(destinationPath);
+                        result.ExtractedFiles.Add(destinationPath);
                     }
                     else
                     {
@@ -97,7 +114,7 @@ namespace JastUsaLibrary
                 }
             }
 
-            return extractionFinished;
+            return result;
         }
 
 

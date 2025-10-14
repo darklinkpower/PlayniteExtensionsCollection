@@ -3,6 +3,8 @@ using JastUsaLibrary.DownloadManager.Domain.Enums;
 using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.DownloadManager.Domain.Exceptions;
 using JastUsaLibrary.Features.DownloadManager.Domain.Events;
+using JastUsaLibrary.Features.InstallationHandler.Application;
+using JastUsaLibrary.Features.InstallationHandler.Domain;
 using JastUsaLibrary.JastLibraryCacheService.Application;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
 using JastUsaLibrary.ProgramsHelper;
@@ -24,6 +26,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static JastUsaLibrary.CompressionUtility;
 
 namespace JastUsaLibrary.Features.DownloadManager.Application
 {
@@ -50,6 +53,8 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
         private readonly JastUsaAccountClient _jastAccountClient;
         private readonly JastUsaLibrarySettingsViewModel _settingsViewModel;
         private readonly ObservableCollection<DownloadItem> _downloadsList;
+        private readonly InstallerService _installerService;
+
         public IReadOnlyCollection<DownloadItem> DownloadsList => _downloadsList;
         private readonly SemaphoreSlim _downloadsListAddRemoveSemaphore = new SemaphoreSlim(1);
         private readonly SemaphoreSlim _bulkStartDownloadsSemaphore = new SemaphoreSlim(1);
@@ -70,7 +75,8 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             IPlayniteAPI playniteApi,
             IDownloadDataPersistence downloadsPersistence,
             ILibraryCacheService libraryCacheService,
-            IGameInstallationManagerService gameInstallationManagerService)
+            IGameInstallationManagerService gameInstallationManagerService,
+            InstallerService installerService)
         {
             _logger = Guard.Against.Null(logger);
             _playniteApi = Guard.Against.Null(playniteApi);
@@ -81,6 +87,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             _jastAccountClient = Guard.Against.Null(jastAccountClient);
             _settingsViewModel = Guard.Against.Null(settingsViewModel);
             _downloadsList = new ObservableCollection<DownloadItem>();
+            _installerService = installerService;
             Task.Run(async () => await RestorePersistingDownloads()).Wait();
             _persistOnListChanges = true;
             _enableDownloadsOnAdd = true;
@@ -645,7 +652,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             }
 
             var extractDirectory = string.Empty;
-            var extractSuccess = true;
+            ExtractionResult extractResult = null;
             try
             {
                 if (!FileSystem.FileExists(filePath))
@@ -660,14 +667,17 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 downloadItem.DownloadData.Status = DownloadItemStatus.Extracting;
                 if (isZipFile)
                 {
-                    extractSuccess = CompressionUtility.ExtractZipFile(filePath, extractDirectory, _extractionCancellationToken.Token);
+                    extractResult = CompressionUtility.ExtractZipFile(filePath, extractDirectory, _extractionCancellationToken.Token);
                 }
                 else if (isRarFile)
                 {
-                    extractSuccess = CompressionUtility.ExtractRarFile(filePath, extractDirectory, _extractionCancellationToken.Token);
+                    extractResult = CompressionUtility.ExtractRarFile(filePath, extractDirectory, _extractionCancellationToken.Token);
+
                 }
 
-                downloadItem.DownloadData.Status = extractSuccess ? DownloadItemStatus.ExtractionCompleted : DownloadItemStatus.ExtractionFailed;
+                downloadItem.DownloadData.Status = extractResult.Success
+                    ? DownloadItemStatus.ExtractionCompleted
+                    : DownloadItemStatus.ExtractionFailed;
             }
             catch (Exception e)
             {
@@ -676,7 +686,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 return;
             }
 
-            if (extractSuccess && downloadSettings.DeleteOnExtract)
+            if (extractResult.Success && downloadSettings.DeleteOnExtract)
             {
                 try
                 {
@@ -689,16 +699,16 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 }
             }
 
-            if (extractSuccess && downloadItem.DownloadData.AssetType == JastDownloadType.Game)
+            if (extractResult.Success && downloadItem.DownloadData.AssetType == JastDownloadType.Game)
             {
                 _playniteApi.MainView.UIDispatcher.Invoke(() =>
                 {
-                    ApplyGameInstalation(downloadItem, extractDirectory);
+                    ApplyGameInstalation(downloadItem, extractDirectory, extractResult);
                 });
             }
         }
 
-        private void ApplyGameInstalation(DownloadItem downloadItem, string extractDirectory)
+        private void ApplyGameInstalation(DownloadItem downloadItem, string extractDirectory, ExtractionResult extractResult)
         {
             try
             {
@@ -708,14 +718,37 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                     return;
                 }
 
-                if (!TryFindExecutable(extractDirectory, out var gameExecutablePath))
+                if (!TryFindExecutable(extractDirectory, out var gameExecutablePath, out var isInstaller))
                 {
                     return;
                 }
 
-                var program = ProgramsService.GetProgramData(gameExecutablePath);
-                _gameInstallationManagerService.ApplyProgramToGameCache(databaseGame, program);
-                OnGameInstallationApplied(databaseGame, program);
+                if (!isInstaller)
+                {
+                    var program = ProgramsService.GetProgramData(gameExecutablePath);
+                    _gameInstallationManagerService.ApplyProgramToGameCache(databaseGame, program);
+                    OnGameInstallationApplied(databaseGame, program);
+                }
+
+                var installRequest = new InstallRequest(gameExecutablePath, extractDirectory);
+                var installSuccess = _installerService.Install(installRequest);
+                if (installSuccess)
+                {
+                    // No need to keep installation files if the game has been installed
+                    foreach (var filePath in extractResult.ExtractedFiles)
+                    {
+                        FileSystem.DeleteFileSafe(filePath);
+                    }
+
+                    if (!TryFindExecutable(installRequest.TargetDirectory, out var installedFilesExecutable, out var isInstalledExecutable))
+                    {
+                        return;
+                    }
+
+                    var program = ProgramsService.GetProgramData(installedFilesExecutable);
+                    _gameInstallationManagerService.ApplyProgramToGameCache(databaseGame, program);
+                    OnGameInstallationApplied(databaseGame, program);
+                }
             }
             catch (Exception e)
             {
@@ -723,9 +756,10 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             }
         }
 
-        private static bool TryFindExecutable(string extractDirectory, out string executableFullPath)
+        private static bool TryFindExecutable(string extractDirectory, out string executableFullPath, out bool isInstaller)
         {
             executableFullPath = null;
+            isInstaller = false;
             if (!Directory.Exists(extractDirectory))
             {
                 return false;
@@ -786,6 +820,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
 
             // As fallback, return the first executable whatever it is
             executableFullPath = foundExecutables[0];
+            isInstaller = true;
             return true;
         }
 

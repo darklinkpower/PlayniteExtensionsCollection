@@ -24,7 +24,7 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
             _detector = detector;
         }
 
-        public bool CanHandle(string filePath, string content)
+        public bool CanHandle(string filePath, string content, ExecutableMetadata executableMetadata)
         {
             var fileExtension = Path.GetExtension(filePath).ToLowerInvariant();
             if (fileExtension == ".zip" || fileExtension == ".7z")
@@ -40,14 +40,17 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
             return false;
         }
 
-        public void Install(InstallRequest request)
+        public bool Install(InstallRequest request)
         {
             var outputDir = request.TargetDirectory ?? Path.Combine(Path.GetDirectoryName(request.FilePath), Path.GetFileNameWithoutExtension(request.FilePath));
             Directory.CreateDirectory(outputDir);
             if (!TryExtractArchive(request.FilePath, outputDir))
             {
-                throw new InvalidOperationException("Cannot extract archive: " + request.FilePath);
+                //throw new InvalidOperationException("Cannot extract archive: " + request.FilePath);
+                return false;
             }
+
+            return true;
         }
 
         private bool TryExtractArchive(string filePath, string outputDir)

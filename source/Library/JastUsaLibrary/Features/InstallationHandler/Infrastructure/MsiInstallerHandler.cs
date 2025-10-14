@@ -14,10 +14,10 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
     {
         public InstallerType Type => InstallerType.Msi;
 
-        public bool CanHandle(string filePath, string content) =>
+        public bool CanHandle(string filePath, string content, ExecutableMetadata executableMetadata) =>
             Path.GetExtension(filePath).Equals(".msi", StringComparison.OrdinalIgnoreCase);
 
-        public void Install(InstallRequest request)
+        public bool Install(InstallRequest request)
         {
             var arguments = $"/i \"{request.FilePath}\" /qn /norestart";
             var startInfo = new ProcessStartInfo
@@ -31,6 +31,12 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
             using (var process = Process.Start(startInfo))
             {
                 process?.WaitForExit();
+                if (process is null)
+                {
+                    return false; // Process failed to start
+                }
+
+                return process.ExitCode == 0;
             }
         }
     }

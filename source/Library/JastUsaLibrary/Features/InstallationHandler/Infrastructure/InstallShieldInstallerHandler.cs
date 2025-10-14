@@ -13,9 +13,10 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
     {
         public InstallerType Type => InstallerType.InstallShield;
 
-        public bool CanHandle(string filePath, string content) => content.Contains("InstallShield");
+        public bool CanHandle(string filePath, string content, ExecutableMetadata executableMetadata) =>
+            content.Contains("InstallShield");
 
-        public void Install(InstallRequest request)
+        public bool Install(InstallRequest request)
         {
             var startInfo = new ProcessStartInfo
             {
@@ -28,6 +29,12 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
             using (var process = Process.Start(startInfo))
             {
                 process?.WaitForExit();
+                if (process is null)
+                {
+                    return false; // Process failed to start
+                }
+
+                return process.ExitCode == 0;
             }
         }
     }
