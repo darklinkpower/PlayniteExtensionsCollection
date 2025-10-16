@@ -53,7 +53,7 @@ namespace PurchaseDateImporter.ViewModels
                     ApplyDatesToLibrary("Legendary (Epic)", legendaryPluginId, licenses, true);
                     break;
                 case GogLicenseService.LibraryName:
-                    var gogLicenses = EpicLicenseService.GetLicensesDict();
+                    var gogLicenses = GogLicenseService.GetLicensesDict();
                     ApplyDatesToLibrary(GogLicenseService.LibraryName,
                         GogLicenseService.PluginId, gogLicenses, false);
                     ApplyDatesToLibrary("GOG OSS library integration",
