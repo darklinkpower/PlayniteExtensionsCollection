@@ -192,7 +192,7 @@ namespace CooperativeModesImporter
                                     continue;
                                 }
 
-                                if (!specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
+                                if (!specIdToSystemDictionary.TryGetValue(platform.SpecificationId, out var systemId))
                                 {
                                     continue;
                                 }
@@ -200,7 +200,6 @@ namespace CooperativeModesImporter
                                 gameUpdated = ProcessGameWithDatabase(game, systemId, db);
                                 if (gameUpdated)
                                 {
-                                    updatedGames++;
                                     break;
                                 }
                             }
