@@ -113,12 +113,6 @@ namespace CooperativeModesImporter
             };
         }
 
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            // Deprecated database with json format
-            FileSystem.DeleteFile(Path.Combine(GetPluginUserDataPath(), "database.json"));
-        }
-
         public override ISettings GetSettings(bool firstRunSettings)
         {
             return settings;
@@ -183,17 +177,42 @@ namespace CooperativeModesImporter
                 {
                     foreach (var game in games)
                     {
-                        if (!game.Platforms.HasItems() || game.Platforms[0].SpecificationId.IsNullOrEmpty())
+                        if (!game.Platforms.HasItems())
                         {
                             continue;
                         }
 
-                        if (specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
+                        var gameUpdated = false;
+                        if (isBackgroundProcessing)
                         {
-                            if (ProcessGameWithDatabase(game, systemId, isBackgroundProcessing, db))
+                            foreach (var platform in game.Platforms)
                             {
-                                updatedGames++;
+                                if (platform.SpecificationId.IsNullOrEmpty())
+                                {
+                                    continue;
+                                }
+
+                                if (!specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
+                                {
+                                    continue;
+                                }
+
+                                gameUpdated = ProcessGameWithDatabase(game, systemId, db);
+                                if (gameUpdated)
+                                {
+                                    updatedGames++;
+                                    break;
+                                }
                             }
+                        }
+                        else
+                        {
+                            gameUpdated = SearchDatabaseAndApply(game, db);
+                        }
+
+                        if (gameUpdated)
+                        {
+                            updatedGames++;
                         }
                     }
                 }
@@ -202,64 +221,62 @@ namespace CooperativeModesImporter
             return updatedGames;
         }
 
-        private bool ProcessGameWithDatabase(Game game, string systemId, bool isBackgroundProcessing, ISQLite db)
+        private bool SearchDatabaseAndApply(Game game, ISQLite db)
         {
-            if (isBackgroundProcessing)
+            var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(
+                new List<GenericItemOption>(),
+                (a) => GetCooptimusItemOptions(a, game, db),
+                game.Name,
+                ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
+
+            if (selectedItem is null)
             {
-                var satinizedName = SatinizeGameName(game.Name);
-                var queryGames = db.Query<DatabaseQueryItem>($"SELECT * FROM games WHERE matchingName='{satinizedName}' AND system='{systemId}';", null);
-                if (!queryGames.HasItems())
-                {
-                    return false;
-                }
-                var dbGame = queryGames.First();
-
-                var queryExtra = db.Query<DatabaseQueryExtraModes>($"SELECT * FROM modesDetailed WHERE id='{dbGame.Id}';", null);
-                if (!queryExtra.HasItems())
-                {
-                    return false;
-                }
-                var dbExtraModes = queryExtra.First();
-                return ApplyCooptimusData(game, dbGame, dbExtraModes);
+                return false;
             }
-            else
+
+            var queryGames = db.Query<DatabaseQueryItem>($"SELECT * FROM games WHERE id='{selectedItem.Description}';", null);
+            if (!queryGames.HasItems())
             {
-                var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(
-                    new List<GenericItemOption>(),
-                    (a) => GetCooptimusItemOptions(a, systemId, db),
-                    game.Name,
-                    ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
-
-                if (selectedItem == null)
-                {
-                    return false;
-                }
-
-                var queryGames = db.Query<DatabaseQueryItem>($"SELECT * FROM games WHERE id='{selectedItem.Description}';", null);
-                if (!queryGames.HasItems())
-                {
-                    return false;
-                }
-
-                var dbGame = queryGames.First();
-                var queryExtra = db.Query<DatabaseQueryExtraModes>($"SELECT * FROM modesDetailed WHERE id='{selectedItem.Description}';", null);
-                if (!queryExtra.HasItems())
-                {
-                    return false;
-                }
-
-                var dbExtraModes = queryExtra.First();
-                return ApplyCooptimusData(game, dbGame, dbExtraModes);
+                return false;
             }
+
+            var dbGame = queryGames.First();
+            var queryExtra = db.Query<DatabaseQueryExtraModes>($"SELECT * FROM modesDetailed WHERE id='{selectedItem.Description}';", null);
+            if (!queryExtra.HasItems())
+            {
+                return false;
+            }
+
+            var dbExtraModes = queryExtra.First();
+            return ApplyCooptimusData(game, dbGame, dbExtraModes);
+        }
+
+        private bool ProcessGameWithDatabase(Game game, string systemId, ISQLite db)
+        {
+            var satinizedName = SatinizeGameName(game.Name);
+            var queryGames = db.Query<DatabaseQueryItem>($"SELECT * FROM games WHERE matchingName='{satinizedName}' AND system='{systemId}';", null);
+            if (!queryGames.HasItems())
+            {
+                return false;
+            }
+
+            var dbGame = queryGames.First();
+            var queryExtra = db.Query<DatabaseQueryExtraModes>($"SELECT * FROM modesDetailed WHERE id='{dbGame.Id}';", null);
+            if (!queryExtra.HasItems())
+            {
+                return false;
+            }
+
+            var dbExtraModes = queryExtra.First();
+            return ApplyCooptimusData(game, dbGame, dbExtraModes);
         }
 
         private bool ApplyCooptimusData(Game game, DatabaseQueryItem dbGame, DatabaseQueryExtraModes dbExtraModes)
         {
             var gameUpdated = false;
-            if (game.FeatureIds == null)
+            if (game.FeatureIds is null)
             {
-                game.FeatureIds = new List<Guid> { };
-                gameUpdated = true;
+                game.FeatureIds = new List<Guid>();
             }
 
             var modesBasic = GetBasicModes(dbGame);
@@ -305,31 +322,44 @@ namespace CooperativeModesImporter
             return gameUpdated;
         }
 
-        private List<GenericItemOption> GetCooptimusItemOptions(string searchTerm, string systemId, ISQLite db)
+        private List<GenericItemOption> GetCooptimusItemOptions(string searchTerm, Game game, ISQLite db)
         {
-            var selectOptions = new List<Tuple<int, DatabaseQueryItem>>();
-            var queryResults = db.Query<DatabaseQueryItem>($"SELECT name, id, system FROM games WHERE system='{systemId}';", null);
-            foreach (var dbGame in queryResults)
-            {
-                var distance = searchTerm.GetLevenshteinDistance(dbGame.Name, CaseInsensitiveCharComparer);
-                if (dbGame.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                {
-                    selectOptions.Add(Tuple.Create(distance, dbGame));
-                }
-                else if (distance <= 5)
-                {
-                    selectOptions.Add(Tuple.Create(distance, dbGame));
-                }
-            }
-
-            if (selectOptions.Count == 0)
+            if (!game.Platforms.HasItems())
             {
                 return new List<GenericItemOption>();
             }
 
+            var selectOptions = new List<Tuple<int, DatabaseQueryItem>>();
+            foreach (var platform in game.Platforms)
+            {
+                if (platform.SpecificationId.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                if (!specIdToSystemDictionary.TryGetValue(platform.SpecificationId, out var systemId))
+                {
+                    continue;
+                }
+
+                var queryResults = db.Query<DatabaseQueryItem>($"SELECT name, id, system FROM games WHERE system='{systemId}';", null);
+                foreach (var dbGame in queryResults)
+                {
+                    var distance = searchTerm.GetLevenshteinDistance(dbGame.Name, CaseInsensitiveCharComparer);
+                    if (dbGame.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    {
+                        selectOptions.Add(Tuple.Create(distance, dbGame));
+                    }
+                    else if (distance <= 5)
+                    {
+                        selectOptions.Add(Tuple.Create(distance, dbGame));
+                    }
+                }
+            }
+
             // We sort the results by distance, to provide the more relevant results on top
             selectOptions.Sort((x, y) => x.Item1.CompareTo(y.Item1));
-            return selectOptions.Select(x => new GenericItemOption($"{x.Item2.Name} ({x.Item2.System})", x.Item2.Id.ToString())).Take(10).ToList();
+            return selectOptions.Select(x => new GenericItemOption($"{x.Item2.Name} ({x.Item2.System})", x.Item2.Id.ToString())).Take(12).ToList();
         }
 
         private List<string> GetBasicModes(DatabaseQueryItem dbGame)
