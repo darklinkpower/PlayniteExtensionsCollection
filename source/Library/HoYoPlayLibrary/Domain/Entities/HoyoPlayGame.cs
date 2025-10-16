@@ -40,5 +40,10 @@ namespace HoYoPlayLibrary.Domain.Entities
             InstallDirectory = installDirectory;
             ExePath = exePath;
         }
+
+        public override string ToString()
+        {
+            return $"Name='{Name}', Id='{Id}'";
+        }
     }
 }

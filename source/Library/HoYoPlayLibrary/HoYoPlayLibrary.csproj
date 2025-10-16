@@ -118,8 +118,8 @@
     <Compile Include="Domain\Entities\HoyoPlayGame.cs" />
     <Compile Include="Domain\Entities\HoyoPlayLauncherInfo.cs" />
     <Compile Include="Domain\Interfaces\IHoyoPlayGameRepository.cs" />
-    <Compile Include="Domain\Interfaces\ILauncherDiscovery.cs" />
     <Compile Include="Domain\Interfaces\ILauncherRepository.cs" />
+    <Compile Include="Domain\Interfaces\IRegistryVersionResolver.cs" />
     <Compile Include="HoYoPlayGameUninstallController.cs" />
     <Compile Include="HoYoPlayGameInstallController.cs" />
     <Compile Include="HoYoPlayLibraryClient.cs" />
@@ -130,6 +130,7 @@
     </Compile>
     <Compile Include="Infrastructure\RegistryGameRepository.cs" />
     <Compile Include="Infrastructure\RegistryLauncherRepository.cs" />
+    <Compile Include="Infrastructure\RegistryVersionResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

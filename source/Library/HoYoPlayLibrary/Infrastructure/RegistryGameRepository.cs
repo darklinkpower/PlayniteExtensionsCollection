@@ -9,31 +9,48 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HoYoPlayLibrary.Infrastructure
 {
     internal class RegistryGameRepository : IHoyoPlayGameRepository
     {
-        private const string RootKey = @"Software\Cognosphere\HYP\1_0";
         private readonly ILogger _logger;
+        private readonly IRegistryVersionResolver _registryVersionResolver;
 
-        public RegistryGameRepository(ILogger logger)
+        public RegistryGameRepository(ILogger logger, IRegistryVersionResolver registryVersionResolver)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _registryVersionResolver = registryVersionResolver ?? throw new ArgumentNullException(nameof(registryVersionResolver));
         }
 
         public IEnumerable<HoyoPlayGame> GetInstalledGames()
         {
             var games = new List<HoyoPlayGame>();
-            using (var root = Registry.CurrentUser.OpenSubKey(RootKey))
+            var rootKeyPath = _registryVersionResolver.GetActiveRootKeyPath();
+            if (rootKeyPath.IsNullOrEmpty())
+            {
+                _logger.Warn("HoYoPlay registry not found; cannot locate games.");
+                return games;
+            }
+
+            using (var root = Registry.CurrentUser.OpenSubKey(rootKeyPath))
             {
                 if (root is null)
                 {
+                    _logger.Warn($"Failed to open HoYoPlay registry path: {rootKeyPath}");
                     return games;
                 }
 
-                foreach (var subkeyName in root.GetSubKeyNames())
+                var subkeyNames = root.GetSubKeyNames();
+                if (subkeyNames.Length == 0)
+                {
+                    _logger.Warn($"No subkeys found under HoYoPlay registry path: {rootKeyPath}");
+                    return games;
+                }
+
+                foreach (var subkeyName in subkeyNames)
                 {
                     if (subkeyName.Equals("InstallPath", StringComparison.OrdinalIgnoreCase))
                     {
@@ -76,8 +93,13 @@ namespace HoYoPlayLibrary.Infrastructure
                         games.Add(new HoyoPlayGame(gameBiz, name, installPath, exePath));
                     }
                 }
+
+                if (!games.Any())
+                {
+                    _logger.Warn($"No valid game entries found under HoYoPlay registry path: {rootKeyPath}");
+                }
             }
-            
+
             return games;
         }
 

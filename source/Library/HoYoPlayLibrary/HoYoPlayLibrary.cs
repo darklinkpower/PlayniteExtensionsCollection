@@ -36,13 +36,13 @@ namespace HoYoPlayLibrary
                 HasSettings = false
             };
 
-            var launcherRepo = new RegistryLauncherRepository();
+            var registryVersionResolver = new RegistryVersionResolver(_logger);
+            var launcherRepo = new RegistryLauncherRepository(_logger, registryVersionResolver);
             var launcherService = new LauncherService(launcherRepo);
 
-            var gameRepo = new RegistryGameRepository(_logger);
+            var gameRepo = new RegistryGameRepository(_logger, registryVersionResolver);
             var gameService = new GameDiscoveryService(gameRepo);
 
-            
             _hoyoPlayClient = new HoYoPlayLibraryClient(launcherService, gameService);
         }
 
