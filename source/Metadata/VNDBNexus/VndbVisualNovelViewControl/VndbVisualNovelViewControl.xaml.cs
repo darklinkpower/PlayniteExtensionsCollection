@@ -411,7 +411,7 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             }
         }
 
-        private bool _displayUnnoficialRelations = true;
+        private bool _displayUnnoficialRelations = false;
         public bool DisplayUnnoficialRelations
         {
             get => _displayUnnoficialRelations;
@@ -697,7 +697,7 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             TagsDisplayNoneSpoilers = true;
             TagsDisplayMinimumSpoilers = false;
             TagsDisplayMajorSpoilers = false;
-            DisplayUnnoficialRelations = true;
+            DisplayUnnoficialRelations = false;
             LengthText = string.Empty;
             VotesText = string.Empty;
             
