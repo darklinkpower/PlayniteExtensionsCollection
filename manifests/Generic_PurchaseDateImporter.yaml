@@ -99,3 +99,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.23_9dc54c33/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_28.pext
     Changelog:
     - 'Added: Support for GOG OSS library integration plugin'
+  - Version: 2.29
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-10-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.16_8bb45638/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_29.pext
+    Changelog:
+    - 'Fixed: Being unable to update dates for GOG Library'

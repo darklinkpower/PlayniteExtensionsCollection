@@ -91,3 +91,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.26_3fef3ed1/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_12.pext
     Changelog:
     - 'Changed: Descriptions obtained during metadata download will now be cleaned to remove source notes like [From ...], [Translated from ...] or [Partially taken from ...].'
+  - Version: 1.13
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-10-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.16_8bb45638/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_13.pext
+    Changelog:
+    - 'Added: Button to the VNDB control to open visual novel reviews on web browser'
+    - 'Changed: Related visual novels that are unnoficial will now not be displayed by default'
