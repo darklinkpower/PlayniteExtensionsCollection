@@ -637,15 +637,28 @@
                             <Expander Header="{DynamicResource LOC_VndbNexus_VotesLabel}" IsExpanded="True"
                                       Margin="0,10,0,0"
                                       Visibility="{Binding VotesText, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
-                                <Button Command="{Binding DataContext.OpenRatingVotesPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+
+
+                                <StackPanel Margin="30,0,0,0">
+                                    <Button Command="{Binding DataContext.OpenRatingVotesPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         DockPanel.Dock="Left" VerticalAlignment="Center"
                                         HorizontalAlignment="Left"
-                                        Margin="30,0,0,0"
+                                        Margin="0,0,0,0"
                                         Padding="0" Background="Transparent" BorderThickness="0">
-                                    <TextBlock Text="{Binding VotesText}"
+                                        <TextBlock Text="{Binding VotesText}"
                                                TextTrimming="CharacterEllipsis" />
-                                </Button>
+                                    </Button>
+                                    <Button Command="{Binding DataContext.OpenVndbReviewsPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                            HorizontalAlignment="Left"
+                                            Margin="0,10,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{DynamicResource LOC_VndbNexus_ReviewsLabel}" VerticalAlignment="Center" />
+                                            <TextBlock Margin="5,0,0,0" Text="&#xEF1F;" FontFamily="{DynamicResource FontIcoFont}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
                             </Expander>
+                            
                         </StackPanel>
                     </DockPanel>
 

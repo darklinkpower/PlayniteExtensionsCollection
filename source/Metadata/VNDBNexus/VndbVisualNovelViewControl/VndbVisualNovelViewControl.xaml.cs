@@ -1381,6 +1381,17 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             });
         }
 
+        public RelayCommand OpenVndbReviewsPageCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (_activeVisualNovel != null)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{_activeVisualNovel.Id}/reviews#review");
+                }
+            });
+        }
+
         public RelayCommand<object> OpenUriCommand
         {
             get => new RelayCommand<object>((object parameter) =>
