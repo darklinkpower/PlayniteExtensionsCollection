@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2a6def78-2409-4f90-9d17-e43cd48e3471</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>FlowHttp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\HttpContentTypeConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\HttpContentTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\HttpRequestClientStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\DownloadProgressArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events\DownloadStateArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\MissingContentRangeHeaderException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequests\FlowHttpFileRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequests\FlowHttpRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequests\FlowHttpRequestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Results\HttpContentResultT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Results\HttpFileDownloadResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Results\HttpResultBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\HttpContentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CookiesUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DownloadStateController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpClientFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpRequestFactory.cs" />
+  </ItemGroup>
+</Project>
