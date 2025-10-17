@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>46240901-2d73-4609-ad33-2f2dc183ad92</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>PluginsCommon</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\HoverPopupBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ScrollIntoViewBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToOpacityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ConvertersUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumEqualityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumerableStringJoinConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumStringEqualityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToListConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumToStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EnumValueToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\EqualityToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IEnumerableHasItemsToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ImagePathToBitmapImageConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ImagePathToBitmapImageWithCacheConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ImageUriToBitmapImageConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IntSubstitutionConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedBooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedEnumValueToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\InvertedVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NumericConverters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringNullOrEmptyToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\TypeEqualityToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CharExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\LongExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Kernel32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Ntdll.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\Processthreadsapi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Native\WinBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Encryption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Guard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Paths.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PluginUserControlBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProcessStarter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TaskExecutor.cs" />
+  </ItemGroup>
+</Project>
