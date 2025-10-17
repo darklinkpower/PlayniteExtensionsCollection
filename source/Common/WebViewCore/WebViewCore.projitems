@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>5fbf6dc4-dfdb-4a07-8e73-0ef038f19e16</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>WebViewCore</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Application\BookmarksManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Application\BrowserHostViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Application\CefSharpWebBrowserHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Application\WebBrowserUserInterfaceSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Entities\Bookmark.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Entities\BookmarkInternal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Events\AddressChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Events\BookmarkAddedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Events\BookmarkRemovedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Events\BookmarksChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Events\IsLoadingChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Interfaces\IBookmarksIconRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Interfaces\IBookmarksRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\BookmarksIconRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\FileBookmarksRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Infrastructure\InMemoryBookmarksRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Presentation\BrowserHostView.xaml.cs">
+      <DependentUpon>BrowserHostView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Presentation\BrowserHostView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>
