@@ -203,58 +203,6 @@
     <Compile Include="..\..\common\pluginscommon\TaskExecutor.cs">
       <Link>Shared\PluginsCommon\TaskExecutor.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Application\BookmarksManager.cs">
-      <Link>Shared\WebViewCore\Application\BookmarksManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Application\BrowserHostViewModel.cs">
-      <Link>Shared\WebViewCore\Application\BrowserHostViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Application\CefSharpWebBrowserHost.cs">
-      <Link>Shared\WebViewCore\Application\CefSharpWebBrowserHost.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Application\WebBrowserUserInterfaceSettings.cs">
-      <Link>Shared\WebViewCore\Application\WebBrowserUserInterfaceSettings.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Entities\Bookmark.cs">
-      <Link>Shared\WebViewCore\Domain\Entities\Bookmark.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Entities\BookmarkInternal.cs">
-      <Link>Shared\WebViewCore\Domain\Entities\BookmarkInternal.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Events\AddressChangedEventArgs.cs">
-      <Link>Shared\WebViewCore\Domain\Events\AddressChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Events\BookmarkAddedEventArgs.cs">
-      <Link>Shared\WebViewCore\Domain\Events\BookmarkAddedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Events\BookmarkRemovedEventArgs.cs">
-      <Link>Shared\WebViewCore\Domain\Events\BookmarkRemovedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Events\BookmarksChangedEventArgs.cs">
-      <Link>Shared\WebViewCore\Domain\Events\BookmarksChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Events\IsLoadingChangedEventArgs.cs">
-      <Link>Shared\WebViewCore\Domain\Events\IsLoadingChangedEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Interfaces\IBookmarksIconRepository.cs">
-      <Link>Shared\WebViewCore\Application\Interfaces\IBookmarksIconRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Domain\Interfaces\IBookmarksRepository.cs">
-      <Link>Shared\WebViewCore\Application\Interfaces\IBookmarksRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Infrastructure\BookmarksIconRepository.cs">
-      <Link>Shared\WebViewCore\Infrastructure\BookmarksIconRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Infrastructure\FileBookmarksRepository.cs">
-      <Link>Shared\WebViewCore\Infrastructure\FileBookmarksRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Infrastructure\InMemoryBookmarksRepository.cs">
-      <Link>Shared\WebViewCore\Infrastructure\InMemoryBookmarksRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\WebViewCore\Presentation\BrowserHostView.xaml.cs">
-      <Link>Shared\WebViewCore\Presentation\BrowserHostView.xaml.cs</Link>
-      <DependentUpon>BrowserHostView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BookmarkFormViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -288,11 +236,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Include="..\..\Common\WebViewCore\Presentation\BrowserHostView.xaml">
-      <Link>Shared\WebViewCore\Presentation\BrowserHostView.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -323,6 +266,7 @@
   <Import Project="..\..\Common\EventsCommon\EventsCommon.projitems" Label="Shared" />
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
   <Import Project="..\..\Common\TemporaryCache\TemporaryCache.projitems" Label="Shared" />
+  <Import Project="..\..\Common\WebViewCore\WebViewCore.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
