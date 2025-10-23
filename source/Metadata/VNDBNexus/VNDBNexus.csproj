@@ -114,12 +114,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Common\EventsCommon\EventAggregator.cs">
-      <Link>Shared\EventsCommon\EventAggregator.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\EventsCommon\IEventAggregator.cs">
-      <Link>Shared\EventsCommon\IEventAggregator.cs</Link>
-    </Compile>
     <Compile Include="..\..\common\flowhttp\constants\HttpContentTypeConstants.cs">
       <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
     </Compile>
@@ -590,6 +584,7 @@
       <Name>VndbApiInfrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\Common\EventsCommon\EventsCommon.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
