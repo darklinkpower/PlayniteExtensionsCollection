@@ -203,12 +203,6 @@
     <Compile Include="..\..\common\pluginscommon\TaskExecutor.cs">
       <Link>Shared\PluginsCommon\TaskExecutor.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\temporarycache\CacheManager.cs">
-      <Link>Shared\TemporaryCache\CacheManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\temporarycache\models\CacheItem.cs">
-      <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
-    </Compile>
     <Compile Include="..\..\Common\WebViewCore\Application\BookmarksManager.cs">
       <Link>Shared\WebViewCore\Application\BookmarksManager.cs</Link>
     </Compile>
@@ -328,6 +322,7 @@
   </ItemGroup>
   <Import Project="..\..\Common\EventsCommon\EventsCommon.projitems" Label="Shared" />
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\Common\TemporaryCache\TemporaryCache.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

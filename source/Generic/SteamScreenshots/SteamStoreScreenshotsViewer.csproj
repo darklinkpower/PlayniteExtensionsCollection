@@ -220,12 +220,6 @@
     <Compile Include="..\..\common\steamcommon\Web.cs">
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\temporarycache\CacheManager.cs">
-      <Link>Shared\TemporaryCache\CacheManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\temporarycache\models\CacheItem.cs">
-      <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
-    </Compile>
     <Compile Include="Application\Services\ScreenshotManagementService.cs" />
     <Compile Include="Application\Services\SteamAppDetailsService.cs" />
     <Compile Include="Domain\Enums\ScreenshotServiceType.cs" />
@@ -290,6 +284,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\Common\TemporaryCache\TemporaryCache.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
