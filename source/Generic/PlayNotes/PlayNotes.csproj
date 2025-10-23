@@ -219,15 +219,6 @@
     <Compile Include="..\..\Common\PluginsCommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\DatabaseCommon\IDatabaseItem.cs">
-      <Link>Shared\DatabaseCommon\IDatabaseItem.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\DatabaseCommon\IRepository.cs">
-      <Link>Shared\DatabaseCommon\IRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\DatabaseCommon\LiteDbRepository.cs">
-      <Link>Shared\DatabaseCommon\LiteDbRepository.cs</Link>
-    </Compile>
     <Compile Include="Converters\MarkdownUnescapeConverter.cs" />
     <Compile Include="Models\SteamGuideImporter.cs" />
     <Compile Include="Models\SteamHtmlTransformDefinition.cs" />
@@ -275,6 +266,7 @@
     </None>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\..\Common\DatabaseCommon\DatabaseCommon.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
