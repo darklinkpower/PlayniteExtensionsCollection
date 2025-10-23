@@ -174,15 +174,6 @@
     <Compile Include="..\..\common\steamcommon\Web.cs">
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\YouTubeCommon\Models\YoutubeEmbeddedResponse.cs">
-      <Link>Shared\YouTubeCommon\Models\YoutubeEmbeddedResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\YouTubeCommon\Models\YoutubeSearchItem.cs">
-      <Link>Shared\YouTubeCommon\Models\YoutubeSearchItem.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\YouTubeCommon\YouTube.cs">
-      <Link>Shared\YouTubeCommon\YouTube.cs</Link>
-    </Compile>
     <Compile Include="Controls\VideoPlayerControl.xaml.cs">
       <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
     </Compile>
@@ -269,6 +260,7 @@
   <ItemGroup />
   <Import Project="..\..\Common\EventsCommon\EventsCommon.projitems" Label="Shared" />
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\Common\YouTubeCommon\YouTubeCommon.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
