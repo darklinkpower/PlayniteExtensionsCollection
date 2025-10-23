@@ -97,12 +97,6 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\TemporaryCache\CacheManager.cs">
-      <Link>Shared\TemporaryCache\CacheManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\TemporaryCache\Models\CacheItem.cs">
-      <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
-    </Compile>
     <Compile Include="GameRelations.cs" />
     <Compile Include="GameRelationsSettings.cs" />
     <Compile Include="GameRelationsSettingsView.xaml.cs">
@@ -159,6 +153,7 @@
   <ItemGroup>
     <Resource Include="Resources\DefaultCover.png" />
   </ItemGroup>
+  <Import Project="..\..\Common\TemporaryCache\TemporaryCache.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
