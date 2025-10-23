@@ -173,15 +173,6 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\GenericEntityJsonRepository\EntityJsonRepository.cs">
-      <Link>Shared\GenericEntityJsonRepository\EntityJsonRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\GenericEntityJsonRepository\IEntity.cs">
-      <Link>Shared\GenericEntityJsonRepository\IEntity.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\GenericEntityJsonRepository\IEntityRepository.cs">
-      <Link>Shared\GenericEntityJsonRepository\IEntityRepository.cs</Link>
-    </Compile>
     <Compile Include="Features\DownloadManager\Application\IDownloadDataPersistence.cs" />
     <Compile Include="Features\DownloadManager\Domain\Events\DownloadItemStatusChangedEventArgs.cs" />
     <Compile Include="Features\DownloadManager\Infrastructure\DownloadDataPersistenceJson.cs" />
@@ -335,6 +326,7 @@
     <Folder Include="Features\DownloadManager\Domain\Interfaces\" />
   </ItemGroup>
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\Common\GenericEntityJsonRepository\GenericEntityJsonRepository.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
