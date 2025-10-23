@@ -173,9 +173,6 @@
     <Compile Include="..\..\Common\SteamCommon\Common.cs">
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\ProtobufUtilities\ProtobufSerialization.cs">
-      <Link>Shared\ProtobufUtilities\ProtobufSerialization.cs</Link>
-    </Compile>
     <Compile Include="Application\Steam\Tags\GetTagListResponseDto.cs" />
     <Compile Include="Application\Steam\Tags\SteamTagsService.cs" />
     <Compile Include="Application\WishlistTracker\WishlistTrackerService.cs" />
@@ -262,6 +259,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\Common\ProtobufUtilities\ProtobufUtilities.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
