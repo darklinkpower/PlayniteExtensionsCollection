@@ -119,18 +119,6 @@
     <Compile Include="..\..\..\common\pluginscommon\Paths.cs">
       <Link>Shared\PluginsCommon\Paths.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\Common\ThrottlerSharp\OperationResult.cs">
-      <Link>Shared\ThrottlerSharp\OperationResult.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Common\ThrottlerSharp\RateLimiter.cs">
-      <Link>Shared\ThrottlerSharp\RateLimiter.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Common\ThrottlerSharp\RateLimiterBuilder.cs">
-      <Link>Shared\ThrottlerSharp\RateLimiterBuilder.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Common\ThrottlerSharp\RateLimitMode.cs">
-      <Link>Shared\ThrottlerSharp\RateLimitMode.cs</Link>
-    </Compile>
     <Compile Include="Aggregates\Character\CharacterConstants.cs" />
     <Compile Include="Aggregates\Character\CharacterFilterFactory.cs" />
     <Compile Include="Aggregates\Character\CharacterRequestFieldsFlags.cs" />
@@ -200,6 +188,7 @@
     <Folder Include="Shared\PluginsCommon\Native\" />
   </ItemGroup>
   <Import Project="..\..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\..\Common\ThrottlerSharp\ThrottlerSharp.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
