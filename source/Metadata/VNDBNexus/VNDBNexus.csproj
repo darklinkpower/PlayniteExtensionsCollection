@@ -114,63 +114,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Common\EventsCommon\EventAggregator.cs">
-      <Link>Shared\EventsCommon\EventAggregator.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\EventsCommon\IEventAggregator.cs">
-      <Link>Shared\EventsCommon\IEventAggregator.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\constants\HttpContentTypeConstants.cs">
-      <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\constants\HttpContentTypes.cs">
-      <Link>Shared\FlowHttp\Constants\HttpContentTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\CookiesUtilities.cs">
-      <Link>Shared\FlowHttp\CookiesUtilities.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\DownloadStateController.cs">
-      <Link>Shared\FlowHttp\DownloadStateController.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\enums\HttpRequestClientStatus.cs">
-      <Link>Shared\FlowHttp\Enums\HttpRequestClientStatus.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\events\DownloadProgressArgs.cs">
-      <Link>Shared\FlowHttp\Events\DownloadProgressArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\events\DownloadStateArgs.cs">
-      <Link>Shared\FlowHttp\Events\DownloadStateArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\exceptions\MissingContentRangeHeaderException.cs">
-      <Link>Shared\FlowHttp\Exceptions\MissingContentRangeHeaderException.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\HttpClientFactory.cs">
-      <Link>Shared\FlowHttp\HttpClientFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\HttpRequestFactory.cs">
-      <Link>Shared\FlowHttp\HttpRequestFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpFileRequest.cs">
-      <Link>Shared\FlowHttp\HttpRequests\FlowHttpFileRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpRequest.cs">
-      <Link>Shared\FlowHttp\HttpRequests\FlowHttpRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpRequestBase.cs">
-      <Link>Shared\FlowHttp\HttpRequests\FlowHttpRequestBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\results\HttpContentResultT.cs">
-      <Link>Shared\FlowHttp\Results\HttpContentResultT.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\results\HttpFileDownloadResult.cs">
-      <Link>Shared\FlowHttp\Results\HttpFileDownloadResult.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\results\HttpResultBase.cs">
-      <Link>Shared\FlowHttp\Results\HttpResultBase.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\flowhttp\valueobjects\HttpContentType.cs">
-      <Link>Shared\FlowHttp\ValueObjects\HttpContentType.cs</Link>
-    </Compile>
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
@@ -269,12 +212,6 @@
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\TaskExecutor.cs">
       <Link>Shared\PluginsCommon\TaskExecutor.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\temporarycache\CacheManager.cs">
-      <Link>Shared\TemporaryCache\CacheManager.cs</Link>
-    </Compile>
-    <Compile Include="..\..\common\temporarycache\models\CacheItem.cs">
-      <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
     </Compile>
     <Compile Include="BbCodeProcessor.cs" />
     <Compile Include="Controls\VndbImageControl.cs" />
@@ -590,6 +527,9 @@
       <Name>VndbApiInfrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\..\Common\EventsCommon\EventsCommon.projitems" Label="Shared" />
+  <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
+  <Import Project="..\..\Common\TemporaryCache\TemporaryCache.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
