@@ -103,7 +103,7 @@ namespace GamePassCatalogBrowser.Models
         public string Category { get; set; }
 
         [JsonProperty("Categories")]
-        public string[] Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         [JsonProperty("PackageFamilyName")]
         public string PackageFamilyName { get; set; }

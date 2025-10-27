@@ -57,10 +57,10 @@ namespace GamePassCatalogBrowser
             GameIdsInLibrary = gamesOnLibrary;
         }
 
-        private List<Guid> arrayToCompanyGuids(string[] array)
+        private List<Guid> arrayToCompanyGuids(List<string> array)
         {
             var list = new List<Guid>();
-            foreach (string str in array)
+            foreach (var str in array)
             {
                 var company = PlayniteApi.Database.Companies.Add(str);
                 list.Add(company.Id);

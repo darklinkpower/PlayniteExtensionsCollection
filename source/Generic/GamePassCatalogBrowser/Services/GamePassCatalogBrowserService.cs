@@ -143,7 +143,7 @@ namespace GamePassCatalogBrowser.Services
         }
 
 
-        private string[] CompaniesStringToArray(string companiesString)
+        private List<string> CompaniesStringToList(string companiesString)
         {
             var companiesList = new List<string>();
 
@@ -158,9 +158,9 @@ namespace GamePassCatalogBrowser.Services
                 Replace(", Ltd", ". Ltd").
                 Replace(", LTD", ". LTD");
 
-            string[] stringSeparators = new string[] { ", ", "|", "/", "+", " and ", " & " };
+            var stringSeparators = new string[] { ", ", "|", "/", "+", " and ", " & " };
             var splitArray = companiesString.Split(stringSeparators, StringSplitOptions.None);
-            foreach (string splittedString in splitArray)
+            foreach (var splittedString in splitArray)
             {
                 companiesList.Add(splittedString.
                     Replace(". Inc", ", Inc").
@@ -173,7 +173,7 @@ namespace GamePassCatalogBrowser.Services
                     Trim());
             }
 
-            return companiesList.ToArray();
+            return companiesList;
         }
 
         private void AddGamesFromCatalogData(CatalogData catalogData, bool addChildProducts, ProductType gameProductType, bool isChildProduct, string parentProductId)
@@ -260,25 +260,27 @@ namespace GamePassCatalogBrowser.Services
             DownloadGamePassGameCache(gamePassGame);
 
             var gameAdded = false;
-            if (addNewGames == true && gamePassGame.ProductType == ProductType.Game)
+            if (addNewGames && gamePassGame.ProductType == ProductType.Game)
             {
                 xboxLibraryHelper.AddGameToLibrary(gamePassGame, false);
-                if (gameAdded == true)
+                if (gameAdded)
                 {
                     playniteApi.Notifications.Add(new NotificationMessage(
                         Guid.NewGuid().ToString(),
                         $"{gamePassGame.Name} has been added to the Game Pass catalog and Playnite library",
-                        NotificationType.Info));
+                        NotificationType.Info,
+                        () => ProcessStarter.StartUrl($"msxbox://game/?productId={product.ProductId}")));
                 }
             }
 
             // Notify user that game has been added
-            if (notifyCatalogUpdates == true && gameAdded == false)
+            if (notifyCatalogUpdates && !gameAdded)
             {
                 playniteApi.Notifications.Add(new NotificationMessage(
                     Guid.NewGuid().ToString(),
                     $"{gamePassGame.Name} has been added to the Game Pass catalog",
-                    NotificationType.Info));
+                    NotificationType.Info,
+                    () => ProcessStarter.StartUrl($"msxbox://game/?productId={product.ProductId}")));
             }
 
             RestoreMediaPaths(gamePassGame);
@@ -298,7 +300,7 @@ namespace GamePassCatalogBrowser.Services
                 Description = product.LocalizedProperties[0].ProductDescription,
                 Name = NormalizeGameName(product.LocalizedProperties[0].ProductTitle),
                 ProductId = product.ProductId,
-                Publishers = CompaniesStringToArray(product.LocalizedProperties[0].PublisherName),
+                Publishers = CompaniesStringToList(product.LocalizedProperties[0].PublisherName),
                 ReleaseDate = product.MarketProperties.FirstOrDefault().OriginalReleaseDate.UtcDateTime,
                 ChildProducts = childSubproductsList,
                 IsChildProduct = isChildProduct,
@@ -321,7 +323,7 @@ namespace GamePassCatalogBrowser.Services
             }
             else
             {
-                gamePassGame.Developers = CompaniesStringToArray(product.LocalizedProperties[0].DeveloperName);
+                gamePassGame.Developers = CompaniesStringToList(product.LocalizedProperties[0].DeveloperName);
             }
 
             if (product.LocalizedProperties[0].Images.Any(x => x.ImagePurpose == ImagePurpose.BoxArt) == true)
@@ -368,7 +370,7 @@ namespace GamePassCatalogBrowser.Services
             var idsForDataRequest = new List<string>();
             // Check for games removed from the service
             var gamesRemoved = false;
-            foreach (GamePassGame game in gamePassGamesList.ToList())
+            foreach (var game in gamePassGamesList.ToList())
             {
                 if (game.ProductType == ProductType.Game || game.ProductType == ProductType.Collection)
                 {
@@ -386,7 +388,7 @@ namespace GamePassCatalogBrowser.Services
                 }
 
                 var gameMatched = false;
-                if (game.IsChildProduct == false)
+                if (game.IsChildProduct)
                 {
                     gameMatched = gamePassCatalog.Any(x => x.Id == game.ProductId);
                 }
@@ -418,30 +420,33 @@ namespace GamePassCatalogBrowser.Services
                 }
 
                 var gameRemoved = false;
-                if (removeExpiredGames == true)
+                if (removeExpiredGames)
                 {
                     gameRemoved = xboxLibraryHelper.RemoveGamePassGame(game);
-                    if (gameRemoved == true)
+                    if (gameRemoved)
                     {
                         // Notify user that game has been removed from the library
                         playniteApi.Notifications.Add(new NotificationMessage(
                         Guid.NewGuid().ToString(),
                             $"{game.Name} has been removed from the Game Pass catalog and Playnite library",
-                            NotificationType.Info));
+                            NotificationType.Info,
+                            () => ProcessStarter.StartUrl($"msxbox://game/?productId={game.ProductId}")));
                     }
                 }
-                if (addExpiredTagToGames == true)
+
+                if (addExpiredTagToGames)
                 {
                     xboxLibraryHelper.AddExpiredTag(game);
                 }
 
-                if (notifyCatalogUpdates == true && gameRemoved == false)
+                if (notifyCatalogUpdates && !gameRemoved)
                 {
                     // Notify user that game has been removed
                     playniteApi.Notifications.Add(new NotificationMessage(
                     Guid.NewGuid().ToString(),
                         $"{game.Name} has been removed from the Game Pass catalog",
-                        NotificationType.Info));
+                        NotificationType.Info,
+                        () => ProcessStarter.StartUrl($"msxbox://game/?productId={game.ProductId}")));
                 }
 
                 gamePassGamesList.Remove(game);
@@ -461,7 +466,7 @@ namespace GamePassCatalogBrowser.Services
                 }
             }
 
-            if (idsForDataRequest.Count == 0)
+            if (!idsForDataRequest.Any())
             {
                 return;
             }
