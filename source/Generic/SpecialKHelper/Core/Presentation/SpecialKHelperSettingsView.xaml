@@ -46,6 +46,9 @@
                 
                 <Separator Margin="0,10,0,0"/>
                 
+                <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingKeepServicesRunning}"
+                          IsChecked="{Binding Settings.KeepServicesRunning}" />
+                
                 <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingStopIfVac}"
                       IsChecked="{Binding Settings.StopExecutionIfVac}" />
 
