@@ -390,11 +390,11 @@ namespace GamePassCatalogBrowser.Services
                 var gameMatched = false;
                 if (game.IsChildProduct)
                 {
-                    gameMatched = gamePassCatalog.Any(x => x.Id == game.ProductId);
+                    gameMatched = gamePassCatalog.Any(x => x.Id == game.ParentProductId);
                 }
                 else
                 {
-                    gameMatched = gamePassCatalog.Any(x => x.Id == game.ParentProductId);
+                    gameMatched = gamePassCatalog.Any(x => x.Id == game.ProductId);
                 }
 
                 if (gameMatched)
