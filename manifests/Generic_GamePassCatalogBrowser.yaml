@@ -203,3 +203,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_ef4466c4/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_31.pext
     Changelog:
     - 'Added: Support to open GamePass games on Xbox App by clicking notifications'
+  - Version: 2.32
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-11-06
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_3e538f96/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_32.pext
+    Changelog:
+    - 'Fixed: Issue causing the extension to not correctly detect when a game has been removed from GamePass'
