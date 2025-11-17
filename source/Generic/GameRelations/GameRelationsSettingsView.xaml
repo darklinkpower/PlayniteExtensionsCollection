@@ -41,7 +41,7 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
-        
+
         <Style x:Key="ExcludeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
             <Setter Property="Margin" Value="0,5,0,0"/>
             <Setter Property="DockPanel.Dock" Value="Top"/>
@@ -80,7 +80,7 @@
             <Setter Property="Margin" Value="0,5,0,5" />
             <Setter Property="Content" Value="&#xEA5C;" />
         </Style>
-        
+
         <Style x:Key="ExclusionAllowTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
             <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
             <Setter Property="DockPanel.Dock" Value="Top" />
@@ -96,7 +96,7 @@
             <Setter Property="FontSize" Value="22" />
             <Setter Property="Text" Value="&#xEEDD;" />
         </Style>
-        
+
     </UserControl.Resources>
     <Grid Margin="20">
         <ScrollViewer>
@@ -142,7 +142,7 @@
                                              ItemsSource="{Binding SimilarGamesNotExcludeTags}"
                                              SelectionChanged="SimilarGamesNotExcludeTagsLb_SelectionChanged" />
                                 </DockPanel>
-                                
+
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center"
                                             Margin="5,0,5,0">
                                     <Button Style="{DynamicResource ExcludeArrowRightStyle}"
@@ -221,7 +221,40 @@
                                 </DockPanel>
                             </Grid>
                         </Expander>
-                        
+
+                        <Expander Margin="0,10,0,0" Header="Advanced">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock VerticalAlignment="Center">Jacard similarity requirement per field:</TextBlock>
+                                    <TextBox VerticalAlignment="Center" IsReadOnly="True" MinWidth="35" Margin="10,0"
+                                             Text="{Binding Settings.SimilarGamesControlSettings.JacardSimilarityPerField}" />
+                                    <Slider Minimum="0.4" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.01"
+                                            Value="{Binding Settings.SimilarGamesControlSettings.JacardSimilarityPerField}"
+                                            Width="200" VerticalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Text="Fields enabled/weights:" Margin="0,10,0,0"/>
+
+                                <ItemsControl ItemsSource="{Binding Settings.SimilarGamesControlSettings.FieldSettings}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                                                <CheckBox IsChecked="{Binding Enabled}" Content="{Binding Name}"
+                                                          VerticalAlignment="Center" MinWidth="150"/>
+                                                <TextBox VerticalAlignment="Center" IsReadOnly="True" MinWidth="35"
+                                                         Margin="10,0" Text="{Binding Weight}"
+                                                         IsEnabled="{Binding Enabled}"/>
+                                                <Slider Minimum="0.5" Maximum="2" TickFrequency="0.01"
+                                                        Value="{Binding Weight}" IsEnabled="{Binding Enabled}"
+                                                        Width="150" VerticalAlignment="Center" IsSnapToTickEnabled="True"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <Button Content="Reset to defaults" Command="{Binding SetAdvancedSectionDefaultsCommand}" Padding="5" Width="200" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Expander>
                     </StackPanel>
                 </Expander>
 
