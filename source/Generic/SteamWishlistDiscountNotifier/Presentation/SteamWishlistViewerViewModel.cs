@@ -391,8 +391,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         wishlistItem.Appid,
                         wishlistItem.Priority,
                         wishlistItemTags,
-                        DateTimeOffset.FromUnixTimeSeconds(wishlistItem.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
-                        wishlistItem.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(wishlistItem.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/MM/dd") : string.Empty,
+                        FormatUnixDate(wishlistItem.DateAdded),
+                        FormatUnixDate(wishlistItem.StoreItem.Release?.SteamReleaseDate),
                         wishlistItem.StoreItem.IsEarlyAccess,
                         wishlistItem.StoreItem.BestPurchaseOption.DiscountPct,
                         wishlistItem.StoreItem.BestPurchaseOption.FormattedFinalPrice,
@@ -417,8 +417,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         wishlistItem.Appid,
                         wishlistItem.Priority,
                         wishlistItemTags,
-                        DateTimeOffset.FromUnixTimeSeconds(wishlistItem.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
-                        wishlistItem.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(wishlistItem.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/M/d") : string.Empty,
+                        FormatUnixDate(wishlistItem.DateAdded),
+                        FormatUnixDate(wishlistItem.StoreItem.Release?.SteamReleaseDate),
                         wishlistItem.StoreItem.IsEarlyAccess,
                         0,
                         string.Empty,
@@ -549,6 +549,19 @@ namespace SteamWishlistDiscountNotifier.Presentation
             var collectionView = CollectionViewSource.GetDefaultView(wishlistItems);
             collectionView.Filter = FilterWishlistItems;
             return collectionView;
+        }
+
+        private static string FormatUnixDate(uint? timestamp)
+        {
+            if (timestamp is null || timestamp <= 0)
+            {
+                return "-";
+            }
+
+            return DateTimeOffset
+                .FromUnixTimeSeconds(timestamp.Value)
+                .ToLocalTime()
+                .ToString("yyyy/M/d");
         }
 
         private bool FilterWishlistItems(object item)
