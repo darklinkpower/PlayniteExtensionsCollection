@@ -580,4 +580,4 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_3e538f96/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_83.pext
     Changelog:
     - 'Fixed: Unable to download videos due to Steam changing how videos are delivered'
-    - 'Fixed: Unable to download videos due to Steam changing how videos are delivered. Because Steam no longer provides direct video links, streaming trailers on demand may not always work correctly. Downloading trailers is recommended. (Thanks to supersmo)'
+    - 'Fixed: Unable to stream videos due to Steam changing how videos are delivered. Because Steam no longer provides direct video links, streaming trailers on demand may not always work correctly. Downloading trailers is recommended. (Thanks to supersmo)'
