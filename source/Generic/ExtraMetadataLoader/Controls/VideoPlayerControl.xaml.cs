@@ -513,29 +513,10 @@ namespace ExtraMetadataLoader
                             var response = parsedData[parsedData.Keys.First()];
                             if (response.success == true && response.data != null)
                             {
-                                if (trailerVideoPath == null)
+                                if (trailerVideoPath is null)
                                 {
                                     var movie = response.data?.Movies?.FirstOrDefault();
-                                    if (movie?.Mp4 != null)
-                                    {
-                                        // choose video quality
-                                        var urlString = (SettingsModel.Settings.StreamSteamHighQuality ? movie.Mp4.Max : movie.Mp4.Q480)?.ToString();
-                                        if (!string.IsNullOrEmpty(urlString))
-                                        {
-                                            try
-                                            {
-                                                trailerVideoPath = new Uri(urlString);
-                                                SettingsModel.Settings.IsAnyVideoAvailable = true;
-                                                SettingsModel.Settings.IsTrailerAvailable = true;
-                                            }
-                                            catch (UriFormatException)
-                                            {
-                                                logger.Error($"Error forming Steam trailer video url: {urlString}");
-                                            }
-                                        }
-                                    }
-                                    // attempt to guess the video url based on known pattern
-                                    else if (movie?.Id != null)
+                                    if (movie?.Id != null)
                                     {
                                         // choose guessed filename based on StreamSteamHighQuality setting
                                         var guessedFile = SettingsModel.Settings.StreamSteamHighQuality ? "movie_max.mp4" : "movie480.mp4";

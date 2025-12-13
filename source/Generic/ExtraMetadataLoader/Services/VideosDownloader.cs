@@ -37,6 +37,12 @@ namespace ExtraMetadataLoader.Services
         public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, bool downloadVideo = false, bool downloadVideoMicro = false)
         {
             logger.Debug($"DownloadSteamVideo starting for game {game.Name}");
+            var ffmpegPath = settings.FfmpegPath;
+            if (ffmpegPath.IsNullOrWhiteSpace() || !File.Exists(ffmpegPath))
+            {
+                return false;
+            }
+
             var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
             var videoMicroPath = extraMetadataHelper.GetGameVideoMicroPath(game, true);
             if (FileSystem.FileExists(videoPath) && !overwrite)
@@ -80,22 +86,49 @@ namespace ExtraMetadataLoader.Services
                 return false;
             }
 
+
+
             if (downloadVideo)
             {
-                var videoUrl = steamAppDetails.data.Movies[0].Mp4.Q480;
-                if (settings.VideoSteamDownloadHdQuality)
+                var movie = steamAppDetails.data.Movies[0];
+
+                Uri videoManifestUrl =
+                    movie.DashH264 ??
+                    movie.HlsH264 ??
+                    null;
+
+                if (videoManifestUrl is null)
                 {
-                    videoUrl = steamAppDetails.data.Movies[0].Mp4.Max;
+                    return false;
                 }
 
-                var downloadFileResult = HttpRequestFactory.GetHttpFileRequest()
-                    .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath)
-                    .DownloadFile(cancelToken);
-                if (downloadFileResult.IsSuccess)
+                int videoStreamIndex = settings.VideoSteamDownloadHdQuality
+                    ? 0  // 1080p
+                    : 1; // 720p
+
+                var ffmpegArgs =
+                    "-y -loglevel error " +
+                    "-analyzeduration 0 -probesize 32k " +
+                    $"-i \"{videoManifestUrl}\" " +
+                    $"-map 0:v:{videoStreamIndex}? " +
+                    "-map 0:a:0? " +
+                    "-c copy -movflags +faststart " +
+                    $"\"{tempDownloadPath}\"";
+
+                var ffmpegResult = ProcessStarter.StartProcessWait(ffmpegPath, ffmpegArgs, Path.GetDirectoryName(ffmpegPath), true, out var stdOut, out var stdErr);
+                if (ffmpegResult != 0)
                 {
-                    GetVideoInformation(tempDownloadPath);
-                    ProcessVideo(tempDownloadPath, videoPath, false, true);
+                    logger.Error($"Failed to download video in ffmpeg: {videoPath}, {ffmpegResult}, {stdErr}");
+                    playniteApi.Notifications.Add(new NotificationMessage(
+                        Guid.NewGuid().ToString(),
+                        string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, ffmpegResult, stdErr),
+                        NotificationType.Error)
+                    );
+
+                    return false;
                 }
+
+                ProcessVideo(tempDownloadPath, videoPath, false, true);
             }
             if (downloadVideoMicro)
             {

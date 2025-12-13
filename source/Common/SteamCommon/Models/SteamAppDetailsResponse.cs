@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using Newtonsoft.Json;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
@@ -73,22 +74,25 @@ namespace SteamCommon.Models
 
             public class Movie
             {
-                [SerializationPropertyName("id")]
-                public uint Id { get; set; }
+                [JsonProperty("id")]
+                public long Id { get; set; }
 
-                [SerializationPropertyName("name")]
+                [JsonProperty("name")]
                 public string Name { get; set; }
 
-                [SerializationPropertyName("thumbnail")]
+                [JsonProperty("thumbnail")]
                 public Uri Thumbnail { get; set; }
 
-                [SerializationPropertyName("webm")]
-                public Mp4 Webm { get; set; }
+                [JsonProperty("dash_av1")]
+                public Uri DashAv1 { get; set; }
 
-                [SerializationPropertyName("mp4")]
-                public Mp4 Mp4 { get; set; }
+                [JsonProperty("dash_h264")]
+                public Uri DashH264 { get; set; }
 
-                [SerializationPropertyName("highlight")]
+                [JsonProperty("hls_h264")]
+                public Uri HlsH264 { get; set; }
+
+                [JsonProperty("highlight")]
                 public bool Highlight { get; set; }
             }
 
