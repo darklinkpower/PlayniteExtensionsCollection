@@ -129,7 +129,7 @@ namespace XboxMetadata.Services
     public class ProductSummary
     {
         [SerializationPropertyName("availableOn")]
-        public AvailableOn[] AvailableOn { get; set; }
+        public List<AvailableOn> AvailableOn { get; set; }
 
         [SerializationPropertyName("averageRating")]
         public double? AverageRating { get; set; }
@@ -428,7 +428,7 @@ namespace XboxMetadata.Services
 
     public enum Eligibility { None };
 
-    public enum AvailableOn { Pc, XboxOne, XboxSeriesX, MobileDevice, HoloLens, Hub, XCloud };
+    public enum AvailableOn { Pc, XboxOne, XboxSeriesX, MobileDevice, HoloLens, Hub, XCloud, Handheld };
 
     [JsonConverter(typeof(BoardNameConverter))]
     public enum BoardName
