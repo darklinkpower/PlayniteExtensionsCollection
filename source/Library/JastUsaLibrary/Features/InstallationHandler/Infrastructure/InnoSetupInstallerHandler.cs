@@ -20,14 +20,14 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
                 return false;
             }
 
-            if (content.Contains("Inno Setup"))
-            {
-                return true;
-            }
+            //if (content.Contains("Inno Setup"))
+            //{
+            //    return true;
+            //}
 
             if (executableMetadata?.ManifestAssemblyIdentity != null &&
-                executableMetadata.ManifestAssemblyIdentity.TryGetValue("assemblyIdentity", out var value) &&
-                value.Contains("Inno", StringComparison.OrdinalIgnoreCase))
+                executableMetadata.ManifestAssemblyIdentity.TryGetValue("name", out var value) &&
+                value.Equals("JR.Inno.Setup", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

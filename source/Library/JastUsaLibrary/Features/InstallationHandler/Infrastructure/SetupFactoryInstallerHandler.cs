@@ -24,14 +24,12 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
                 return false;
             }
 
-            if (content.Contains("Setup Factory"))
-            {
-                return true;
-            }
+            //if (content.Contains("Setup Factory"))
+            //{
+            //    return true;
+            //}
 
-            if (executableMetadata != null &&
-                !executableMetadata.ProductName.IsNullOrEmpty() &&
-                executableMetadata.ProductName.Contains("Setup Factory Runtime", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(executableMetadata?.ProductName, "Setup Factory Runtime", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

@@ -3,6 +3,7 @@ using JastUsaLibrary.Features.InstallationHandler.Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,20 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
 
         public bool Install(InstallRequest request)
         {
+            // Arguments:
+            // /s          = InstallShield silent mode
+            // /v"..."     = passes parameters to MSI
+            // /qn         = MSI quiet no UI
+            // /l*v log    = verbose logging (optional, helpful for debugging)
+
+            var escapedPath = request.TargetDirectory.Replace("\"", "\\\"");
+
+            var logPath = Path.Combine(Path.GetTempPath(), "installshield.log");
+            var arguments = $"/s /v\"/qn INSTALLDIR=\\\"{escapedPath}\\\" /l*v \\\"{logPath}\\\"\"";
             var startInfo = new ProcessStartInfo
             {
                 FileName = request.FilePath,
-                Arguments = "/s /v\"/qn\"",
+                Arguments = $"/s /v\"/qn INSTALLDIR=\\\"{escapedPath}\\\"\"",
                 UseShellExecute = false,
                 CreateNoWindow = true
             };

@@ -21,14 +21,14 @@ namespace JastUsaLibrary.Features.InstallationHandler.Infrastructure
                 return false;
             }
 
-            if (content.Contains("Nullsoft"))
-            {
-                return true;
-            }
+            //if (content.Contains("Nullsoft"))
+            //{
+            //    return true;
+            //}
 
             if (executableMetadata?.ManifestAssemblyIdentity != null &&
-                executableMetadata.ManifestAssemblyIdentity.TryGetValue("assemblyIdentity", out var value) &&
-                value.Contains("NSIS", StringComparison.OrdinalIgnoreCase))
+                executableMetadata.ManifestAssemblyIdentity.TryGetValue("name", out var value) &&
+                value.Equals("Nullsoft.NSIS.exehead", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
