@@ -20,6 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
+using System.Net.Http;
 
 namespace ExtraMetadataLoader
 {
@@ -514,16 +515,55 @@ namespace ExtraMetadataLoader
                             {
                                 if (trailerVideoPath == null)
                                 {
-                                    if (SettingsModel.Settings.StreamSteamHighQuality)
+                                    var movie = response.data?.Movies?.FirstOrDefault();
+                                    if (movie?.Mp4 != null)
                                     {
-                                        trailerVideoPath = response.data.Movies?[0].Mp4.Max;
+                                        // choose video quality
+                                        var urlString = (SettingsModel.Settings.StreamSteamHighQuality ? movie.Mp4.Max : movie.Mp4.Q480)?.ToString();
+                                        if (!string.IsNullOrEmpty(urlString))
+                                        {
+                                            try
+                                            {
+                                                trailerVideoPath = new Uri(urlString);
+                                                SettingsModel.Settings.IsAnyVideoAvailable = true;
+                                                SettingsModel.Settings.IsTrailerAvailable = true;
+                                            }
+                                            catch (UriFormatException)
+                                            {
+                                                logger.Error($"Error forming Steam trailer video url: {urlString}");
+                                            }
+                                        }
                                     }
-                                    else
+                                    // attempt to guess the video url based on known pattern
+                                    else if (movie?.Id != null)
                                     {
-                                        trailerVideoPath = response.data.Movies?[0].Mp4.Q480;
+                                        // choose guessed filename based on StreamSteamHighQuality setting
+                                        var guessedFile = SettingsModel.Settings.StreamSteamHighQuality ? "movie_max.mp4" : "movie480.mp4";
+                                        var guessedUrl = $"https://video.akamai.steamstatic.com/store_trailers/{movie.Id}/{guessedFile}";
+                                        try
+                                        {
+                                            var uri = new Uri(guessedUrl);
+                                            using (var client = new HttpClient())
+                                            {
+                                                var request = new HttpRequestMessage(HttpMethod.Head, uri);
+                                                var httpResponse = client.SendAsync(request).Result;
+                                                if (httpResponse.IsSuccessStatusCode)
+                                                {
+                                                    trailerVideoPath = uri;
+                                                    SettingsModel.Settings.IsAnyVideoAvailable = true;
+                                                    SettingsModel.Settings.IsTrailerAvailable = true;
+                                                }
+                                            }
+                                        }
+                                        catch (UriFormatException)
+                                        {
+                                            logger.Error($"Error forming guessed Steam trailer video url: {guessedUrl}");
+                                        }
+                                        catch (HttpRequestException)
+                                        {
+                                            logger.Info($"Guessed Steam trailer not available: {guessedUrl}");
+                                        }
                                     }
-                                    SettingsModel.Settings.IsAnyVideoAvailable = true;
-                                    SettingsModel.Settings.IsTrailerAvailable = true;
                                 }
                             }
                         }
