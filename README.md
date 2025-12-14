@@ -129,6 +129,9 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 To maintain consistency and code quality, please follow these guidelines when submitting a Pull Request (PR).
 
+Notes:
+- Source code of Extra Metadata Loader extension is main branch is a WIP rewrite. Release source code and build-able source code is in the `emlCrashFix2025` branch.
+
 ### General Contribution Rules
 - **Localization**: If your PR includes new strings (e.g., text displayed in the UI), ensure they are properly implemented as localization strings within the localization dictionary.
   
