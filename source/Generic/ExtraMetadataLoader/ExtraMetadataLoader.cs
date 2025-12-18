@@ -429,7 +429,14 @@ namespace ExtraMetadataLoader
                             var fileCopied = FileSystem.CopyFile(filePath, logoPath, true);
                             if (settings.Settings.ProcessLogosOnDownload && fileCopied)
                             {
-                                ProcessLogoImage(logoPath);
+                                try
+                                {
+                                    ProcessLogoImage(logoPath);
+                                }
+                                catch (Exception e)
+                                {
+                                    logger.Error(e, $"Error processing logo {logoPath}");
+                                }
                             }
 
                             OnLogoUpdated(game);
@@ -766,7 +773,14 @@ namespace ExtraMetadataLoader
             {
                 if (settings.Settings.ProcessLogosOnDownload)
                 {
-                    ProcessLogoImage(logoPath);
+                    try
+                    {
+                        ProcessLogoImage(logoPath);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error(e, $"Error processing logo {logoPath}");
+                    }
                 }
 
                 OnLogoUpdated(game);
