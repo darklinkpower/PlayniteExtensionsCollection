@@ -581,3 +581,9 @@ Packages:
     Changelog:
     - 'Fixed: Unable to download videos due to Steam changing how videos are delivered'
     - 'Fixed: Unable to stream videos due to Steam changing how videos are delivered. Because Steam no longer provides direct video links, streaming trailers on demand may not always work correctly. Downloading trailers is recommended. (Thanks to supersmo)'
+  - Version: 1.84
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-12-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_3e538f96/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_84.pext
+    Changelog:
+    - 'Fixed: Updated Magick library component to match updated component version in Playnite to fix errors when processing downloaded logos.'
