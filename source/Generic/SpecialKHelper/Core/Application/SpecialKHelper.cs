@@ -220,7 +220,10 @@ namespace SpecialKHelper
                 _steamHelper.RemoveBigPictureModeEnvVariable();
             }
 
-            StopAllSpecialKServices();
+            if (!settings.Settings.KeepServicesRunning)
+            {
+                StopAllSpecialKServices();
+            }
         }
 
         private void StopAllSpecialKServices()
