@@ -587,3 +587,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_3e538f96/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_84.pext
     Changelog:
     - 'Fixed: Updated Magick library component to match updated component version in Playnite to fix errors when processing downloaded logos.'
+  - Version: 1.85
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-02-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_3e538f96/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_85.pext
+    Changelog:
+    - 'Fixed: Updated image library component to match updated component version in Playnite to fix errors when processing downloaded logos.'
