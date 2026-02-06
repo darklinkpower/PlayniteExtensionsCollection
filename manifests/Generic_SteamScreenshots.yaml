@@ -115,3 +115,9 @@ Packages:
     - 'Added: Support to cycle between screenshots in Screenshots fullscreen view by using the mouse scroll'
     - 'Added: Support to close the Screenshots fullscreen view by right-clicking'
     - 'Added: Support to cycle between screenshots in the themes control by using the mouse scroll while hovering the screenshots list'
+  - Version: 1.17
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-02-06
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.02.06_eccba1db/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_17.pext
+    Changelog:
+    - 'Fixed: Cached data could persist longer than intended in some cases.'

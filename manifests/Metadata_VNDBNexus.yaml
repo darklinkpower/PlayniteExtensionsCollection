@@ -98,3 +98,9 @@ Packages:
     Changelog:
     - 'Added: Button to the VNDB control to open visual novel reviews on web browser'
     - 'Changed: Related visual novels that are unnoficial will now not be displayed by default'
+  - Version: 1.14
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-02-06
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.02.06_eccba1db/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_14.pext
+    Changelog:
+    - 'Fixed: Cached data could persist longer than intended in some cases.'
