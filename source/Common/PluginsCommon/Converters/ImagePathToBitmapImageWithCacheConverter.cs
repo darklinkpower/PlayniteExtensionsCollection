@@ -12,7 +12,8 @@ namespace PluginsCommon.Converters
 {
     public class ImagePathToBitmapImageWithCacheConverter : IValueConverter
     {
-        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>(TimeSpan.FromSeconds(60));
+        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager =
+            new CacheManager<string, BitmapImage>().WithItemLifetime(TimeSpan.FromSeconds(60));
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

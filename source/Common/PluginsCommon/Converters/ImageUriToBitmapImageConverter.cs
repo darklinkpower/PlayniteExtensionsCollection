@@ -17,7 +17,8 @@ namespace PluginsCommon.Converters
     {
         private readonly string _storageDirectory;
         private readonly bool _useLocalPathForFilenames;
-        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>(TimeSpan.FromSeconds(60));
+        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager =
+            new CacheManager<string, BitmapImage>().WithItemLifetime(TimeSpan.FromSeconds(60));
 
         public ImageUriToBitmapImageConverter(string storageDirectory, bool useLocalPathForFilenames = false)
         {

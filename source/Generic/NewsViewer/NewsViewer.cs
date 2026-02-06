@@ -21,7 +21,8 @@ namespace NewsViewer
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         
-        private readonly CacheManager<Guid, NumberOfPlayersResponse> playersCountCacheManager = new CacheManager<Guid, NumberOfPlayersResponse>(TimeSpan.FromSeconds(120));
+        private readonly CacheManager<Guid, NumberOfPlayersResponse> _playersCountCacheManager =
+            new CacheManager<Guid, NumberOfPlayersResponse>().WithItemLifetime(TimeSpan.FromSeconds(120));
         private readonly SteamNewsService _steamNewsService;
 
         public NewsViewerSettingsViewModel settings { get; set; }
@@ -80,7 +81,7 @@ namespace NewsViewer
             }
             else if (args.Name == "PlayersInGameViewerControl")
             {
-                return new PlayersInGameViewerControl(PlayniteApi, settings, playersCountCacheManager);
+                return new PlayersInGameViewerControl(PlayniteApi, settings, _playersCountCacheManager);
             }
 
             return null;

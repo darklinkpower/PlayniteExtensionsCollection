@@ -21,7 +21,7 @@ namespace SteamScreenshots.Infrastructure.Providers
     {
         private readonly string _storageDirectory;
         private readonly ILogger _logger;
-        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>(TimeSpan.FromSeconds(60));
+        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>().WithItemLifetime(TimeSpan.FromSeconds(60));
         private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(30);
         private static readonly BitmapImage _fallbackImage = CreateTransparentFallbackImage();
 

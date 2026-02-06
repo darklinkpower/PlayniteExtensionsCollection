@@ -30,7 +30,7 @@ namespace SteamScreenshots.Infrastructure.Repositories
             if (_useMemoryCache)
             {
                 var memoryExpiryTime = cacheExpirationTime ?? TimeSpan.FromSeconds(60);
-                _cacheManager = new CacheManager<string, SteamAppDetails>(memoryExpiryTime);
+                _cacheManager = new CacheManager<string, SteamAppDetails>().WithItemLifetime(memoryExpiryTime);
             }
         }
 

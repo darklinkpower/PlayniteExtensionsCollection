@@ -18,7 +18,7 @@ namespace GameRelations
     {
         private static readonly IPlayniteAPI _playniteApi = API.Instance;
         private static readonly ILogger _logger = LogManager.GetLogger();
-        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>(TimeSpan.FromSeconds(30));
+        private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>().WithItemLifetime(TimeSpan.FromSeconds(30));
         private static readonly BitmapImage _defaultCover = new BitmapImage(new Uri("/GameRelations;component/Resources/DefaultCover.png", UriKind.Relative));
         private static SemaphoreSlim _bulkGetGamesWrappersLimiter = new SemaphoreSlim(1);
 

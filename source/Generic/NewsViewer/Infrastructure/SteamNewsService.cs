@@ -27,7 +27,7 @@ namespace NewsViewer.Infrastructure
         {
             _logger = logger;
             _steamLanguage = steamLanguage;
-            _newsCacheManager = new CacheManager<string, SteamNewsFeed>(cacheAliveTime);
+            _newsCacheManager = new CacheManager<string, SteamNewsFeed>().WithItemLifetime(cacheAliveTime);
             _descriptionTransformElems = new List<SteamHtmlTransformDefinition>()
             {
                 new SteamHtmlTransformDefinition("span", "bb_strike", "strike"),
