@@ -167,8 +167,8 @@ namespace WebExplorer
                 return false;
             }
 
-            if (link.Url.StartsWith("http", StringComparison.OrdinalIgnoreCase)
-                || link.Url.StartsWith("www", StringComparison.OrdinalIgnoreCase))
+            if (link.Url.StartsWith("http", StringComparison.OrdinalIgnoreCase) ||
+                link.Url.StartsWith("www", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

@@ -100,11 +100,13 @@ namespace VNDBNexus
             _eventAggregator = new EventAggregator();
             Searches = new List<SearchSupport>
             {
-                new SearchSupport("vn",
+                new SearchSupport(
+                    "vn",
                     ResourceProvider.GetString("LOC_VndbNexus_SearchOnVndbLabel"),
-                    new VndbKeyboardSearch(Settings, _eventAggregator))
+                    new VndbKeyboardSearch(Settings, _eventAggregator)
+                )
             };
-            
+
             _imageUriToBitmapImageConverter = new ImageUriToBitmapImageConverter(Path.Combine(GetPluginUserDataPath(), "ImagesCache"));
         }
 
