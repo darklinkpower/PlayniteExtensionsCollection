@@ -7,21 +7,21 @@ using System.Xml;
 
 namespace TemporaryCache.Models
 {
-    public class CacheItem<T>
+    public sealed class CacheItem<T>
     {
         public T Value { get; }
-        public DateTime Expiration { get; private set; }
-        public bool IsExpired => DateTime.Now >= Expiration;
+        public DateTime CreatedAtUtc { get; }
+        public DateTime LastAccessedUtc { get; private set; }
 
-        public CacheItem(T value, DateTime expiration)
+        public CacheItem(T value, DateTime createdAtUtc)
         {
             Value = value;
-            Expiration = expiration;
+            CreatedAtUtc = createdAtUtc;
         }
 
-        public void RefreshExpiration(DateTime expirationDate)
+        public void Touch(DateTime nowUtc)
         {
-            Expiration = Expiration = expirationDate;
+            LastAccessedUtc = nowUtc;
         }
     }
 }
