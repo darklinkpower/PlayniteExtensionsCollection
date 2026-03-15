@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Fons de la previsualització:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Gruix de l'indicador (píxels):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Nombre de traços de l'indicador:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Longitud del traç de l'indicador (píxels):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Longitud del traç de l'indicador (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Utilitza extrems arrodonits als traços</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Ajusta automàticament la velocitat segons la mida de l'indicador</sys:String>
 

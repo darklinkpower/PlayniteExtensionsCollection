@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Тло попереднього перегляду:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Товщина індикатора (пікселі):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Кількість штрихів індикатора:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Довжина штриха індикатора (пікселі):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Довжина штриха індикатора (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Використовувати заокруглені кінці штрихів</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Автоматично підлаштовувати швидкість індикатора під його розмір</sys:String>
 

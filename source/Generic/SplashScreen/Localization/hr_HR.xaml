@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Pozadina pregleda:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Debljina indikatora (pikseli):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Broj crtica indikatora:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Duljina crtice indikatora (pikseli):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Duljina crtice indikatora (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Koristi zaobljene završetke crtica</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Automatski prilagodi brzinu indikatora prema veličini</sys:String>
 

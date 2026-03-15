@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Önizleme arka planı:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Gösterge kalınlığı (piksel):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Gösterge çizgi sayısı:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Gösterge çizgi uzunluğu (piksel):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Gösterge çizgi uzunluğu (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Yuvarlatılmış çizgi uçlarını kullan</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Gösterge hızını boyuta göre otomatik ayarla</sys:String>
 

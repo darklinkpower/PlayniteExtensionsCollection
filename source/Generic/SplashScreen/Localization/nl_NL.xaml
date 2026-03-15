@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Voorbeeldachtergrond:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Dikte van de spinner (pixels):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Aantal streepjes van de spinner:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Lengte van spinnerstreepjes (pixels):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Lengte van spinnerstreepjes (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Afgeronde uiteinden voor streepjes gebruiken</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Spinnersnelheid automatisch aanpassen op basis van de spinnergrootte</sys:String>
 

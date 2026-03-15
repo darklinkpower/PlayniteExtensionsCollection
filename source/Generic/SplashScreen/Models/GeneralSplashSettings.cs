@@ -90,7 +90,7 @@ namespace SplashScreen.Models
         double LoadingSpinnerThickness { get; set; }
 
         /// <summary>
-        /// Gets or sets loading spinner dash length in pixels.
+        /// Gets or sets loading spinner dash length as a percentage of each dash slot.
         /// </summary>
         double LoadingSpinnerDashLength { get; set; }
 
@@ -143,7 +143,7 @@ namespace SplashScreen.Models
         public int LoadingSpinnerSize { get; set; } = 50;
         public double LoadingSpinnerOpacity { get; set; } = 0.85;
         public double LoadingSpinnerThickness { get; set; } = 2.0;
-        public double LoadingSpinnerDashLength { get; set; } = 4.0;
+        public double LoadingSpinnerDashLength { get; set; } = 70.0;
         public int LoadingSpinnerDashCount { get; set; } = 16;
         public bool LoadingSpinnerRoundedDashes { get; set; } = false;
         public double LoadingSpinnerRotationSeconds { get; set; } = 3.0;

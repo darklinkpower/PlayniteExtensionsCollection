@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Esikatselun tausta:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Pyörivän ilmaisimen paksuus (pikseleinä):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Pyörivän ilmaisimen viivojen määrä:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Pyörivän ilmaisimen viivan pituus (pikseleinä):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Pyörivän ilmaisimen viivan pituus (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Käytä pyöristettyjä viivanpäitä</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Säädä pyörivän ilmaisimen nopeutta automaattisesti koon mukaan</sys:String>
 

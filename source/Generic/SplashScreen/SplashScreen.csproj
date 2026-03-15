@@ -99,6 +99,7 @@
     <Compile Include="Models\GeneralSplashSettings.cs" />
     <Compile Include="Helpers\SplashSettingsSyncHelper.cs" />
     <Compile Include="Helpers\SpinnerGeometryBuilder.cs" />
+    <Compile Include="Helpers\SpinnerRenderHelper.cs" />
     <Compile Include="Models\ModeSplashSettings.cs" />
     <Compile Include="Models\VideoManagerItem.cs" />
     <Compile Include="SplashScreen.cs" />

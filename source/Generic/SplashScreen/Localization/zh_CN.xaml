@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">预览背景：</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">指示器粗细（像素）：</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">指示器短划线数量：</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">指示器短划线长度（像素）：</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">指示器短划线长度 (1-100%):</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">使用圆角短划线端帽</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">根据指示器大小自动调整速度</sys:String>
 

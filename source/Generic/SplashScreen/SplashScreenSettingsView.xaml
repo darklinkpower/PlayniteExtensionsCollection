@@ -136,14 +136,14 @@
                     <DockPanel Margin="0,10,0,0">
                         <TextBlock Text="{DynamicResource LOCSplashScreen_SettingSpinnerDashLengthLabel}"
                                    DockPanel.Dock="Left" VerticalAlignment="Center" />
-                        <Slider x:Name="SettingsDashLengthSlider" DockPanel.Dock="Left" Width="220" Minimum="0.5" Maximum="24.0" TickFrequency="0.5" IsSnapToTickEnabled="True"
+                        <Slider x:Name="SettingsDashLengthSlider" DockPanel.Dock="Left" Width="220" Minimum="1" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True"
                                 Value="{Binding Settings.GeneralSplashSettings.LoadingSpinnerDashLength}" Margin="10,0,0,0" />
-                        <TextBlock Text="{Binding Settings.GeneralSplashSettings.LoadingSpinnerDashLength, StringFormat=F1}" Margin="10,0,0,0" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Settings.GeneralSplashSettings.LoadingSpinnerDashLength, StringFormat=F0}" Margin="10,0,0,0" VerticalAlignment="Center" />
                     </DockPanel>
                     <DockPanel Margin="0,10,0,0">
                         <TextBlock Text="{DynamicResource LOCSplashScreen_SettingSpinnerDashCountLabel}"
                                    DockPanel.Dock="Left" VerticalAlignment="Center" />
-                        <Slider x:Name="SettingsDashCountSlider" DockPanel.Dock="Left" Width="220" Minimum="2" Maximum="80" TickFrequency="1" IsSnapToTickEnabled="True"
+                        <Slider x:Name="SettingsDashCountSlider" DockPanel.Dock="Left" Width="220" Minimum="1" Maximum="80" TickFrequency="1" IsSnapToTickEnabled="True"
                             Value="{Binding Settings.GeneralSplashSettings.LoadingSpinnerDashCount}" Margin="10,0,0,0" />
                         <TextBlock Text="{Binding Settings.GeneralSplashSettings.LoadingSpinnerDashCount}" Margin="10,0,0,0" VerticalAlignment="Center" />
                     </DockPanel>

@@ -28,7 +28,7 @@ namespace SplashScreen.Views
 
         public static readonly DependencyProperty SpinnerDashLengthProperty =
             DependencyProperty.Register(nameof(SpinnerDashLength), typeof(double), typeof(SpinnerPreviewControl),
-                new PropertyMetadata(4.0, OnAppearancePropertyChanged));
+                new PropertyMetadata(70.0, OnAppearancePropertyChanged));
 
         public static readonly DependencyProperty SpinnerDashCountProperty =
             DependencyProperty.Register(nameof(SpinnerDashCount), typeof(int), typeof(SpinnerPreviewControl),
@@ -152,38 +152,13 @@ namespace SplashScreen.Views
                 PreviewContainer.Background = new SolidColorBrush(Color.FromRgb(channel, channel, channel));
             }
 
-            var thickness = SpinnerThickness;
-            if (thickness < 0.5)
-            {
-                thickness = 0.5;
-            }
-
-            var dashLengthPx = SpinnerDashLength;
-            if (dashLengthPx < 0.5)
-            {
-                dashLengthPx = 0.5;
-            }
-
-            var dashCount = SpinnerDashCount;
-            if (dashCount < 2)
-            {
-                dashCount = 2;
-            }
-
-            var spinnerSize = SpinnerSize;
-            if (spinnerSize < 4)
-            {
-                spinnerSize = 4;
-            }
-
-            var roundedDashes = RoundedDashes;
-            PreviewPath.StrokeThickness = thickness;
-            PreviewPath.StrokeDashArray = null;
-            PreviewPath.StrokeDashOffset = 0;
-            PreviewPath.StrokeDashCap = PenLineCap.Flat;
-            PreviewPath.StrokeStartLineCap = roundedDashes ? PenLineCap.Round : PenLineCap.Flat;
-            PreviewPath.StrokeEndLineCap = roundedDashes ? PenLineCap.Round : PenLineCap.Flat;
-            PreviewPath.Data = SpinnerGeometryBuilder.BuildDashGeometry(spinnerSize, thickness, dashLengthPx, dashCount, roundedDashes);
+            SpinnerRenderHelper.ApplySpinnerAppearance(
+                PreviewPath,
+                SpinnerSize,
+                SpinnerThickness,
+                SpinnerDashLength,
+                SpinnerDashCount,
+                RoundedDashes);
         }
 
         private void ApplyAnimation()
@@ -202,34 +177,7 @@ namespace SplashScreen.Views
             }
 
             rotateTransform.BeginAnimation(RotateTransform.AngleProperty, null);
-
-            var baseSeconds = RotationSeconds;
-            if (baseSeconds <= 0)
-            {
-                baseSeconds = 3.0;
-            }
-
-            var durationSeconds = baseSeconds;
-            if (AutoSpeed)
-            {
-                var normalizedSize = SpinnerSize / 50.0;
-                if (normalizedSize < 0.4)
-                {
-                    normalizedSize = 0.4;
-                }
-
-                durationSeconds = baseSeconds * normalizedSize;
-            }
-
-            if (durationSeconds < 0.25)
-            {
-                durationSeconds = 0.25;
-            }
-
-            if (durationSeconds > 20.0)
-            {
-                durationSeconds = 20.0;
-            }
+            var durationSeconds = SpinnerRenderHelper.CalculateRotationDurationSeconds(RotationSeconds, AutoSpeed, SpinnerSize);
 
             var animation = new DoubleAnimation
             {

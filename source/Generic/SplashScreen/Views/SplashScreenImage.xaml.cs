@@ -60,34 +60,10 @@ namespace SplashScreen.Views
             }
 
             rotateTransform.BeginAnimation(RotateTransform.AngleProperty, null);
-
-            var baseSeconds = vm.Settings.LoadingSpinnerRotationSeconds;
-            if (baseSeconds <= 0)
-            {
-                baseSeconds = 3.0;
-            }
-
-            var durationSeconds = baseSeconds;
-            if (vm.Settings.EnableLoadingSpinnerAutoSpeed)
-            {
-                var normalizedSize = vm.Settings.LoadingSpinnerSize / 50.0;
-                if (normalizedSize < 0.4)
-                {
-                    normalizedSize = 0.4;
-                }
-
-                durationSeconds = baseSeconds * normalizedSize;
-            }
-
-            if (durationSeconds < 0.25)
-            {
-                durationSeconds = 0.25;
-            }
-
-            if (durationSeconds > 20.0)
-            {
-                durationSeconds = 20.0;
-            }
+            var durationSeconds = SpinnerRenderHelper.CalculateRotationDurationSeconds(
+                vm.Settings.LoadingSpinnerRotationSeconds,
+                vm.Settings.EnableLoadingSpinnerAutoSpeed,
+                vm.Settings.LoadingSpinnerSize);
 
             var animation = new DoubleAnimation
             {
@@ -102,43 +78,13 @@ namespace SplashScreen.Views
 
         private void ConfigureSpinnerAppearance(Models.GeneralSplashSettings settings)
         {
-            if (SpinnerPath == null)
-            {
-                return;
-            }
-
-            var thickness = settings.LoadingSpinnerThickness;
-            if (thickness < 0.5)
-            {
-                thickness = 0.5;
-            }
-
-            var dashLengthPx = settings.LoadingSpinnerDashLength;
-            if (dashLengthPx < 0.5)
-            {
-                dashLengthPx = 0.5;
-            }
-
-            var dashCount = settings.LoadingSpinnerDashCount;
-            if (dashCount < 2)
-            {
-                dashCount = 2;
-            }
-
-            var spinnerSize = settings.LoadingSpinnerSize;
-            if (spinnerSize < 4)
-            {
-                spinnerSize = 4;
-            }
-
-            var roundedDashes = settings.LoadingSpinnerRoundedDashes;
-            SpinnerPath.StrokeThickness = thickness;
-            SpinnerPath.StrokeDashArray = null;
-            SpinnerPath.StrokeDashOffset = 0;
-            SpinnerPath.StrokeDashCap = PenLineCap.Flat;
-            SpinnerPath.StrokeStartLineCap = roundedDashes ? PenLineCap.Round : PenLineCap.Flat;
-            SpinnerPath.StrokeEndLineCap = roundedDashes ? PenLineCap.Round : PenLineCap.Flat;
-            SpinnerPath.Data = SpinnerGeometryBuilder.BuildDashGeometry(spinnerSize, thickness, dashLengthPx, dashCount, roundedDashes);
+            SpinnerRenderHelper.ApplySpinnerAppearance(
+                SpinnerPath,
+                settings.LoadingSpinnerSize,
+                settings.LoadingSpinnerThickness,
+                settings.LoadingSpinnerDashLength,
+                settings.LoadingSpinnerDashCount,
+                settings.LoadingSpinnerRoundedDashes);
         }
     }
 }
