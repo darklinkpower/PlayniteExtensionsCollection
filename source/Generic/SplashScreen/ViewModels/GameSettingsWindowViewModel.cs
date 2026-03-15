@@ -7,32 +7,29 @@ using SplashScreen.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SplashScreen.ViewModels
 {
     public class GameSettingsWindowViewModel : ObservableObject
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly IPlayniteAPI playniteApi;
-        private readonly string pluginUserDataPath;
-        private readonly string customBackgroundsDirectory;
-        private readonly string gameSettingsPath;
-        private readonly GeneralSplashSettings globalSettings;
-        private bool saveCustomBackground = false;
-        private bool removeCustomBackground = false;
+        private static readonly ILogger _logger = LogManager.GetLogger();
+        private readonly IPlayniteAPI _playniteApi;
+        private readonly string _pluginUserDataPath;
+        private readonly string _customBackgroundsDirectory;
+        private readonly string _gameSettingsPath;
+        private readonly GeneralSplashSettings _globalSettings;
+        private bool _saveCustomBackground = false;
+        private bool _removeCustomBackground = false;
 
-        private Game game;
-        public Game Game { get => game; set => SetValue(ref game, value); }
+        private Game _game;
+        public Game Game { get => _game; set => SetValue(ref _game, value); }
 
-        private string customBackgroundPath = null;
-        public string CustomBackgroundPath { get => customBackgroundPath; set => SetValue(ref customBackgroundPath, value); }
+        private string _customBackgroundPath = null;
+        public string CustomBackgroundPath { get => _customBackgroundPath; set => SetValue(ref _customBackgroundPath, value); }
 
-        private GameSplashSettings settings = new GameSplashSettings();
-        public GameSplashSettings Settings { get => settings; set => SetValue(ref settings, value); }
+        private GameSplashSettings _settings = new GameSplashSettings();
+        public GameSplashSettings Settings { get => _settings; set => SetValue(ref _settings, value); }
 
         public Dictionary<HorizontalAlignment, string> LogoHorizontalSource { get; set; } = new Dictionary<HorizontalAlignment, string>
         {
@@ -50,19 +47,19 @@ namespace SplashScreen.ViewModels
 
         public GameSettingsWindowViewModel(IPlayniteAPI playniteApi, string pluginUserDataPath, Game game, GeneralSplashSettings globalSettings)
         {
-            this.playniteApi = playniteApi;
-            this.pluginUserDataPath = pluginUserDataPath;
-            this.globalSettings = Serialization.GetClone(globalSettings);
-            customBackgroundsDirectory = Path.Combine(pluginUserDataPath, "CustomBackgrounds");
+            this._playniteApi = playniteApi;
+            this._pluginUserDataPath = pluginUserDataPath;
+            this._globalSettings = Serialization.GetClone(globalSettings);
+            _customBackgroundsDirectory = Path.Combine(pluginUserDataPath, "CustomBackgrounds");
             Game = game;
 
-            gameSettingsPath = Path.Combine(pluginUserDataPath, $"{game.Id}.json");
-            if (FileSystem.FileExists(gameSettingsPath))
+            _gameSettingsPath = Path.Combine(pluginUserDataPath, $"{game.Id}.json");
+            if (FileSystem.FileExists(_gameSettingsPath))
             {
-                Settings = Serialization.FromJsonFile<GameSplashSettings>(gameSettingsPath);
+                Settings = Serialization.FromJsonFile<GameSplashSettings>(_gameSettingsPath);
                 if (!Settings.GeneralSplashSettings.CustomBackgroundImage.IsNullOrEmpty())
                 {
-                    CustomBackgroundPath = Path.Combine(customBackgroundsDirectory, Settings.GeneralSplashSettings.CustomBackgroundImage);
+                    CustomBackgroundPath = Path.Combine(_customBackgroundsDirectory, Settings.GeneralSplashSettings.CustomBackgroundImage);
                 }
             }
 
@@ -76,7 +73,7 @@ namespace SplashScreen.ViewModels
                 return;
             }
 
-            var backgroundPath = Path.Combine(customBackgroundsDirectory, Settings.GeneralSplashSettings.CustomBackgroundImage);
+            var backgroundPath = Path.Combine(_customBackgroundsDirectory, Settings.GeneralSplashSettings.CustomBackgroundImage);
             if (FileSystem.FileExists(backgroundPath))
             {
                 FileSystem.DeleteFileSafe(backgroundPath);
@@ -87,17 +84,17 @@ namespace SplashScreen.ViewModels
 
         private void SaveGameSettings()
         {
-            SplashSettingsSyncHelper.ApplyGlobalIndicatorSettings(Settings.GeneralSplashSettings, globalSettings);
+            SplashSettingsSyncHelper.ApplyGlobalIndicatorSettings(Settings.GeneralSplashSettings, _globalSettings);
 
-            if (removeCustomBackground)
+            if (_removeCustomBackground)
             {
                 DeleteCurrentGameBackground();
             }
-            else if (saveCustomBackground && !CustomBackgroundPath.IsNullOrEmpty() && FileSystem.FileExists(CustomBackgroundPath))
+            else if (_saveCustomBackground && !CustomBackgroundPath.IsNullOrEmpty() && FileSystem.FileExists(CustomBackgroundPath))
             {
                 DeleteCurrentGameBackground();
                 var fileName = Guid.NewGuid() + Path.GetExtension(CustomBackgroundPath);
-                var customBackgroundImagePathTarget = Path.Combine(customBackgroundsDirectory, fileName);
+                var customBackgroundImagePathTarget = Path.Combine(_customBackgroundsDirectory, fileName);
                 try
                 {
                     FileSystem.CopyFile(CustomBackgroundPath, customBackgroundImagePathTarget);
@@ -105,20 +102,20 @@ namespace SplashScreen.ViewModels
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, $"Error copying game custom background image from {CustomBackgroundPath} to {customBackgroundImagePathTarget}");
+                    _logger.Error(e, $"Error copying game custom background image from {CustomBackgroundPath} to {customBackgroundImagePathTarget}");
                 }
             }
 
-            FileSystem.WriteStringToFile(gameSettingsPath, Serialization.ToJson(Settings));
-            playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_GameSettingsWindowSettingsSavedLabel"), "Splash Screen");
+            FileSystem.WriteStringToFile(_gameSettingsPath, Serialization.ToJson(Settings));
+            _playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_GameSettingsWindowSettingsSavedLabel"), "Splash Screen");
         }
 
         public RelayCommand RemoveCustomBackgroundCommand
         {
             get => new RelayCommand(() =>
             {
-                removeCustomBackground = true;
-                saveCustomBackground = false;
+                _removeCustomBackground = true;
+                _saveCustomBackground = false;
                 CustomBackgroundPath = null;
             }, () => CustomBackgroundPath != null);
         }
@@ -135,14 +132,14 @@ namespace SplashScreen.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                var filePath = playniteApi.Dialogs.SelectImagefile();
+                var filePath = _playniteApi.Dialogs.SelectImagefile();
                 if (filePath.IsNullOrEmpty() || !FileSystem.FileExists(filePath))
                 {
                     return;
                 }
 
-                removeCustomBackground = false;
-                saveCustomBackground = true;
+                _removeCustomBackground = false;
+                _saveCustomBackground = true;
                 CustomBackgroundPath = filePath;
             });
         }
