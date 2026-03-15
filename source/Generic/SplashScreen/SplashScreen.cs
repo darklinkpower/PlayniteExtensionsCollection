@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
+using SplashScreen.Helpers;
 using SplashScreen.Models;
 using SplashScreen.ViewModels;
 using SplashScreen.Views;
@@ -196,6 +197,7 @@ namespace SplashScreen
                 var gameSplashSettings = Serialization.FromJsonFile<GameSplashSettings>(gameSettingsPath);
                 if (gameSplashSettings.EnableGameSpecificSettings)
                 {
+                    SplashSettingsSyncHelper.ApplyGlobalIndicatorSettings(gameSplashSettings.GeneralSplashSettings, settings.Settings.GeneralSplashSettings);
                     return gameSplashSettings.GeneralSplashSettings;
                 }
             }
@@ -580,7 +582,7 @@ namespace SplashScreen
             window.Title = "Splash Screen";
 
             window.Content = new GameSettingsWindow();
-            window.DataContext = new GameSettingsWindowViewModel(PlayniteApi, GetPluginUserDataPath(), game);
+            window.DataContext = new GameSettingsWindowViewModel(PlayniteApi, GetPluginUserDataPath(), game, settings.Settings.GeneralSplashSettings);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 

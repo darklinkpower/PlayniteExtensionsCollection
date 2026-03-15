@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Abrir gestor de vídeo</sys:String>
@@ -36,6 +36,20 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Abajo</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Usar animación de desvanecimiento para la imagen de la ventana de SplashScreen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Usar animación de desvanecimiento para el logo de la ventana de SplashScreen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingShowLoadingSpinnerLabel">Mostrar indicador de carga</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSizeLabel">Tamaño del indicador (píxeles):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerOpacityLabel">Opacidad del indicador:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSpeedLabel">Velocidad del indicador (segundos por vuelta):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewLabel">Vista previa:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Fondo de la vista previa:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Grosor del indicador (píxeles):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Cantidad de trazos del indicador:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Longitud del trazo del indicador (píxeles):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Usar extremos redondeados en los trazos</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Ajustar automáticamente la velocidad según el tamaño del indicador</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_SettingSafeAreaPaddingLabel">Relleno del área segura (píxeles):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingBackgroundImageOpacityLabel">Opacidad de la imagen de fondo:</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Usar una imagen global para todos los juegos</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Usa el logo del juego en la imagen global si está disponible</sys:String>
@@ -57,3 +71,4 @@
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Guardar configuración</sys:String>
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Configuración guardada</sys:String>
 </ResourceDictionary>
+

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Open video manager</sys:String>
@@ -36,6 +36,20 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Bottom</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingShowLoadingSpinnerLabel">Wys laaispinner</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSizeLabel">Spinnergrootte (pixels):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerOpacityLabel">Spinner-deursigtigheid:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSpeedLabel">Spinner-spoed (sekondes per omwenteling):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewLabel">Voorskou:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Voorskou-agtergrond:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Dikte van laaispinner (pixels):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Aantal strepies van laaispinner:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Lengte van spinnerstrepie (pixels):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Gebruik afgeronde strepie-eindes</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Pas spinner-spoed outomaties aan volgens spinnergrootte</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_SettingSafeAreaPaddingLabel">Veilige area-opvulling (pixels):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingBackgroundImageOpacityLabel">Ondeursigtigheid van agtergrondbeeld:</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Use a global splash image for all games</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Use game logo in global splash image if it's available</sys:String>
@@ -57,3 +71,4 @@
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
 </ResourceDictionary>
+

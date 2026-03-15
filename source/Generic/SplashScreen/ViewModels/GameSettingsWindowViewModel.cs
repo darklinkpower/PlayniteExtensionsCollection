@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
+using SplashScreen.Helpers;
 using SplashScreen.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace SplashScreen.ViewModels
         private readonly string pluginUserDataPath;
         private readonly string customBackgroundsDirectory;
         private readonly string gameSettingsPath;
+        private readonly GeneralSplashSettings globalSettings;
         private bool saveCustomBackground = false;
         private bool removeCustomBackground = false;
 
@@ -46,10 +48,11 @@ namespace SplashScreen.ViewModels
             { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentBottomLabel") },
         };
 
-        public GameSettingsWindowViewModel(IPlayniteAPI playniteApi, string pluginUserDataPath, Game game)
+        public GameSettingsWindowViewModel(IPlayniteAPI playniteApi, string pluginUserDataPath, Game game, GeneralSplashSettings globalSettings)
         {
             this.playniteApi = playniteApi;
             this.pluginUserDataPath = pluginUserDataPath;
+            this.globalSettings = Serialization.GetClone(globalSettings);
             customBackgroundsDirectory = Path.Combine(pluginUserDataPath, "CustomBackgrounds");
             Game = game;
 
@@ -62,6 +65,8 @@ namespace SplashScreen.ViewModels
                     CustomBackgroundPath = Path.Combine(customBackgroundsDirectory, Settings.GeneralSplashSettings.CustomBackgroundImage);
                 }
             }
+
+            SplashSettingsSyncHelper.ApplyGlobalIndicatorSettings(Settings.GeneralSplashSettings, globalSettings);
         }
 
         private void DeleteCurrentGameBackground()
@@ -82,6 +87,8 @@ namespace SplashScreen.ViewModels
 
         private void SaveGameSettings()
         {
+            SplashSettingsSyncHelper.ApplyGlobalIndicatorSettings(Settings.GeneralSplashSettings, globalSettings);
+
             if (removeCustomBackground)
             {
                 DeleteCurrentGameBackground();
