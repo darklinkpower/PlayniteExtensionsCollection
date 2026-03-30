@@ -1,0 +1,162 @@
+<Window x:Class="EmlFullscreen.FullscreenVideoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        WindowState="Maximized"
+        AllowsTransparency="False"
+        Topmost="True"
+        Background="Black"
+        KeyDown="Window_KeyDown"
+        MouseDoubleClick="Window_MouseDoubleClick"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid>
+        <MediaElement Name="fsPlayer"
+                      LoadedBehavior="Manual"
+                      ScrubbingEnabled="True"
+                      Stretch="Uniform"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      MediaOpened="FsPlayer_MediaOpened"
+                      MediaEnded="FsPlayer_MediaEnded" />
+
+        <!-- Exit fullscreen button overlay -->
+        <Border HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="20"
+                Padding="14,6"
+                Background="#88000000"
+                CornerRadius="6"
+                Cursor="Hand"
+                MouseLeftButtonDown="ExitButton_MouseLeftButtonDown">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0.15" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.9" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.15" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock Text="✕" FontSize="20" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+
+        <!-- Transport controls bar at the bottom -->
+        <Border Name="ControlBar"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Stretch"
+                Margin="40,0,40,30"
+                Padding="12,8"
+                Background="#88000000"
+                CornerRadius="6"
+                Cursor="Arrow"
+                MouseLeftButtonDown="ControlBar_MouseLeftButtonDown">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0.15" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.9" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.15" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <DockPanel LastChildFill="True">
+                <!-- Play/Pause button -->
+                <Button Name="PlayPauseButton"
+                        DockPanel.Dock="Left"
+                        Click="PlayPauseButton_Click"
+                        Foreground="White"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="4"
+                        Margin="0,0,10,0"
+                        Cursor="Hand"
+                        VerticalAlignment="Center">
+                    <TextBlock Name="PlayPauseIcon"
+                               FontFamily="Segoe MDL2 Assets"
+                               Text="&#xE769;"
+                               FontSize="20" />
+                </Button>
+
+                <!-- Time display -->
+                <TextBlock Name="TimeDisplay"
+                           DockPanel.Dock="Left"
+                           Foreground="White"
+                           FontSize="13"
+                           VerticalAlignment="Center"
+                           Margin="0,0,12,0"
+                           Text="00:00 / 00:00" />
+
+                <!-- Volume controls (right-docked) -->
+                <Slider Name="VolumeSlider"
+                        DockPanel.Dock="Right"
+                        Width="90"
+                        Minimum="0" Maximum="1"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="0.025"
+                        VerticalAlignment="Center"
+                        Margin="4,0,0,0"
+                        ValueChanged="VolumeSlider_ValueChanged" />
+
+                <!-- Mute button -->
+                <Button Name="MuteButton"
+                        DockPanel.Dock="Right"
+                        Click="MuteButton_Click"
+                        Foreground="White"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="4"
+                        Margin="10,0,0,0"
+                        Cursor="Hand"
+                        VerticalAlignment="Center">
+                    <TextBlock Name="MuteIcon"
+                               FontFamily="Segoe MDL2 Assets"
+                               Text="&#xE767;"
+                               FontSize="18" />
+                </Button>
+
+                <!-- Timeline slider (fills remaining space) -->
+                <Slider Name="TimelineSlider"
+                        Minimum="0"
+                        IsMoveToPointEnabled="True"
+                        VerticalAlignment="Center"
+                        Margin="0,0,10,0"
+                        Thumb.DragStarted="TimelineSlider_DragStarted"
+                        Thumb.DragCompleted="TimelineSlider_DragCompleted"
+                        PreviewMouseUp="TimelineSlider_PreviewMouseUp" />
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,4 +1,5 @@
-﻿using ExtraMetadataLoader.Models;
+using ExtraMetadataLoader.Models;
+using EmlFullscreen;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
@@ -105,6 +106,9 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private bool _isInFullscreen = false;
+        public RelayCommand EnterFullscreenCommand { get; private set; }
+
         public double VideoPlayerVolumeLinear
         {
             get => Math.Sqrt(videoPlayerVolume);
@@ -195,6 +199,8 @@ namespace ExtraMetadataLoader
             updatePlayerTimer.Tick += new EventHandler(UpdaterPlayerTimer_Tick);
 
             SetControlTextBlockStyle();
+
+            EnterFullscreenCommand = new RelayCommand(() => EnterFullscreen(), () => true);
         }
 
         private void SetControlTextBlockStyle()
@@ -268,6 +274,8 @@ namespace ExtraMetadataLoader
 
         void MediaPlay()
         {
+            if (_isInFullscreen) return;
+
             player.Play();
             timer.Start();
             SettingsModel.Settings.IsVideoPlaying = true;
@@ -369,6 +377,8 @@ namespace ExtraMetadataLoader
 
         private void player_MediaEnded(object sender, EventArgs e)
         {
+            if (_isInFullscreen) return;
+
             if (activeVideoType == ActiveVideoType.Trailer && SettingsModel.Settings.RepeatTrailerVideos
                 || activeVideoType == ActiveVideoType.Microtrailer || !displayControls)
             {
@@ -405,6 +415,71 @@ namespace ExtraMetadataLoader
 
             OnPropertyChanged(nameof(VideoPlayCommand));
             OnPropertyChanged(nameof(VideoPauseCommand));
+        }
+
+        private void Player_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                EnterFullscreenCommand?.Execute(null);
+            }
+        }
+
+        private void EnterFullscreen()
+        {
+            if (_isInFullscreen || VideoSource == null) return;
+            
+            _isInFullscreen = true;
+            bool wasPlaying = SettingsModel.Settings.IsVideoPlaying;
+            TimeSpan currentPosition = player.Position;
+            double currentVolume = VideoPlayerVolumeLinear;
+            bool isMuted = IsPlayerMuted;
+            
+            player.Pause();
+            timer.Stop();
+            SettingsModel.Settings.IsVideoPlaying = false;
+
+            Window ownerWindow = Window.GetWindow(this);
+            var fsWindow = new FullscreenVideoWindow(
+                source: VideoSource,
+                startPosition: currentPosition,
+                volume: currentVolume,
+                startPlaying: wasPlaying,
+                shouldLoop: true,
+                isMuted: isMuted
+            );
+            
+            if (ownerWindow != null)
+            {
+                fsWindow.Owner = ownerWindow;
+                fsWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+            else
+            {
+                fsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+
+            fsWindow.ShowDialog();
+            
+            ExitFullscreen(fsWindow);
+        }
+
+        private void ExitFullscreen(FullscreenVideoWindow fsWindow)
+        {
+            _isInFullscreen = false;
+            
+            // Sync play state, position, volume, and mute exactly from the fullscreen window's exit state
+            bool shouldPlay = fsWindow.WasPlaying;
+            TimeSpan finalPosition = fsWindow.ExitPosition;
+            VideoPlayerVolumeLinear = fsWindow.ExitVolume;
+            IsPlayerMuted = fsWindow.ExitMuted;
+
+            player.Position = finalPosition;
+            
+            if (shouldPlay && displayControls)
+            {
+                MediaPlay();
+            }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)

@@ -1,4 +1,4 @@
-﻿<PluginUserControl x:Class="ExtraMetadataLoader.VideoPlayerControl"
+<PluginUserControl x:Class="ExtraMetadataLoader.VideoPlayerControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=local:VideoPlayerControl}">
     <Grid Name="ControlGrid" Visibility="{Binding ControlVisibility}" MinHeight="120">
-        <Grid>
+        <Grid MouseLeftButtonDown="Player_MouseLeftButtonDown" Background="Transparent">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Visible" />
@@ -145,6 +145,15 @@
                                 Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.025"/>
                     </DockPanel>
                 </Grid>
+                <Button DockPanel.Dock="Left" Name="FullscreenButton"
+                        Command="{Binding EnterFullscreenCommand}"
+                        ToolTip="Fullscreen"
+                        Margin="10,0,0,0" Padding="5">
+                    <Button.Content>
+                        <TextBlock FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE740;" FontSize="20" Margin="0,2,0,0" />
+                    </Button.Content>
+                </Button>
             </WrapPanel>
         </Border>
     </Grid>
