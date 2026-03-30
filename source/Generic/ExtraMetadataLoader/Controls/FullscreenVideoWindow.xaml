@@ -97,6 +97,7 @@
                 <Button Name="PlayPauseButton"
                         DockPanel.Dock="Left"
                         Click="PlayPauseButton_Click"
+                        Focusable="False"
                         Foreground="White"
                         Background="Transparent"
                         BorderThickness="0"
@@ -121,6 +122,7 @@
 
                 <!-- Volume controls (right-docked) -->
                 <Slider Name="VolumeSlider"
+                        Focusable="False"
                         DockPanel.Dock="Right"
                         Width="90"
                         Minimum="0" Maximum="1"
@@ -134,6 +136,7 @@
                 <Button Name="MuteButton"
                         DockPanel.Dock="Right"
                         Click="MuteButton_Click"
+                        Focusable="False"
                         Foreground="White"
                         Background="Transparent"
                         BorderThickness="0"
@@ -149,6 +152,7 @@
 
                 <!-- Timeline slider (fills remaining space) -->
                 <Slider Name="TimelineSlider"
+                        Focusable="False"
                         Minimum="0"
                         IsMoveToPointEnabled="True"
                         VerticalAlignment="Center"
