@@ -20,13 +20,14 @@ This update adds the ability to view game videos in a borderless, maximized full
   - Click the **✕** overlay button in the top-right corner.
 - **Auto-Looping**: Respects the "Repeat trailer videos" setting from the plugin configuration.
 
-## 🛠️ Technical Bug Fixes Included
+## 🛠️ Technical Implementation & Bug Fixes
 
-This branch includes robust fixes to the WPF `MediaElement` implementation:
+This feature has been surgically ported to the stable `emlCrashFix2025` branch, avoiding regressions in the `master` repository (such as the broken Steam Video downloader). It includes robust fixes to the WPF `MediaElement` implementation:
+- **Spacebar Focus Fix**: Explicitly set `Focusable="False"` on all interactive control buttons and sliders in the fullscreen window. This prevents mouse clicks from stealing keyboard focus, ensuring the Spacebar consistently acts as a global Play/Pause toggle rather than re-triggering the last clicked button.
 - **Black Screen on Pause resolved**: When entering fullscreen while a video is paused, WPF natively fails to render the initial frame, presenting a black screen. A robust `fsPlayer.Pause()` injection during initialization forces the pipeline to immediately render the initial start position frame.
 - **Stream Reset fixed**: Prevented an aggressive WPF bug that resets a manual stream back to `00:00` the very first time `Play()` is called from a Paused state.
 - **Mute Syncing**: Fixed logic where the fullscreen player would ignore the embedded player's mute state. 
-- **Compilation Repair**: Resolved 18 pre-existing namespace collisions and missing code references in `VideosDownloader.cs`, `SteamMetadataProvider.cs`, and `ExtraMetadataLoader.cs` related to an incomplete service-layer refactoring. Resolves `MouseDoubleClick` missing on `Grid` elements.
+- **Compilation & Integration**: Cleanly injected the new windows into the existing `ExtraMetadataLoader.csproj` structure, ensuring zero compilation errors on the `emlCrashFix2025` foundation while adhering to the original author's strict coding guidelines (PascalCase, camelCase with underscores, etc.).
 
 ## 🧪 Installation & Testing Instructions
 
