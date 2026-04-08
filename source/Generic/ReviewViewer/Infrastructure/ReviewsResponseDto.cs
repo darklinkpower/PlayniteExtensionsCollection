@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Playnite.SDK.Data;
+﻿using Playnite.SDK.Data;
+using System;
+using System.Collections.Generic;
 
 namespace ReviewViewer.Infrastructure
 {
@@ -85,12 +86,27 @@ namespace ReviewViewer.Infrastructure
 
         [SerializationPropertyName("primarily_steam_deck")]
         public bool PrimarilySteamDeck { get; set; }
+
+        [SerializationPropertyName("hardware")]
+        public Hardware Hardware { get; set; }
+
+        [SerializationPropertyName("csgo_disclaimer")]
+        public bool CsgoDisclaimer { get; set; }
     }
 
     public class Author
     {
         [SerializationPropertyName("steamid")]
         public string Steamid { get; set; }
+
+        [SerializationPropertyName("personaname")]
+        public string PersonaName { get; set; }
+
+        [SerializationPropertyName("persona_status")]
+        public PersonaStatus PersonaStatus { get; set; }
+
+        [SerializationPropertyName("profile_url")]
+        public Uri ProfileUrl { get; set; }
 
         [SerializationPropertyName("num_games_owned")]
         public long NumGamesOwned { get; set; }
@@ -107,10 +123,78 @@ namespace ReviewViewer.Infrastructure
         [SerializationPropertyName("playtime_at_review")]
         public long PlaytimeAtReview { get; set; }
 
-        [SerializationPropertyName("deck_playtime_at_review")]
-        public long? DeckPlaytimeAtReview { get; set; }
-
         [SerializationPropertyName("last_played")]
         public long LastPlayed { get; set; }
+
+        [SerializationPropertyName("avatar")]
+        public Uri Avatar { get; set; }
+
+        [SerializationPropertyName("deck_playtime_at_review")]
+        public long? DeckPlaytimeAtReview { get; set; }
     }
+
+    public partial class Reaction
+    {
+        [SerializationPropertyName("reaction_type")]
+        public uint ReactionType { get; set; }
+
+        [SerializationPropertyName("count")]
+        public uint Count { get; set; }
+    }
+
+    public partial class Hardware
+    {
+        [SerializationPropertyName("manufacturer")]
+        public string Manufacturer { get; set; }
+
+        [SerializationPropertyName("model")]
+        public string Model { get; set; }
+
+        [SerializationPropertyName("dx_video_card")]
+        public string DxVideoCard { get; set; }
+
+        [SerializationPropertyName("dx_vendorid")]
+        public uint DxVendorid { get; set; }
+
+        [SerializationPropertyName("dx_deviceid")]
+        public uint DxDeviceid { get; set; }
+
+        [SerializationPropertyName("num_gpu")]
+        public uint NumGpu { get; set; }
+
+        [SerializationPropertyName("system_ram")]
+        public string SystemRam { get; set; }
+
+        [SerializationPropertyName("os")]
+        public string Os { get; set; }
+
+        [SerializationPropertyName("cpu_vendor")]
+        public string CpuVendor { get; set; }
+
+        [SerializationPropertyName("cpu_name")]
+        public string CpuName { get; set; }
+
+        [SerializationPropertyName("gaming_device_type")]
+        public uint GamingDeviceType { get; set; }
+
+        [SerializationPropertyName("dx_driver_version")]
+        public string DxDriverVersion { get; set; }
+
+        [SerializationPropertyName("dx_driver_name")]
+        public string DxDriverName { get; set; }
+
+        [SerializationPropertyName("adapter_description")]
+        public string AdapterDescription { get; set; }
+
+        [SerializationPropertyName("driver_version")]
+        public string DriverVersion { get; set; }
+
+        [SerializationPropertyName("driver_date")]
+        public string DriverDate { get; set; }
+
+        [SerializationPropertyName("vram_size")]
+        public uint VramSize { get; set; }
+    }
+
+    public enum PersonaStatus { InGame, Offline, Online };
 }

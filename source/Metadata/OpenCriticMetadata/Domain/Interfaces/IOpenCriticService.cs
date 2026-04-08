@@ -10,8 +10,8 @@ namespace OpenCriticMetadata.Domain.Interfaces
 {
     public interface IOpenCriticService
     {
-        Task<List<OpenCriticGameResult>> GetGameSearchResultsAsync(string searchTerm, CancellationToken cancelToken = default);
-        Task<OpenCriticGameData> GetGameDataAsync(string gameId, CancellationToken cancelToken = default);
-        Task<OpenCriticGameData> GetGameDataAsync(OpenCriticGameResult gameData, CancellationToken cancelToken = default);
+        Task<List<OpenCriticGameResult>> GetGameSearchResultsAsync(string apiKey, string searchTerm, CancellationToken cancelToken = default);
+        Task<OpenCriticGameData> GetGameDataAsync(string apiKey, string gameId, CancellationToken cancelToken = default);
+        Task<OpenCriticGameData> GetGameDataAsync(string apiKey, OpenCriticGameResult gameData, CancellationToken cancelToken = default);
     }
 }

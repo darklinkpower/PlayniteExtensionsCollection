@@ -14,15 +14,17 @@ namespace OpenCriticMetadata
     public class OpenCriticSearchContext : SearchContext
     {
         private readonly IOpenCriticService _openCriticService;
+        private readonly OpenCriticMetadataSettingsViewModel _settings;
         private const string _openCriticGameUrlTemplate = @"https://opencritic.com/game/{0}/{1}";
 
-        public OpenCriticSearchContext(IOpenCriticService openCriticService)
+        public OpenCriticSearchContext(OpenCriticMetadataSettingsViewModel settings, IOpenCriticService openCriticService)
         {
             Description = "Enter search term";
             Label = "OpenCritic";
             Hint = "Searches games on OpenCritic";
             Delay = 600;
             _openCriticService = openCriticService;
+            _settings = settings;
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -34,7 +36,7 @@ namespace OpenCriticMetadata
                 return searchItems;
             }
 
-            var searchResults = Task.Run(() => _openCriticService.GetGameSearchResultsAsync(searchTerm))
+            var searchResults = Task.Run(() => _openCriticService.GetGameSearchResultsAsync(_settings.Settings.ApiKey, searchTerm))
                 .GetAwaiter().GetResult();
             if (args.CancelToken.IsCancellationRequested)
             {

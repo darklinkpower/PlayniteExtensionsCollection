@@ -10,7 +10,8 @@ namespace OpenCriticMetadata
 {
     public class OpenCriticMetadataSettings : ObservableObject
     {
-
+        private string _apiKey = string.Empty;
+        public string ApiKey { get => _apiKey; set => SetValue(ref _apiKey, value); }
     }
 
     public class OpenCriticMetadataSettingsViewModel : ObservableObject, ISettings

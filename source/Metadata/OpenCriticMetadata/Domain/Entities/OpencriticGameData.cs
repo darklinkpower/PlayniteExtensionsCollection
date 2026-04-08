@@ -9,29 +9,32 @@ namespace OpenCriticMetadata.Domain.Entities
 {
     public class OpenCriticGameData
     {
+        [SerializationPropertyName("reviewSummary")]
+        public SummaryObject ReviewSummary { get; set; }
+
         [SerializationPropertyName("images")]
         public Images Images { get; set; }
-
-        [SerializationPropertyName("mainChannel")]
-        public MainChannel MainChannel { get; set; }
 
         [SerializationPropertyName("Rating")]
         public Rating Rating { get; set; }
 
-        [SerializationPropertyName("imageMigrationComplete")]
-        public bool ImageMigrationComplete { get; set; }
+        [SerializationPropertyName("isPre2015")]
+        public bool IsPre2015 { get; set; }
 
         [SerializationPropertyName("hasLootBoxes")]
         public bool? HasLootBoxes { get; set; }
+
+        [SerializationPropertyName("isMajorTitle")]
+        public bool IsMajorTitle { get; set; }
 
         [SerializationPropertyName("percentRecommended")]
         public double PercentRecommended { get; set; }
 
         [SerializationPropertyName("numReviews")]
-        public int NumReviews { get; set; }
+        public uint NumReviews { get; set; }
 
         [SerializationPropertyName("numTopCriticReviews")]
-        public int NumTopCriticReviews { get; set; }
+        public uint NumTopCriticReviews { get; set; }
 
         [SerializationPropertyName("medianScore")]
         public double MedianScore { get; set; }
@@ -45,32 +48,41 @@ namespace OpenCriticMetadata.Domain.Entities
         [SerializationPropertyName("tier")]
         public string Tier { get; set; }
 
-        [SerializationPropertyName("Platforms")]
-        public Platform[] Platforms { get; set; }
-
-        [SerializationPropertyName("Genres")]
-        public Genre[] Genres { get; set; }
-
-        [SerializationPropertyName("Companies")]
-        public Company[] Companies { get; set; }
-
-        [SerializationPropertyName("trailers")]
-        public Trailer[] Trailers { get; set; }
-
         [SerializationPropertyName("name")]
         public string Name { get; set; }
 
         [SerializationPropertyName("description")]
         public string Description { get; set; }
 
-        [SerializationPropertyName("id")]
-        public long Id { get; set; }
+        [SerializationPropertyName("screenshots")]
+        public OpencrocketScreenshot[] Screenshots { get; set; }
 
-        [SerializationPropertyName("firstReleaseDate")]
-        public DateTimeOffset? FirstReleaseDate { get; set; }
+        [SerializationPropertyName("trailers")]
+        public List<Trailer> Trailers { get; set; }
+
+        [SerializationPropertyName("embargoDate")]
+        public DateTimeOffset? EmbargoDate { get; set; }
+
+        [SerializationPropertyName("monetizationFeatures")]
+        public MonetizationFeatures MonetizationFeatures { get; set; }
+
+        [SerializationPropertyName("Companies")]
+        public List<Company> Companies { get; set; }
+
+        [SerializationPropertyName("Platforms")]
+        public List<Platform> Platforms { get; set; }
+
+        [SerializationPropertyName("Genres")]
+        public List<Genre> Genres { get; set; }
 
         [SerializationPropertyName("Affiliates")]
-        public Affiliate[] Affiliates { get; set; }
+        public List<Affiliate> Affiliates { get; set; }
+
+        [SerializationPropertyName("id")]
+        public uint Id { get; set; }
+
+        [SerializationPropertyName("firstReleaseDate")]
+        public DateTimeOffset FirstReleaseDate { get; set; }
 
         [SerializationPropertyName("createdAt")]
         public DateTimeOffset CreatedAt { get; set; }
@@ -84,17 +96,59 @@ namespace OpenCriticMetadata.Domain.Entities
         [SerializationPropertyName("latestReviewDate")]
         public DateTimeOffset? LatestReviewDate { get; set; }
 
+        [SerializationPropertyName("bannerScreenshot")]
+        public BannerScreenshotClass BannerScreenshot { get; set; }
+
+        [SerializationPropertyName("oldObject")]
+        public SummaryObject OldObject { get; set; }
+
+        [SerializationPropertyName("squareScreenshot")]
+        public SquareScreenshotClass SquareScreenshot { get; set; }
+
+        [SerializationPropertyName("verticalLogoScreenshot")]
+        public SquareScreenshotClass VerticalLogoScreenshot { get; set; }
+
+        [SerializationPropertyName("mastheadScreenshot")]
+        public BannerScreenshotClass MastheadScreenshot { get; set; }
+
+        [SerializationPropertyName("imageMigrationComplete")]
+        public bool ImageMigrationComplete { get; set; }
+
+        [SerializationPropertyName("tenthReviewDate")]
+        public DateTimeOffset TenthReviewDate { get; set; }
+
+        [SerializationPropertyName("criticalReviewDate")]
+        public DateTimeOffset CriticalReviewDate { get; set; }
+
+        [SerializationPropertyName("biggestDiscountDollars")]
+        public long BiggestDiscountDollars { get; set; }
+
+        [SerializationPropertyName("biggestDiscountPercentage")]
+        public long BiggestDiscountPercentage { get; set; }
+
+        [SerializationPropertyName("needsAdminDealReview")]
+        public bool NeedsAdminDealReview { get; set; }
+
+        [SerializationPropertyName("tags")]
+        public List<string> Tags { get; set; }
+
         [SerializationPropertyName("url")]
         public Uri Url { get; set; }
     }
 
-    public partial class Affiliate
+    public class Affiliate
     {
         [SerializationPropertyName("externalUrl")]
         public Uri ExternalUrl { get; set; }
 
         [SerializationPropertyName("name")]
         public string Name { get; set; }
+    }
+
+    public class BannerScreenshotClass
+    {
+        [SerializationPropertyName("fullRes")]
+        public string FullRes { get; set; }
     }
 
     public class Company
@@ -115,7 +169,7 @@ namespace OpenCriticMetadata.Domain.Entities
         public string Name { get; set; }
     }
 
-    public partial class Images
+    public class Images
     {
         [SerializationPropertyName("box")]
         public Banner Box { get; set; }
@@ -123,11 +177,14 @@ namespace OpenCriticMetadata.Domain.Entities
         [SerializationPropertyName("square")]
         public Square Square { get; set; }
 
+        [SerializationPropertyName("masthead")]
+        public Masthead Masthead { get; set; }
+
         [SerializationPropertyName("banner")]
         public Banner Banner { get; set; }
 
         [SerializationPropertyName("screenshots")]
-        public Screenshot[] Screenshots { get; set; }
+        public ImagesScreenshot[] Screenshots { get; set; }
     }
 
     public class Banner
@@ -139,16 +196,37 @@ namespace OpenCriticMetadata.Domain.Entities
         public string Sm { get; set; }
     }
 
-    public class Screenshot
+    public class Masthead
     {
-        [SerializationPropertyName("_id")]
-        public string Id { get; set; }
+        [SerializationPropertyName("og")]
+        public string Og { get; set; }
 
+        [SerializationPropertyName("xs")]
+        public string Xs { get; set; }
+
+        [SerializationPropertyName("sm")]
+        public string Sm { get; set; }
+
+        [SerializationPropertyName("md")]
+        public string Md { get; set; }
+
+        [SerializationPropertyName("lg")]
+        public string Lg { get; set; }
+
+        [SerializationPropertyName("xl")]
+        public string Xl { get; set; }
+    }
+
+    public class ImagesScreenshot
+    {
         [SerializationPropertyName("og")]
         public string Og { get; set; }
 
         [SerializationPropertyName("sm")]
         public string Sm { get; set; }
+
+        [SerializationPropertyName("_id")]
+        public string Id { get; set; }
     }
 
     public class Square
@@ -166,25 +244,19 @@ namespace OpenCriticMetadata.Domain.Entities
         public string Lg { get; set; }
     }
 
-    public class MainChannel
+    public class MonetizationFeatures
     {
-        [SerializationPropertyName("channelId")]
-        public string ChannelId { get; set; }
+        [SerializationPropertyName("summary")]
+        public string Summary { get; set; }
 
-        [SerializationPropertyName("channelTitle")]
-        public string ChannelTitle { get; set; }
+        [SerializationPropertyName("hasLootBoxes")]
+        public bool HasLootBoxes { get; set; }
+    }
 
-        [SerializationPropertyName("description")]
-        public string Description { get; set; }
-
-        [SerializationPropertyName("title")]
-        public string Title { get; set; }
-
-        [SerializationPropertyName("image")]
-        public Uri Image { get; set; }
-
-        [SerializationPropertyName("externalUrl")]
-        public Uri ExternalUrl { get; set; }
+    public partial class SummaryObject
+    {
+        [SerializationPropertyName("summary")]
+        public string Summary { get; set; }
     }
 
     public class Platform
@@ -198,26 +270,59 @@ namespace OpenCriticMetadata.Domain.Entities
         [SerializationPropertyName("shortName")]
         public string ShortName { get; set; }
 
+        [SerializationPropertyName("imageSrc")]
+        public Uri ImageSrc { get; set; }
+
         [SerializationPropertyName("releaseDate")]
         public DateTimeOffset ReleaseDate { get; set; }
+
+        [SerializationPropertyName("displayRelease")]
+        public object DisplayRelease { get; set; }
     }
 
     public class Rating
     {
         [SerializationPropertyName("value")]
         public string Value { get; set; }
+
+        [SerializationPropertyName("imageSrc")]
+        public Uri ImageSrc { get; set; }
+    }
+
+    public class OpencrocketScreenshot
+    {
+        [SerializationPropertyName("_id")]
+        public string Id { get; set; }
+
+        [SerializationPropertyName("fullRes")]
+        public string FullRes { get; set; }
+
+        [SerializationPropertyName("thumbnail")]
+        public string Thumbnail { get; set; }
+    }
+
+    public class SquareScreenshotClass
+    {
+        [SerializationPropertyName("fullRes")]
+        public string FullRes { get; set; }
+
+        [SerializationPropertyName("thumbnail")]
+        public string Thumbnail { get; set; }
     }
 
     public class Trailer
     {
-        [SerializationPropertyName("publishedDate")]
-        public DateTimeOffset PublishedDate { get; set; }
-
         [SerializationPropertyName("title")]
         public string Title { get; set; }
 
         [SerializationPropertyName("videoId")]
         public string VideoId { get; set; }
+
+        [SerializationPropertyName("channelId")]
+        public string ChannelId { get; set; }
+
+        [SerializationPropertyName("description")]
+        public string Description { get; set; }
 
         [SerializationPropertyName("externalUrl")]
         public Uri ExternalUrl { get; set; }
@@ -225,10 +330,13 @@ namespace OpenCriticMetadata.Domain.Entities
         [SerializationPropertyName("channelTitle")]
         public string ChannelTitle { get; set; }
 
-        [SerializationPropertyName("channelId")]
-        public string ChannelId { get; set; }
+        [SerializationPropertyName("publishedDate")]
+        public DateTimeOffset PublishedDate { get; set; }
 
-        [SerializationPropertyName("description")]
-        public string Description { get; set; }
+        [SerializationPropertyName("isOpenCritic")]
+        public bool IsOpenCritic { get; set; }
+
+        [SerializationPropertyName("isSpecial")]
+        public string IsSpecial { get; set; }
     }
 }

@@ -16,17 +16,19 @@ namespace OpenCriticMetadata
         private readonly MetadataRequestOptions _options;
         private readonly OpenCriticMetadata _plugin;
         private readonly IOpenCriticService _openCriticService;
+        private readonly OpenCriticMetadataSettingsViewModel _settings;
 
         public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>
         {
             MetadataField.CriticScore
         };
 
-        public OpenCriticMetadataProvider(MetadataRequestOptions options, OpenCriticMetadata plugin, IOpenCriticService openCriticService)
+        public OpenCriticMetadataProvider(MetadataRequestOptions options, OpenCriticMetadata plugin, IOpenCriticService openCriticService, OpenCriticMetadataSettingsViewModel settings)
         {
             _options = options;
             _plugin = plugin;
             _openCriticService = openCriticService;
+            _settings = settings;
         }
 
         public override int? GetCriticScore(GetMetadataFieldArgs args)
@@ -34,7 +36,7 @@ namespace OpenCriticMetadata
             if (_options.IsBackgroundDownload)
             {
                 var gameResults = Task.Run(
-                    () => _openCriticService.GetGameSearchResultsAsync(_options.GameData.Name, args.CancelToken))
+                    () => _openCriticService.GetGameSearchResultsAsync(_settings.Settings.ApiKey, _options.GameData.Name, args.CancelToken))
                     .GetAwaiter().GetResult();
                 if (!gameResults.HasItems())
                 {
@@ -46,7 +48,7 @@ namespace OpenCriticMetadata
                 if (resultMatch != null)
                 {
                     var data = Task.Run(
-                        () => _openCriticService.GetGameDataAsync(resultMatch, args.CancelToken))
+                        () => _openCriticService.GetGameDataAsync(_settings.Settings.ApiKey, resultMatch, args.CancelToken))
                         .GetAwaiter().GetResult();
                     if (data != null)
                     {
@@ -65,7 +67,7 @@ namespace OpenCriticMetadata
                 if (selectedData != null)
                 {
                     var data = Task.Run(
-                        () => _openCriticService.GetGameDataAsync(selectedData.Description))
+                        () => _openCriticService.GetGameDataAsync(_settings.Settings.ApiKey, selectedData.Description))
                         .GetAwaiter().GetResult();
                     if (data != null)
                     {
@@ -79,7 +81,7 @@ namespace OpenCriticMetadata
 
         private List<GenericItemOption> GetOpencriticSearchOptions(string gameName)
         {
-            return Task.Run(() => _openCriticService.GetGameSearchResultsAsync(gameName))
+            return Task.Run(() => _openCriticService.GetGameSearchResultsAsync(_settings.Settings.ApiKey, gameName))
                 .GetAwaiter().GetResult()
                 .Select(x => new GenericItemOption(x.Name, x.Id.ToString()))
                 .ToList();

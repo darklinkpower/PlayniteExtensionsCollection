@@ -152,6 +152,8 @@
     <Compile Include="Domain\Entities\OpencriticGameData.cs" />
     <Compile Include="Domain\Entities\OpenCriticGameResult.cs" />
     <Compile Include="Domain\Interfaces\IOpenCriticService.cs" />
+    <Compile Include="Infrastructure\Clients\OpenCriticClient.cs" />
+    <Compile Include="Infrastructure\Http\RateLimitedHttpRequester.cs" />
     <Compile Include="OpenCriticMetadata.cs" />
     <Compile Include="OpenCriticMetadataProvider.cs" />
     <Compile Include="OpenCriticMetadataSettings.cs" />

@@ -17,5 +17,8 @@ namespace OpenCriticMetadata.Domain.Entities
 
         [SerializationPropertyName("dist")]
         public double Dist { get; set; }
+
+        [SerializationPropertyName("relation")]
+        public string Relation { get; set; }
     }
 }
