@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -237,6 +237,9 @@
     <Compile Include="..\..\Common\YouTubeCommon\YouTube.cs">
       <Link>Shared\YouTubeCommon\YouTube.cs</Link>
     </Compile>
+    <Compile Include="Controls\FullscreenVideoWindow.xaml.cs">
+      <DependentUpon>FullscreenVideoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VideoPlayerControl.xaml.cs">
       <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
     </Compile>
@@ -281,6 +284,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="app.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FullscreenVideoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
