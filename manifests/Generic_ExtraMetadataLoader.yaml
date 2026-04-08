@@ -593,3 +593,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.11.06_3e538f96/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_85.pext
     Changelog:
     - 'Fixed: Updated image library component to match updated component version in Playnite to fix errors when processing downloaded logos.'
+  - Version: 1.86
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.02.06_eccba1db/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_86.pext
+    Changelog:
+    - 'Added: Support to open videos in borderless fullscreen (By Dawnflare)'
