@@ -1,4 +1,4 @@
-﻿using FlowHttp;
+using FlowHttp;
 using FlowHttp.Constants;
 using JastUsaLibrary.JastUsaIntegration.Domain.Exceptions;
 using JastUsaLibrary.Services.JastUsaIntegration.Domain.ValueObjects;
@@ -92,7 +92,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
+            var translationsUrl = string.Format(@"https://app.jaststore.com/api/v2/shop/account/game-translations/{0}", translationId);
             var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(translationsUrl)
                 .WithHeaders(headers);
