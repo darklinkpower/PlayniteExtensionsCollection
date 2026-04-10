@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +8,8 @@ namespace JastUsaLibrary.Features.MetadataProvider
 {
     internal class JastUsaWebUrls
     {
-        public const string JastBaseAppUrl = @"https://app.jastusa.com";
-        public const string MyAccountPage = "https://jastusa.com/my-account";
-        public const string JastMediaUrlTemplate = @"https://app.jastusa.com/media/image/{0}";
+        public const string JastBaseAppUrl = @"https://app.jaststore.com";
+        public const string MyAccountPage = "https://jaststore.com/my-account";
+        public const string JastMediaUrlTemplate = @"https://app.jaststore.com/media/image/{0}";
     }
 }
