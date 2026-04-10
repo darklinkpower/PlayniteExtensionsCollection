@@ -31,21 +31,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             bool rememberMe,
             CancellationToken cancellationToken = default)
         {
-            if (email.IsNullOrWhiteSpace())
-            {
-                throw new ArgumentException("Email cannot be null or empty.", nameof(email));
-            }
-
-            if (password.IsNullOrWhiteSpace())
-            {
-                throw new ArgumentException("Password cannot be null or empty.", nameof(password));
-            }
-
-            if (!email.Contains('@'))
-            {
-                throw new ArgumentException("Email must be a valid address.", nameof(email));
-            }
-
+            ValidateEmail(email, password);
             var headers = new Dictionary<string, string>
             {
                 ["Accept"] = "application/json",
@@ -77,6 +63,26 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             }
 
             throw new AuthenticationErrorException(authenticationRequest.Email, authenticationRequest.Password, downloadStringResult.HttpStatusCode);
+        }
+
+        private bool ValidateEmail(string email, string password)
+        {
+            if (email.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            }
+
+            if (password.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("Password cannot be null or empty.", nameof(password));
+            }
+
+            if (!email.Contains('@'))
+            {
+                throw new ArgumentException("Email must be a valid address.", nameof(email));
+            }
+
+            return true;
         }
 
         public async Task<GameTranslationsResponse> GetGameTranslationsAsync(AuthenticationToken token, int translationId, CancellationToken cancellationToken = default)

@@ -38,6 +38,24 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
 
         public bool Login(string email, string password, bool rememberMe)
         {
+            ValidateEmail(email, password);
+            _authenticationPersistence.DeleteAuthentication();
+            var authRequest = new AuthenticationCredentials(email, password, rememberMe);
+            var token = _apiClient.GetAuthenticationToken(
+                authRequest.Email,
+                authRequest.Password,
+                authRequest.RememberMe);
+
+            if (token is null)
+            {
+                return false;
+            }
+
+            return _authenticationPersistence.SaveAuthentication(authRequest);
+        }
+
+        private bool ValidateEmail(string email, string password)
+        {
             if (email.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException("Email cannot be null or empty.", nameof(email));
@@ -53,16 +71,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
                 throw new ArgumentException("Email must be a valid address.", nameof(email));
             }
 
-            _authenticationPersistence.DeleteAuthentication();
-            var authRequest = new AuthenticationCredentials(email, password, rememberMe);
-            var token = _apiClient.GetAuthenticationToken(authRequest.Email, authRequest.Password, authRequest.RememberMe);
-            if (token != null)
-            {
-                return _authenticationPersistence.SaveAuthentication(authRequest);
-            }
-
-            _playniteApi.Dialogs.ShowErrorMessage("Login failed. Please check your credentials.", "JAST USA Library");
-            return false;
+            return true;
         }
 
         public AuthenticationToken GetAuthenticationToken(CancellationToken cancellationToken = default)
