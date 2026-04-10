@@ -179,3 +179,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.09.25_628126f4/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_26.pext
     Changelog:
     - 'Fixed: Error preventing refreshing downloads for games in the Downloads manager view'
+  - Version: 1.27
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.10_d88fcb58/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_27.pext
+    Changelog:
+    - 'Fixed: Crash when user login fails'
+    - 'Fixed: Failing to login and other network operations due to site migration by JAST USA (By Dawnflare)'

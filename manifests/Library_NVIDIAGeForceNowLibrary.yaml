@@ -339,3 +339,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.13_d84ecf06/NVIDIA_GeForce_Now_Enabler_2_54.pext
     Changelog:
     - 'Fixed: Being unable to update GeForce Now database due to recent changes in the service'
+  - Version: 2.55
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.10_d88fcb58/NVIDIA_GeForce_Now_Enabler_2_55.pext
+    Changelog:
+    - 'Fixed: Crash during obtaining of games database due to newly added unsupported store "GAIJIN"'
