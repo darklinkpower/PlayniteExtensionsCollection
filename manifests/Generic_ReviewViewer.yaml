@@ -391,3 +391,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.13_0d5a78b7/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_57.pext
     Changelog:
     - 'Changed: Decreased the delay to update the reviews after the active filter settings change'
+  - Version: 2.58
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.11_afc951aa/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_58.pext
+    Changelog:
+    - "Added: Reviews will now display the reviewer's PC specifications when available"
