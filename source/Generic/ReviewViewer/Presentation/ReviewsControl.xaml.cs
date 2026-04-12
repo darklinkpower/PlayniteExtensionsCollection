@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
@@ -13,6 +7,14 @@ using ReviewViewer.Domain;
 using ReviewViewer.Infrastructure;
 using ReviewViewer.Presentation.SteamLanguageSelector;
 using SteamCommon;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ReviewViewer.Presentation
 {
@@ -40,6 +42,14 @@ namespace ReviewViewer.Presentation
         public ReviewViewerSettingsViewModel SettingsModel { get; }
 
         // ──────── Visibility Properties ────────
+        private bool _displayPcSpecsPanel;
+
+        public bool DisplayPcSpecsPanel
+        {
+            get => _displayPcSpecsPanel;
+            set { SetValue(ref _displayPcSpecsPanel, value); }
+        }
+
         private bool _displayProgressPanel;
 
         public bool DisplayProgressPanel
@@ -294,6 +304,13 @@ namespace ReviewViewer.Presentation
         {
             get => _totalFormattedPlaytime;
             set => SetValue(ref _totalFormattedPlaytime, value);
+        }
+
+        private List<string> _pcSpecsFormattedLines = new List<string>();
+        public List<string> PcSpecsFormattedLines
+        {
+            get => _pcSpecsFormattedLines;
+            set => SetValue(ref _pcSpecsFormattedLines, value);
         }
 
         private string _reviewHelpfulnessHelpful;
@@ -553,6 +570,98 @@ namespace ReviewViewer.Presentation
             }
 
             DisplayTextReceivedForFree = SelectedReview.ReceivedForFree;
+            DisplayPcSpecsPanel = false;
+            if (SelectedReview.Hardware != null)
+            {
+                var formattedHardwareLines = GetFormattedHardwareLines(SelectedReview.Hardware).ToList();
+                if (formattedHardwareLines.HasItems())
+                {
+                    PcSpecsFormattedLines = formattedHardwareLines;
+                    DisplayPcSpecsPanel = true;
+                }
+            }
+        }
+
+        private static string BuildLine(string separator, params string[] parts)
+        {
+            if (parts is null || parts.Length == 0)
+            {
+                return null;
+            }
+
+            var filtered = parts
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .ToArray();
+
+            if (filtered.Length == 0)
+            {
+                return null;
+            }
+
+            if (filtered.Length == 1)
+            {
+                return filtered[0];
+            }
+
+            return string.Join(separator, filtered);
+        }
+
+        private static string NormalizeRam(string ramString)
+        {
+            if (ramString.IsNullOrWhiteSpace())
+            {
+                return null;
+            }
+
+            if (!uint.TryParse(ramString, out var mb) || mb == 0)
+            {
+                return null;
+            }
+
+            var gb = Math.Round(mb / 1024.0, 1);
+            return $"RAM: {gb} GB";
+        }
+
+        private IEnumerable<string> GetFormattedHardwareLines(Hardware hardware)
+        {
+            if (hardware is null)
+            {
+                yield break;
+            }
+
+            // OS
+            if (!hardware.Os.IsNullOrWhiteSpace())
+            {
+                yield return $"OS: {hardware.Os.Trim()}";
+            }
+
+            // CPU + RAM
+            var cpu = hardware.CpuName.IsNullOrWhiteSpace() ? null : $"CPU: {hardware.CpuName.Trim()}";
+            var ram = NormalizeRam(hardware.SystemRam);
+
+            var cpuRamLine = BuildLine(" ● ", cpu, ram);
+            if (!cpuRamLine.IsNullOrWhiteSpace())
+            {
+                yield return cpuRamLine;
+            }
+
+            // GPU + VRAM
+            var gpu = hardware.AdapterDescription.IsNullOrWhiteSpace()
+                ? null
+                : $"GPU: {hardware.AdapterDescription.Trim()}";
+
+            string vram = null;
+            if (hardware.VramSize > 0)
+            {
+                var gb = Math.Round(hardware.VramSize / 1024.0, 1);
+                vram = $"VRAM: {gb} GB";
+            }
+
+            var gpuVramLine = BuildLine(" ● ", gpu, vram);
+            if (!gpuVramLine.IsNullOrWhiteSpace())
+            {
+                yield return gpuVramLine;
+            }
         }
 
         private void UpdateClearFiltersButtons()
@@ -725,6 +834,8 @@ namespace ReviewViewer.Presentation
             ReviewHelpfulnessHelpful = string.Empty;
             ReviewHelpfulnessFunny = string.Empty;
             IconReviewSteamDeckTooltip = string.Empty;
+            DisplayPcSpecsPanel = false;
+            PcSpecsFormattedLines?.Clear();
         }
 
         public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken, bool forceRefresh)

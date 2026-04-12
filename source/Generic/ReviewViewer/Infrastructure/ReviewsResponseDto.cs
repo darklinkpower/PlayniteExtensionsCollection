@@ -1,6 +1,9 @@
-﻿using Playnite.SDK.Data;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace ReviewViewer.Infrastructure
 {
@@ -127,7 +130,7 @@ namespace ReviewViewer.Infrastructure
         public long LastPlayed { get; set; }
 
         [SerializationPropertyName("avatar")]
-        public Uri Avatar { get; set; }
+        public string Avatar { get; set; }
 
         [SerializationPropertyName("deck_playtime_at_review")]
         public long? DeckPlaytimeAtReview { get; set; }
@@ -196,5 +199,16 @@ namespace ReviewViewer.Infrastructure
         public uint VramSize { get; set; }
     }
 
-    public enum PersonaStatus { InGame, Offline, Online };
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum PersonaStatus
+    {
+        [EnumMember(Value = "in-game")]
+        InGame,
+
+        [EnumMember(Value = "offline")]
+        Offline,
+
+        [EnumMember(Value = "online")]
+        Online
+    }
 }
