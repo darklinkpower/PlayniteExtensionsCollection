@@ -599,3 +599,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.02.06_eccba1db/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_86.pext
     Changelog:
     - 'Added: Support to open videos in borderless fullscreen (By Dawnflare)'
+  - Version: 1.87
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.11_afc951aa/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_87.pext
+    Changelog:
+    - 'Fixed: Image resizing no longer working after Playnite 10.52 update'
