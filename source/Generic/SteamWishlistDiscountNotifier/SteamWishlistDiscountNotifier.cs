@@ -83,16 +83,19 @@ namespace SteamWishlistDiscountNotifier
                     () => OpenSettingsView()
                 ));
             });
+        }
 
-            UpdateTracketServiceConfig(_settings.Settings);
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            UpdateTrackerServiceConfig(_settings.Settings);
         }
 
         private void Settings_SettingsChanged(object sender, SettingsChangedEventArgs e)
         {
-            UpdateTracketServiceConfig(e.NewSettings);
+            UpdateTrackerServiceConfig(e.NewSettings);
         }
 
-        private void UpdateTracketServiceConfig(SteamWishlistDiscountNotifierSettings settings)
+        private void UpdateTrackerServiceConfig(SteamWishlistDiscountNotifierSettings settings)
         {
             _wishlistTrackerService.SetBackgroundServiceTrackingDelay(TimeSpan.FromMinutes(settings.WishlistAutoCheckIntervalMins));
             if (settings.EnableWishlistNotifications)
