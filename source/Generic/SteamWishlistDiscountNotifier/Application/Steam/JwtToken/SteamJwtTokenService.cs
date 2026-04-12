@@ -60,45 +60,56 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.JwtToken
             }
         }
 
-        public SteamAuthInfo GetJwtToken()
+        private void InvokeCallbacks(List<Action> callbacks)
         {
-            if (!IsTokenValid())
+            foreach (var callback in callbacks)
             {
-                _jwtToken = RetrieveNewToken();
-                if (!_jwtToken.IsNullOrEmpty())
+                try
                 {
-                    var payload = DecodeJwtPayload(_jwtToken);
-                    _tokenExpiration = DateTimeOffset.FromUnixTimeSeconds(payload.Exp).DateTime;
-                    _steamAuthInfo = new SteamAuthInfo(payload.Sub, _jwtToken, _tokenExpiration);
-                    foreach (var callback in _onUserLoggedInCallbacks)
-                    {
-                        try
-                        {
-                            callback?.Invoke();
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.Error(ex, "Error occurred while invoking user logged-in callback.");
-                        }
-                    }
+                    callback?.Invoke();
                 }
-                else
+                catch (Exception ex)
                 {
-                    foreach (var callback in _onUserNotLoggedInCallbacks)
-                    {
-                        try
-                        {
-                            callback?.Invoke();
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.Error(ex, "Error occurred while invoking user not logged-in callback.");
-                        }
-                    }
+                    _logger.Error(ex, $"Error occurred while invoking callbacks.");
                 }
             }
+        }
 
-            return _steamAuthInfo;
+        public SteamAuthInfo GetJwtToken()
+        {
+            if (IsTokenValid())
+            {
+                return _steamAuthInfo;
+            }
+
+            var result = RetrieveNewToken();
+            switch (result.Status)
+            {
+                case TokenRetrievalStatus.NoInternet:
+                    return null;
+                case TokenRetrievalStatus.Success:
+                    {
+                        var payload = DecodeJwtPayload(result.Token);
+                        if (payload is null)
+                        {
+                            _logger.Error("Invalid JWT payload.");
+                            InvalidateToken();
+                            return null;
+                        }
+
+                        _tokenExpiration = DateTimeOffset
+                            .FromUnixTimeSeconds(payload.Exp)
+                            .DateTime;
+
+                        _steamAuthInfo = new SteamAuthInfo(payload.Sub, result.Token, _tokenExpiration);
+
+                        InvokeCallbacks(_onUserLoggedInCallbacks);
+                        return _steamAuthInfo;
+                    }
+                default:
+                    InvokeCallbacks(_onUserNotLoggedInCallbacks);
+                    return null;
+            }
         }
 
         public void InvalidateToken()
@@ -113,38 +124,55 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.JwtToken
             return !string.IsNullOrEmpty(_jwtToken) && _tokenExpiration > DateTime.UtcNow;
         }
 
-        private string RetrieveNewToken()
+        private TokenRetrievalResult RetrieveNewToken()
         {
             using (var webView = _playniteApi.WebViews.CreateOffscreenView())
             {
                 webView.NavigateAndWait(@"https://store.steampowered.com/account/?l=english");
                 var address = webView.GetCurrentAddress();
-                if (address.StartsWith(@"https://store.steampowered.com/account/"))
+                if (address.IsNullOrEmpty()) // Adress is empty when there's no internet connection, so we can use this to detect that specific case
                 {
-                    var source = webView.GetPageSource();
-                    var regeMatch = Regex.Match(source, @"webapi_token&quot;:&quot;(.*?)(?=&quot;)");
-                    if (regeMatch.Success)
-                    {
-                        return regeMatch.Groups[1].Value;
-                    }
+                    return TokenRetrievalResult.Fail(TokenRetrievalStatus.NoInternet);
                 }
-            }
 
-            return null;
+                if (!address.StartsWith(@"https://store.steampowered.com/account/"))
+                {
+                    _logger.Error($"Unexpected URL during JWT retrieval: {address}");
+                    return TokenRetrievalResult.Fail(TokenRetrievalStatus.UnexpectedNavigation);
+                }
+
+                var source = webView.GetPageSource();
+                var match = Regex.Match(source, @"webapi_token&quot;:&quot;(.*?)(?=&quot;)");
+                if (!match.Success)
+                {
+                    _logger.Error($"JWT token not found in page sourcel: {address}");
+                    return TokenRetrievalResult.Fail(TokenRetrievalStatus.ParseFailure);
+                }
+
+                return TokenRetrievalResult.Success(match.Groups[1].Value);
+            }
         }
 
-        private static SteamJwtTokenPayload DecodeJwtPayload(string jwt)
+        private SteamJwtTokenPayload DecodeJwtPayload(string jwt)
         {
             var parts = jwt.Split('.');
             if (parts.Length != 3)
             {
-                throw new ArgumentException("Invalid JWT format.");
+                _logger.Error($"Invalid JWT format. Total parts: {parts.Length}, Expected 3.");
+                return null;
             }
 
             var payload = parts[1];
             var jsonPayload = payload.Base64Decode();
-            var token = Serialization.FromJson<SteamJwtTokenPayload>(jsonPayload);
-            return token;
+            if (Serialization.TryFromJson<SteamJwtTokenPayload>(jsonPayload, out var token, out var ex))
+            {
+                return token;
+            }
+            else
+            {
+                _logger.Error(ex, "Failed to deserialize JWT payload.");
+                return null;
+            }
         }
     }
 
