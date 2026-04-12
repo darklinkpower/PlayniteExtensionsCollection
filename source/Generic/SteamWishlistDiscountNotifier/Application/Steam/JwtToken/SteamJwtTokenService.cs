@@ -106,8 +106,10 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.JwtToken
                         InvokeCallbacks(_onUserLoggedInCallbacks);
                         return _steamAuthInfo;
                     }
+                    case TokenRetrievalStatus.NotLoggedIn:
+                        InvokeCallbacks(_onUserNotLoggedInCallbacks);
+                        return null;
                 default:
-                    InvokeCallbacks(_onUserNotLoggedInCallbacks);
                     return null;
             }
         }
@@ -138,14 +140,14 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.JwtToken
                 if (!address.StartsWith(@"https://store.steampowered.com/account/"))
                 {
                     _logger.Error($"Unexpected URL during JWT retrieval: {address}");
-                    return TokenRetrievalResult.Fail(TokenRetrievalStatus.UnexpectedNavigation);
+                    return TokenRetrievalResult.Fail(TokenRetrievalStatus.NotLoggedIn); // If the user is not logged in, Steam redirects to the login page, which has a different URL. So we can use this to detect that specific case.
                 }
 
                 var source = webView.GetPageSource();
                 var match = Regex.Match(source, @"webapi_token&quot;:&quot;(.*?)(?=&quot;)");
                 if (!match.Success)
                 {
-                    _logger.Error($"JWT token not found in page sourcel: {address}");
+                    _logger.Error($"JWT token not found in page source: {address}");
                     return TokenRetrievalResult.Fail(TokenRetrievalStatus.ParseFailure);
                 }
 
@@ -162,8 +164,18 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.JwtToken
                 return null;
             }
 
-            var payload = parts[1];
-            var jsonPayload = payload.Base64Decode();
+            string jsonPayload;
+            try
+            {
+                var payload = parts[1];
+                jsonPayload = payload.Base64Decode();
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Failed to decode JWT payload.");
+                return null;
+            }
+
             if (Serialization.TryFromJson<SteamJwtTokenPayload>(jsonPayload, out var token, out var ex))
             {
                 return token;
