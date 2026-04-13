@@ -404,3 +404,9 @@ Packages:
     Changelog:
     - "Added: Reviews will now display review's received awards"
     - "Added: Reviews will now display review's comments count"
+  - Version: 2.60
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.12_f7195f1f/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_60.pext
+    Changelog:
+    - 'Changed: Review awards tooltip will now also display the award image'
