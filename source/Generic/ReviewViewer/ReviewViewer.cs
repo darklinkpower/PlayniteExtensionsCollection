@@ -115,6 +115,22 @@ namespace ReviewViewer
                     _logger.Info(e, "Error upgrading Plugin data to version 3.");
                 }
             }
+
+            if (Settings.Settings.DatabaseVersion == 3)
+            {
+                _logger.Info("Upgrading plugin data to database version 4.");
+                try
+                {
+                    _reviewsRecordsDatabase.DeleteAll();
+                    Settings.Settings.DatabaseVersion = 4;
+                    base.SavePluginSettings(Settings.Settings);
+                    _logger.Info("Plugin data upgraded to version 4.");
+                }
+                catch (Exception e)
+                {
+                    _logger.Info(e, "Error upgrading Plugin data to version 4.");
+                }
+            }
         }
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
