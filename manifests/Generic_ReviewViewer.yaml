@@ -397,3 +397,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.11_afc951aa/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_58.pext
     Changelog:
     - "Added: Reviews will now display the reviewer's PC specifications when available"
+  - Version: 2.59
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.12_9ac49cf3/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_59.pext
+    Changelog:
+    - "Added: Reviews will now display review's received awards"
+    - "Added: Reviews will now display review's comments count"
