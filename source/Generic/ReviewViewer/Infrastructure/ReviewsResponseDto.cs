@@ -89,6 +89,10 @@ namespace ReviewViewer.Infrastructure
 
         [SerializationPropertyName("primarily_steam_deck")]
         public bool PrimarilySteamDeck { get; set; }
+        [SerializationPropertyName("app_release_date")]
+        public string AppReleaseDate { get; set; }
+        [SerializationPropertyName("reactions")]
+        public List<Reaction> Reactions { get; set; }
 
         [SerializationPropertyName("hardware")]
         public Hardware Hardware { get; set; }
@@ -136,7 +140,7 @@ namespace ReviewViewer.Infrastructure
         public long? DeckPlaytimeAtReview { get; set; }
     }
 
-    public partial class Reaction
+    public class Reaction
     {
         [SerializationPropertyName("reaction_type")]
         public uint ReactionType { get; set; }
@@ -145,7 +149,7 @@ namespace ReviewViewer.Infrastructure
         public uint Count { get; set; }
     }
 
-    public partial class Hardware
+    public class Hardware
     {
         [SerializationPropertyName("manufacturer")]
         public string Manufacturer { get; set; }

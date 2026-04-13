@@ -209,6 +209,9 @@
     <Compile Include="Infrastructure\SteamReviewsService.cs" />
     <Compile Include="Presentation\HtmlTextView.cs" />
     <Compile Include="Presentation\QueryOptionsViewModel.cs" />
+    <Compile Include="Presentation\ReactionMetadata.cs" />
+    <Compile Include="Presentation\ReactionViewModel.cs" />
+    <Compile Include="Presentation\ReviewReactionToMetadataMapper.cs" />
     <Compile Include="Presentation\ReviewsControl.xaml.cs">
       <DependentUpon>ReviewsControl.xaml</DependentUpon>
     </Compile>
@@ -267,6 +270,79 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Presentation\Resources\icon_review_notcounted.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Presentation\Resources\Reactions\1-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\1.png" />
+    <Resource Include="Presentation\Resources\Reactions\10-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\10.png" />
+    <Resource Include="Presentation\Resources\Reactions\11-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\11.png" />
+    <Resource Include="Presentation\Resources\Reactions\12-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\12.png" />
+    <Resource Include="Presentation\Resources\Reactions\13-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\13.png" />
+    <Resource Include="Presentation\Resources\Reactions\14-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\14.png" />
+    <Resource Include="Presentation\Resources\Reactions\15-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\15.png" />
+    <Resource Include="Presentation\Resources\Reactions\16-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\16.png" />
+    <Resource Include="Presentation\Resources\Reactions\17-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\17.png" />
+    <Resource Include="Presentation\Resources\Reactions\18-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\18.png" />
+    <Resource Include="Presentation\Resources\Reactions\19-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\19.png" />
+    <Resource Include="Presentation\Resources\Reactions\2-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\2.png" />
+    <Resource Include="Presentation\Resources\Reactions\20-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\20.png" />
+    <Resource Include="Presentation\Resources\Reactions\21-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\21.png" />
+    <Resource Include="Presentation\Resources\Reactions\22-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\22.png" />
+    <Resource Include="Presentation\Resources\Reactions\23-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\23.png" />
+    <Resource Include="Presentation\Resources\Reactions\24-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\24.png" />
+    <Resource Include="Presentation\Resources\Reactions\25-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\25.png" />
+    <Resource Include="Presentation\Resources\Reactions\26-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\26.png" />
+    <Resource Include="Presentation\Resources\Reactions\27-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\27.png" />
+    <Resource Include="Presentation\Resources\Reactions\28-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\28.png" />
+    <Resource Include="Presentation\Resources\Reactions\29-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\29.png" />
+    <Resource Include="Presentation\Resources\Reactions\3-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\3.png" />
+    <Resource Include="Presentation\Resources\Reactions\30-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\30.png" />
+    <Resource Include="Presentation\Resources\Reactions\31-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\31.png" />
+    <Resource Include="Presentation\Resources\Reactions\32-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\32.png" />
+    <Resource Include="Presentation\Resources\Reactions\33-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\33.png" />
+    <Resource Include="Presentation\Resources\Reactions\34-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\34.png" />
+    <Resource Include="Presentation\Resources\Reactions\35-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\35.png" />
+    <Resource Include="Presentation\Resources\Reactions\4-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\4.png" />
+    <Resource Include="Presentation\Resources\Reactions\5-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\5.png" />
+    <Resource Include="Presentation\Resources\Reactions\6-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\6.png" />
+    <Resource Include="Presentation\Resources\Reactions\7-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\7.png" />
+    <Resource Include="Presentation\Resources\Reactions\8-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\8.png" />
+    <Resource Include="Presentation\Resources\Reactions\9-animated.png" />
+    <Resource Include="Presentation\Resources\Reactions\9.png" />
   </ItemGroup>
   <Import Project="..\..\Common\DatabaseCommon\DatabaseCommon.projitems" Label="Shared" />
   <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />

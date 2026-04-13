@@ -493,10 +493,68 @@
                         <TextBlock Text="{Binding ReviewHelpfulnessFunny}" Opacity="0.75" />
                     </StackPanel>
 
+                    <WrapPanel Margin="0,10,0,10"
+                                Visibility="{Binding DisplayReactionsPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <!-- Reactions -->
+                        <ItemsControl ItemsSource="{Binding VisibleReactions}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        Margin="0,3,5,0"
+                                        Padding="4"
+                                        CornerRadius="4"
+                                        Background="#802b323b">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                RenderOptions.BitmapScalingMode="Fant"
+                                                VerticalAlignment="Center"
+                                                Width="24"
+                                                Height="24"
+                                                Source="{Binding IconPath}" />
+
+                                            <TextBlock
+                                                Margin="2,0,0,0"
+                                                Text="{Binding DisplayCount}"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#66c0f4"/>
+                                        </StackPanel>
+
+                                        <!-- Hover tooltip -->
+                                        <Border.ToolTip>
+                                            <StackPanel>
+                                                <TextBlock
+                                                    Text="{Binding Name}"
+                                                    FontWeight="Bold"/>
+                                                <TextBlock
+                                                    Text="{Binding Description}"
+                                                    TextWrapping="Wrap"
+                                                    MaxWidth="200"/>
+                                            </StackPanel>
+                                        </Border.ToolTip>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- Expand / Collapse -->
+                        <Button Content="+" FontWeight="Bold"
+                                Margin="5,0,0,0"
+                                HorizontalAlignment="Left"
+                                Visibility="{Binding DisplayMoreReactionsButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Command="{Binding ToggleExpandCommand}" />
+                    </WrapPanel>
+                    
                     <Grid Visibility="{Binding DisplayPcSpecsPanel, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Margin="0,10,0,10">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
-                            <TextBlock Text="Reviewer's PC Specs:" TextWrapping="Wrap" Margin="0,0,0,10" />
+                            <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewerPcSpecsLabel}" TextWrapping="Wrap" Margin="0,0,0,10" />
                             <ItemsControl ItemsSource="{Binding PcSpecsFormattedLines}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>

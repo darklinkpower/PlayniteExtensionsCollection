@@ -42,6 +42,14 @@ namespace ReviewViewer.Presentation
         public ReviewViewerSettingsViewModel SettingsModel { get; }
 
         // ──────── Visibility Properties ────────
+        private bool _displayReactionsPanel;
+
+        public bool DisplayReactionsPanel
+        {
+            get => _displayReactionsPanel;
+            set { SetValue(ref _displayReactionsPanel, value); }
+        }
+
         private bool _displayPcSpecsPanel;
 
         public bool DisplayPcSpecsPanel
@@ -196,6 +204,48 @@ namespace ReviewViewer.Presentation
         }
 
         // ──────── Data and Selections ────────
+        private const int MaxVisible = 3;
+
+        private List<ReactionViewModel> _allReactions = new List<ReactionViewModel>();
+        public List<ReactionViewModel> AllReactions
+        {
+            get => _allReactions;
+            set
+            {
+                SetValue(ref _allReactions, value);
+                OnPropertiesChanged(
+                    nameof(VisibleReactions),
+                    nameof(HasMoreReactions),
+                    nameof(DisplayMoreReactionsButton)
+                );
+            }
+        }
+
+        public bool DisplayMoreReactionsButton =>
+            !IsMoreReactionsExpanded && HasMoreReactions;
+
+        private bool _isMoreReactionsExpanded;
+        public bool IsMoreReactionsExpanded
+        {
+            get => _isMoreReactionsExpanded;
+            set
+            {
+                SetValue(ref _isMoreReactionsExpanded, value);
+                OnPropertiesChanged(nameof(VisibleReactions), nameof(DisplayMoreReactionsButton));
+            }
+        }
+
+        public IEnumerable<ReactionViewModel> VisibleReactions =>
+            IsMoreReactionsExpanded
+                ? AllReactions
+                : AllReactions.Take(MaxVisible);
+
+        public bool HasMoreReactions =>
+            AllReactions.Count > MaxVisible;
+
+        public bool IsReactionsExpanded { get; set; }
+
+
         private ReviewsResponseDto _reviews;
         public ReviewsResponseDto Reviews
         {
@@ -420,6 +470,7 @@ namespace ReviewViewer.Presentation
         public RelayCommand NextReviewCommand { get; }
         public RelayCommand PreviousReviewCommand { get; }
         public RelayCommand OpenSelectedReviewCommand { get; }
+        public RelayCommand ToggleExpandCommand { get; }
         public RelayCommand RefreshReviewsCommand { get; }
         public ReviewsControl(
             ReviewViewerSettingsViewModel settingsViewModel,
@@ -483,6 +534,11 @@ namespace ReviewViewer.Presentation
                     @"https://steamcommunity.com/profiles/{0}/recommended/{1}/",
                     _selectedReview.Author.Steamid, _currentSteamId);
                 ProcessStarter.StartUrl(reviewUrl);
+            });
+
+            ToggleExpandCommand = new RelayCommand(() =>
+            {
+                IsMoreReactionsExpanded = !IsMoreReactionsExpanded;
             });
 
             UpdateClearFiltersButtons();
@@ -578,6 +634,29 @@ namespace ReviewViewer.Presentation
                 {
                     PcSpecsFormattedLines = formattedHardwareLines;
                     DisplayPcSpecsPanel = true;
+                }
+            }
+
+            IsMoreReactionsExpanded = false;
+            DisplayReactionsPanel = false;
+            AllReactions = new List<ReactionViewModel>();
+            if (SelectedReview.Reactions.HasItems())
+            {
+                var reactionsList = new List<ReactionViewModel>();
+                foreach (var reaction in SelectedReview.Reactions)
+                {
+                    var reactionMetadata = ReviewReactionToMetadataMapper.Map(reaction);
+                    if (reactionMetadata != null)
+                    {
+                        reactionsList.Add(new ReactionViewModel(reaction, reactionMetadata));
+                    }
+                }
+
+                if (reactionsList.HasItems())
+                {
+                    reactionsList.Sort((a, b) => b.Count.CompareTo(a.Count));
+                    AllReactions = reactionsList;
+                    DisplayReactionsPanel = true;
                 }
             }
         }
@@ -835,7 +914,10 @@ namespace ReviewViewer.Presentation
             ReviewHelpfulnessFunny = string.Empty;
             IconReviewSteamDeckTooltip = string.Empty;
             DisplayPcSpecsPanel = false;
-            PcSpecsFormattedLines?.Clear();
+            PcSpecsFormattedLines = new List<string>();
+            DisplayReactionsPanel = false;
+            IsMoreReactionsExpanded = false;
+            AllReactions = new List<ReactionViewModel>();
         }
 
         public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken, bool forceRefresh)
