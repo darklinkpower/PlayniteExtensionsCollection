@@ -114,6 +114,22 @@ namespace ReviewViewer.Presentation
             set { SetValue(ref _displayEarlyAccessLabel, value); }
         }
 
+        private bool _displayCommentsButton;
+
+        public bool DisplayCommentsButton
+        {
+            get => _displayCommentsButton;
+            set { SetValue(ref _displayCommentsButton, value); }
+        }
+
+        private string _selectedReviewCommentsCount = 0.ToString();
+
+        public string SelectedReviewCommentsCount
+        {
+            get => _selectedReviewCommentsCount;
+            set { SetValue(ref _selectedReviewCommentsCount, value); }
+        }
+
         private bool _displayReviewTypeClearButton;
 
         public bool DisplayReviewTypeClearButton
@@ -658,6 +674,17 @@ namespace ReviewViewer.Presentation
                     AllReactions = reactionsList;
                     DisplayReactionsPanel = true;
                 }
+            }
+
+            if (SelectedReview.CommentCount > 0)
+            {
+                DisplayCommentsButton = true;
+                SelectedReviewCommentsCount = SelectedReview.CommentCount.ToString();
+            }
+            else
+            {
+                DisplayCommentsButton = false;
+                SelectedReviewCommentsCount = 0.ToString();
             }
         }
 
