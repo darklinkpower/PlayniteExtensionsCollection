@@ -283,3 +283,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.11_7e6ea5a7/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_39.pext
     Changelog:
     - 'Fixed: Improved reliability of Steam account detection to potentially prevent crashes in edge cases and unexpected errors'
+  - Version: 1.40
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.14_e9768519/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_40.pext
+    Changelog:
+    - 'Fixed: Plugin potentially failing to load due to used dependency using a different version than Playnite'
