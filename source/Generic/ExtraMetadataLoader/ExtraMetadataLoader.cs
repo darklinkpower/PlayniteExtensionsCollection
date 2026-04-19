@@ -198,7 +198,7 @@ namespace ExtraMetadataLoader
             var displayControls = !controlNameParts.Contains(noControlsToken, StringComparer.OrdinalIgnoreCase);
             var useSound = !controlNameParts.Contains(noSoundToken, StringComparer.OrdinalIgnoreCase);
 
-            var videoPlayerControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath(), true, displayControls, useSound);
+            var videoPlayerControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath(), true, displayControls, useSound, videosDownloader);
             configuredVideoControls.Add(videoPlayerControl);
 
             return videoPlayerControl;
@@ -233,7 +233,7 @@ namespace ExtraMetadataLoader
         {
             if (control == null)
             {
-                control = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                control = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath(), videosDownloader: videosDownloader);
             }
 
             return control;

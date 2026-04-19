@@ -18,7 +18,7 @@ using System.Threading;
 
 namespace ExtraMetadataLoader.Services
 {
-    class VideosDownloader
+    public class VideosDownloader
     {
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();

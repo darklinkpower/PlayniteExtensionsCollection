@@ -1,4 +1,5 @@
 using ExtraMetadataLoader.Models;
+using ExtraMetadataLoader.Services;
 using EmlFullscreen;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
@@ -16,6 +17,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,6 +52,10 @@ namespace ExtraMetadataLoader
         private Uri trailerVideoPath;
         private bool multipleSourcesAvailable = false;
         private Game currentGame;
+        private readonly VideosDownloader videosDownloader;
+        private static readonly HashSet<Guid> attemptedFallbackDownloads = new HashSet<Guid>();
+        private static readonly SemaphoreSlim fallbackDownloadSemaphore = new SemaphoreSlim(1, 1);
+        private Guid pendingFallbackDownloadForGameId = Guid.Empty;
 
         private DesktopView activeViewAtCreation;
         public DesktopView ActiveViewAtCreation
@@ -165,11 +171,12 @@ namespace ExtraMetadataLoader
             }
         }
 
-        public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings, string pluginDataPath, bool isConfiguredControl = false, bool displayControls = true, bool useSound = true)
+        public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings, string pluginDataPath, bool isConfiguredControl = false, bool displayControls = true, bool useSound = true, VideosDownloader videosDownloader = null)
         {
             InitializeComponent();
             this.pluginDataPath = pluginDataPath;
             this.PlayniteApi = PlayniteApi;
+            this.videosDownloader = videosDownloader;
             SettingsModel = settings;
             DataContext = this;
 
@@ -639,6 +646,8 @@ namespace ExtraMetadataLoader
                 multipleSourcesAvailable = true;
             }
 
+            TryStartSteamTrailerFallbackDownload(game, videoPath);
+
             if (useMicrovideosSource)
             {
                 if (microVideoPath != null)
@@ -665,6 +674,89 @@ namespace ExtraMetadataLoader
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
             }
+        }
+
+        private void TryStartSteamTrailerFallbackDownload(Game game, string videoPath)
+        {
+            // Fallback: when no trailer has been resolved (neither a locally downloaded file nor
+            // a Steam on-demand streamable URL), try to download one in the background. This
+            // covers two cases:
+            //   - on-demand streaming is disabled in settings
+            //   - on-demand streaming is enabled but no streamable movie is available for this game
+            if (trailerVideoPath != null)
+            {
+                return;
+            }
+
+            if (videosDownloader == null || game == null)
+            {
+                return;
+            }
+
+            // Only attempt once per game per session to avoid hammering the Steam API / ffmpeg.
+            if (!attemptedFallbackDownloads.Add(game.Id))
+            {
+                return;
+            }
+
+            pendingFallbackDownloadForGameId = game.Id;
+            var gameIdSnapshot = game.Id;
+            var gameSnapshot = game;
+
+            Task.Run(() =>
+            {
+                // Serialize fallback downloads: VideosDownloader uses a single shared temp file
+                // (%TEMP%\VideoTemp.mp4), so parallel runs would clobber each other.
+                fallbackDownloadSemaphore.Wait();
+                try
+                {
+                    // The trailer may have been produced while we were queued (e.g. the user
+                    // navigated back to this game and a previous attempt succeeded), or a newer
+                    // attempt for a different game is now the one that should update the UI.
+                    if (FileSystem.FileExists(videoPath))
+                    {
+                        // File already there; still trigger a UI refresh if this game is active.
+                    }
+                    else
+                    {
+                        try
+                        {
+                            videosDownloader.DownloadSteamVideo(
+                                gameSnapshot,
+                                overwrite: false,
+                                isBackgroundDownload: true,
+                                cancelToken: CancellationToken.None,
+                                downloadVideo: true,
+                                downloadVideoMicro: false);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Error(ex, $"Steam trailer fallback download failed for {gameSnapshot?.Name}");
+                            return;
+                        }
+                    }
+
+                    if (!FileSystem.FileExists(videoPath))
+                    {
+                        return;
+                    }
+
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        // Refresh only if the user is still looking at the same game.
+                        if (currentGame != null && currentGame.Id == gameIdSnapshot &&
+                            pendingFallbackDownloadForGameId == gameIdSnapshot)
+                        {
+                            pendingFallbackDownloadForGameId = Guid.Empty;
+                            RefreshPlayer();
+                        }
+                    }));
+                }
+                finally
+                {
+                    fallbackDownloadSemaphore.Release();
+                }
+            });
         }
 
         private static Uri NormalizeVideoUri(Uri original)
