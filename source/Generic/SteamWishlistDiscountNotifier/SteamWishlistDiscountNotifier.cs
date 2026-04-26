@@ -1,8 +1,21 @@
-﻿using Playnite.SDK;
+﻿using FlowHttp;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
-using FlowHttp;
+using SteamCommon;
+using SteamWishlistDiscountNotifier.Application.Steam.JwtToken;
+using SteamWishlistDiscountNotifier.Application.Steam.Login;
+using SteamWishlistDiscountNotifier.Application.Steam.Tags;
+using SteamWishlistDiscountNotifier.Application.Steam.UserAccount;
+using SteamWishlistDiscountNotifier.Application.Steam.Wishlist;
+using SteamWishlistDiscountNotifier.Application.WishlistTracker;
+using SteamWishlistDiscountNotifier.Domain.Enums;
+using SteamWishlistDiscountNotifier.Domain.Events;
+using SteamWishlistDiscountNotifier.Domain.ValueObjects;
+using SteamWishlistDiscountNotifier.Infrastructure.WishlistTracker;
+using SteamWishlistDiscountNotifier.Presentation;
+using SteamWishlistDiscountNotifier.Presentation.WishlistCategories;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,18 +23,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Media;
-using SteamCommon;
-using SteamWishlistDiscountNotifier.Application.Steam.Wishlist;
-using SteamWishlistDiscountNotifier.Application.Steam.JwtToken;
-using SteamWishlistDiscountNotifier.Application.Steam.UserAccount;
-using SteamWishlistDiscountNotifier.Domain.ValueObjects;
-using SteamWishlistDiscountNotifier.Application.WishlistTracker;
-using SteamWishlistDiscountNotifier.Infrastructure.WishlistTracker;
-using SteamWishlistDiscountNotifier.Domain.Events;
-using SteamWishlistDiscountNotifier.Domain.Enums;
-using SteamWishlistDiscountNotifier.Presentation;
-using SteamWishlistDiscountNotifier.Application.Steam.Login;
-using SteamWishlistDiscountNotifier.Application.Steam.Tags;
 
 namespace SteamWishlistDiscountNotifier
 {
@@ -335,7 +336,12 @@ namespace SteamWishlistDiscountNotifier
                 return null;
             }
 
-            _wishlistViewDataContext = new SteamWishlistViewerViewModel(PlayniteApi, walletDetails, wishlistItems, tags, bannersPathsMapper, GetPluginUserDataPath());
+            var persistence = new WishlistCategoryPersistence(GetPluginUserDataPath());
+            var store = persistence.Load();
+            var wishlistCategoryService = new WishlistCategoryService(store, persistence);
+
+            _wishlistViewDataContext = new SteamWishlistViewerViewModel(
+                PlayniteApi, walletDetails, wishlistItems, tags, bannersPathsMapper, GetPluginUserDataPath(), wishlistCategoryService);
             return new SteamWishlistViewerView { DataContext = _wishlistViewDataContext };
         }
 

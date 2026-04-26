@@ -201,6 +201,20 @@
     <Compile Include="Domain\ValueObjects\SteamWalletDetails.cs" />
     <Compile Include="Domain\Enums\AuthStatus.cs" />
     <Compile Include="Domain\Enums\Ownership.cs" />
+    <Compile Include="Presentation\WishlistCategories\CategoryToggleItem.cs" />
+    <Compile Include="Presentation\WishlistCategories\ListBoxSelectionBehavior.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistBatchCategoryEditorViewModel.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategory.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryManagerView.xaml.cs">
+      <DependentUpon>WishlistCategoryManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryManagerViewModel.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryPersistence.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryService.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryStore.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistItemCategoryEditorView.xaml.cs">
+      <DependentUpon>WishlistItemCategoryEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\WishlistViewSorting.cs" />
     <Compile Include="Presentation\Filters\FilterGroup.cs" />
     <Compile Include="Presentation\Filters\FilterItem.cs" />
@@ -239,6 +253,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Presentation\WishlistCategories\WishlistCategoryManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\WishlistCategories\WishlistItemCategoryEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SteamWishlistDiscountNotifierSettingsView.xaml">
       <SubType>Designer</SubType>

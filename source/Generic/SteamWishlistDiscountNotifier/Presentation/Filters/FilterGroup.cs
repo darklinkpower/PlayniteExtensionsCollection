@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,50 +14,16 @@ namespace SteamWishlistDiscountNotifier.Presentation.Filters
     public class FilterGroup : ObservableObject, IDisposable
     {
         public event EventHandler SettingsChanged;
-        public RelayCommand<FilterItem> MoveFilterUpCommand
-        {
-            get => new RelayCommand<FilterItem>((a) =>
-            {
-                var index = Sources.IndexOf(a);
-                if (Sources.Count > 1 && (index - 1) >= 0)
-                {
-                    Sources.Remove(a);
-                    Sources.Insert(index - 1, a);
-                }
-            });
-        }
 
-        public RelayCommand<FilterItem> MoveFilterDownCommand
-        {
-            get => new RelayCommand<FilterItem>((a) =>
-            {
-                var index = Sources.IndexOf(a);
-                if (Sources.Count > 1 && (index + 1) < Sources.Count)
-                {
-                    Sources.Remove(a);
-                    Sources.Insert(index + 1, a);
-                }
-            });
-        }
+        public IReadOnlyList<FilterItem> ActiveItems =>
+            Sources?.Where(x => x.Enabled).ToList();
 
-        public RelayCommand<FilterItem> ClearEnabledCommand
-        {
-            get => new RelayCommand<FilterItem>((a) =>
-            {
-                foreach (var item in Sources)
-                {
-                    if (item.Enabled)
-                    {
-                        item.Enabled = false;
-                    }
-                }
-            });
-        }
+        public string SelectionText =>
+            string.Join(", ", Sources.Where(x => x.Enabled).Select(x => x.Name));
 
-        public ObservableCollection<FilterItem> Sources
-        {
-            get; set;
-        }
+        public ObservableCollection<FilterItem> Sources { get; }
+
+        public HashSet<Guid> ActiveIds { get; private set; } = new HashSet<Guid>();
 
         private HashSet<string> enabledFiltersNames = new HashSet<string>();
         public HashSet<string> EnabledFiltersNames
@@ -67,57 +36,132 @@ namespace SteamWishlistDiscountNotifier.Presentation.Filters
             }
         }
 
-        public string SelectionText
-        {
-            get => string.Join(", ", EnabledFiltersNames);
-        }
+        public RelayCommand<FilterItem> MoveFilterUpCommand { get; }
+        public RelayCommand<FilterItem> MoveFilterDownCommand { get; }
+        public RelayCommand ClearEnabledCommand { get; }
 
-        public FilterGroup(ObservableCollection<FilterItem> sources)
+        public FilterGroup(IEnumerable<FilterItem> sources = null)
         {
-            Sources = sources.OrderBy(x => x.Name).ToObservable();
-            Sources.CollectionChanged += (s, e) =>
-            {
-                OnSettingsChanged();
-            };
+            Sources = new ObservableCollection<FilterItem>(
+                sources?.OrderBy(x => x.Name) ?? Enumerable.Empty<FilterItem>());
 
-            foreach (var source in Sources)
+            Sources.CollectionChanged += Sources_CollectionChanged;
+            foreach (var item in Sources)
             {
-                source.PropertyChanged += (s, e) =>
-                {
-                    OnSettingsChanged();
-                };
+                Subscribe(item);
             }
+
+            MoveFilterUpCommand = new RelayCommand<FilterItem>(MoveUp);
+            MoveFilterDownCommand = new RelayCommand<FilterItem>(MoveDown);
+            ClearEnabledCommand = new RelayCommand(ClearEnabled);
+
+            Recompute();
         }
 
-        private void OnSettingsChanged()
+        private void Sources_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var newEnabledFiltersNames = new HashSet<string>();
-            foreach (var sourceItem in Sources)
+            if (e.OldItems != null)
             {
-                if (sourceItem.Enabled)
+                foreach (FilterItem item in e.OldItems)
                 {
-                    newEnabledFiltersNames.Add(sourceItem.Name);
+                    Unsubscribe(item);
                 }
             }
 
-            EnabledFiltersNames = newEnabledFiltersNames;
+            if (e.NewItems != null)
+            {
+                foreach (FilterItem item in e.NewItems)
+                {
+                    Subscribe(item);
+                }
+            }
+
+            Recompute();
+        }
+
+        private void Subscribe(FilterItem item)
+        {
+            item.PropertyChanged += Item_PropertyChanged;
+        }
+
+        private void Unsubscribe(FilterItem item)
+        {
+            item.PropertyChanged -= Item_PropertyChanged;
+        }
+
+        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(FilterItem.Enabled))
+            {
+                Recompute();
+            }
+        }
+
+        private void Recompute()
+        {
+            ActiveIds = Sources
+                .Where(x => x.Enabled)
+                .Select(x => x.Id)
+                .ToHashSet();
+
+            OnPropertyChanged(nameof(ActiveItems));
+            OnPropertyChanged(nameof(ActiveIds));
             OnPropertyChanged(nameof(SelectionText));
+
             SettingsChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void MoveUp(FilterItem item)
+        {
+            var index = Sources.IndexOf(item);
+            if (index > 0)
+            {
+                Sources.Move(index, index - 1);
+            }
+        }
+
+        private void MoveDown(FilterItem item)
+        {
+            var index = Sources.IndexOf(item);
+            if (index >= 0 && index < Sources.Count - 1)
+            {
+                Sources.Move(index, index + 1);
+            }
+        }
+
+        private void ClearEnabled()
+        {
+            foreach (var item in Sources.Where(x => x.Enabled))
+            {
+                item.Enabled = false;
+            }
+        }
+
+        internal void UpdateFilters(List<FilterItem> items)
+        {
+            Sources.CollectionChanged -= Sources_CollectionChanged;
+            foreach (var item in Sources)
+            {
+                Unsubscribe(item);
+            }
+
+            Sources.Clear();
+            foreach (var item in items.OrderBy(x => x.Name))
+            {
+                Sources.Add(item);
+                Subscribe(item);
+            }
+
+            Sources.CollectionChanged += Sources_CollectionChanged;
+            Recompute();
         }
 
         public void Dispose()
         {
-            Sources.CollectionChanged -= (s, e) =>
+            Sources.CollectionChanged -= Sources_CollectionChanged;
+            foreach (var item in Sources)
             {
-                OnSettingsChanged();
-            };
-
-            foreach (var source in Sources)
-            {
-                source.PropertyChanged -= (s, e) =>
-                {
-                    OnSettingsChanged();
-                };
+                Unsubscribe(item);
             }
         }
     }

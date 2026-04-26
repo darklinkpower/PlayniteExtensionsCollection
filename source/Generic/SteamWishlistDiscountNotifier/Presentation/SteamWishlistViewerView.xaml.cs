@@ -1,9 +1,11 @@
 ﻿using SteamWishlistDiscountNotifier.Presentation.Converters;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Timers;
 
 namespace SteamWishlistDiscountNotifier.Presentation
 {
@@ -37,6 +38,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
             _timer.Elapsed += TimerElapsedHandler;
             this.Unloaded += SteamWishlistViewerView_Unloaded;
         }
+
+        public IList GetSelectedItems() => LbCollection.SelectedItems;
 
         private void TimerElapsedHandler(object sender, ElapsedEventArgs e)
         {

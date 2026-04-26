@@ -1,6 +1,15 @@
-﻿using Playnite.SDK;
+﻿using FlowHttp;
+using FlowHttp.Constants;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using PluginsCommon;
+using SteamCommon;
+using SteamWishlistDiscountNotifier.Application.Steam.Tags;
+using SteamWishlistDiscountNotifier.Application.Steam.Wishlist;
+using SteamWishlistDiscountNotifier.Domain.Enums;
+using SteamWishlistDiscountNotifier.Domain.ValueObjects;
+using SteamWishlistDiscountNotifier.Presentation.Filters;
+using SteamWishlistDiscountNotifier.Presentation.WishlistCategories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,16 +19,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using FlowHttp;
-using FlowHttp.Constants;
-using SteamWishlistDiscountNotifier.Domain.ValueObjects;
-using SteamCommon;
-using SteamWishlistDiscountNotifier.Domain.Enums;
-using SteamWishlistDiscountNotifier.Application.Steam.Wishlist;
-using SteamWishlistDiscountNotifier.Presentation.Filters;
-using SteamWishlistDiscountNotifier.Application.Steam.Tags;
 
 namespace SteamWishlistDiscountNotifier.Presentation
 {
@@ -27,6 +30,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
     {
         #region Fields
         private readonly IPlayniteAPI _playniteApi;
+        private readonly WishlistCategoryService _wishlistCategoryService;
         private string _steamSessionId;
         private string _steamLoginSecure;
 
@@ -271,8 +275,14 @@ namespace SteamWishlistDiscountNotifier.Presentation
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnSteamCommand { get; }
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnWebCommand { get; }
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnSteamDbCommand { get; }
+        public RelayCommand<SteamWishlistViewItem> OpenItemCategoryEditorCommand { get; }
+        public RelayCommand OpenCategoryManagerCommand { get; }
 
         #endregion
+
+        public string NewCategoryName { get; set; }
+        public ObservableCollection<SteamWishlistViewItem> SelectedItems { get; }
+                = new ObservableCollection<SteamWishlistViewItem>();
 
         #region Constructor
 
@@ -282,9 +292,11 @@ namespace SteamWishlistDiscountNotifier.Presentation
             List<CWishlistGetWishlistSortedFilteredResponseWishlistItem> wishlistResponseItems,
             List<Tag> tags,
             Dictionary<uint, string> bannersPathsMapper,
-            string pluginInstallPath)
+            string pluginInstallPath,
+            WishlistCategoryService wishlistCategoryService)
         {
             _playniteApi = playniteApi;
+            _wishlistCategoryService = wishlistCategoryService;
             FormattedBalance = walletDetails.FormattedBalance;
             WishlistItemsCollection = CreateViewItems(wishlistResponseItems, bannersPathsMapper, tags);
             DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
@@ -298,6 +310,59 @@ namespace SteamWishlistDiscountNotifier.Presentation
             OpenWishlistItemOnSteamCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInSteamClient(a));
             OpenWishlistItemOnWebCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInBrowser(a));
             OpenWishlistItemOnSteamDbCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInSteamDb(a));
+
+            OpenItemCategoryEditorCommand = new RelayCommand<SteamWishlistViewItem>((item) =>
+            {
+                var selectedItems = SelectedItems.ToList();
+                if (!selectedItems.Any())
+                {
+                    return;
+                }
+
+                var window = _playniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                {
+                    ShowMinimizeButton = false,
+                    ShowMaximizeButton = false
+                });
+
+                
+
+                window.Content = new WishlistItemCategoryEditorView();
+                window.Title = selectedItems.Count == 1
+                    ? $"Edit Categories - {selectedItems[0].Name}"
+                    : $"Edit Categories ({selectedItems.Count} items)";
+                
+                var vm = new WishlistBatchCategoryEditorViewModel(
+                    selectedItems,
+                    _wishlistCategoryService,
+                    () => window.Close());
+
+                window.DataContext = vm;
+                window.Height = 300;
+                window.SizeToContent = SizeToContent.Width;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
+                _wishlistCollectionView.Refresh();
+            });
+
+            OpenCategoryManagerCommand = new RelayCommand(() =>
+            {
+                var vm = new WishlistCategoryManagerViewModel(_wishlistCategoryService);
+                var wco = new WindowCreationOptions
+                {
+                    ShowMinimizeButton = false,
+                    ShowMaximizeButton = false
+                };
+
+                var window = _playniteApi.Dialogs.CreateWindow(wco);
+                window.Content = new WishlistCategoryManagerView();
+                window.DataContext = vm;
+                window.Title = "Category Manager";
+                window.Height = 400;
+                window.SizeToContent = System.Windows.SizeToContent.Width;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                window.ShowDialog();
+            });
 
             TagFilters = new FilterGroup(CreateFilterItems(WishlistItemsCollection));
             TagFilters.SettingsChanged += OnTagFiltersSettingsChanged;
@@ -329,18 +394,59 @@ namespace SteamWishlistDiscountNotifier.Presentation
                 [Ownership.Owned] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOwnershipOwned"),
                 [Ownership.NotOwned] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOwnershipNotOwned")
             };
+
+            CategoryFilters = new FilterGroup();
+            RefreshCategoryFilters();
+            CategoryFilters.SettingsChanged += OnCategoryFiltersChanged;
+            _wishlistCategoryService.CategoriesChanged += OnCategoriesChanged;
         }
 
-        public ObservableCollection<FilterItem> CreateFilterItems(List<SteamWishlistViewItem> wishlistItemsCollection)
+        private void OnCategoriesChanged()
+        {
+            SyncItemCategoriesWithStore();
+            RefreshCategoryFilters();
+            _wishlistCollectionView.Refresh();
+        }
+
+        private void SyncItemCategoriesWithStore()
+        {
+            foreach (var item in WishlistItemsCollection)
+            {
+                var validIds = _wishlistCategoryService.GetCategories(item.Appid);
+
+                item.CategoryIds.Clear();
+                item.CategoryIds.UnionWith(validIds);
+
+                item.OnPropertyChanged(nameof(item.CategoriesDisplay));
+            }
+        }
+
+        private void OnCategoryFiltersChanged(object sender, EventArgs e)
+        {
+            _wishlistCollectionView.Refresh();
+        }
+
+        private void RefreshCategoryFilters()
+        {
+            var filterItems = _wishlistCategoryService.Categories.OrderBy(x => x.Name)
+                .Select(cat => new FilterItem(cat.Id, cat.Name))
+                .ToList();
+
+            CategoryFilters.UpdateFilters(filterItems);
+        }
+
+        public FilterGroup CategoryFilters { get; set; }
+
+        private static ObservableCollection<FilterItem> CreateFilterItems(List<SteamWishlistViewItem> wishlistItemsCollection)
         {
             var dict = new Dictionary<string, FilterItem>();
             foreach (var wishlistItem in wishlistItemsCollection)
             {
-                foreach (var tag in wishlistItem.Tags)
+                foreach (var tagName in wishlistItem.Tags)
                 {
-                    if (!dict.ContainsKey(tag))
+                    if (!dict.ContainsKey(tagName))
                     {
-                        dict[tag] = new FilterItem(false, tag);
+                        dict[tagName] = new FilterItem(Guid.NewGuid(), tagName);
                     }
                 }
             }
@@ -371,9 +477,22 @@ namespace SteamWishlistDiscountNotifier.Presentation
             var otherSourcesOwnership = GetNonSteamOwnedItems();
             var items = new List<SteamWishlistViewItem>();
             var tagsDictionary = tags.ToDictionary(x => x.Tagid, x => x.Name);
+
+            var categoryLookup = _wishlistCategoryService.Categories
+                .OrderBy(c => c.Name)
+                .ToDictionary(c => c.Id, c => c.Name);
+
+            Func<Guid, string> categoryNameResolver = id =>
+            {
+                return _wishlistCategoryService.Categories
+                    .FirstOrDefault(c => c.Id == id)?.Name ?? string.Empty;
+            };
+
             foreach (var wishlistItem in wishlistResponseItems)
             {
                 var wishlistItemTags = GetWishlistItemTags(wishlistItem, tagsDictionary);
+                var categoryIds = _wishlistCategoryService.GetCategories(wishlistItem.Appid);
+
                 if (wishlistItem.StoreItem.BestPurchaseOption != null)
                 {
                     DateTime? activeDiscountEndDate = null;
@@ -404,7 +523,9 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), wishlistItem.StoreItem.Type),
                         wishlistItem.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
                         activeDiscountEndDate,
-                        formattedActiveDiscountEndDate
+                        formattedActiveDiscountEndDate,
+                        categoryIds,
+                        categoryNameResolver
                     );
 
                     items.Add(item);
@@ -430,7 +551,9 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), wishlistItem.StoreItem.ItemType),
                         wishlistItem.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
                         null,
-                        string.Empty
+                        string.Empty,
+                        categoryIds,
+                        categoryNameResolver
                     );
 
                     items.Add(item);
@@ -567,6 +690,15 @@ namespace SteamWishlistDiscountNotifier.Presentation
         private bool FilterWishlistItems(object item)
         {
             var wishlistItem = item as SteamWishlistViewItem;
+            if (CategoryFilters?.ActiveIds?.Count > 0)
+            {
+                if (wishlistItem.CategoryIds.Count == 0 ||
+                    !wishlistItem.CategoryIds.Overlaps(CategoryFilters.ActiveIds))
+                {
+                    return false;
+                }
+            }
+
             if (_filterOnlyDiscounted)
             {
                 if (wishlistItem.DiscountPct == 0 || wishlistItem.DiscountPct < FilterMinimumDiscount)
@@ -716,6 +848,10 @@ namespace SteamWishlistDiscountNotifier.Presentation
                 TagFilters.SettingsChanged -= OnTagFiltersSettingsChanged;
                 TagFilters.Dispose();
             }
+
+            CategoryFilters.SettingsChanged -= OnCategoryFiltersChanged;
+            CategoryFilters?.Dispose();
+            _wishlistCategoryService.CategoriesChanged -= OnCategoriesChanged;
         }
         #endregion
     }

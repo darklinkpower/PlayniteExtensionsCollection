@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SteamWishlistDiscountNotifier.Presentation
 {
-    public class SteamWishlistViewItem
+    public class SteamWishlistViewItem : ObservableObject
     {
         public string Name { get; }
         public uint Appid { get; }
@@ -27,8 +27,18 @@ namespace SteamWishlistDiscountNotifier.Presentation
         public string ReviewScoreLabel { get; }
         public DateTime? DiscountEndDate { get; }
         public string FormattedDiscountEndDate { get; }
+        public HashSet<Guid> CategoryIds { get; }
 
         public bool IsDiscounted => DiscountPct > 0;
+
+        public string CategoriesDisplay =>
+            CategoryIds != null && CategoryIds.Count > 0
+                ? string.Join(", ", CategoryIds
+                    .Select(id => _categoryNameResolver(id)))
+                : "None";
+
+        private readonly Func<Guid, string> _categoryNameResolver;
+
         public SteamWishlistViewItem(
             string name,
             uint appid,
@@ -47,7 +57,9 @@ namespace SteamWishlistDiscountNotifier.Presentation
             SteamStoreItemAppType steamStoreItemType,
             string reviewScoreLabel,
             DateTime? discountEndDate,
-            string formattedDiscountEndDate)
+            string formattedDiscountEndDate,
+            IEnumerable<Guid> categoryIds,
+            Func<Guid, string> categoryNameResolver)
         {
             Name = name;
             Appid = appid;
@@ -67,6 +79,10 @@ namespace SteamWishlistDiscountNotifier.Presentation
             ReviewScoreLabel = reviewScoreLabel;
             DiscountEndDate = discountEndDate;
             FormattedDiscountEndDate = formattedDiscountEndDate;
+            CategoryIds = categoryIds != null
+                ? new HashSet<Guid>(categoryIds)
+                : new HashSet<Guid>();
+            _categoryNameResolver = categoryNameResolver;
         }
     }
 }
