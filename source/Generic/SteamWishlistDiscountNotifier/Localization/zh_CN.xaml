@@ -36,6 +36,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">价格</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">发布日期</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">日期已添加</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscountEndDate">Discount End Date</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">升序</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">降序</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">搜索：</sys:String>
