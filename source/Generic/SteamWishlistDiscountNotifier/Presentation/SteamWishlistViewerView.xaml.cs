@@ -39,8 +39,6 @@ namespace SteamWishlistDiscountNotifier.Presentation
             this.Unloaded += SteamWishlistViewerView_Unloaded;
         }
 
-        public IList GetSelectedItems() => LbCollection.SelectedItems;
-
         private void TimerElapsedHandler(object sender, ElapsedEventArgs e)
         {
             UpdateTextBlocksText();
