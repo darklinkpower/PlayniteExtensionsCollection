@@ -97,6 +97,9 @@
     </Compile>
     <Compile Include="Models\GameSplashSettings.cs" />
     <Compile Include="Models\GeneralSplashSettings.cs" />
+    <Compile Include="Helpers\SplashSettingsSyncHelper.cs" />
+    <Compile Include="Helpers\SpinnerGeometryBuilder.cs" />
+    <Compile Include="Helpers\SpinnerRenderHelper.cs" />
     <Compile Include="Models\ModeSplashSettings.cs" />
     <Compile Include="Models\VideoManagerItem.cs" />
     <Compile Include="SplashScreen.cs" />
@@ -110,6 +113,9 @@
     <Compile Include="ViewModels\VideoManagerViewModel.cs" />
     <Compile Include="Views\GameSettingsWindow.xaml.cs">
       <DependentUpon>GameSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpinnerPreviewControl.xaml.cs">
+      <DependentUpon>SpinnerPreviewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SplashScreenImage.xaml.cs">
       <DependentUpon>SplashScreenImage.xaml</DependentUpon>
@@ -137,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GameSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SpinnerPreviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

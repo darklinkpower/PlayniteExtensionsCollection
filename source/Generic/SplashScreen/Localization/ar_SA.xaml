@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">مساعدة</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">فتح إدارة الفيديو</sys:String>
@@ -36,6 +36,20 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">الأسفل</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">استخدام تلاشي الرسوم المتحركة لصورة الشاشة</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">استخدام تلاشي الرسوم المتحركة لشعار الشاشة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingShowLoadingSpinnerLabel">إظهار مؤشر التحميل الدوار</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSizeLabel">حجم المؤشر الدوار (بالبكسل):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerOpacityLabel">شفافية المؤشر الدوار:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSpeedLabel">سرعة المؤشر الدوار (ثوانٍ لكل دورة):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewLabel">معاينة:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">خلفية المعاينة:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">سُمك المؤشر الدوار (بالبكسل):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">عدد شرطات المؤشر الدوار:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">طول شرطة المؤشر الدوار (1-100%):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">استخدام نهايات مستديرة للشرطات</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">ضبط سرعة المؤشر الدوار تلقائيا حسب الحجم</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_SettingSafeAreaPaddingLabel">حشوة المنطقة الآمنة (بالبكسل):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingBackgroundImageOpacityLabel">شفافية صورة الخلفية:</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">استخدام صورة بداية عامة لجميع الألعاب</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">استخدم شعار اللعبة في صورة البداية العالمية إذا كان متاحًا</sys:String>
@@ -57,3 +71,4 @@
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
 </ResourceDictionary>
+

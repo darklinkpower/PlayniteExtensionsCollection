@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SplashScreen.Models
@@ -68,6 +64,61 @@ namespace SplashScreen.Models
         /// Gets or sets Fullscreen Mode specific settings.
         /// </summary>
         ModeSplashSettings FullscreenModeSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether loading spinner should be displayed.
+        /// </summary>
+        bool EnableLoadingSpinner { get; set; }
+
+        /// <summary>
+        /// Gets or sets loading spinner size in pixels.
+        /// </summary>
+        int LoadingSpinnerSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets loading spinner opacity.
+        /// </summary>
+        double LoadingSpinnerOpacity { get; set; }
+
+        /// <summary>
+        /// Gets or sets loading spinner stroke thickness in pixels.
+        /// </summary>
+        double LoadingSpinnerThickness { get; set; }
+
+        /// <summary>
+        /// Gets or sets loading spinner dash length as a percentage of each dash slot.
+        /// </summary>
+        double LoadingSpinnerDashLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets loading spinner dash count.
+        /// </summary>
+        int LoadingSpinnerDashCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether spinner dashes should have rounded caps.
+        /// </summary>
+        bool LoadingSpinnerRoundedDashes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base spinner rotation duration in seconds.
+        /// </summary>
+        double LoadingSpinnerRotationSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether spinner speed should be adjusted by spinner size.
+        /// </summary>
+        bool EnableLoadingSpinnerAutoSpeed { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the safe area padding in pixels used by logo and loading spinner.
+        /// </summary>
+        int SafeAreaPadding { get; set; }
+
+        /// <summary>
+        /// Gets or sets background image opacity.
+        /// </summary>
+        double BackgroundImageOpacity { get; set; }
     }
 
     public class GeneralSplashSettings : IGeneralSplashSettings
@@ -84,5 +135,16 @@ namespace SplashScreen.Models
         public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
         public ModeSplashSettings DesktopModeSettings { get; set; } = new ModeSplashSettings();
         public ModeSplashSettings FullscreenModeSettings { get; set; } = new ModeSplashSettings();
+        public bool EnableLoadingSpinner { get; set; } = true;
+        public int LoadingSpinnerSize { get; set; } = 50;
+        public double LoadingSpinnerOpacity { get; set; } = 0.85;
+        public double LoadingSpinnerThickness { get; set; } = 2.0;
+        public double LoadingSpinnerDashLength { get; set; } = 70.0;
+        public int LoadingSpinnerDashCount { get; set; } = 16;
+        public bool LoadingSpinnerRoundedDashes { get; set; } = false;
+        public double LoadingSpinnerRotationSeconds { get; set; } = 3.0;
+        public bool EnableLoadingSpinnerAutoSpeed { get; set; } = true;
+        public int SafeAreaPadding { get; set; } = 60;
+        public double BackgroundImageOpacity { get; set; } = 0.60;
     }
 }
