@@ -123,7 +123,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
             try
             {
                 var installDir = GetInstallDirectory();
-                if (!installDir.IsNullOrEmpty())
+                if (installDir.IsNullOrEmpty())
                 { 
                     _logger.Warn("Special K installation directory is null or empty.");
                     return;
