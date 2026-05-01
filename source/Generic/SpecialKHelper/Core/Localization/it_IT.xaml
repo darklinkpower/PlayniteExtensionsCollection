@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Aiuto</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Apri editor dei profili Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenInstallationDirectory">Open Special K installation directory</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Apri la configurazione di Steam Controller per &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Id Steam per il gioco &quot;{0}&quot; necessario per aprire la configurazione non è stato trovato.
