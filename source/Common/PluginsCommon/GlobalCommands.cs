@@ -30,23 +30,17 @@ namespace PluginsCommon.Commands
             });
         }
 
-        public static RelayCommand<string> NavigateDirectoryCommand
+        public static RelayCommand<string> NavigateDirectoryCommand { get; } = new RelayCommand<string>((path) =>
         {
-            get => new RelayCommand<string>((path) =>
+            try
             {
-                try
-                {
-                    if (Directory.Exists(path))
-                    {
-                        Process.Start(path);
-                    }
-                }
-                catch (Exception e) when (!Debugger.IsAttached)
-                {
-                    logger.Error(e, "Failed to open directory.");
-                }
-            });
-        }
+                Explorer.OpenDirectory(path);
+            }
+            catch (Exception e) when (!Debugger.IsAttached)
+            {
+                logger.Error(e, "Failed to open directory.");
+            }
+        });
 
         public static void NavigateUrl(object url)
         {

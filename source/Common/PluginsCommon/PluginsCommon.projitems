@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\NumericConverters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringNullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TypeEqualityToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Explorer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\CharExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\LongExtensions.cs" />
