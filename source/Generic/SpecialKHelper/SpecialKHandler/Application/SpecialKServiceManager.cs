@@ -244,6 +244,13 @@ namespace SpecialKHelper.SpecialKHandler.Application
             }
         }
 
+        public bool StartAllServices(CancellationToken cancellationToken = default)
+        {
+            var start32Bits = Start32BitsService(cancellationToken);
+            var start64Bits = Start64BitsService(cancellationToken);
+            return start32Bits && start64Bits;
+        }
+
         public bool Start32BitsService(CancellationToken cancellationToken = default)
         {
             _logger.Info("Attempting to start 64-bit Special K service...");
@@ -369,6 +376,13 @@ namespace SpecialKHelper.SpecialKHandler.Application
             {
                 _logger.Error(ex, $"Failed to start stop process for Special K service: {servletExe}");
             }
+        }
+
+        public bool StopAllServices(CancellationToken cancellationToken = default)
+        {
+            var stop32Bits = Stop32BitsService(cancellationToken);
+            var stop64Bits = Stop64BitsService(cancellationToken);
+            return stop32Bits && stop64Bits;
         }
 
         public bool Stop32BitsService(CancellationToken cancellationToken = default)

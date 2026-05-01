@@ -86,17 +86,8 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             OpenSpecialKInstallationDirectoryCommand = new RelayCommand(() => _specialKServiceManager.OpenSpecialKInstallationDirectory());
             OpenProfilesEditorCommand = new RelayCommand(() => _specialKProfilesEditor.OpenEditorWindow());
 
-            StartAllServicesCommand = new RelayCommand(() =>
-            {
-                _specialKServiceManager.Start32BitsService();
-                _specialKServiceManager.Start64BitsService();
-            });
-
-            StopAllServicesCommand = new RelayCommand(() =>
-            {
-                _specialKServiceManager.Stop32BitsService();
-                _specialKServiceManager.Stop64BitsService();
-            });
+            StartAllServicesCommand = new RelayCommand(() => _specialKServiceManager.StartAllServices());
+            StopAllServicesCommand = new RelayCommand(() => _specialKServiceManager.StopAllServices());
 
             Is32BitsServiceRunning = _specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running;
             Is64BitsServiceRunning = _specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running;
