@@ -29,10 +29,10 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} Stunden {1} Minuten Gesamtspielzeit</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} Personen fanden diese Bewertung hilfreich</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} Personen fanden diese Bewertung lustig</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewerPcSpecsLabel">Reviewer's PC Specs:</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewerPcSpecsLabel">PC-Konfiguration des Reviewers:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Reaction_1_Name">Deep Thoughts</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Reaction_1_Desc">Trained dolphins couldn't get to the bottom of this one.</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_Reaction_2_Name">Heartwarming</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_Reaction_2_Name">Herzerwärmend</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Reaction_2_Desc">Makes you want to go out and show a rainbow to a kitten.</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Reaction_3_Name">Urkomisch</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Reaction_3_Desc">There's funny, and then there's this absolute gem.</sys:String>
