@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Lege Profilbild fest</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Lege Hintergrund-Video fest</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Profilbild festlegen</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Hintergrundvideo festlegen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata Konfiguration für das Theme &quot;{0}&quot; aktualisiert.
 Bitte starte Playnite neu damit die Änderungen wirksam werden.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Fehler beim Umwandeln einer Bilddatei zu png. Error: &quot;{0}&quot;</sys:String>
