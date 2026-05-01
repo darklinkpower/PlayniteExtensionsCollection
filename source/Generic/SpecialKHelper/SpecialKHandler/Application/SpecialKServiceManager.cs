@@ -120,20 +120,29 @@ namespace SpecialKHelper.SpecialKHandler.Application
 
         internal void OpenSpecialKInstallationDirectory()
         {
-            var installDir = GetInstallDirectory();
-            if (installDir.IsNullOrEmpty())
+            var installDir = string.Empty;
+            try
             {
-                _logger.Warn("Special K installation directory is null or empty.");
-                return;
-            }
+                installDir = GetInstallDirectory();
+                if (installDir.IsNullOrEmpty())
+                {
+                    _logger.Warn("Special K installation directory is null or empty.");
+                    return;
+                }
 
-            if (!Directory.Exists(installDir))
+                if (!Directory.Exists(installDir))
+                {
+                    _logger.Warn($"Special K installation directory does not exist: {installDir}");
+                    return;
+                }
+
+                Explorer.OpenDirectory(installDir);
+            }
+            catch (Exception e)
             {
-                _logger.Warn($"Special K installation directory does not exist: {installDir}");
-                return;
+                _logger.Error(e, $"Failed to open Special K installation directory: {installDir}");
             }
-
-            ProcessStarter.StartProcess(installDir);
+            
         }
 
         internal void OpenSpecialK()

@@ -58,6 +58,7 @@ namespace SpecialKHelper.PluginSidebarItem.Application
         public RelayCommand StartAllServicesCommand { get; }
         public RelayCommand StopAllServicesCommand { get; }
         public RelayCommand OpenSpecialKCommand { get; }
+        public RelayCommand OpenSpecialKInstallationDirectoryCommand { get; }
         public RelayCommand OpenProfilesEditorCommand { get; }
 
         public SidebarItemSwitcherViewModel(
@@ -82,6 +83,7 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             Start64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Start64BitsService());
             Stop64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Stop64BitsService());
             OpenSpecialKCommand = new RelayCommand(() => _specialKServiceManager.OpenSpecialK());
+            OpenSpecialKInstallationDirectoryCommand = new RelayCommand(() => _specialKServiceManager.OpenSpecialKInstallationDirectory());
             OpenProfilesEditorCommand = new RelayCommand(() => _specialKProfilesEditor.OpenEditorWindow());
 
             StartAllServicesCommand = new RelayCommand(() =>
@@ -131,6 +133,14 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             {
                 Header = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
                 Command = OpenProfilesEditorCommand
+            });
+
+            ContextMenuItems.Add(new Separator());
+
+            ContextMenuItems.Add(new MenuItem
+            {
+                Header = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenInstallationDirectory"),
+                Command = OpenSpecialKInstallationDirectoryCommand
             });
 
             ContextMenuItems.Add(new Separator());
