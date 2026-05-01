@@ -284,3 +284,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.30_78dfa209/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_43.pext
     Changelog:
     - 'Fixed: Failing to launch Special K from sidebar right click menu'
+  - Version: 1.44
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-04-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.30_5579743a/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_44.pext
+    Changelog:
+    - 'Added: Support to open Special K installation directory from sidebar right click menu'
+    - "Added: Menu items previously only available in the sidebar right click menu will now also be available in Playnite's main menu"
