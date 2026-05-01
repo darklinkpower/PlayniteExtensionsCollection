@@ -7,9 +7,11 @@ using PluginsCommon;
 using SteamCommon;
 using SteamShortcuts.Application;
 using SteamShortcuts.Domain.Enums;
+using SteamShortcuts.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -20,7 +22,7 @@ namespace SteamShortcuts
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly SteamUriLauncherService _steamUriLauncherService;
-        private readonly SteamShortcutsSettingsViewModel _settingsViewModel;
+        public SteamShortcutsSettingsViewModel Settings { get; set; }
         private readonly List<GameMenuItem> _steamComponentMenuItems;
         private static readonly string _menuSection = ResourceProvider.GetString("LOCSteam_Viewer_SteamShortcutsLabel");
 
@@ -29,10 +31,32 @@ namespace SteamShortcuts
         public SteamShortcuts(IPlayniteAPI api) : base(api)
         {
             _steamUriLauncherService = new SteamUriLauncherService();
-            _settingsViewModel = new SteamShortcutsSettingsViewModel(this, _steamUriLauncherService);
+            Settings = new SteamShortcutsSettingsViewModel(this, _steamUriLauncherService);
             Properties = new GenericPluginProperties { HasSettings = true };
             _steamComponentMenuItems = GetSteamComponentMenuItems();
-            _steamUriLauncherService.LaunchUrlsInSteamClient = _settingsViewModel.Settings.LaunchUrlsInSteamClient;
+            _steamUriLauncherService.LaunchUrlsInSteamClient = Settings.Settings.LaunchUrlsInSteamClient;
+
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
+                SourceName = "SteamShortcuts",
+                SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
+            });
+
+            AddCustomElementSupport(new AddCustomElementSupportArgs
+            {
+                SourceName = "SteamShortcuts",
+                ElementList = new List<string> { "SteamGameActionsLauncher" }
+            });
+        }
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            if (args.Name == "SteamGameActionsLauncher")
+            {
+                return new SteamGameActionsLauncher(_steamUriLauncherService, Settings, PlayniteApi, _logger);
+            }
+
+            return null;
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -51,7 +75,7 @@ namespace SteamShortcuts
                     AddSteamWebLinkMenuItems(menuItems, game.GameId);
                     AddSeparatorToMenuItems(menuItems, _menuSection);
                 }
-                else if (_settingsViewModel.Settings.AddWebLinksForNonSteam)
+                else if (Settings.Settings.AddWebLinksForNonSteam)
                 {
                     var steamId = Steam.GetSteamIdFromLinks(game);
                     if (!steamId.IsNullOrEmpty())
@@ -143,7 +167,7 @@ namespace SteamShortcuts
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return _settingsViewModel;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)

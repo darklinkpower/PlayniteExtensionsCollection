@@ -145,6 +145,9 @@
     <Compile Include="..\..\common\pluginscommon\Paths.cs">
       <Link>Shared\PluginsCommon\Paths.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\PluginUserControlBase.cs">
+      <Link>Shared\PluginsCommon\PluginUserControlBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
@@ -164,6 +167,9 @@
     <Compile Include="Domain\Enums\SteamComponentType.cs" />
     <Compile Include="Domain\Enums\SteamUrlType.cs" />
     <Compile Include="Application\SteamUriLauncherService.cs" />
+    <Compile Include="Presentation\SteamGameActionsLauncher.xaml.cs">
+      <DependentUpon>SteamGameActionsLauncher.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SteamShortcuts.cs" />
     <Compile Include="SteamShortcutsSettings.cs" />
     <Compile Include="SteamShortcutsSettingsView.xaml.cs">
@@ -186,6 +192,10 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Presentation\SteamGameActionsLauncher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SteamShortcutsSettingsView.xaml">
       <SubType>Designer</SubType>
