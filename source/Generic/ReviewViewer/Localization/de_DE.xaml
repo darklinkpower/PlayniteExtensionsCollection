@@ -3,9 +3,9 @@
     <sys:String x:Key="LOCReview_Viewer_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Bewertungsbetrachter</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Bewertungsdaten der ausgewählten Spiele aktualisieren</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">Möchten Sie die Daten für bereits vorhandene Spiele erneut herunterladen?</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">Die Daten für bereits vorhandene Spiele erneut herunterladen?</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Bewertungsdaten werden aktualisiert...</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Aktualisierung der Daten abgeschlossen.</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Datenaktualisierung abgeschlossen.</sys:String>
 
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Daten Herunterladen bei Spielauswahl überprüfen</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">Wenn die Daten älter als ein paar Tage sind:</sys:String>
@@ -17,8 +17,8 @@
 
     <sys:String x:Key="LOCReview_Viewer_ReviewsTypeLabel">Bewertungstyp:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewTypeAll">Alle</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTypePositive">Positive</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">Negative</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypePositive">Positiv</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">Negativ</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Review">Bewertung:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Bewertung</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Bewertungen</sys:String>
