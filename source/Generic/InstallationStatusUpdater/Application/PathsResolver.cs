@@ -67,39 +67,54 @@ namespace InstallationStatusUpdater.Application
             return game.Roms.Any(rom => DetectIsRomInstalled(game, rom, resolvedInstallationDirectory));
         }
 
-        private bool DetectIsRomInstalled(Game game, GameRom rom, string resolvedInstallationDirectory)
+        private bool DetectIsRomInstalled(
+            Game game,
+            GameRom rom,
+            string resolvedInstallationDirectory)
         {
-            if (rom.Path.IsNullOrEmpty())
+            var path = rom.Path;
+            if (path.IsNullOrEmpty())
             {
                 return false;
             }
 
-            var resolvedPath = rom.Path;
-            if (resolvedPath.Contains("{EmulatorDir}"))
+            if (path.Contains('{'))
             {
-                var emulator = GetGameEmulator(game);
-                if (emulator != null && !emulator.InstallDir.IsNullOrEmpty())
+                var requiresEmulatorDir =
+                    path.Contains("{EmulatorDir}") ||
+                    game.InstallDirectory?.Contains("{EmulatorDir}") == true;
+
+                if (requiresEmulatorDir)
                 {
-                    resolvedPath = resolvedPath.Replace("{EmulatorDir}", emulator.InstallDir);
+                    var emulator = GetGameEmulator(game);
+                    if (emulator != null &&
+                        !emulator.InstallDir.IsNullOrEmpty())
+                    {
+                        path = _playniteApi.ExpandGameVariables(
+                            game,
+                            path,
+                            emulator.InstallDir);
+                    }
+                    else
+                    {
+                        path = _playniteApi.ExpandGameVariables(game, path);
+                    }
+                }
+                else
+                {
+                    path = _playniteApi.ExpandGameVariables(game, path);
                 }
             }
 
-            if (resolvedPath.Contains('{'))
+            if (!Path.IsPathRooted(path) &&
+                !resolvedInstallationDirectory.IsNullOrEmpty())
             {
-                resolvedPath = _playniteApi.ExpandGameVariables(game, resolvedPath);
+                path = Path.Combine(
+                    resolvedInstallationDirectory,
+                    path);
             }
 
-            if (Path.IsPathRooted(resolvedPath))
-            {
-                return FileSystem.FileExists(resolvedPath);
-            }
-
-            if (!resolvedInstallationDirectory.IsNullOrEmpty())
-            {
-                resolvedPath = Path.Combine(resolvedInstallationDirectory, resolvedPath);
-            }
-
-            return FileSystem.FileExists(resolvedPath);
+            return FileSystem.FileExists(path);
         }
 
         private Emulator GetGameEmulator(Game game)
