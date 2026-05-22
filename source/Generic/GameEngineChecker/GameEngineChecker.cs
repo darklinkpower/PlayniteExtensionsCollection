@@ -1,6 +1,5 @@
 ﻿using GameEngineChecker.Services;
 using Playnite.SDK;
-using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace GameEngineChecker
 {
@@ -21,59 +19,16 @@ namespace GameEngineChecker
 		private readonly Tagger _tagger;
 		private readonly RateLimiter _rateLimiter;
 
-		private GameEngineCheckerSettingsViewModel Settings { get; set; }
-
 		public override Guid Id { get; } = Guid.Parse("7a21243e-c7cc-4ca7-85bd-f6f96f22e9db");
 
 		public GameEngineChecker(IPlayniteAPI api) : base(api)
 		{
-			Settings = new GameEngineCheckerSettingsViewModel(this);
 			Properties = new GenericPluginProperties
 			{
 				HasSettings = false
 			};
 			_tagger = new Tagger(PlayniteApi);
 			_rateLimiter = new RateLimiter(PcGamingWikiRateLimitWindow, PcGamingWikiMaxRequestsPerWindow);
-		}
-
-		public override void OnGameInstalled(OnGameInstalledEventArgs args)
-		{
-			// Add code to be executed when game is finished installing.
-		}
-
-		public override void OnGameStarted(OnGameStartedEventArgs args)
-		{
-			// Add code to be executed when game is started running.
-		}
-
-		public override void OnGameStarting(OnGameStartingEventArgs args)
-		{
-			// Add code to be executed when game is preparing to be started.
-		}
-
-		public override void OnGameStopped(OnGameStoppedEventArgs args)
-		{
-			// Add code to be executed when game is preparing to be started.
-		}
-
-		public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
-		{
-			// Add code to be executed when game is uninstalled.
-		}
-
-		public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-		{
-			// Add code to be executed when Playnite is initialized.
-		}
-
-		public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
-		{
-			// Add code to be executed when Playnite is shutting down.
-		}
-
-		public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-		{
-			// Add code to be executed when library is updated.
 		}
 
 		public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
@@ -90,20 +45,10 @@ namespace GameEngineChecker
 					}
 					catch (Exception ex)
 					{
-						Logger.Error(ex, "ohoh");
+						Logger.Error(ex, "Failure running add task. Should not happen.");
 					}
 				}
 			};
-		}
-
-		public override ISettings GetSettings(bool firstRunSettings)
-		{
-			return Settings;
-		}
-
-		public override UserControl GetSettingsView(bool firstRunSettings)
-		{
-			return new GameEngineCheckerSettingsView();
 		}
 
 		private async Task AddTagsToGames(IReadOnlyCollection<Game> games)

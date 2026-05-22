@@ -52,10 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameEngineChecker.cs" />
-    <Compile Include="GameEngineCheckerSettings.cs" />
-    <Compile Include="GameEngineCheckerSettingsView.xaml.cs">
-      <DependentUpon>GameEngineCheckerSettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\PcGamingWiki\CargoQueryItem.cs" />
     <Compile Include="Models\PcGamingWiki\Infobox.cs" />
     <Compile Include="Models\PcGamingWiki\PcGamingWikiEngineResponse.cs" />
@@ -89,10 +85,6 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GameEngineCheckerSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
