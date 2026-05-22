@@ -1,21 +1,20 @@
-﻿using Playnite.SDK;
+﻿using GameEngineChecker.Services;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using GameEngineChecker.Services;
 
 namespace GameEngineChecker
 {
 	public class GameEngineChecker : GenericPlugin
 	{
+		private const string ExtensionName = "Game Engine Checker";
 		private const int PcGamingWikiMaxRequestsPerWindow = 30;
 		private static readonly TimeSpan PcGamingWikiRateLimitWindow = TimeSpan.FromSeconds(60);
 		private static readonly ILogger Logger = LogManager.GetLogger();
@@ -81,72 +80,13 @@ namespace GameEngineChecker
 		{
 			yield return new MainMenuItem()
 			{
-				MenuSection = "@Game Engine Checker",
-				Description = "Add",
+				MenuSection = $"@{ExtensionName}",
+				Description = ResourceProvider.GetString("LOCGame_Engine_Checker_MenuItemAddTagSelectedGamesDescription"),
 				Action = x =>
 				{
 					try
 					{
 						Task.Run(() => AddTagsToGames(PlayniteApi.MainView.SelectedGames.ToList()));
-
-					}
-					catch (Exception ex)
-					{
-						Logger.Error(ex, "ohoh");
-					}
-				}
-			};
-
-
-			yield return new MainMenuItem()
-			{
-				MenuSection = "@Game Engine Checker",
-				Description = "SteamTest",
-				Action = async x =>
-				{
-					try
-					{
-						using (var httpClient = new HttpClient())
-						{
-							var request = new HttpRequestMessage(HttpMethod.Get, "https://api.steampowered.com/IStoreService/GetAppList/v1/");
-							request.Headers.Add("x-webapi-key", Settings.Settings.SteamWebApiKey);
-
-
-							var response = await httpClient.SendAsync(request);
-							var text = await response.Content.ReadAsStringAsync();
-
-							Logger.Debug(text);
-						}
-					}
-					catch (Exception ex)
-					{
-						Logger.Error(ex, "ohoh");
-					}
-				}
-			};
-
-
-			yield return new MainMenuItem()
-			{
-				MenuSection = "@Game Engine Checker",
-				Description = "PCWIKI",
-				Action = async x =>
-				{
-					try
-					{
-						var pcWikiSteam = new Uri($@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&format=json&tables=Infobox_game&fields=Engines,_pageName=title&where=Steam_AppID HOLDS ""{230290}""");
-						var pcWikiGog = new Uri($@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&format=json&tables=Infobox_game&fields=Engines,_pageName=title&where=GOGcom_ID HOLDS ""{230290}""");
-
-						using (var httpClient = new HttpClient())
-						{
-							var request = new HttpRequestMessage(HttpMethod.Get, pcWikiSteam);
-
-
-							var response = await httpClient.SendAsync(request);
-							var text = await response.Content.ReadAsStringAsync();
-
-							Logger.Debug(text);
-						}
 					}
 					catch (Exception ex)
 					{
@@ -172,7 +112,7 @@ namespace GameEngineChecker
 			{
 				var gamesFilter = new GamesFilter(PlayniteApi);
 				var pcGamingWikiLinkProvider = new PcGamingWikiLinkProvider();
-				var pcGamingWikiClient = new PcGamingWikiClient();
+				var pcGamingWikiClient = new PcGamingWikiClient(PlayniteApi);
 				var enginesParser = new EnginesParser();
 
 				var gameEngineCheckerService = new GameEngineCheckerService(
@@ -184,7 +124,11 @@ namespace GameEngineChecker
 					enginesParser,
 					_tagger);
 
-				await gameEngineCheckerService.AddGameEngineTags(games, CancellationToken.None);
+				var addedCount = await gameEngineCheckerService.AddGameEngineTags(games, CancellationToken.None);
+				PlayniteApi.Notifications.Add(
+					"game_engine_checker__added_count",
+					string.Format(ResourceProvider.GetString("LOCGame_Engine_Checker_ResultsMessage"), addedCount),
+					NotificationType.Info);
 			}
 			catch (Exception ex)
 			{

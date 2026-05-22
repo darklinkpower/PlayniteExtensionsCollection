@@ -78,14 +78,14 @@ namespace GameEngineChecker.Tests.Services
 			await _sut.AddGameEngineTags(new List<Game> { game }, CancellationToken.None);
 
 			// Assert
-			A.CallTo(() => _pcGamingWikiClient.GetEngines(A<Uri>._, A<CancellationToken>._)).MustNotHaveHappened();
+			A.CallTo(() => _pcGamingWikiClient.GetEngines(A<Uri>._, A<Game>._, A<CancellationToken>._)).MustNotHaveHappened();
 		}
 
 		private void SetupSuccessfulRun(Game game, Uri link, string engines, List<string> parsedEngines)
 		{
 			A.CallTo(() => _gamesFilter.ShouldTheGameBeProcessed(game)).Returns(true);
 			A.CallTo(() => _pcGamingWikiLinkProvider.GetLink(game, A<CancellationToken>._)).Returns(link);
-			A.CallTo(() => _pcGamingWikiClient.GetEngines(link, A<CancellationToken>._)).Returns(engines);
+			A.CallTo(() => _pcGamingWikiClient.GetEngines(link, A<Game>._, A<CancellationToken>._)).Returns(engines);
 			A.CallTo(() => _enginesParser.Parse(engines)).Returns(parsedEngines);
 		}
 	}
