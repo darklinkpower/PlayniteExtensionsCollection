@@ -1,6 +1,7 @@
 ﻿using GameEngineChecker.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,45 +37,58 @@ namespace GameEngineChecker.Services
 			_tagger = tagger;
 		}
 
-		public async Task<int> AddGameEngineTags(IReadOnlyCollection<Game> games, CancellationToken cancellationToken)
+		public async Task<int> AddGameEngineTags(
+			IReadOnlyList<Game> games,
+			Action<float> reportProgress,
+			CancellationToken cancellationToken)
 		{
 			var addedCount = 0;
-			using (var _ = _api.Database.BufferedUpdate())
+			try
 			{
-				foreach (var game in games)
+				using (var _ = _api.Database.BufferedUpdate())
 				{
-					if (cancellationToken.IsCancellationRequested)
+					for (var i = 0; i < games.Count; i++)
 					{
-						return addedCount;
-					}
+						var game = games[i];
+						if (cancellationToken.IsCancellationRequested)
+						{
+							return addedCount;
+						}
 
-					if (!_filter.ShouldTheGameBeProcessed(game))
-					{
-						continue;
-					}
+						if (!_filter.ShouldTheGameBeProcessed(game))
+						{
+							continue;
+						}
 
-					var link = await _linkProvider.GetLink(game, cancellationToken);
-					if (link == null)
-					{
-						_logger.Info($"Could not create PC Gaming Wiki link for game {game.Id} - {game.Name}.");
-						continue;
-					}
+						var link = await _linkProvider.GetLink(game, cancellationToken);
+						if (link == null)
+						{
+							_logger.Info($"Could not create PC Gaming Wiki link for game {game.Id} - {game.Name}.");
+							continue;
+						}
 
-					await _rateLimiter.Limit(games.Count, cancellationToken);
-					var engines = await _client.GetEngines(link, game, cancellationToken);
-					if (engines == null)
-					{
-						_logger.Info($"No engines found for game {game.Id} - {game.Name}.");
-						continue;
-					}
+						await _rateLimiter.Limit(games.Count, cancellationToken);
+						var engines = await _client.GetEngines(link, game, cancellationToken);
+						if (engines == null)
+						{
+							_logger.Info($"No engines found for game {game.Id} - {game.Name}.");
+							continue;
+						}
 
-					var parsedEngines = _enginesParser.Parse(engines);
-					_tagger.AddEngineTags(game, parsedEngines, cancellationToken);
-					addedCount++;
+						var parsedEngines = _enginesParser.Parse(engines);
+						_tagger.AddEngineTags(game, parsedEngines, cancellationToken);
+
+						addedCount++;
+						reportProgress.Invoke(i * 100f / games.Count);
+					}
 				}
-			}
 
-			return addedCount;
+				return addedCount;
+			}
+			catch (OperationCanceledException)
+			{
+				return addedCount;
+			}
 		}
 	}
 }

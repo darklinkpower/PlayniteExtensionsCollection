@@ -49,6 +49,23 @@ namespace GameEngineChecker.Tests.Services
 		}
 
 		[Fact]
+		public void AddEngineTags_AddsNewTagAndUpdatesTheGame_WhenGameHasNoTags()
+		{
+			// Arrange
+			var game = _fixture.Create<Game>();
+			var engines = new List<string> { "Unity" };
+			game.TagIds = null;
+
+			// Act
+			_sut.AddEngineTags(game, engines, CancellationToken.None);
+
+			// Assert
+			var tag = Assert.Single(_api.Database.Tags);
+			Assert.Equal("[Engine] Unity", tag.Name);
+			Assert.Contains(tag.Id, game.TagIds);
+		}
+
+		[Fact]
 		public void AddEngineTags_DoesNotAddTheTagToTheGame_WhenGameHasTheTag()
 		{
 			// Arrange

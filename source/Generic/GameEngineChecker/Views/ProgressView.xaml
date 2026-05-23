@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="GameEngineChecker.Views.ProgressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="5,0,5,5"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ProgressBar Grid.Row="0" Value="{Binding ProgressValue}" Margin="5"></ProgressBar>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="{DynamicResource LOCGame_Engine_Checker_ProgressHide}" Command="{Binding Hide}"></Button>
+            <Button Content="{DynamicResource LOCGame_Engine_Checker_ProgressCancel}" Command="{Binding Cancel}"></Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

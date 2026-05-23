@@ -47,6 +47,20 @@ namespace GameEngineChecker.Tests.Services
 		}
 
 		[Fact]
+		public void ShouldTheGameBeProcessed_ReturnsTrue_WhenGameHasNoTags()
+		{
+			// Arrange
+			var game = _fixture.Create<Game>();
+			game.TagIds = null;
+
+			// Act
+			var result = _sut.ShouldTheGameBeProcessed(game);
+
+			// Assert
+			Assert.True(result);
+		}
+
+		[Fact]
 		public void ShouldTheGameBeProcessed_ReturnsFalse_WhenGameHasAnyEngineTag()
 		{
 			// Arrange

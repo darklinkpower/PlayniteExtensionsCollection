@@ -46,7 +46,7 @@ namespace GameEngineChecker.Tests.Services
 			SetupSuccessfulRun(game, link, engines, parsedEngines);
 
 			// Act
-			await _sut.AddGameEngineTags(new List<Game> { game }, CancellationToken.None);
+			await _sut.AddGameEngineTags(new List<Game> { game }, x => { }, CancellationToken.None);
 
 			// Assert
 			A.CallTo(() => _tagger.AddEngineTags(game, parsedEngines, CancellationToken.None)).MustHaveHappenedOnceExactly();
@@ -58,9 +58,9 @@ namespace GameEngineChecker.Tests.Services
 			// Arrange
 			var game = _fixture.Create<Game>();
 			A.CallTo(() => _gamesFilter.ShouldTheGameBeProcessed(game)).Returns(false);
-			
+
 			// Act
-			await _sut.AddGameEngineTags(new List<Game> { game }, CancellationToken.None);
+			await _sut.AddGameEngineTags(new List<Game> { game }, x => { }, CancellationToken.None);
 
 			// Assert
 			A.CallTo(() => _pcGamingWikiLinkProvider.GetLink(A<Game>._, CancellationToken.None)).MustNotHaveHappened();
@@ -75,7 +75,7 @@ namespace GameEngineChecker.Tests.Services
 			A.CallTo(() => _pcGamingWikiLinkProvider.GetLink(game, A<CancellationToken>._)).Returns<Uri>(null);
 
 			// Act
-			await _sut.AddGameEngineTags(new List<Game> { game }, CancellationToken.None);
+			await _sut.AddGameEngineTags(new List<Game> { game }, x => { }, CancellationToken.None);
 
 			// Assert
 			A.CallTo(() => _pcGamingWikiClient.GetEngines(A<Uri>._, A<Game>._, A<CancellationToken>._)).MustNotHaveHappened();

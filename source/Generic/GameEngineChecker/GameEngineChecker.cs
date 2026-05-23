@@ -1,4 +1,6 @@
 ﻿using GameEngineChecker.Services;
+using GameEngineChecker.ViewModels;
+using GameEngineChecker.Views;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -7,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace GameEngineChecker
 {
@@ -51,8 +55,13 @@ namespace GameEngineChecker
 			};
 		}
 
-		private async Task AddTagsToGames(IReadOnlyCollection<Game> games)
+		private async Task AddTagsToGames(IReadOnlyList<Game> games)
 		{
+			if (games.Count == 0)
+			{
+				return;
+			}
+
 			try
 			{
 				var gamesFilter = new GamesFilter(PlayniteApi);
@@ -69,16 +78,77 @@ namespace GameEngineChecker
 					enginesParser,
 					_tagger);
 
-				var addedCount = await gameEngineCheckerService.AddGameEngineTags(games, CancellationToken.None);
-				PlayniteApi.Notifications.Add(
-					"game_engine_checker__added_count",
-					string.Format(ResourceProvider.GetString("LOCGame_Engine_Checker_ResultsMessage"), addedCount),
-					NotificationType.Info);
+				using (var cancellationTokenSource = new CancellationTokenSource())
+				using (var progressViewModel = ShowProgressDialog(cancellationTokenSource, true))
+				{
+					void ReportProgressAction(float progress)
+					{
+						PlayniteApi.MainView.UIDispatcher.Invoke(() => progressViewModel.ProgressValue = progress);
+					}
+
+					var addedCount = await gameEngineCheckerService.AddGameEngineTags(games, ReportProgressAction, cancellationTokenSource.Token);
+					PlayniteApi.Notifications.Add(
+						"game_engine_checker__added_count",
+						string.Format(ResourceProvider.GetString("LOCGame_Engine_Checker_ResultsMessage"), addedCount),
+						NotificationType.Info);
+				}
 			}
 			catch (Exception ex)
 			{
 				Logger.Error(ex, "Failure while adding engines to games.");
 			}
+		}
+
+		private ProgressViewModel ShowProgressDialog(CancellationTokenSource cts, bool showProgressBar)
+		{
+			var progressViewModel = new ProgressViewModel(PlayniteApi, cts);
+			if (showProgressBar)
+			{
+				PlayniteApi.MainView.UIDispatcher.Invoke(() =>
+					{
+						var window = ShowDialog(
+							new ProgressView(progressViewModel),
+							100,
+							250,
+							ResourceProvider.GetString("LOCGame_Engine_Checker_ProgressTitle"),
+							false,
+							false);
+
+						progressViewModel.SetWindow(window);
+					}
+				);
+			}
+
+			return progressViewModel;
+		}
+
+		private Window ShowDialog(UserControl view, double height, double width, string title, bool showMaximizeButton, bool waitToClose)
+		{
+			var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions()
+			{
+				ShowCloseButton = true,
+				ShowMaximizeButton = showMaximizeButton,
+				ShowMinimizeButton = false,
+			});
+
+			window.Height = height;
+			window.Width = width;
+			window.Title = title;
+
+			window.Content = view;
+			window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+			window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+			if (waitToClose)
+			{
+				window.ShowDialog();
+			}
+			else
+			{
+				window.Show();
+			}
+
+			return window;
 		}
 	}
 }

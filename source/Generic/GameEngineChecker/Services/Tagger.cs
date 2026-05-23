@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using GameEngineChecker.Interfaces;
+﻿using GameEngineChecker.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace GameEngineChecker.Services
 {
@@ -30,7 +31,12 @@ namespace GameEngineChecker.Services
 
 				var newTagsIdsForGame = tags
 					.Select(x => x.Id)
-					.Except(game.TagIds);
+					.Except(game.TagIds ?? new List<Guid>());
+
+				if (game.TagIds == null)
+				{
+					game.TagIds = new List<Guid>();
+				}
 
 				game.TagIds.AddRange(newTagsIdsForGame);
 				_api.Database.Games.Update(game);

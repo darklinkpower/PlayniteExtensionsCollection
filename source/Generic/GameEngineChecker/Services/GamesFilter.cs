@@ -18,7 +18,7 @@ namespace GameEngineChecker.Services
 
 		public bool ShouldTheGameBeProcessed(Game game)
 		{
-			return game.TagIds.All(x => !_engineTagIds.Contains(x));
+			return game.TagIds?.All(x => !_engineTagIds.Contains(x)) ?? true;
 		}
 	}
 }
