@@ -6,5 +6,7 @@
     <sys:String x:Key="LOCGame_Engine_Checker_PcgwDownloadErrorMessage">Couldn't download game information of "{0}" from PCGW. Error: {1}</sys:String>
     <sys:String x:Key="LOCGame_Engine_Checker_ResultsMessage" xml:space="preserve">Finished.
 Added engine tag to {0} game(s).</sys:String>
+    <sys:String x:Key="LOCGame_Engine_Checker_ResultsErrorMessage" xml:space="preserve">Failure while adding engines to games: {0}
+{1}</sys:String>
     <sys:String x:Key="LOCGame_Engine_Checker_SteamAppListDownloadErrorMessage">Error downloading Steam AppList database. Error: {0}</sys:String>
 </ResourceDictionary>

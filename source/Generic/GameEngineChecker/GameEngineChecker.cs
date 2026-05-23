@@ -96,6 +96,10 @@ namespace GameEngineChecker
 			catch (Exception ex)
 			{
 				Logger.Error(ex, "Failure while adding engines to games.");
+				PlayniteApi.Notifications.Add(
+					"game_engine_checker__add_error",
+					string.Format(ResourceProvider.GetString("LOCGame_Engine_Checker_ResultsErrorMessage"), ex.Message, ex.StackTrace),
+					NotificationType.Error);
 			}
 		}
 

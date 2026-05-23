@@ -69,6 +69,20 @@ namespace GameEngineChecker.Tests.Services
 		}
 
 		[Fact]
+		public async Task GetLink_ReturnNull_WhenGameIsNonSteamNonGogAndHasNoLinks()
+		{
+			// Arrange
+			var game = _fixture.Create<Game>();
+			game.Links = null;
+
+			// Act
+			var result = await _sut.GetLink(game, CancellationToken.None);
+
+			// Assert
+			Assert.Null(result);
+		}
+
+		[Fact]
 		public async Task GetLink_ReturnNull_WhenGameLinkNotGenerated()
 		{
 			// Arrange

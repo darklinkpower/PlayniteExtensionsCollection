@@ -20,9 +20,14 @@ namespace GameEngineChecker.Services
 			}
 
 			if (game.PluginId == Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E") // GOG
-			    || game.PluginId == Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C")) // GOG OSS
+				|| game.PluginId == Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C")) // GOG OSS
 			{
 				return Task.FromResult(GetGogGameLink(game.GameId));
+			}
+
+			if (game.Links == null)
+			{
+				return Task.FromResult<Uri>(null);
 			}
 
 			foreach (var link in game.Links)
