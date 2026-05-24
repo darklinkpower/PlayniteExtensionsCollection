@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GameEngineChecker.Interfaces;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GameEngineChecker.Interfaces;
 
 namespace GameEngineChecker.Services
 {
@@ -26,24 +26,9 @@ namespace GameEngineChecker.Services
 			{
 				await _semaphore.WaitAsync(cancellationToken);
 
-				if (batchSize > _maxRequestsPerWindow)
-				{
-					var delayMilliseconds = _rateLimitWindow.TotalMilliseconds / _maxRequestsPerWindow;
-					await Task.Delay(TimeSpan.FromMilliseconds(delayMilliseconds), cancellationToken);
-				}
-
-				if (DateTime.UtcNow > ExecutionWindowEnd)
-				{
-					ResetWindow(DateTime.UtcNow);
-				}
-
-				if (_totalExecutionInWindow >= _maxRequestsPerWindow)
-				{
-					var timeLeftInWindow = ExecutionWindowEnd - DateTime.UtcNow;
-					await Task.Delay(timeLeftInWindow, cancellationToken);
-
-					ResetWindow(DateTime.UtcNow);
-				}
+				await SpreadExecutionsIfBatchLargerThanMaxPerWindow(batchSize, cancellationToken);
+				ResetWindowIfWindowEnded();
+				await WaitForNewWindowIfMaxExecutionsReached(cancellationToken);
 
 				_totalExecutionInWindow++;
 			}
@@ -55,9 +40,37 @@ namespace GameEngineChecker.Services
 
 		private DateTime ExecutionWindowEnd => _firstExecutionInWindow + _rateLimitWindow;
 
-		private void ResetWindow(DateTime utcNow)
+		private async Task SpreadExecutionsIfBatchLargerThanMaxPerWindow(int batchSize, CancellationToken cancellationToken)
 		{
-			_firstExecutionInWindow = utcNow;
+			if (batchSize > _maxRequestsPerWindow)
+			{
+				var delayMilliseconds = _rateLimitWindow.TotalMilliseconds / _maxRequestsPerWindow;
+				await Task.Delay(TimeSpan.FromMilliseconds(delayMilliseconds), cancellationToken);
+			}
+		}
+
+		private void ResetWindowIfWindowEnded()
+		{
+			if (DateTime.UtcNow > ExecutionWindowEnd)
+			{
+				ResetWindow();
+			}
+		}
+
+		private async Task WaitForNewWindowIfMaxExecutionsReached(CancellationToken cancellationToken)
+		{
+			if (_totalExecutionInWindow >= _maxRequestsPerWindow)
+			{
+				var timeLeftInWindow = ExecutionWindowEnd - DateTime.UtcNow;
+				await Task.Delay(timeLeftInWindow, cancellationToken);
+
+				ResetWindow();
+			}
+		}
+
+		private void ResetWindow()
+		{
+			_firstExecutionInWindow = DateTime.UtcNow;
 			_totalExecutionInWindow = 0;
 		}
 	}
