@@ -37,17 +37,11 @@ namespace GameEngineChecker.Services
 
 				response.EnsureSuccessStatusCode();
 				var parsedResponse = ParseResponse(responseString);
-				
-				var allFoundEntriesEngines = parsedResponse?
-					                             .CargoQuery?
-					                             .Where(x => x.Title?.Engines != null)
-					                             .Select(x => x.Title?.Engines)
-					                             .ToList()
-				                             ?? new List<string>();
-				var engines = string.Join(",", allFoundEntriesEngines);
-				if (string.IsNullOrEmpty(engines))
+
+				var engines = parsedResponse?.CargoQuery?.FirstOrDefault()?.Title?.Engines;
+				if (engines == null)
 				{
-					_logger.Info($"No engines found in response: {responseString}");
+					_logger.Debug($"No engines found in response: {responseString}");
 				}
 
 				return engines;
