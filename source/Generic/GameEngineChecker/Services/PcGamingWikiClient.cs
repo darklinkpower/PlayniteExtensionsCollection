@@ -28,7 +28,7 @@ namespace GameEngineChecker.Services
 			try
 			{
 				var request = new HttpRequestMessage(HttpMethod.Get, link);
-				request.Headers.TryAddWithoutValidation("User-Agent", "Playnite.GameEngineChecker Extension 3.0 (https://github.com/SparrowBrain/)");
+				request.Headers.TryAddWithoutValidation("User-Agent", "Playnite.GameEngineChecker Extension 3.x (https://github.com/SparrowBrain/)");
 
 				var response = await _httpClient.SendAsync(request, cancellationToken);
 				var responseString = await response.Content.ReadAsStringAsync();
@@ -39,8 +39,8 @@ namespace GameEngineChecker.Services
 
 				if (parsedResponse?.CargoQuery?.Count > 1)
 				{
-					var foundEntries = string.Join(", ", parsedResponse.CargoQuery.Select(x => x.Title?.Title));
-					_logger.Info($"Multiple PC Gaming Wiki entries found for game {game.Name}: {foundEntries}. Skipping.");
+					var foundEntries = string.Join(", ", parsedResponse.CargoQuery.Select(x => $"\"{x.Title?.Title}\""));
+					_logger.Info($"Multiple PC Gaming Wiki entries found for game {game.Id} - {game.Name}: {foundEntries}. Skipping.");
 					return null;
 				}
 
