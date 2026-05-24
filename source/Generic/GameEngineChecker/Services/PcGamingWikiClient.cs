@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -36,8 +37,15 @@ namespace GameEngineChecker.Services
 
 				response.EnsureSuccessStatusCode();
 				var parsedResponse = ParseResponse(responseString);
-				var engines = parsedResponse?.CargoQuery?.FirstOrDefault()?.Title?.Engines;
-				if (engines == null)
+				
+				var allFoundEntriesEngines = parsedResponse?
+					                             .CargoQuery?
+					                             .Where(x => x.Title?.Engines != null)
+					                             .Select(x => x.Title?.Engines)
+					                             .ToList()
+				                             ?? new List<string>();
+				var engines = string.Join(",", allFoundEntriesEngines);
+				if (string.IsNullOrEmpty(engines))
 				{
 					_logger.Warn($"No engines found in response: {responseString}");
 				}
