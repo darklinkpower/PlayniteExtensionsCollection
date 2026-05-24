@@ -1,9 +1,9 @@
-﻿using System;
+﻿using GameEngineChecker.Interfaces;
+using Playnite.SDK.Models;
+using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using GameEngineChecker.Interfaces;
-using Playnite.SDK.Models;
 
 namespace GameEngineChecker.Services
 {
@@ -11,6 +11,7 @@ namespace GameEngineChecker.Services
 	{
 		private const string UrlBase = "https://www.pcgamingwiki.com/w/api.php?action=cargoquery&format=json&tables=Infobox_game&fields=Engines,_pageName=title&where=";
 		private readonly Regex _steamLinkRegex = new Regex(@"store\.steampowered\.com/app/(?<appId>\d+)", RegexOptions.Compiled);
+		private readonly Regex _wikipediaLinkRegex = new Regex(@"wikipedia\.org/wiki/(?<pageName>[^/]+)", RegexOptions.Compiled);
 
 		public Task<Uri> GetLink(Game game, CancellationToken cancellationToken)
 		{
@@ -32,11 +33,18 @@ namespace GameEngineChecker.Services
 
 			foreach (var link in game.Links)
 			{
-				var match = _steamLinkRegex.Match(link.Url);
-				if (match.Success)
+				var steamMatch = _steamLinkRegex.Match(link.Url);
+				if (steamMatch.Success)
 				{
-					var gameId = match.Groups["appId"].Value;
+					var gameId = steamMatch.Groups["appId"].Value;
 					return Task.FromResult(GetSteamGameLink(gameId));
+				}
+
+				var wikipediaMatch = _wikipediaLinkRegex.Match(link.Url);
+				if (wikipediaMatch.Success)
+				{
+					var pageName = wikipediaMatch.Groups["pageName"].Value;
+					return Task.FromResult(GetWikipediaGameLink(pageName));
 				}
 			}
 
@@ -51,6 +59,12 @@ namespace GameEngineChecker.Services
 		private static Uri GetGogGameLink(string gameId)
 		{
 			return new Uri($@"{UrlBase}GOGcom_ID HOLDS ""{gameId}""");
+		}
+
+		private static Uri GetWikipediaGameLink(string pageName)
+		{
+			var pcWikiPageName = pageName.Replace('_', ' ');
+			return new Uri($@"{UrlBase}Wikipedia=""{pcWikiPageName}""");
 		}
 	}
 }

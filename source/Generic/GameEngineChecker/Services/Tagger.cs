@@ -12,6 +12,7 @@ namespace GameEngineChecker.Services
 	{
 		private const string TagPrefix = "[Engine]";
 
+		private readonly ILogger _logger = LogManager.GetLogger();
 		private readonly IPlayniteAPI _api;
 		private readonly SemaphoreSlim _semaphore;
 
@@ -27,11 +28,17 @@ namespace GameEngineChecker.Services
 			{
 				_semaphore.Wait(cancellationToken);
 				var tagNames = engines.Select(x => $"{TagPrefix} {x}").ToList();
-				var tags = _api.Database.Tags.Add(tagNames);
+				var tags = _api.Database.Tags.Add(tagNames).ToList();
 
 				var newTagsIdsForGame = tags
 					.Select(x => x.Id)
-					.Except(game.TagIds ?? new List<Guid>());
+					.Except(game.TagIds ?? new List<Guid>())
+					.ToList();
+
+				if (newTagsIdsForGame.Count == 0)
+				{
+					return;
+				}
 
 				if (game.TagIds == null)
 				{
@@ -40,6 +47,13 @@ namespace GameEngineChecker.Services
 
 				game.TagIds.AddRange(newTagsIdsForGame);
 				_api.Database.Games.Update(game);
+
+				var addedTagNames = newTagsIdsForGame
+					.Select(id => tags.FirstOrDefault(x => x.Id == id))
+					.Where(x => x != null)
+					.Select(x => x.Name);
+
+				_logger.Info($"Added game engine(s) {string.Join(", ", addedTagNames)} to {game.Name}");
 			}
 			finally
 			{

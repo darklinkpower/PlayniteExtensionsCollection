@@ -47,7 +47,7 @@ namespace GameEngineChecker.Services
 				var engines = string.Join(",", allFoundEntriesEngines);
 				if (string.IsNullOrEmpty(engines))
 				{
-					_logger.Warn($"No engines found in response: {responseString}");
+					_logger.Info($"No engines found in response: {responseString}");
 				}
 
 				return engines;

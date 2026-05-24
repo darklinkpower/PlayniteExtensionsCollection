@@ -68,6 +68,22 @@ namespace GameEngineChecker.Tests.Services
 			Assert.Equal(new Uri($@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&format=json&tables=Infobox_game&fields=Engines,_pageName=title&where=Steam_AppID HOLDS ""3634520"""), result);
 		}
 
+		[Theory]
+		[InlineData("Wikipedia", "https://en.wikipedia.org/wiki/Need_for_Speed_III:_Hot_Pursuit")]
+		[InlineData("LINK!", "wikipedia.org/wiki/Need_for_Speed_III:_Hot_Pursuit")]
+		public async Task GetLink_UseWikipediaLink_WhenGameIsNonSteamNonGogGameAndHasWikipediaLink(string name, string url)
+		{
+			// Arrange
+			var game = _fixture.Create<Game>();
+			game.Links.Add(new Link(name, url));
+
+			// Act
+			var result = await _sut.GetLink(game, CancellationToken.None);
+
+			// Assert
+			Assert.Equal(new Uri($@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&format=json&tables=Infobox_game&fields=Engines,_pageName=title&where=Wikipedia=""Need for Speed III: Hot Pursuit"""), result);
+		}
+
 		[Fact]
 		public async Task GetLink_ReturnNull_WhenGameIsNonSteamNonGogAndHasNoLinks()
 		{
