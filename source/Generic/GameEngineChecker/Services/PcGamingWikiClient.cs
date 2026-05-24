@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -37,6 +36,13 @@ namespace GameEngineChecker.Services
 
 				response.EnsureSuccessStatusCode();
 				var parsedResponse = ParseResponse(responseString);
+
+				if (parsedResponse?.CargoQuery?.Count > 1)
+				{
+					var foundEntries = string.Join(", ", parsedResponse.CargoQuery.Select(x => x.Title?.Title));
+					_logger.Info($"Multiple PC Gaming Wiki entries found for game {game.Name}: {foundEntries}. Skipping.");
+					return null;
+				}
 
 				var engines = parsedResponse?.CargoQuery?.FirstOrDefault()?.Title?.Engines;
 				if (engines == null)
