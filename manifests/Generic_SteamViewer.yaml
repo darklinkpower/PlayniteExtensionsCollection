@@ -115,3 +115,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_2.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 3.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-04-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.30_f4b20183/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_3.pext
+    Changelog:
+    - 'Added: New Steam Game Actions button for custom themes. Provides quick access to common Steam actions such as Game Details, Controller Configuration, Properties, Store Page, Community Hub, Guides, Achievements, and more.'

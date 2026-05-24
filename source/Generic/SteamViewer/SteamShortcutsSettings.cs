@@ -16,6 +16,8 @@ namespace SteamShortcuts
 
         private bool _addWebLinksForNonSteam = true;
         public bool AddWebLinksForNonSteam { get => _addWebLinksForNonSteam; set => SetValue(ref _addWebLinksForNonSteam, value); }
+        private bool _isControlVisible = false;
+        public bool IsControlVisible { get => _isControlVisible; set => SetValue(ref _isControlVisible, value); }
     }
 
     public class SteamShortcutsSettingsViewModel : ObservableObject, ISettings

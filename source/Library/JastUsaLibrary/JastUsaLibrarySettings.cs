@@ -1,5 +1,6 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
+using JastUsaLibrary.JastUsaIntegration.Domain.Exceptions;
 using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -66,10 +67,13 @@ namespace JastUsaLibrary
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings
     {
+        public RelayCommand<PasswordBox> LoginCommand { get; }
+
         private readonly JastUsaLibrary _plugin;
         private JastUsaLibrarySettings editingClone { get; set; }
 
         private JastUsaLibrarySettings settings;
+        private readonly ILogger _logger;
         private readonly IPlayniteAPI _playniteApi;
         private readonly JastUsaAccountClient _accountClient;
 
@@ -113,8 +117,13 @@ namespace JastUsaLibrary
             }
         }
 
-        public JastUsaLibrarySettingsViewModel(JastUsaLibrary plugin, IPlayniteAPI api, JastUsaAccountClient accountClient)
+        public JastUsaLibrarySettingsViewModel(JastUsaLibrary plugin, ILogger logger, IPlayniteAPI api, JastUsaAccountClient accountClient)
         {
+            LoginCommand = new RelayCommand<PasswordBox>((pwBox) =>
+            {
+                Login(pwBox);
+            }, pwBox => !LoginEmail.IsNullOrEmpty() && !pwBox.Password.IsNullOrEmpty() && isUserLoggedIn != null);
+
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             _plugin = plugin;
 
@@ -131,6 +140,7 @@ namespace JastUsaLibrary
                 Settings = new JastUsaLibrarySettings();
             }
 
+            _logger = logger;
             _playniteApi = api;
             _accountClient = accountClient;
             InitializeSettings();
@@ -222,20 +232,43 @@ namespace JastUsaLibrary
             return true;
         }
 
-        public RelayCommand<PasswordBox> LoginCommand
-        {
-            get => new RelayCommand<PasswordBox>((a) =>
-            {
-                Login(a);
-            });
-        }
-
         private void Login(PasswordBox passwordBox)
         {
-            if (!LoginEmail.IsNullOrEmpty() && !passwordBox.Password.IsNullOrEmpty())
+            isUserLoggedIn = null;
+            try
             {
-                isUserLoggedIn = null;
-                IsUserLoggedIn = _accountClient.Login(LoginEmail, passwordBox.Password, true).ToString();
+                var success = _accountClient.Login(LoginEmail, passwordBox.Password, true);
+                IsUserLoggedIn = success.ToString();
+                if (!success)
+                {
+                    isUserLoggedIn = false.ToString();
+                    _playniteApi.Dialogs.ShowErrorMessage(
+                        "Login failed. Please check your credentials.",
+                        "JAST USA Library");
+                }
+            }
+            catch (InvalidLoginCredentialsException)
+            {
+                isUserLoggedIn = false.ToString();
+                _playniteApi.Dialogs.ShowErrorMessage(
+                    "Invalid email or password.",
+                    "JAST USA Library");
+            }
+            catch (AuthenticationErrorException ex)
+            {
+                isUserLoggedIn = false.ToString();
+                _logger.Error(ex, "Login failed due to server error");
+                _playniteApi.Dialogs.ShowErrorMessage(
+                    $"Login failed due to server error ({ex.StatusCode}).",
+                    "JAST USA Library");
+            }
+            catch (Exception ex)
+            {
+                isUserLoggedIn = false.ToString();
+                _logger.Error(ex, "Unexpected login error");
+                _playniteApi.Dialogs.ShowErrorMessage(
+                    "Unexpected error occurred during login.",
+                    "JAST USA Library");
             }
         }
 

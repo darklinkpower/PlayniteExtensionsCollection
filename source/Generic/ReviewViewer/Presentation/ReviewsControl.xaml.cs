@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
@@ -13,6 +7,14 @@ using ReviewViewer.Domain;
 using ReviewViewer.Infrastructure;
 using ReviewViewer.Presentation.SteamLanguageSelector;
 using SteamCommon;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ReviewViewer.Presentation
 {
@@ -40,6 +42,22 @@ namespace ReviewViewer.Presentation
         public ReviewViewerSettingsViewModel SettingsModel { get; }
 
         // ──────── Visibility Properties ────────
+        private bool _displayReactionsPanel;
+
+        public bool DisplayReactionsPanel
+        {
+            get => _displayReactionsPanel;
+            set { SetValue(ref _displayReactionsPanel, value); }
+        }
+
+        private bool _displayPcSpecsPanel;
+
+        public bool DisplayPcSpecsPanel
+        {
+            get => _displayPcSpecsPanel;
+            set { SetValue(ref _displayPcSpecsPanel, value); }
+        }
+
         private bool _displayProgressPanel;
 
         public bool DisplayProgressPanel
@@ -94,6 +112,22 @@ namespace ReviewViewer.Presentation
         {
             get => _displayEarlyAccessLabel;
             set { SetValue(ref _displayEarlyAccessLabel, value); }
+        }
+
+        private bool _displayCommentsButton;
+
+        public bool DisplayCommentsButton
+        {
+            get => _displayCommentsButton;
+            set { SetValue(ref _displayCommentsButton, value); }
+        }
+
+        private string _selectedReviewCommentsCount = 0.ToString();
+
+        public string SelectedReviewCommentsCount
+        {
+            get => _selectedReviewCommentsCount;
+            set { SetValue(ref _selectedReviewCommentsCount, value); }
         }
 
         private bool _displayReviewTypeClearButton;
@@ -186,6 +220,48 @@ namespace ReviewViewer.Presentation
         }
 
         // ──────── Data and Selections ────────
+        private const int MaxVisible = 3;
+
+        private List<ReactionViewModel> _allReactions = new List<ReactionViewModel>();
+        public List<ReactionViewModel> AllReactions
+        {
+            get => _allReactions;
+            set
+            {
+                SetValue(ref _allReactions, value);
+                OnPropertiesChanged(
+                    nameof(VisibleReactions),
+                    nameof(HasMoreReactions),
+                    nameof(DisplayMoreReactionsButton)
+                );
+            }
+        }
+
+        public bool DisplayMoreReactionsButton =>
+            !IsMoreReactionsExpanded && HasMoreReactions;
+
+        private bool _isMoreReactionsExpanded;
+        public bool IsMoreReactionsExpanded
+        {
+            get => _isMoreReactionsExpanded;
+            set
+            {
+                SetValue(ref _isMoreReactionsExpanded, value);
+                OnPropertiesChanged(nameof(VisibleReactions), nameof(DisplayMoreReactionsButton));
+            }
+        }
+
+        public IEnumerable<ReactionViewModel> VisibleReactions =>
+            IsMoreReactionsExpanded
+                ? AllReactions
+                : AllReactions.Take(MaxVisible);
+
+        public bool HasMoreReactions =>
+            AllReactions.Count > MaxVisible;
+
+        public bool IsReactionsExpanded { get; set; }
+
+
         private ReviewsResponseDto _reviews;
         public ReviewsResponseDto Reviews
         {
@@ -296,6 +372,13 @@ namespace ReviewViewer.Presentation
             set => SetValue(ref _totalFormattedPlaytime, value);
         }
 
+        private List<string> _pcSpecsFormattedLines = new List<string>();
+        public List<string> PcSpecsFormattedLines
+        {
+            get => _pcSpecsFormattedLines;
+            set => SetValue(ref _pcSpecsFormattedLines, value);
+        }
+
         private string _reviewHelpfulnessHelpful;
         public string ReviewHelpfulnessHelpful
         {
@@ -403,6 +486,7 @@ namespace ReviewViewer.Presentation
         public RelayCommand NextReviewCommand { get; }
         public RelayCommand PreviousReviewCommand { get; }
         public RelayCommand OpenSelectedReviewCommand { get; }
+        public RelayCommand ToggleExpandCommand { get; }
         public RelayCommand RefreshReviewsCommand { get; }
         public ReviewsControl(
             ReviewViewerSettingsViewModel settingsViewModel,
@@ -466,6 +550,11 @@ namespace ReviewViewer.Presentation
                     @"https://steamcommunity.com/profiles/{0}/recommended/{1}/",
                     _selectedReview.Author.Steamid, _currentSteamId);
                 ProcessStarter.StartUrl(reviewUrl);
+            });
+
+            ToggleExpandCommand = new RelayCommand(() =>
+            {
+                IsMoreReactionsExpanded = !IsMoreReactionsExpanded;
             });
 
             UpdateClearFiltersButtons();
@@ -553,6 +642,132 @@ namespace ReviewViewer.Presentation
             }
 
             DisplayTextReceivedForFree = SelectedReview.ReceivedForFree;
+            DisplayPcSpecsPanel = false;
+            if (SelectedReview.Hardware != null)
+            {
+                var formattedHardwareLines = GetFormattedHardwareLines(SelectedReview.Hardware).ToList();
+                if (formattedHardwareLines.HasItems())
+                {
+                    PcSpecsFormattedLines = formattedHardwareLines;
+                    DisplayPcSpecsPanel = true;
+                }
+            }
+
+            IsMoreReactionsExpanded = false;
+            DisplayReactionsPanel = false;
+            AllReactions = new List<ReactionViewModel>();
+            if (SelectedReview.Reactions.HasItems())
+            {
+                var reactionsList = new List<ReactionViewModel>();
+                foreach (var reaction in SelectedReview.Reactions)
+                {
+                    var reactionMetadata = ReviewReactionToMetadataMapper.Map(reaction);
+                    if (reactionMetadata != null)
+                    {
+                        reactionsList.Add(new ReactionViewModel(reaction, reactionMetadata));
+                    }
+                }
+
+                if (reactionsList.HasItems())
+                {
+                    reactionsList.Sort((a, b) => b.Count.CompareTo(a.Count));
+                    AllReactions = reactionsList;
+                    DisplayReactionsPanel = true;
+                }
+            }
+
+            if (SelectedReview.CommentCount > 0)
+            {
+                DisplayCommentsButton = true;
+                SelectedReviewCommentsCount = SelectedReview.CommentCount.ToString();
+            }
+            else
+            {
+                DisplayCommentsButton = false;
+                SelectedReviewCommentsCount = 0.ToString();
+            }
+        }
+
+        private static string BuildLine(string separator, params string[] parts)
+        {
+            if (parts is null || parts.Length == 0)
+            {
+                return null;
+            }
+
+            var filtered = parts
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .ToArray();
+
+            if (filtered.Length == 0)
+            {
+                return null;
+            }
+
+            if (filtered.Length == 1)
+            {
+                return filtered[0];
+            }
+
+            return string.Join(separator, filtered);
+        }
+
+        private static string NormalizeRam(string ramString)
+        {
+            if (ramString.IsNullOrWhiteSpace())
+            {
+                return null;
+            }
+
+            if (!uint.TryParse(ramString, out var mb) || mb == 0)
+            {
+                return null;
+            }
+
+            var gb = Math.Round(mb / 1024.0, 1);
+            return $"RAM: {gb} GB";
+        }
+
+        private IEnumerable<string> GetFormattedHardwareLines(Hardware hardware)
+        {
+            if (hardware is null)
+            {
+                yield break;
+            }
+
+            // OS
+            if (!hardware.Os.IsNullOrWhiteSpace())
+            {
+                yield return $"OS: {hardware.Os.Trim()}";
+            }
+
+            // CPU + RAM
+            var cpu = hardware.CpuName.IsNullOrWhiteSpace() ? null : $"CPU: {hardware.CpuName.Trim()}";
+            var ram = NormalizeRam(hardware.SystemRam);
+
+            var cpuRamLine = BuildLine(" ● ", cpu, ram);
+            if (!cpuRamLine.IsNullOrWhiteSpace())
+            {
+                yield return cpuRamLine;
+            }
+
+            // GPU + VRAM
+            var gpu = hardware.AdapterDescription.IsNullOrWhiteSpace()
+                ? null
+                : $"GPU: {hardware.AdapterDescription.Trim()}";
+
+            string vram = null;
+            if (hardware.VramSize > 0)
+            {
+                var gb = Math.Round(hardware.VramSize / 1024.0, 1);
+                vram = $"VRAM: {gb} GB";
+            }
+
+            var gpuVramLine = BuildLine(" ● ", gpu, vram);
+            if (!gpuVramLine.IsNullOrWhiteSpace())
+            {
+                yield return gpuVramLine;
+            }
         }
 
         private void UpdateClearFiltersButtons()
@@ -725,6 +940,11 @@ namespace ReviewViewer.Presentation
             ReviewHelpfulnessHelpful = string.Empty;
             ReviewHelpfulnessFunny = string.Empty;
             IconReviewSteamDeckTooltip = string.Empty;
+            DisplayPcSpecsPanel = false;
+            PcSpecsFormattedLines = new List<string>();
+            DisplayReactionsPanel = false;
+            IsMoreReactionsExpanded = false;
+            AllReactions = new List<ReactionViewModel>();
         }
 
         public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken, bool forceRefresh)

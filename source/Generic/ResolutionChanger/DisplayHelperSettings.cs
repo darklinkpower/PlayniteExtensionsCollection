@@ -65,18 +65,18 @@ namespace DisplayHelper
             }
         }
 
-        public List<DisplayMode> SelectedDisplayModes
+        public List<DisplayModeOld> SelectedDisplayModes
         {
             get
             {
-                var list = selectedDisplay is null ? new List<DisplayMode>() : SelectedDisplay.DisplayModes;
+                var list = selectedDisplay is null ? new List<DisplayModeOld>() : SelectedDisplay.DisplayModes;
                 SelectedDisplayMode = list?.FirstOrDefault();
                 return list;
             }
         }
 
-        private DisplayMode selectedDisplayMode = null;
-        public DisplayMode SelectedDisplayMode
+        private DisplayModeOld selectedDisplayMode = null;
+        public DisplayModeOld SelectedDisplayMode
         {
             get => selectedDisplayMode;
             set

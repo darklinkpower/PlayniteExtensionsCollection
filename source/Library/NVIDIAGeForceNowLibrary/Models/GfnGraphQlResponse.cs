@@ -119,7 +119,8 @@ namespace NVIDIAGeForceNowEnabler.Models
         Wargaming = 14,
         Stove = 15,
         EA_APP = 16,
-        Xbox = 17
+        Xbox = 17,
+        GAIJIN = 18
     };
 
     public enum Status {

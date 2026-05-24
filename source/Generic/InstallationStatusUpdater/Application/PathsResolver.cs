@@ -14,7 +14,7 @@ namespace InstallationStatusUpdater.Application
     {
         private readonly IPlayniteAPI _playniteApi;
         private readonly InstallationStatusUpdaterSettingsViewModel _settings;
-        private static readonly HashSet<char> invalidFileChars = new HashSet<char>(Path.GetInvalidFileNameChars());
+        private static readonly HashSet<char> _invalidFileChars = new HashSet<char>(Path.GetInvalidFileNameChars());
 
         public PathsResolver(IPlayniteAPI playniteApi, InstallationStatusUpdaterSettingsViewModel settings)
         {
@@ -24,18 +24,32 @@ namespace InstallationStatusUpdater.Application
 
         public string GetInstallDirForDetection(Game game)
         {
-            if (game.InstallDirectory.IsNullOrEmpty())
+            var path = game.InstallDirectory;
+            if (path.IsNullOrEmpty())
             {
                 return string.Empty;
             }
 
-            var resolvedPath = game.InstallDirectory;
-            if (resolvedPath.Contains('{'))
+            // No variables to expand
+            if (!path.Contains('{'))
             {
-                resolvedPath = _playniteApi.ExpandGameVariables(game, resolvedPath);
+                return path;
             }
 
-            return resolvedPath;
+            if (path.Contains("{EmulatorDir}"))
+            {
+                var emulator = GetGameEmulator(game);
+                if (emulator != null &&
+                    !emulator.InstallDir.IsNullOrEmpty())
+                {
+                    return _playniteApi.ExpandGameVariables(
+                        game,
+                        path,
+                        emulator.InstallDir);
+                }
+            }
+
+            return _playniteApi.ExpandGameVariables(game, path);
         }
 
         public bool IsAnyRomInstalled(Game game, string resolvedInstallationDirectory)
@@ -53,39 +67,54 @@ namespace InstallationStatusUpdater.Application
             return game.Roms.Any(rom => DetectIsRomInstalled(game, rom, resolvedInstallationDirectory));
         }
 
-        private bool DetectIsRomInstalled(Game game, GameRom rom, string resolvedInstallationDirectory)
+        private bool DetectIsRomInstalled(
+            Game game,
+            GameRom rom,
+            string resolvedInstallationDirectory)
         {
-            if (rom.Path.IsNullOrEmpty())
+            var path = rom.Path;
+            if (path.IsNullOrEmpty())
             {
                 return false;
             }
 
-            var resolvedPath = rom.Path;
-            if (resolvedPath.Contains("{EmulatorDir}"))
+            if (path.Contains('{'))
             {
-                var emulator = GetGameEmulator(game);
-                if (emulator != null && !emulator.InstallDir.IsNullOrEmpty())
+                var requiresEmulatorDir =
+                    path.Contains("{EmulatorDir}") ||
+                    game.InstallDirectory?.Contains("{EmulatorDir}") == true;
+
+                if (requiresEmulatorDir)
                 {
-                    resolvedPath = resolvedPath.Replace("{EmulatorDir}", emulator.InstallDir);
+                    var emulator = GetGameEmulator(game);
+                    if (emulator != null &&
+                        !emulator.InstallDir.IsNullOrEmpty())
+                    {
+                        path = _playniteApi.ExpandGameVariables(
+                            game,
+                            path,
+                            emulator.InstallDir);
+                    }
+                    else
+                    {
+                        path = _playniteApi.ExpandGameVariables(game, path);
+                    }
+                }
+                else
+                {
+                    path = _playniteApi.ExpandGameVariables(game, path);
                 }
             }
 
-            if (resolvedPath.Contains('{'))
+            if (!Path.IsPathRooted(path) &&
+                !resolvedInstallationDirectory.IsNullOrEmpty())
             {
-                resolvedPath = _playniteApi.ExpandGameVariables(game, resolvedPath);
+                path = Path.Combine(
+                    resolvedInstallationDirectory,
+                    path);
             }
 
-            if (Path.IsPathRooted(resolvedPath))
-            {
-                return FileSystem.FileExists(resolvedPath);
-            }
-
-            if (!resolvedInstallationDirectory.IsNullOrEmpty())
-            {
-                resolvedPath = Path.Combine(resolvedInstallationDirectory, resolvedPath);
-            }
-
-            return FileSystem.FileExists(resolvedPath);
+            return FileSystem.FileExists(path);
         }
 
         private Emulator GetGameEmulator(Game game)
@@ -97,7 +126,7 @@ namespace InstallationStatusUpdater.Application
 
             foreach (var action in game.GameActions)
             {
-                if (action.Type != GameActionType.Emulator && action.EmulatorId == Guid.Empty)
+                if (action.Type != GameActionType.Emulator || action.EmulatorId == Guid.Empty)
                 {
                     continue;
                 }
@@ -231,7 +260,7 @@ namespace InstallationStatusUpdater.Application
             var result = new StringBuilder(str.Length);
             foreach (var c in str)
             {
-                if (!invalidFileChars.Contains(c) || c == '\\' || c == '/' || c == ':')
+                if (!_invalidFileChars.Contains(c) || c == '\\' || c == '/' || c == ':')
                 {
                     result.Append(c);
                 }

@@ -58,6 +58,7 @@ namespace SpecialKHelper.PluginSidebarItem.Application
         public RelayCommand StartAllServicesCommand { get; }
         public RelayCommand StopAllServicesCommand { get; }
         public RelayCommand OpenSpecialKCommand { get; }
+        public RelayCommand OpenSpecialKInstallationDirectoryCommand { get; }
         public RelayCommand OpenProfilesEditorCommand { get; }
 
         public SidebarItemSwitcherViewModel(
@@ -82,19 +83,11 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             Start64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Start64BitsService());
             Stop64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Stop64BitsService());
             OpenSpecialKCommand = new RelayCommand(() => _specialKServiceManager.OpenSpecialK());
+            OpenSpecialKInstallationDirectoryCommand = new RelayCommand(() => _specialKServiceManager.OpenSpecialKInstallationDirectory());
             OpenProfilesEditorCommand = new RelayCommand(() => _specialKProfilesEditor.OpenEditorWindow());
 
-            StartAllServicesCommand = new RelayCommand(() =>
-            {
-                _specialKServiceManager.Start32BitsService();
-                _specialKServiceManager.Start64BitsService();
-            });
-
-            StopAllServicesCommand = new RelayCommand(() =>
-            {
-                _specialKServiceManager.Stop32BitsService();
-                _specialKServiceManager.Stop64BitsService();
-            });
+            StartAllServicesCommand = new RelayCommand(() => _specialKServiceManager.StartAllServices());
+            StopAllServicesCommand = new RelayCommand(() => _specialKServiceManager.StopAllServices());
 
             Is32BitsServiceRunning = _specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running;
             Is64BitsServiceRunning = _specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running;
@@ -131,6 +124,14 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             {
                 Header = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
                 Command = OpenProfilesEditorCommand
+            });
+
+            ContextMenuItems.Add(new Separator());
+
+            ContextMenuItems.Add(new MenuItem
+            {
+                Header = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenInstallationDirectory"),
+                Command = OpenSpecialKInstallationDirectoryCommand
             });
 
             ContextMenuItems.Add(new Separator());

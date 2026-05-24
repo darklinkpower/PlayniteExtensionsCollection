@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DisplayHelper.Models
 {
-    public class DisplayMode : ObservableObject, IEquatable<DisplayMode>
+    public class DisplayModeOld : ObservableObject, IEquatable<DisplayModeOld>
     {
         private int width;
         public int Width { get => width; set => SetValue(ref width, value); }
@@ -22,7 +22,7 @@ namespace DisplayHelper.Models
 
         public string DisplayName => $"{width}x{height} ({AspectRatio}) {DisplayFrenquency}Hz";
 
-        public DisplayMode(int width, int height, int displayFrenquency)
+        public DisplayModeOld(int width, int height, int displayFrenquency)
         {
             Width = width;
             Height = height;
@@ -52,7 +52,7 @@ namespace DisplayHelper.Models
 
         public override bool Equals(object obj)
         {
-            if (obj is DisplayMode displayMode)
+            if (obj is DisplayModeOld displayMode)
             {
                 return Equals(displayMode);
             }
@@ -62,17 +62,17 @@ namespace DisplayHelper.Models
             }
         }
 
-        public static bool operator ==(DisplayMode obj1, DisplayMode obj2)
+        public static bool operator ==(DisplayModeOld obj1, DisplayModeOld obj2)
         {
             return obj1.Equals(obj2);
         }
 
-        public static bool operator !=(DisplayMode obj1, DisplayMode obj2)
+        public static bool operator !=(DisplayModeOld obj1, DisplayModeOld obj2)
         {
             return !obj1.Equals(obj2);
         }
 
-        public bool Equals(DisplayMode other)
+        public bool Equals(DisplayModeOld other)
         {
             return Width == other.Width &&
                 Height == other.Height &&
@@ -93,10 +93,10 @@ namespace DisplayHelper.Models
         public readonly string DeviceString;
         public readonly string DeviceID;
         public readonly string DeviceKey;
-        public readonly List<DisplayMode> DisplayModes = new List<DisplayMode>();
+        public readonly List<DisplayModeOld> DisplayModes = new List<DisplayModeOld>();
         public string DisplayName => $"{DeviceString} - {DeviceName}";
 
-        public DisplayInfo(string deviceName, string deviceString, string deviceID, string deviceKey, List<DisplayMode> displayModes)
+        public DisplayInfo(string deviceName, string deviceString, string deviceID, string deviceKey, List<DisplayModeOld> displayModes)
         {
             DeviceName = deviceName;
             DeviceString = deviceString;

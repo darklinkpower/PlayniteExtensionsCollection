@@ -15,7 +15,7 @@ namespace OpenCriticMetadata
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
 
-        private OpenCriticMetadataSettingsViewModel settings { get; set; }
+        public OpenCriticMetadataSettingsViewModel Settings { get; private set; }
 
         public override Guid Id { get; } = Guid.Parse("c29e6c13-089b-43d5-a916-514d85e10486");
         private readonly IOpenCriticService _openCriticService = new OpenCriticService();
@@ -29,28 +29,28 @@ namespace OpenCriticMetadata
 
         public OpenCriticMetadata(IPlayniteAPI api) : base(api)
         {
-            settings = new OpenCriticMetadataSettingsViewModel(this);
+            Settings = new OpenCriticMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
 
             Searches = new List<SearchSupport>
             {
                 new SearchSupport("oc",
                     "OpenCritic",
-                    new OpenCriticSearchContext(_openCriticService))
+                    new OpenCriticSearchContext(Settings, _openCriticService))
             };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new OpenCriticMetadataProvider(options, this, _openCriticService);
+            return new OpenCriticMetadataProvider(options, this, _openCriticService, Settings);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)

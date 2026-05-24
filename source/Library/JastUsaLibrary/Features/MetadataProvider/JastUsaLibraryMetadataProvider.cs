@@ -1,4 +1,4 @@
-﻿using Playnite.SDK;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
@@ -30,7 +30,7 @@ namespace JastUsaLibrary.Features.MetadataProvider
                 return new GameMetadata();
             }
 
-            var url = string.Format(@"https://app.jastusa.com/api/v2/shop/products/{0}?localeCode=en_US", productCode);
+            var url = string.Format(@"https://app.jaststore.com/api/v2/shop/products/{0}?localeCode=en_US", productCode);
             var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(url).DownloadString();
             if (!downloadedString.IsSuccess)
             {
@@ -85,7 +85,7 @@ namespace JastUsaLibrary.Features.MetadataProvider
                 metadata.BackgroundImage = new MetadataFile(string.Format(JastUsaWebUrls.JastMediaUrlTemplate, backgroundImage.Path));
             }
 
-            metadata.Links = new List<Link> { new Link("Store", @"https://jastusa.com/games/" + productResponse.Code) };
+            metadata.Links = new List<Link> { new Link("Store", @"https://jaststore.com/games/" + productResponse.Code) };
             var urlAttributes = productResponse.Attributes.Where(x => x.Code.EndsWith("_url") && x.Value.HasItems() &&
                                 x.Value.First().StartsWith("http"));
             if (urlAttributes.HasItems())

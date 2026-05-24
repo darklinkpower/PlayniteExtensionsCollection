@@ -62,8 +62,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\protobuf-net.2.4.4\lib\net40\protobuf-net.dll</HintPath>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -134,6 +134,9 @@
     <Compile Include="..\..\common\pluginscommon\Encryption.cs">
       <Link>Shared\PluginsCommon\Encryption.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Explorer.cs">
+      <Link>Shared\PluginsCommon\Explorer.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Extensions\CharExtensions.cs">
       <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
     </Compile>
@@ -173,6 +176,8 @@
     <Compile Include="..\..\Common\SteamCommon\Common.cs">
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
+    <Compile Include="Application\Steam\JwtToken\TokenRetrievalResult.cs" />
+    <Compile Include="Application\Steam\JwtToken\TokenRetrievalStatus.cs" />
     <Compile Include="Application\Steam\Tags\GetTagListResponseDto.cs" />
     <Compile Include="Application\Steam\Tags\SteamTagsService.cs" />
     <Compile Include="Application\WishlistTracker\WishlistTrackerService.cs" />
@@ -199,6 +204,20 @@
     <Compile Include="Domain\ValueObjects\SteamWalletDetails.cs" />
     <Compile Include="Domain\Enums\AuthStatus.cs" />
     <Compile Include="Domain\Enums\Ownership.cs" />
+    <Compile Include="Presentation\WishlistCategories\CategoryToggleItem.cs" />
+    <Compile Include="Presentation\WishlistCategories\ListBoxSelectionBehavior.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistBatchCategoryEditorViewModel.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategory.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryManagerView.xaml.cs">
+      <DependentUpon>WishlistCategoryManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryManagerViewModel.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryPersistence.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryService.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistCategoryStore.cs" />
+    <Compile Include="Presentation\WishlistCategories\WishlistItemCategoryEditorView.xaml.cs">
+      <DependentUpon>WishlistItemCategoryEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\WishlistViewSorting.cs" />
     <Compile Include="Presentation\Filters\FilterGroup.cs" />
     <Compile Include="Presentation\Filters\FilterItem.cs" />
@@ -237,6 +256,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Presentation\WishlistCategories\WishlistCategoryManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\WishlistCategories\WishlistItemCategoryEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SteamWishlistDiscountNotifierSettingsView.xaml">
       <SubType>Designer</SubType>

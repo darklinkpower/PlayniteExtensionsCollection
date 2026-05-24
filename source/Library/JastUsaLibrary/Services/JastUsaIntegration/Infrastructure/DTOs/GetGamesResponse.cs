@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
@@ -170,7 +170,7 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         Zh_Hant
     };
 
-    public enum TranslationType { GameLinkTranslation };
+    public enum TranslationType { GameLinkTranslation, GameLinkLocale };
 
     public enum GameType { Game };
 
@@ -276,9 +276,12 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         {
             if (reader.TokenType == JsonToken.Null) return null;
             var value = serializer.Deserialize<string>(reader);
-            if (value == "GameLinkTranslation")
+            switch (value)
             {
-                return TranslationType.GameLinkTranslation;
+                case "GameLinkTranslation":
+                    return TranslationType.GameLinkTranslation;
+                case "GameLinkLocale":
+                    return TranslationType.GameLinkLocale;
             }
             throw new Exception("Cannot unmarshal type EnUsType");
         }
@@ -291,10 +294,14 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
                 return;
             }
             var value = (TranslationType)untypedValue;
-            if (value == TranslationType.GameLinkTranslation)
+            switch (value)
             {
-                serializer.Serialize(writer, "GameLinkTranslation");
-                return;
+                case TranslationType.GameLinkTranslation:
+                    serializer.Serialize(writer, "GameLinkTranslation");
+                    return;
+                case TranslationType.GameLinkLocale:
+                    serializer.Serialize(writer, "GameLinkLocale");
+                    return;
             }
             throw new Exception("Cannot marshal type EnUsType");
         }

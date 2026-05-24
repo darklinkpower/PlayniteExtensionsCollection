@@ -1,17 +1,18 @@
-﻿using Playnite.SDK.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ComposableAsync;
 using FlowHttp;
-using System.Windows.Threading;
-using System.Threading;
-using RateLimiter;
-using ComposableAsync;
 using FlowHttp.Results;
 using OpenCriticMetadata.Domain.Entities;
 using OpenCriticMetadata.Domain.Interfaces;
+using Playnite.SDK.Data;
+using RateLimiter;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace OpenCriticMetadata.Infrastructure.Services
 {
@@ -26,45 +27,66 @@ namespace OpenCriticMetadata.Infrastructure.Services
             timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
         }
 
-        private async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl, CancellationToken cancelToken)
+        private static void ValidateApiKey(string apiKey)
+        {
+            if (apiKey.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("OpenCritic API key is missing.", nameof(apiKey));
+            }
+        }
+
+        private async Task<string> ExecuteRequestAsync(
+            string apiKey, string requestUrl, CancellationToken cancelToken)
         {
             await timeConstraint;
-            return HttpRequestFactory.GetHttpRequest()
+            var requestResult = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl)
-                .AddHeader("Referer", @"https://opencritic.com")
+                .AddHeader("Authorization", $"Bearer {apiKey}")
                 .DownloadString(cancelToken);
+
+            if (!requestResult.IsSuccess)
+            {
+                throw new HttpRequestException(
+                    $"OpenCritic API request failed: {requestResult.Error}. StatusCode: {requestResult.HttpStatusCode}");
+            }
+
+            return requestResult.Content;
         }
-        public async Task<List<OpenCriticGameResult>> GetGameSearchResultsAsync(string searchTerm, CancellationToken cancelToken = default)
+
+        public async Task<List<OpenCriticGameResult>> GetGameSearchResultsAsync(
+            string apiKey, string searchTerm, CancellationToken cancelToken = default)
         {
+            ValidateApiKey(apiKey);
             var requestUrl = string.Format(_searchGameTemplate, searchTerm.EscapeDataString());
-            var result = await ExecuteRequestAsync(requestUrl, cancelToken);
-            if (result.IsSuccess)
-            {
-                return Serialization.FromJson<List<OpenCriticGameResult>>(result.Content);
-            }
-            else
-            {
-                return new List<OpenCriticGameResult>();
-            }
+            var requestResult = await ExecuteRequestAsync(apiKey, requestUrl, cancelToken);
+            var result = Serialization.FromJson<List<OpenCriticGameResult>>(requestResult);
+            return result;
         }
 
-        public async Task<OpenCriticGameData> GetGameDataAsync(OpenCriticGameResult gameData, CancellationToken cancelToken = default)
+        public async Task<OpenCriticGameData> GetGameDataAsync(
+            string apiKey, OpenCriticGameResult gameData, CancellationToken cancelToken = default)
         {
-            return await GetGameDataAsync(gameData.Id.ToString(), cancelToken);
+            if (gameData is null)
+            {
+                throw new ArgumentNullException(nameof(gameData));
+            }
+
+            return await GetGameDataAsync(apiKey, gameData.Id.ToString(), cancelToken);
         }
 
-        public async Task<OpenCriticGameData> GetGameDataAsync(string gameId, CancellationToken cancelToken)
+        public async Task<OpenCriticGameData> GetGameDataAsync(
+            string apiKey, string gameId, CancellationToken cancelToken)
         {
-            var requestUrl = string.Format(_getGameDataTemplate, gameId);
-            var result = await ExecuteRequestAsync(requestUrl, cancelToken);
-            if (result.IsSuccess)
+            ValidateApiKey(apiKey);
+            if (gameId.IsNullOrWhiteSpace())
             {
-                return Serialization.FromJson<OpenCriticGameData>(result.Content);
+                throw new ArgumentException("gameId is missing.", nameof(gameId));
             }
-            else
-            {
-                return null;
-            }
+
+            var requestUrl = string.Format(_getGameDataTemplate, gameId.EscapeDataString());
+            var requestResult = await ExecuteRequestAsync(apiKey, requestUrl, cancelToken);
+            var result = Serialization.FromJson<OpenCriticGameData>(requestResult);
+            return result;
         }
     }
 }

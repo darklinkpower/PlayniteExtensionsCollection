@@ -13,6 +13,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
         Discount,
         Price,
         ReleaseDate,
-        Added
+        Added,
+        DiscountEndDate
     }
 }

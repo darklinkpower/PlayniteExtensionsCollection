@@ -6,6 +6,7 @@
              xmlns:conv="clr-namespace:PluginsCommon.Converters"
              xmlns:presentationConverters="clr-namespace:SteamWishlistDiscountNotifier.Presentation.Converters"
              xmlns:local="clr-namespace:SteamWishlistDiscountNotifier.Presentation"
+             xmlns:wishlistCategories="clr-namespace:SteamWishlistDiscountNotifier.Presentation.WishlistCategories"
              d:DataContext="{d:DesignInstance local:SteamWishlistViewerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="800">
@@ -34,6 +35,8 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" Padding="0,0,0,3"
@@ -101,6 +104,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews}"
                                        Foreground="{StaticResource SubtitleColorBrush}"
@@ -130,13 +134,31 @@
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        Grid.Column="2" Grid.Row="2" />
 
+                            <TextBlock Text="Categories"
+                                   Grid.Column="0" Grid.Row="3"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource SubtitleColorBrush}" />
+
+                            <StackPanel Grid.Column="2" Grid.Row="3" Orientation="Horizontal">
+                                <TextBlock Text="{Binding CategoriesDisplay}"
+                                   TextTrimming="CharacterEllipsis"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource SubtitleColorBrush}" />
+
+                                <Button Content="⋯"
+                                        Padding="3,1,3,1"
+                                        Margin="5,0,0,0"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.OpenItemCategoryEditorCommand}"
+                                        CommandParameter="{Binding}" />
+                            </StackPanel>
+                            
                             <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate}"
                                        Visibility="{Binding FormattedDiscountEndDate, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
                                        Margin="0,5,0,0"
-                                       Grid.Column="0" Grid.Row="3"
+                                       Grid.Column="0" Grid.Row="4"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}" />
-                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="3" Margin="0,5,0,0"
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="4" Margin="0,5,0,0"
                                         Visibility="{Binding FormattedDiscountEndDate, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
                                 <TextBlock Text="{Binding FormattedDiscountEndDate}"
                                        TextWrapping="Wrap"
@@ -316,22 +338,59 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Sort By:"
+                        <TextBlock Text="Category:"
                                    VerticalAlignment="Center"
                                    Grid.Column="0" Grid.Row="0" />
-                        <TextBlock Text="Order:"
+                        
+                        <!--<ContentControl DataContext="{Binding CategoryFilters}"
+                                        Grid.Column="1" Grid.Row="0"
+                                        Width="200"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Template="{StaticResource FilterSelector}" />-->
+
+                        <DockPanel Grid.Column="1" Grid.Row="0"
+                              Width="200"
+                              Margin="5,0,0,0"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center">
+
+                            <!-- Add button (overlay corner) -->
+                            <Button Content="⋯"
+                                    DockPanel.Dock="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="5,0,0,0"
+                                    Command="{Binding OpenCategoryManagerCommand}" />
+
+                            <!-- Filter -->
+                            <ContentControl DockPanel.Dock="Left" DataContext="{Binding CategoryFilters}"
+                                            VerticalAlignment="Center" Width="160"
+                                            Template="{StaticResource FilterSelector}" />
+                            
+                        </DockPanel>
+
+                        <TextBlock Text="Sort By:"
                                    VerticalAlignment="Center"
                                    Grid.Column="0" Grid.Row="2" />
+
                         <ComboBox ItemsSource="{Binding WishlistSortingTypes}"
                                   Margin="5,0,0,0"
                                   VerticalAlignment="Center"
-                                  Grid.Column="1" Grid.Row="0"
+                                  Grid.Column="1" Grid.Row="2"
                                   SelectedValuePath="Key"
                                   DisplayMemberPath="Value"
                                   SelectedValue="{Binding SelectedSortingType}" />
+
+                        <TextBlock Text="Order:"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="4" />
+
                         <ComboBox ItemsSource="{Binding WishlistSortingOrders}"
-                                  Grid.Column="1" Grid.Row="2"
+                                  Grid.Column="1" Grid.Row="4"
                                   Margin="5,0,0,0"
                                   VerticalAlignment="Center"
                                   SelectedValuePath="Key"
@@ -340,10 +399,10 @@
 
                         <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
                                    VerticalAlignment="Center"
-                                   Grid.Column="0" Grid.Row="4" />
+                                   Grid.Column="0" Grid.Row="6" />
 
                         <ContentControl DataContext="{Binding TagFilters}"
-                                        Grid.Column="1" Grid.Row="4"
+                                        Grid.Column="1" Grid.Row="6"
                                         Width="200"
                                         Margin="5,0,0,0"
                                         HorizontalAlignment="Right"
@@ -496,7 +555,9 @@
                         <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems}" />
                         <TextBlock Text="{Binding ElementName=LbCollection, Path=Items.Count, StringFormat=' {0}'}" />
                     </StackPanel>
-                    <ListBox DockPanel.Dock="Top" x:Name="LbCollection" ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
+                    <ListBox DockPanel.Dock="Top" x:Name="LbCollection" ItemsSource="{Binding WishlistCollectionView}"
+                             SelectionMode="Extended"
+                             wishlistCategories:ListBoxSelectionBehavior.SelectedItems="{Binding SelectedItems}"
                              Margin="0,0,0,0"
                              IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource WishlistItemTemplate}">

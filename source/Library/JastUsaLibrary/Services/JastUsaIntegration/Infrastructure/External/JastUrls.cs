@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace JastUsaLibrary
     {
         public static class Api
         {
-            private const string BaseApiUrl = "https://app.jastusa.com/api/v2/";
+            private const string BaseApiUrl = "https://app.jaststore.com/api/v2/";
             private const string LocaleCode = "en_US";
 
             public static class Authentication

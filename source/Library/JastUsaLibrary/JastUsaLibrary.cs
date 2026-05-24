@@ -62,7 +62,7 @@ namespace JastUsaLibrary
             var apiClient = new JastUsaApiClient(_logger);
             var authenticationPersistence = new AuthenticationPersistence(GetPluginUserDataPath());
             _jastUsaAccountClient = new JastUsaAccountClient(api, apiClient, authenticationPersistence);
-            settings = new JastUsaLibrarySettingsViewModel(this, PlayniteApi, _jastUsaAccountClient);
+            settings = new JastUsaLibrarySettingsViewModel(this, _logger, PlayniteApi, _jastUsaAccountClient);
             _gameInstallationManagerService = new GameInstallationManagerService(PlayniteApi, new GameInstallationManagerPersistenceJson(GetPluginUserDataPath(), _logger));
             _jastUsaCacheService = new LibraryCacheService(PlayniteApi, new LibraryCachePersistenceJson(GetPluginUserDataPath(), _logger), Id);
 

@@ -113,6 +113,9 @@
     <Compile Include="..\..\common\pluginscommon\Encryption.cs">
       <Link>Shared\PluginsCommon\Encryption.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Explorer.cs">
+      <Link>Shared\PluginsCommon\Explorer.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Extensions\CharExtensions.cs">
       <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
     </Compile>
@@ -152,6 +155,8 @@
     <Compile Include="Domain\Entities\OpencriticGameData.cs" />
     <Compile Include="Domain\Entities\OpenCriticGameResult.cs" />
     <Compile Include="Domain\Interfaces\IOpenCriticService.cs" />
+    <Compile Include="Infrastructure\Clients\OpenCriticClient.cs" />
+    <Compile Include="Infrastructure\Http\RateLimitedHttpRequester.cs" />
     <Compile Include="OpenCriticMetadata.cs" />
     <Compile Include="OpenCriticMetadataProvider.cs" />
     <Compile Include="OpenCriticMetadataSettings.cs" />

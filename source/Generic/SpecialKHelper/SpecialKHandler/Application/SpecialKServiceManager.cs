@@ -118,12 +118,39 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return Process.GetProcessesByName(processName).Any();
         }
 
+        internal void OpenSpecialKInstallationDirectory()
+        {
+            var installDir = string.Empty;
+            try
+            {
+                installDir = GetInstallDirectory();
+                if (installDir.IsNullOrEmpty())
+                {
+                    _logger.Warn("Special K installation directory is null or empty.");
+                    return;
+                }
+
+                if (!Directory.Exists(installDir))
+                {
+                    _logger.Warn($"Special K installation directory does not exist: {installDir}");
+                    return;
+                }
+
+                Explorer.OpenDirectory(installDir);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Failed to open Special K installation directory: {installDir}");
+            }
+            
+        }
+
         internal void OpenSpecialK()
         {
             try
             {
                 var installDir = GetInstallDirectory();
-                if (!installDir.IsNullOrEmpty())
+                if (installDir.IsNullOrEmpty())
                 { 
                     _logger.Warn("Special K installation directory is null or empty.");
                     return;
@@ -215,6 +242,13 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 _logger.Info($"Resolved Special K installation directory from registry: {directory}");
                 return directory;
             }
+        }
+
+        public bool StartAllServices(CancellationToken cancellationToken = default)
+        {
+            var start32Bits = Start32BitsService(cancellationToken);
+            var start64Bits = Start64BitsService(cancellationToken);
+            return start32Bits && start64Bits;
         }
 
         public bool Start32BitsService(CancellationToken cancellationToken = default)
@@ -342,6 +376,13 @@ namespace SpecialKHelper.SpecialKHandler.Application
             {
                 _logger.Error(ex, $"Failed to start stop process for Special K service: {servletExe}");
             }
+        }
+
+        public bool StopAllServices(CancellationToken cancellationToken = default)
+        {
+            var stop32Bits = Stop32BitsService(cancellationToken);
+            var stop64Bits = Stop64BitsService(cancellationToken);
+            return stop32Bits && stop64Bits;
         }
 
         public bool Stop32BitsService(CancellationToken cancellationToken = default)

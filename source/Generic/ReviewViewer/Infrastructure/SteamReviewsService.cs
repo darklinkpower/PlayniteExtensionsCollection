@@ -63,7 +63,7 @@ namespace ReviewViewer.Infrastructure
                 var request = HttpRequestFactory.GetHttpRequest().WithUrl(url);
                 var response = await request.DownloadStringAsync(cancellationToken);
                 if (response.IsSuccess &&
-                    Serialization.TryFromJson<ReviewsResponseDto>(response.Content, out var data))
+                    Serialization.TryFromJson<ReviewsResponseDto>(response.Content, out var data, out var ex))
                 {
                     return data;
                 }

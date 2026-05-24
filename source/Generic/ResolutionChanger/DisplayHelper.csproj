@@ -59,6 +59,9 @@
     <Compile Include="..\..\common\pluginscommon\Encryption.cs">
       <Link>Shared\PluginsCommon\Encryption.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Explorer.cs">
+      <Link>Shared\PluginsCommon\Explorer.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Extensions\CharExtensions.cs">
       <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
     </Compile>
@@ -95,7 +98,57 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="Application\Displays\DTOs\ApplyDisplayConfigurationRequestMapper.cs" />
+    <Compile Include="Application\Displays\DTOs\DisplaySnapshot.cs" />
+    <Compile Include="Application\Displays\DTOs\DisplayTransactionResult.cs" />
+    <Compile Include="Application\Displays\Services\DisplayManager.cs" />
+    <Compile Include="Application\Displays\Services\DisplayResolverService.cs" />
+    <Compile Include="Application\Displays\Services\DisplayRestoreService.cs" />
+    <Compile Include="Application\Displays\Services\DisplaySnapshotService.cs" />
+    <Compile Include="Application\Displays\Services\DisplayTopologyService.cs" />
+    <Compile Include="Application\Displays\Services\DisplayTransactionService.cs" />
+    <Compile Include="Application\Displays\Services\IDisplayTransactionCommitService.cs" />
+    <Compile Include="Domain\Displays\Entities\TransactionState.cs" />
+    <Compile Include="Application\Displays\Services\IDisplayTransactionService.cs" />
+    <Compile Include="Application\Mapping\ApplyDisplayConfigurationRequest.cs" />
     <Compile Include="DisplayUtilities.cs" />
+    <Compile Include="Domain\Common\Result.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayApplyMode.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayConfiguration.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayDevice.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayOrientation.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayScaling.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayState.cs" />
+    <Compile Include="Domain\Displays\Entities\DisplayTopology.cs" />
+    <Compile Include="Domain\Displays\Interfaces\IDisplayConfigurationService.cs" />
+    <Compile Include="Domain\Displays\Interfaces\IDisplayQueryService.cs" />
+    <Compile Include="Domain\Displays\Interfaces\IDisplayResolver.cs" />
+    <Compile Include="Domain\Displays\Interfaces\IDisplaySnapshotService.cs" />
+    <Compile Include="Domain\Displays\Interfaces\IDisplayTopologyService.cs" />
+    <Compile Include="Domain\Displays\Interfaces\IQueuedDisplayConfigurationService.cs" />
+    <Compile Include="Domain\Displays\ValueObjects\DisplayMode.cs" />
+    <Compile Include="Domain\Displays\ValueObjects\DisplayPosition.cs" />
+    <Compile Include="Domain\Displays\ValueObjects\MonitorIdentity.cs" />
+    <Compile Include="Domain\Displays\ValueObjects\RefreshRate.cs" />
+    <Compile Include="Domain\Displays\ValueObjects\Resolution.cs" />
+    <Compile Include="Infrastructure\Win32\Mapping\DevModeMapper.cs" />
+    <Compile Include="Infrastructure\Win32\Mapping\DisplayDeviceMapper.cs" />
+    <Compile Include="Infrastructure\Win32\Mapping\DisplayModeMapper.cs" />
+    <Compile Include="Infrastructure\Win32\Native\DevModeFactory.cs" />
+    <Compile Include="Infrastructure\Win32\Native\DisplayDeviceFactory.cs" />
+    <Compile Include="Infrastructure\Win32\Native\User32Interop.cs" />
+    <Compile Include="Infrastructure\Win32\Native\Win32DisplayApi.cs" />
+    <Compile Include="Infrastructure\Win32\Parsing\EdidParser.cs" />
+    <Compile Include="Infrastructure\Win32\Services\IMonitorIdentityProvider.cs" />
+    <Compile Include="Infrastructure\Win32\Services\IRegistryService.cs" />
+    <Compile Include="Infrastructure\Win32\Services\IWin32DisplayApi.cs" />
+    <Compile Include="Infrastructure\Win32\Services\Win32DisplayConfigurationService.cs" />
+    <Compile Include="Infrastructure\Win32\Services\Win32DisplayQueryService.cs" />
+    <Compile Include="Infrastructure\Win32\Services\Win32DisplayTopologyService.cs" />
+    <Compile Include="Infrastructure\Win32\Services\Win32DisplayTransactionCommitService.cs" />
+    <Compile Include="Infrastructure\Win32\Services\Win32MonitorIdentityProvider.cs" />
+    <Compile Include="Infrastructure\Win32\Services\Win32QueuedDisplayConfigurationService.cs" />
+    <Compile Include="Infrastructure\Win32\Services\WindowsRegistryService.cs" />
     <Compile Include="Models\DisplayConfigChangeData.cs" />
     <Compile Include="Models\DisplayInfo.cs" />
     <Compile Include="Models\ModeDisplaySettings.cs" />
@@ -135,7 +188,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Infrastructure\Win32\Registry\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>

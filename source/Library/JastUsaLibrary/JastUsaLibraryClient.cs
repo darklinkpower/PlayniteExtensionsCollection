@@ -1,4 +1,4 @@
-﻿using Playnite.SDK;
+using Playnite.SDK;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace JastUsaLibrary
 
         public override void Open()
         {
-            ProcessStarter.StartUrl(@"https://jastusa.com/");
+            ProcessStarter.StartUrl(@"https://jaststore.com/");
         }
     }
 }

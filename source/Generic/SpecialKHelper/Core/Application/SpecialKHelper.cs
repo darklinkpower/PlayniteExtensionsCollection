@@ -256,19 +256,79 @@ namespace SpecialKHelper
             return settings;
         }
 
+        private MainMenuItem CreateItem(string resourceKey, Action<MainMenuItemActionArgs> action)
+        {
+            return new MainMenuItem
+            {
+                Description = ResourceProvider.GetString(resourceKey),
+                MenuSection = "@Special K Helper",
+                Action = action
+            };
+        }
+
+        private MainMenuItem CreateItem(string resourceKey, Action action)
+        {
+            return CreateItem(resourceKey, _ => action());
+        }
+
+        private MainMenuItem Separator() => new MainMenuItem
+        {
+            Description = "-",
+            MenuSection = "@Special K Helper"
+        };
+
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            return new List<MainMenuItem>
+            var items = new List<MainMenuItem>
             {
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
-                    MenuSection = "@Special K Helper",
-                    Action = (a) => {
-                        _specialKProfilesEditor.OpenEditorWindow();
-                    }
-                },
+                CreateItem("LOCSpecial_K_Helper_OpenSpecialK", _specialKServiceManager.OpenSpecialK),
+                CreateItem("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor", () => _specialKProfilesEditor.OpenEditorWindow()),
+                Separator(),
+                CreateItem("LOCSpecial_K_Helper_MenuItemDescriptionOpenInstallationDirectory", _specialKServiceManager.OpenSpecialKInstallationDirectory),
+                Separator()
             };
+
+            var service32Running = _specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running;
+            var service64Running = _specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running;
+
+            if (service32Running && service64Running)
+            {
+                items.Add(CreateItem("LOCSpecial_K_Helper_StopAllServices", () => _specialKServiceManager.StopAllServices()));
+                items.Add(Separator());
+            }
+            else if (!service32Running && !service64Running)
+            {
+                items.Add(CreateItem("LOCSpecial_K_Helper_StartAllServices", () => _specialKServiceManager.StartAllServices()));
+                items.Add(Separator());
+            }
+
+            if (service32Running)
+            {
+                items.Add(CreateItem(
+                    "LOCSpecial_K_Helper_Stop32BitsService",
+                    () => _specialKServiceManager.Stop32BitsService()));
+            }
+            else
+            {
+                items.Add(CreateItem(
+                    "LOCSpecial_K_Helper_Start32BitsService",
+                    () => _specialKServiceManager.Start32BitsService()));
+            }
+
+            if (service64Running)
+            {
+                items.Add(CreateItem(
+                    "LOCSpecial_K_Helper_Stop64BitsService",
+                    () => _specialKServiceManager.Stop64BitsService()));
+            }
+            else
+            {
+                items.Add(CreateItem(
+                    "LOCSpecial_K_Helper_Start64BitsService",
+                    () => _specialKServiceManager.Start64BitsService()));
+            }
+
+            return items;
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

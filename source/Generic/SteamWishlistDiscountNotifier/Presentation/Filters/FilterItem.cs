@@ -8,32 +8,32 @@ namespace SteamWishlistDiscountNotifier.Presentation.Filters
 {
     public class FilterItem : ObservableObject
     {
-        private bool enabled = false;
+        private bool enabled;
+
         public bool Enabled
         {
             get => enabled;
             set
             {
+                if (enabled == value)
+                {
+                    return;
+                }
+                
                 enabled = value;
                 OnPropertyChanged();
             }
         }
 
-        private string name;
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                OnPropertyChanged();
-            }
-        }
+        public string Name { get; }
+        public Guid Id { get; }
 
-        public FilterItem(bool enabled, string name)
+
+        public FilterItem(Guid id, string name, bool enabled = false)
         {
+            Id = id == Guid.Empty ? throw new ArgumentNullException(nameof(id)) : id;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
             Enabled = enabled;
-            Name = name;
         }
     }
 }
