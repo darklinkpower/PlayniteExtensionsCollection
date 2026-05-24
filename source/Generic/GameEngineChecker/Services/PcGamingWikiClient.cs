@@ -28,7 +28,7 @@ namespace GameEngineChecker.Services
 			try
 			{
 				var request = new HttpRequestMessage(HttpMethod.Get, link);
-				request.Headers.TryAddWithoutValidation("User-Agent", "Playnite.GameEngineChecker Extension 3.x (https://github.com/SparrowBrain/)");
+				request.Headers.TryAddWithoutValidation("User-Agent", "Playnite.GameEngineChecker Extension 3.x (https://github.com/darklinkpower/PlayniteExtensionsCollection/)");
 
 				var response = await _httpClient.SendAsync(request, cancellationToken);
 				var responseString = await response.Content.ReadAsStringAsync();
