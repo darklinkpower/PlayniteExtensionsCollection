@@ -97,4 +97,9 @@ Si este ajuste está deshabilitado, los servicios no se iniciarán sin importar 
     <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">After successful game injection</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_CheckForSpecialKUpdates">Check for Special K updates</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdatesChannel">Updates Channel:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelDiscordDescription">Discord (updates regularly)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelWebsiteDescription">Website (updates every ~6 months)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelAncientDescription">Ancient (~6 months older than website)</sys:String>
 </ResourceDictionary>
