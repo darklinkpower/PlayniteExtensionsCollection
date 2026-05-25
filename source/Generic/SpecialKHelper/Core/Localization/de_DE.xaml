@@ -93,13 +93,13 @@ Wenn diese Einstellung deaktiviert ist, werden die Dienste unabhängig von Einst
     <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">64 Bit Dienst starten</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">64 Bit Dienst stoppen</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Special K öffnen</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Stop Special K services:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">After successful game injection</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_CheckForSpecialKUpdates">Check for Special K updates</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdatesChannel">Updates Channel:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelDiscordDescription">Discord (updates regularly)</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelWebsiteDescription">Website (updates every ~6 months)</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelAncientDescription">Ancient (~6 months older than website)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Dienste von Special K stoppen:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">Nach erfolgreicher Spielinjektion</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">Beim Schließen des Spiels</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Niemals automatisch stoppen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_CheckForSpecialKUpdates">Nach Aktualisierungen für Special K suchen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdatesChannel">Aktualisierungskanal:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelDiscordDescription">Discord (aktualisiert regelmäßig)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelWebsiteDescription">Webseite (aktualisiert ca. alle 6 Monate)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelAncientDescription">Uralt (ca. 6 Monate älter als die Webseite)</sys:String>
 </ResourceDictionary>
