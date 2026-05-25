@@ -93,4 +93,8 @@ Ved deaktivering vil ikke tjenestene bli startet uansett innstillinger eller kon
     <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits-tjeneste</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stopp 64 bits-tjeneste</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Åpne Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Stop Special K services:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">After successful game injection</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
 </ResourceDictionary>
