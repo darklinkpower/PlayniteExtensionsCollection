@@ -291,3 +291,11 @@ Packages:
     Changelog:
     - 'Added: Support to open Special K installation directory from sidebar right click menu'
     - "Added: Menu items previously only available in the sidebar right click menu will now also be available in Playnite's main menu"
+  - Version: 1.45
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-05-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.05.25_1e72e501/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_45.pext
+    Changelog:
+    - 'Added: Configurable Special K services shutdown behavior. Services can now stop on game injection, when the game closes, or never stop automatically. Default: On game injection.'
+    - 'Added: Automatic Special K update detection with selectable update channels (Website, Discord, Ancient). Default: Website.'
+    - 'Fixed: Improved Special K services lifecycle handling to prevent issues when multiple games are launching, being injected, or closing at the same time.'
