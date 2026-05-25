@@ -95,11 +95,11 @@ Se questo set è disabilitato, i servizi non saranno avviati a prescindere dalle
     <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Apri Special K</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Ferma i servizi di Special K:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">Dopo l'iniezione riuscita del gioco</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_CheckForSpecialKUpdates">Check for Special K updates</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdatesChannel">Updates Channel:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelDiscordDescription">Discord (updates regularly)</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelWebsiteDescription">Website (updates every ~6 months)</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelAncientDescription">Ancient (~6 months older than website)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">Quando il gioco si chiude</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Non interrompere mai automaticamente</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_CheckForSpecialKUpdates">Controlla aggiornamenti di Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdatesChannel">Canale aggiornamenti:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelDiscordDescription">Discord (aggiornamenti regolari)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelWebsiteDescription">Sito Web (aggiornamenti ogni ~ 6 mesi)</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_UpdateChannelAncientDescription">Antico (~6 mesi più vecchio del sito web)</sys:String>
 </ResourceDictionary>
