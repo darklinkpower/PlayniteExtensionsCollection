@@ -215,6 +215,17 @@
     <Compile Include="SpecialKProfilesEditorService\Presentation\SpecialKProfileEditorView.xaml.cs">
       <DependentUpon>SpecialKProfileEditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SpecialKUpdater\Application\ISpecialKUpdateService.cs" />
+    <Compile Include="SpecialKUpdater\Application\SpecialKUpdateMonitor.cs" />
+    <Compile Include="SpecialKUpdater\Application\SpecialKVersionComparer.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\Models\RepositoryBranch.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\Models\RepositoryRoot.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\Models\RepositoryVersion.cs" />
+    <Compile Include="SpecialKUpdater\Domain\SpecialKUpdateChannel.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\Models\UpdateCheckResult.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\Sha256Validator.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\SpecialKRepositoryClient.cs" />
+    <Compile Include="SpecialKUpdater\Infrastructure\SpecialKUpdateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using PluginsCommon;
 using SpecialKHelper.Core.Domain;
 using SpecialKHelper.SpecialKHandler.Application;
+using SpecialKHelper.SpecialKUpdater.Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -51,6 +52,12 @@ namespace SpecialKHelper
 
         private SpecialKServiceStopMode _specialKServiceStopMode = SpecialKServiceStopMode.OnInjection;
         public SpecialKServiceStopMode SpecialKServiceStopMode { get => _specialKServiceStopMode; set => SetValue(ref _specialKServiceStopMode, value); }
+
+        private bool _checkForSpecialKUpdates = true;
+        public bool CheckForSpecialKUpdates { get => _checkForSpecialKUpdates; set => SetValue(ref _checkForSpecialKUpdates, value); }
+
+        private SpecialKUpdateChannel _specialKUpdateChannel = SpecialKUpdateChannel.Website;
+        public SpecialKUpdateChannel SpecialKUpdateChannel { get => _specialKUpdateChannel; set => SetValue(ref _specialKUpdateChannel, value); }
     }
 
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings

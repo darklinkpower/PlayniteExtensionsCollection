@@ -44,5 +44,23 @@ namespace SpecialKHelper
         /// </summary>
         public const string SpecialKServiceStopModeNever =
             "LOCSpecial_K_Helper_SpecialKServiceStopModeNever";
+
+        /// <summary>
+        /// Discord (updates regularly)
+        /// </summary>
+        public const string UpdateChannelDiscordDescription =
+            "LOCSpecial_K_Helper_UpdateChannelDiscordDescription";
+
+        /// <summary>
+        /// Website (updates every ~6 months)
+        /// </summary>
+        public const string UpdateChannelWebsiteDescription =
+            "LOCSpecial_K_Helper_UpdateChannelWebsiteDescription";
+
+        /// <summary>
+        /// Ancient (~6 months older than website)
+        /// </summary>
+        public const string UpdateChannelAncientDescription =
+            "LOCSpecial_K_Helper_UpdateChannelAncientDescription";
     }
 }

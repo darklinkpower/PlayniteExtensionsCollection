@@ -14,6 +14,8 @@ using SpecialKHelper.SpecialKHandler.Application;
 using SpecialKHelper.SpecialKHandler.Domain.Enums;
 using SpecialKHelper.SpecialKHandler.Domain.Exceptions;
 using SpecialKHelper.SpecialKProfilesEditorService.Application;
+using SpecialKHelper.SpecialKUpdater.Application;
+using SpecialKHelper.SpecialKUpdater.Infrastructure;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -42,7 +44,9 @@ namespace SpecialKHelper
         private readonly EasyAnticheatService _easyAnticheatHelper;
         private readonly SteamHelper _steamHelper;
         private readonly SteamEnvironmentHandler _steamEnvironmentHandler;
+        private readonly SpecialKSignalWatcher _signalWatcher;
         private readonly SpecialKGameSessionCoordinator _gameCoordinator;
+        private readonly SpecialKUpdateMonitor _specialKUpdateMonitor;
 
         private SpecialKHelperSettingsViewModel settings { get; set; }
 
@@ -79,15 +83,23 @@ namespace SpecialKHelper
                 settings,
                 steamHelper);
 
-            var signalWatcher = new SpecialKSignalWatcher(_logger);
-            signalWatcher.Start();
+            _signalWatcher = new SpecialKSignalWatcher(_logger);
+            
             _gameCoordinator = new SpecialKGameSessionCoordinator(
                 _specialKServiceManager,
-                signalWatcher,
+                _signalWatcher,
                 _logger,
                 PlayniteApi,
                 () => this.OpenSettingsView(),
                 () => settings.Settings.SpecialKServiceStopMode);
+
+            _specialKUpdateMonitor = new SpecialKUpdateMonitor(
+                _logger,
+                PlayniteApi,
+                new SpecialKUpdateService(_logger, new SpecialKRepositoryClient()),
+                _specialKServiceManager,
+                new Sha256Validator(),
+                settings);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -104,6 +116,12 @@ namespace SpecialKHelper
                     }
                 };
             }
+        }
+
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            _signalWatcher.Start();
+            _specialKUpdateMonitor.Start();
         }
 
         public override void OnGameStarting(OnGameStartingEventArgs args)

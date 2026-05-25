@@ -46,9 +46,18 @@ namespace FlowHttp.Requests
         /// <param name="stateChangedCallback">The optional callback for reporting changes in download state.</param>
         /// <param name="progressChangedCallback">The optional callback for reporting download progress.</param>
         /// <returns>The result of the download and file-saving operation represented by an <see cref="HttpFileDownloadResult"/>.</returns>
-        internal HttpFileDownloadResult DownloadFile(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
+        internal HttpFileDownloadResult DownloadFile(
+            CancellationToken cancellationToken = default,
+            DownloadStateController downloadStateController = null, 
+            DownloadStateChangedCallback stateChangedCallback = null,
+            DownloadProgressChangedCallback progressChangedCallback = null)
         {
-            return Task.Run(() => DownloadFileAsync(cancellationToken, downloadStateController, stateChangedCallback, progressChangedCallback)).GetAwaiter().GetResult();
+            return Task.Run(() => DownloadFileAsync(
+                cancellationToken,
+                downloadStateController,
+                stateChangedCallback,
+                progressChangedCallback))
+            .GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -59,7 +68,11 @@ namespace FlowHttp.Requests
         /// <param name="stateChangedCallback">The optional callback for reporting changes in download state.</param>
         /// <param name="progressChangedCallback">The optional callback for reporting download progress.</param>
         /// <returns>An awaitable task representing the asynchronous download and file-saving operation. The task's result is the <see cref="HttpFileDownloadResult"/>.</returns>
-        internal async Task<HttpFileDownloadResult> DownloadFileAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
+        internal async Task<HttpFileDownloadResult> DownloadFileAsync(
+            CancellationToken cancellationToken = default,
+            DownloadStateController downloadStateController = null,
+            DownloadStateChangedCallback stateChangedCallback = null,
+            DownloadProgressChangedCallback progressChangedCallback = null)
         {
             if (_url is null)
             {
@@ -133,7 +146,13 @@ namespace FlowHttp.Requests
                                     throw new MissingContentRangeHeaderException();
                                 }
 
-                                await SaveFileContent(response, cts.Token, appendToFile, downloadStateController, stateChangedCallback, progressChangedCallback);
+                                await SaveFileContent(
+                                    response,
+                                    cts.Token,
+                                    appendToFile,
+                                    downloadStateController,
+                                    stateChangedCallback,
+                                    progressChangedCallback);
                                 var fileInfo = new FileInfo(DownloadPath);
                                 var result = HttpFileDownloadResult.Success(_url, fileInfo, httpStatusCode, response);
                                 OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Completed);

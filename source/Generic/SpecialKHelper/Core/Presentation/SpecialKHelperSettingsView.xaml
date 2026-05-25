@@ -7,6 +7,7 @@
              xmlns:conv="clr-namespace:PluginsCommon.Converters"
              xmlns:beh="clr-namespace:SpecialKHelper.Behaviors"
              xmlns:skM="clr-namespace:SpecialKHelper.Core.Domain"
+             xmlns:skupdaterDomain="clr-namespace:SpecialKHelper.SpecialKUpdater.Domain"
              xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid Margin="20">
@@ -19,7 +20,19 @@
                         <Run Text="{DynamicResource LOCSpecial_K_Helper_SettingsHelpLabel}" />
                     </Hyperlink>
                 </TextBlock>
-                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+
+                <CheckBox Content="{DynamicResource LOCSpecial_K_Helper_CheckForSpecialKUpdates}"
+                          IsChecked="{Binding Settings.CheckForSpecialKUpdates}" />
+
+                <StackPanel Margin="10,10,0,0" Orientation="Horizontal"
+                            IsEnabled="{Binding Settings.CheckForSpecialKUpdates}">
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_UpdatesChannel}" VerticalAlignment="Center"/>
+                    <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
+                          SelectedValue="{Binding Settings.SpecialKUpdateChannel}"
+                          beh:SelectorBehaviors.EnumSource="{x:Type skupdaterDomain:SpecialKUpdateChannel}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                     <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionMode}" VerticalAlignment="Center"/>
                     <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
                           SelectedValue="{Binding Settings.SpecialKExecutionMode}"

@@ -15,6 +15,23 @@ using System.Threading.Tasks;
 
 namespace SpecialKHelper.SpecialKHandler.Application
 {
+    public class SpecialKVersionInformation
+    {
+        public string SkifVersion { get; }
+        public string Service32BitsVersion { get; }
+        public string Service64BitsVersion { get; }
+
+        public SpecialKVersionInformation(
+            string skifVersion,
+            string service32BitsVersion,
+            string service64BitsVersion)
+        {
+            SkifVersion = skifVersion;
+            Service32BitsVersion = service32BitsVersion;
+            Service64BitsVersion = service64BitsVersion;
+        }
+    }
+
     public class SpecialKServiceManager
     {
         public event EventHandler<SpecialKServiceStatusChangedEventArgs> SpecialKServiceStatusChanged;
@@ -110,6 +127,64 @@ namespace SpecialKHelper.SpecialKHandler.Application
             catch (Exception ex)
             {
                 _logger.Error(ex, "Failed to update Special K service statuses.");
+            }
+        }
+
+        private string GetVersionOrDefault(string path)
+        {
+            if (!FileSystem.FileExists(path))
+            {
+                return "0.0.0";
+            }
+
+            var version =
+                FileVersionInfo
+                    .GetVersionInfo(path)
+                    .FileVersion;
+
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                _logger.Warn(
+                    $"No version found for '{path}'.");
+
+                return "0.0.0";
+            }
+
+            return version;
+        }
+
+        public SpecialKVersionInformation GetCurrentVersionInformation()
+        {
+            try
+            {
+                var installDir = GetInstallDirectory();
+                var skifVersion = GetVersionOrDefault(
+                    Path.Combine(
+                        installDir,
+                        _specialKExecutableName));
+
+                var dll32Version = GetVersionOrDefault(
+                    Path.Combine(
+                        installDir,
+                        $"SpecialK{_32BitsPrefix}.dll"));
+
+                var dll64Version = GetVersionOrDefault(
+                    Path.Combine(
+                        installDir,
+                        $"SpecialK{_64BitsPrefix}.dll"));
+
+                return new SpecialKVersionInformation(
+                    skifVersion,
+                    dll32Version,
+                    dll64Version);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(
+                    ex,
+                    "Failed to retrieve Special K version.");
+
+                return null;
             }
         }
 

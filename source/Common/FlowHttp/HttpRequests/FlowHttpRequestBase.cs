@@ -219,12 +219,27 @@ namespace FlowHttp.Requests
         /// <param name="currentTime">The current time for progress reporting.</param>
         /// <param name="lastReportTime">The time of the last progress report.</param>
         /// <param name="lastTotalBytesRead">The total bytes received at the time of the last report.</param>
-        protected void ReportProgress(DownloadProgressChangedCallback progressChangedCallback, long contentProgressLength, long totalContentLength, DateTime startTime, DateTime currentTime, DateTime lastReportTime, long lastTotalBytesRead)
+        protected void ReportProgress(
+            DownloadProgressChangedCallback progressChangedCallback,
+            long contentProgressLength,
+            long totalContentLength,
+            DateTime startTime,
+            DateTime currentTime,
+            DateTime lastReportTime,
+            long lastTotalBytesRead)
         {
             var totalElapsedDownloadTime = currentTime - startTime;
             var intervalElapsedTime = currentTime - lastReportTime;
             var bytesReadThisInterval = contentProgressLength - lastTotalBytesRead;
-            var progressReport = new DownloadProgressArgs(contentProgressLength, totalContentLength, totalElapsedDownloadTime, intervalElapsedTime, bytesReadThisInterval);
+            var progressReport =
+                new DownloadProgressArgs(
+                    contentProgressLength,
+                    totalContentLength,
+                    totalElapsedDownloadTime,
+                    intervalElapsedTime,
+                    bytesReadThisInterval
+                );
+
             OnDownloadProgressChanged(progressChangedCallback, progressReport);
         }
 
