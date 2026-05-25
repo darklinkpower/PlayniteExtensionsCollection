@@ -11,10 +11,12 @@ namespace ExtraMetadataLoader.MetadataProviders
     public class LogoDownloadOptions
     {
         public bool IsBackgroundDownload { get; private set; }
+        public bool IsLibraryUpdateDownload { get; private set; }
 
-        public LogoDownloadOptions(bool isBackgroundDownload)
+        public LogoDownloadOptions(bool isBackgroundDownload, bool isLibraryUpdateDownload = false)
         {
             IsBackgroundDownload = isBackgroundDownload;
+            IsLibraryUpdateDownload = isLibraryUpdateDownload;
         }
     }
 

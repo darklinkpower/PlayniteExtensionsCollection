@@ -47,6 +47,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームの動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームのマイクロ動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームのロゴをダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseLaunchBoxForAutomaticLogoDownloadsLabel">Use LaunchBox for automatic logo downloads</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">ダウンロードするロゴを自動的に選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">動画</sys:String>
 
@@ -65,6 +66,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Steam から動画をダウンロード中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Steam からマイクロ動画をダウンロード中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Steam からロゴをダウンロード中...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosLaunchBox">Downloading logos from LaunchBox...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">SteamGridDB からロゴをダウンロード中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">YouTube から動画をダウンロード中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Failed to download video from YouTube.
@@ -86,6 +88,7 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">選択したゲームの動画を Steam からダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">選択したゲームのマイクロ動画を Steam からダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">選択したゲームのロゴを Steam からダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadLaunchBoxLogosSelectedGames">Download logos from LaunchBox for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">選択したゲームのロゴを SteamGridDB からダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Extra Metadata ディレクトリを開く</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">選択したゲームのロゴを削除</sys:String>

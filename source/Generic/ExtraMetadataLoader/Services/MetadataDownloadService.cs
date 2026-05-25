@@ -53,7 +53,22 @@ namespace ExtraMetadataLoader.Services
             return _videoProviders.FirstOrDefault(x => x.Id == id);
         }
 
+        public Task<bool> DownloadLogoAsync(Game game, bool isBackgroundDownload, CancellationToken cancelToken)
+        {
+            return DownloadLogoAsync(game, _logoProviders, isBackgroundDownload, false, true, cancelToken);
+        }
+
         public async Task<bool> DownloadLogoAsync(Game game, bool isBackgroundDownload, bool overwrite, CancellationToken cancelToken)
+        {
+            return await DownloadLogoAsync(game, _logoProviders, isBackgroundDownload, overwrite, false, cancelToken);
+        }
+
+        public async Task<bool> DownloadLogoAsync(ILogoProvider logoProvider, Game game, bool isBackgroundDownload, bool overwrite, CancellationToken cancelToken)
+        {
+            return await DownloadLogoAsync(game, new[] { logoProvider }, isBackgroundDownload, overwrite, false, cancelToken);
+        }
+
+        private async Task<bool> DownloadLogoAsync(Game game, IEnumerable<ILogoProvider> logoProviders, bool isBackgroundDownload, bool overwrite, bool isLibraryUpdateDownload, CancellationToken cancelToken)
         {
             var logoDownloadPath = ExtraMetadataHelper.GetGameLogoPath(game);
             if (!overwrite && FileSystem.FileExists(logoDownloadPath))
@@ -61,11 +76,17 @@ namespace ExtraMetadataLoader.Services
                 return true;
             }
 
-            var downloadOptions = new LogoDownloadOptions(isBackgroundDownload);            
-            foreach (var provider in _logoProviders)
+            logoDownloadPath = ExtraMetadataHelper.GetGameLogoPath(game, true);
+            var downloadOptions = new LogoDownloadOptions(isBackgroundDownload, isLibraryUpdateDownload);
+            foreach (var provider in logoProviders)
             {
                 try
                 {
+                    if (provider == null)
+                    {
+                        continue;
+                    }
+
                     var logoUrl = provider.GetLogoUrl(game, downloadOptions, cancelToken);
                     if (logoUrl.IsNullOrEmpty())
                     {
@@ -75,6 +96,7 @@ namespace ExtraMetadataLoader.Services
                     var downloadIsSuccess = await DownloadFile(logoUrl, logoDownloadPath, cancelToken);
                     if (!downloadIsSuccess)
                     {
+                        _logger.Debug($"Logo download failed for {provider.Id}. Url: {logoUrl}");
                         continue;
                     }
 
@@ -84,6 +106,11 @@ namespace ExtraMetadataLoader.Services
                     }
 
                     OnLogoUpdated(game);
+                    if (provider.Id == "launchBoxProvider")
+                    {
+                        _logger.Debug($"LaunchBox logo downloaded successfully for '{game.Name}'.");
+                    }
+
                     break;
                 }
                 catch (Exception ex)
