@@ -93,8 +93,8 @@ Se questo set è disabilitato, i servizi non saranno avviati a prescindere dalle
     <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Avvia il servizio a 64 bit</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Arresta il servizio a 64 bit</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Apri Special K</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Stop Special K services:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">After successful game injection</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Ferma i servizi di Special K:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">Dopo l'iniezione riuscita del gioco</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_CheckForSpecialKUpdates">Check for Special K updates</sys:String>
