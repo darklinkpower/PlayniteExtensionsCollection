@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace ExtraMetadataLoader.MetadataProviders
 {
+    public enum VideoType
+    {
+        Trailer,
+        Microtrailer
+    }
+
     public class VideoResult
     {
         public string Url { get; private set; }
@@ -31,11 +37,13 @@ namespace ExtraMetadataLoader.MetadataProviders
     {
         public string DownloadPath { get; private set; }
         public bool IsBackgroundDownload { get; private set; }
+        public VideoType VideoType { get; private set; }
 
-        public VideoDownloadOptions (string downloadPath, bool isBackgroundDownload)
+        public VideoDownloadOptions (string downloadPath, bool isBackgroundDownload, VideoType videoType = VideoType.Trailer)
         {
             DownloadPath = downloadPath;
             IsBackgroundDownload = isBackgroundDownload;
+            VideoType = videoType;
         }
     }
 
