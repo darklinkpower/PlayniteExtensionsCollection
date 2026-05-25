@@ -171,6 +171,13 @@
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
     <Compile Include="Behaviors\SelectorBehaviors.cs" />
+    <Compile Include="Core\Domain\SpecialKLaunchState.cs" />
+    <Compile Include="Core\Domain\SpecialKServiceStopMode.cs" />
+    <Compile Include="SpecialKHandler\Application\SignalReceivedEventArgs.cs" />
+    <Compile Include="Core\Application\SpecialKGameSessionCoordinator.cs" />
+    <Compile Include="Core\Application\SpecialKLaunchSession.cs" />
+    <Compile Include="Core\Application\SteamEnvironmentHandler.cs" />
+    <Compile Include="SpecialKHandler\Domain\Enums\SignalType.cs" />
     <Compile Include="Core\Domain\SpecialKExecutionMode.cs" />
     <Compile Include="Core\Domain\SteamOverlay.cs" />
     <Compile Include="EasyAnticheat\Application\EasyAnticheatService.cs" />
@@ -180,9 +187,11 @@
     <Compile Include="EasyAnticheat\Persistence\IEasyAnticheatCache.cs" />
     <Compile Include="Core\Localization\LocalizationKeys.cs" />
     <Compile Include="EasyAnticheat\Domain\GameDataCache.cs" />
+    <Compile Include="SpecialKHandler\Application\SpecialKSignalWatcher.cs" />
     <Compile Include="SpecialKHandler\Domain\Enums\CpuArchitecture.cs" />
     <Compile Include="SpecialKHandler\Domain\Enums\SpecialKServiceStatus.cs" />
     <Compile Include="SpecialKHandler\Domain\Events\SpecialKServiceStatusChangedEventArgs.cs" />
+    <Compile Include="SpecialKHandler\Infrastructure\NamedEventSignalWatcher.cs" />
     <Compile Include="SpecialKProfilesEditorService\Application\SpecialKProfilesEditor.cs" />
     <Compile Include="SpecialKProfilesEditorService\Domain\PluginLoadMode.cs" />
     <Compile Include="SpecialKProfilesEditorService\Domain\SpecialKProfile.cs" />

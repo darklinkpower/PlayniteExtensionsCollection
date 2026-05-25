@@ -48,6 +48,9 @@ namespace SpecialKHelper
         public bool StopIfEasyAntiCheat { get => stopIfEasyAntiCheat; set => SetValue(ref stopIfEasyAntiCheat, value); }
         private string customSpecialKPath = string.Empty;
         public string CustomSpecialKPath { get => customSpecialKPath; set => SetValue(ref customSpecialKPath, value); }
+
+        private SpecialKServiceStopMode _specialKServiceStopMode = SpecialKServiceStopMode.OnInjection;
+        public SpecialKServiceStopMode SpecialKServiceStopMode { get => _specialKServiceStopMode; set => SetValue(ref _specialKServiceStopMode, value); }
     }
 
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings

@@ -26,7 +26,17 @@
                           beh:SelectorBehaviors.EnumSource="{x:Type skM:SpecialKExecutionMode}" />
 
                 </StackPanel>
-                <TextBlock Margin="20,10,0,0" Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionModeNote}" TextWrapping="Wrap"/>
+                <TextBlock Margin="0,5,0,0"
+                           Opacity="0.75"
+                           Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionModeNote}" TextWrapping="Wrap"/>
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingSpecialKServiceStopMode}" VerticalAlignment="Center"/>
+                    <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
+                          SelectedValue="{Binding Settings.SpecialKServiceStopMode}"
+                          beh:SelectorBehaviors.EnumSource="{x:Type skM:SpecialKServiceStopMode}" />
+
+                </StackPanel>
 
                 <DockPanel Margin="0,15,0,0">
                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"

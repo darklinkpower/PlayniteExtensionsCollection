@@ -79,11 +79,15 @@ namespace SpecialKHelper
                 settings,
                 steamHelper);
 
+            var signalWatcher = new SpecialKSignalWatcher(_logger);
+            signalWatcher.Start();
             _gameCoordinator = new SpecialKGameSessionCoordinator(
                 _specialKServiceManager,
+                signalWatcher,
                 _logger,
                 PlayniteApi,
-                () => this.OpenSettingsView());
+                () => this.OpenSettingsView(),
+                () => settings.Settings.SpecialKServiceStopMode);
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -155,6 +159,17 @@ namespace SpecialKHelper
             }
         }
 
+        public override void OnGameStartupCancelled(OnGameStartupCancelledEventArgs args)
+        {
+            _gameCoordinator.RemoveSession(args.Game.Id, args.Game.Name, true);
+        }
+        
+        public override void OnGameStopped(OnGameStoppedEventArgs args)
+        {
+            _steamEnvironmentHandler.OnGameStopped();
+            _gameCoordinator.Stop(args.Game);
+        }
+
         private bool GetShouldStartService(Game game)
         {
             if (!_sidebarItemSwitcherViewModel.AllowSkUse)
@@ -199,12 +214,6 @@ namespace SpecialKHelper
 
             _logger.Info($"Special K services will start for game '{game.Name}'.");
             return true;
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            _steamEnvironmentHandler.OnGameStopped();
-            _gameCoordinator.Stop(args.Game);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

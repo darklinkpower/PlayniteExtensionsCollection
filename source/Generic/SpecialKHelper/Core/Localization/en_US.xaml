@@ -92,4 +92,8 @@ If this set as disabled, the services won't be started no matter the settings or
     <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Open Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Stop Special K services:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">After successful game injection</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
 </ResourceDictionary>
