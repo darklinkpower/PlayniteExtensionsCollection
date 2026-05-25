@@ -93,4 +93,8 @@ Si este ajuste está deshabilitado, los servicios no se iniciarán sin importar 
     <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Iniciar servicio de 64 bits</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Detener el servicio de 64 bits</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Abrir Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSpecialKServiceStopMode">Stop Special K services:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnInjection">After successful game injection</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeOnGameStop">When the game closes</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SpecialKServiceStopModeNever">Never automatically stop</sys:String>
 </ResourceDictionary>
