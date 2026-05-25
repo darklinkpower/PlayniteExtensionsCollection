@@ -4,6 +4,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
+using SpecialKHelper.Core.Application;
 using SpecialKHelper.Core.Domain;
 using SpecialKHelper.EasyAnticheat.Application;
 using SpecialKHelper.EasyAnticheat.Persistence;
@@ -40,6 +41,8 @@ namespace SpecialKHelper
 
         private readonly EasyAnticheatService _easyAnticheatHelper;
         private readonly SteamHelper _steamHelper;
+        private readonly SteamEnvironmentHandler _steamEnvironmentHandler;
+        private readonly SpecialKGameSessionCoordinator _gameCoordinator;
 
         private SpecialKHelperSettingsViewModel settings { get; set; }
 
@@ -55,10 +58,32 @@ namespace SpecialKHelper
             };
 
             _pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            _specialKProfilesEditor = new SpecialKProfilesEditor(_specialKServiceManager, PlayniteApi);
-            _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath, _specialKServiceManager, _specialKProfilesEditor);
-            _easyAnticheatHelper = new EasyAnticheatService(new EasyAnticheatCache(GetPluginUserDataPath()));
-            _steamHelper = new SteamHelper(GetPluginUserDataPath(), PlayniteApi);
+            _specialKProfilesEditor = new SpecialKProfilesEditor(
+                _specialKServiceManager,
+                PlayniteApi);
+
+            _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(
+                true,
+                _pluginInstallPath,
+                _specialKServiceManager,
+                _specialKProfilesEditor);
+
+            _easyAnticheatHelper = new EasyAnticheatService(
+                new EasyAnticheatCache(GetPluginUserDataPath()));
+
+            var steamHelper = new SteamHelper(
+                GetPluginUserDataPath(),
+                PlayniteApi);
+
+            _steamEnvironmentHandler = new SteamEnvironmentHandler(
+                settings,
+                steamHelper);
+
+            _gameCoordinator = new SpecialKGameSessionCoordinator(
+                _specialKServiceManager,
+                _logger,
+                PlayniteApi,
+                () => this.OpenSettingsView());
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -80,91 +105,54 @@ namespace SpecialKHelper
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
-            var startServices = GetShouldStartService(game);
-            if (_steamHelper.IsEnvinronmentVariableSet())
-            {
-                if (settings.Settings.SteamOverlayForBpm != SteamOverlay.BigPictureMode
-                    || Steam.IsGameSteamGame(game)
-                    || !SteamClient.GetIsSteamBpmRunning())
-                {
-                    _steamHelper.RemoveBigPictureModeEnvVariable();
-                }
-            }
-            else if (settings.Settings.SteamOverlayForBpm == SteamOverlay.BigPictureMode && SteamClient.GetIsSteamBpmRunning())
-            {
-                _steamHelper.SetBigPictureModeEnvVariable();
-            }
 
-            if (!startServices)
+            _steamEnvironmentHandler.OnGameStarting(game);
+            if (!GetShouldStartService(game))
             {
-                StopAllSpecialKServices();
                 return;
             }
 
-            var service32Started = false;
-            var service64Started = false;
             try
             {
-                if (_specialKServiceManager.Service32BitsStatus != SpecialKServiceStatus.Running)
+                var session = _gameCoordinator.Start(game);
+                if (session is null)
                 {
-                    service32Started = _specialKServiceManager.Start32BitsService();
+                    _logger.Info(
+                        "Skipped configuration validation because services were not started.");
+                    return;
                 }
 
-                if (_specialKServiceManager.Service64BitsStatus != SpecialKServiceStatus.Running)
+                if (!session.Started32BitService &&
+                    !session.Started64BitService)
                 {
-                    service64Started = _specialKServiceManager.Start64BitsService();
+                    _logger.Info(
+                        "Skipped configuration validation because services already existed.");
+
+                    return;
                 }
-            }
-            catch (SpecialKFileNotFoundException e)
-            {
-                LogSkFileNotFound(e);
-                return;
-            }
-            catch (SpecialKPathNotFoundException e)
-            {
-                LogSkPathNotFound(e);
-                return;
+
+                var skifPath = _specialKServiceManager.GetInstallDirectory();
+
+                SpecialKConfigurationManager.ValidateDefaultProfile(
+                    game,
+                    skifPath,
+                    settings,
+                    GetPluginUserDataPath(),
+                    PlayniteApi);
+
+                if (settings.Settings.EnableReshadeOnNewProfiles)
+                {
+                    SpecialKConfigurationManager.ValidateReshadeConfiguration(
+                        game,
+                        skifPath);
+                }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error while starting services OnGameStarting");
-                return;
+                _logger.Error(
+                    ex,
+                    "Error on game starting.");
             }
-
-            if (!service32Started && !service64Started)
-            {
-                _logger.Info("Skipped Special K configuration validation because no services were started.");
-                return;
-            }
-
-            var skifPath = _specialKServiceManager.GetInstallDirectory();
-            SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
-            if (settings.Settings.EnableReshadeOnNewProfiles)
-            {
-                SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
-            }
-        }
-
-        private void LogSkFileNotFound(SpecialKFileNotFoundException e)
-        {
-            _logger.Error(e, $"Special K file not found");
-            PlayniteApi.Notifications.Add(new NotificationMessage(
-                Guid.NewGuid().ToString(),
-                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), e.Message),
-                NotificationType.Error,
-                () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
-            ));
-        }
-
-        private void LogSkPathNotFound(SpecialKPathNotFoundException e)
-        {
-            _logger.Error(e, "Special K Path registry key not found");
-            PlayniteApi.Notifications.Add(new NotificationMessage(
-                "sk_registryNotFound",
-                ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
-                NotificationType.Error,
-                () => OpenSettingsView()
-            ));
         }
 
         private bool GetShouldStartService(Game game)
@@ -215,40 +203,8 @@ namespace SpecialKHelper
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            if (_steamHelper.IsEnvinronmentVariableSet())
-            {
-                _steamHelper.RemoveBigPictureModeEnvVariable();
-            }
-
-            StopAllSpecialKServices();
-        }
-
-        private void StopAllSpecialKServices()
-        {
-            try
-            {
-                if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
-                {
-                    _specialKServiceManager.Stop32BitsService();
-                }
-
-                if (_specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running)
-                {
-                    _specialKServiceManager.Stop64BitsService();
-                }
-            }
-            catch (SpecialKFileNotFoundException e)
-            {
-                LogSkFileNotFound(e);
-            }
-            catch (SpecialKPathNotFoundException e)
-            {
-                LogSkPathNotFound(e);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error on StopAllSpecialKServices");
-            }
+            _steamEnvironmentHandler.OnGameStopped();
+            _gameCoordinator.Stop(args.Game);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
