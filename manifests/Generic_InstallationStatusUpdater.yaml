@@ -347,3 +347,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.05.21_e292c6e5/Installation_Status_Updater_2_53.pext
     Changelog:
     - 'Fixed: Installation Status not being correctly detected when {EmulatorDir} variable was used in game installation directory'
+  - Version: 2.54
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-05-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.05.25_b59b53a1/Installation_Status_Updater_2_54.pext
+    Changelog:
+    - 'Fixed: Only using the first Play Action of type File when detecting installation statuses'
