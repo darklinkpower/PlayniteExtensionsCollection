@@ -102,6 +102,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
                     e,
                     "Failed update check.");
             }
+            finally
             {
                 Interlocked.Exchange(
                     ref _checking,
@@ -157,7 +158,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
                         NotificationType.Info,
                         () =>
                         {
-                            OnUpdateAccepted(result);
+                            _ = OnUpdateAccepted(result);
                         }));
             }
             catch (Exception e)
@@ -168,7 +169,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
             }
         }
 
-        private Task OnUpdateAccepted(UpdateCheckResult update)
+        private async Task OnUpdateAccepted(UpdateCheckResult update)
         {
             var dialogResult = _playniteApi.Dialogs.ShowMessage(
                 $"A new Special K version is available.\n\n" +
@@ -186,7 +187,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
 
             if (dialogResult != MessageBoxResult.Yes)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             var downloadPath = Path.Combine(
@@ -213,14 +214,14 @@ namespace SpecialKHelper.SpecialKUpdater.Application
 
             if (downloadResult.IsCancelled)
             {
-                return Task.CompletedTask;
+                return;
             }
 
             if (!downloadResult.IsSuccess)
             {
                 if (downloadResult.IsCancelled)
                 {
-                    return Task.CompletedTask;
+                    return;
                 }
                 
                 if (downloadResult.Error != null)
@@ -237,7 +238,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
 
-                return Task.CompletedTask;
+                return;
             }
 
             try
@@ -252,7 +253,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
                         "Download Failed",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
-                    return Task.CompletedTask;
+                    return;
                 }
 
                 var anyServiceRunning = 
@@ -264,7 +265,11 @@ namespace SpecialKHelper.SpecialKUpdater.Application
                     _specialKServiceManager.StopAllServices();
                 }
 
-                ProcessStarter.StartProcess(downloadResult.DownloadPath);
+                var process = ProcessStarter.StartProcess(downloadResult.DownloadPath);
+                if (process != null)
+                {
+                    await Task.Run(() => process.WaitForExit());
+                }
             }
             catch (Exception e)
             {
@@ -278,7 +283,7 @@ namespace SpecialKHelper.SpecialKUpdater.Application
                 _playniteApi.Notifications.Remove(UpdateNotificationId);
             }
 
-            return Task.CompletedTask;
+            return;
         }
 
         public void Dispose()
