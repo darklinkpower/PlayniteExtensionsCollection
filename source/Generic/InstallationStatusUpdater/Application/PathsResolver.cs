@@ -172,10 +172,11 @@ namespace InstallationStatusUpdater.Application
                         break;
 
                     case GameActionType.File:
-                        var isActionPathInstalled = DetectIsFileActionInstalled(game, gameAction, resolvedInstallationDirectory);
+                        var isActionPathInstalled = DetectIsFileActionInstalled(
+                            game, gameAction, resolvedInstallationDirectory);
                         if (!isActionPathInstalled)
                         {
-                            return false;
+                            break;
                         }
 
                         if (!_settings.Settings.DetectFilesFromLaunchArguments ||  gameAction.Arguments.IsNullOrWhiteSpace())
@@ -220,7 +221,10 @@ namespace InstallationStatusUpdater.Application
             return true;
         }
 
-        private bool DetectIsFileActionInstalled(Game game, GameAction gameAction, string resolvedInstallationDirectory)
+        private bool DetectIsFileActionInstalled(
+            Game game,
+            GameAction gameAction,
+            string resolvedInstallationDirectory)
         {
             if (gameAction.Path.IsNullOrEmpty())
             {
