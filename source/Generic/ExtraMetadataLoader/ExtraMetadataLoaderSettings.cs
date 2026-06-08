@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using ExtraMetadataLoader.MetadataProviders;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ExtraMetadataLoader
 {
+    public enum EmuMoviesVideoQuality
+    {
+        HD,
+        HQ,
+        SQ
+    }
+
+    public enum AutomaticVideoDownloadSource
+    {
+        Steam,
+        EmuMovies,
+        SteamThenEmuMovies
+    }
+
     public class ExtraMetadataLoaderSettings : ObservableObject
     {
         [DontSerialize]
@@ -569,6 +585,42 @@ namespace ExtraMetadataLoader
         }
 
         [DontSerialize]
+        private EmuMoviesVideoQuality emuMoviesVideoQuality { get; set; } = EmuMoviesVideoQuality.HQ;
+        public EmuMoviesVideoQuality EmuMoviesVideoQuality
+        {
+            get => emuMoviesVideoQuality;
+            set
+            {
+                emuMoviesVideoQuality = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool emuMoviesPreferBestAvailableVideoQuality { get; set; } = true;
+        public bool EmuMoviesPreferBestAvailableVideoQuality
+        {
+            get => emuMoviesPreferBestAvailableVideoQuality;
+            set
+            {
+                emuMoviesPreferBestAvailableVideoQuality = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private AutomaticVideoDownloadSource automaticVideoDownloadSource { get; set; } = AutomaticVideoDownloadSource.Steam;
+        public AutomaticVideoDownloadSource AutomaticVideoDownloadSource
+        {
+            get => automaticVideoDownloadSource;
+            set
+            {
+                automaticVideoDownloadSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
         private bool steamDlOnlyProcessPcGames = true;
         public bool SteamDlOnlyProcessPcGames
         {
@@ -750,6 +802,7 @@ namespace ExtraMetadataLoader
     {
         private readonly ExtraMetadataLoader plugin;
         private readonly IPlayniteAPI playniteApi;
+        private readonly EmuMoviesCredentialsStore emuMoviesCredentialsStore;
 
         private ExtraMetadataLoaderSettings editingClone { get; set; }
 
@@ -764,11 +817,34 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private string emuMoviesUsername = string.Empty;
+        public string EmuMoviesUsername
+        {
+            get => emuMoviesUsername;
+            set
+            {
+                emuMoviesUsername = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string emuMoviesCredentialStatus = string.Empty;
+        public string EmuMoviesCredentialStatus
+        {
+            get => emuMoviesCredentialStatus;
+            set
+            {
+                emuMoviesCredentialStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ExtraMetadataLoaderSettingsViewModel(ExtraMetadataLoader plugin, IPlayniteAPI playniteApi)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
             this.playniteApi = playniteApi;
+            emuMoviesCredentialsStore = new EmuMoviesCredentialsStore(plugin.GetPluginUserDataPath(), LogManager.GetLogger());
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<ExtraMetadataLoaderSettings>();
 
@@ -781,12 +857,15 @@ namespace ExtraMetadataLoader
             {
                 Settings = new ExtraMetadataLoaderSettings();
             }
+
+            LoadEmuMoviesCredentials();
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
+            LoadEmuMoviesCredentials();
         }
 
         public void CancelEdit()
@@ -794,6 +873,7 @@ namespace ExtraMetadataLoader
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
             Settings = editingClone;
+            LoadEmuMoviesCredentials();
         }
 
         public void EndEdit()
@@ -866,6 +946,91 @@ namespace ExtraMetadataLoader
             {
                 LoginToYoutube();
             });
+        }
+
+        public RelayCommand<object> SaveEmuMoviesCredentialsCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var credentials = GetEmuMoviesCredentialsFromInput(a, true);
+                if (credentials?.IsConfigured != true)
+                {
+                    UpdateEmuMoviesCredentialStatus(ResourceProvider.GetString("LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsNotConfiguredLabel"));
+                    return;
+                }
+
+                UpdateEmuMoviesCredentialStatus(ResourceProvider.GetString(emuMoviesCredentialsStore.Save(credentials)
+                    ? "LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsSavedMessage"
+                    : "LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsNotConfiguredLabel"));
+            });
+        }
+
+        public RelayCommand<object> TestEmuMoviesCredentialsCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var credentials = GetEmuMoviesCredentialsFromInput(a, true);
+                if (credentials?.IsConfigured != true)
+                {
+                    UpdateEmuMoviesCredentialStatus(ResourceProvider.GetString("LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsNotConfiguredLabel"));
+                    return;
+                }
+
+                var client = new EmuMoviesFtpClient(credentials.Username, credentials.Password, Settings.EmuMoviesVideoQuality, LogManager.GetLogger());
+                var success = client.TestConnection();
+                UpdateEmuMoviesCredentialStatus(ResourceProvider.GetString(success
+                    ? "LOCExtra_Metadata_Loader_SettingsEmuMoviesConnectionSuccessMessage"
+                    : "LOCExtra_Metadata_Loader_SettingsEmuMoviesConnectionFailureMessage"));
+            });
+        }
+
+        public RelayCommand<object> ClearEmuMoviesCredentialsCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                emuMoviesCredentialsStore.Clear();
+                EmuMoviesUsername = string.Empty;
+                if (a is PasswordBox passwordBox)
+                {
+                    passwordBox.Password = string.Empty;
+                }
+
+                UpdateEmuMoviesCredentialStatus(ResourceProvider.GetString("LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsClearedMessage"));
+            });
+        }
+
+        private EmuMoviesCredentials GetEmuMoviesCredentialsFromInput(object parameter, bool allowStoredPassword)
+        {
+            var password = (parameter as PasswordBox)?.Password;
+            if (password.IsNullOrWhiteSpace() && allowStoredPassword)
+            {
+                var storedCredentials = emuMoviesCredentialsStore.Load();
+                if (storedCredentials != null &&
+                    storedCredentials.Username.Equals(EmuMoviesUsername, StringComparison.OrdinalIgnoreCase))
+                {
+                    password = storedCredentials.Password;
+                }
+            }
+
+            return new EmuMoviesCredentials
+            {
+                Username = EmuMoviesUsername?.Trim(),
+                Password = password
+            };
+        }
+
+        private void LoadEmuMoviesCredentials()
+        {
+            var credentials = emuMoviesCredentialsStore.Load();
+            EmuMoviesUsername = credentials?.Username ?? string.Empty;
+            UpdateEmuMoviesCredentialStatus(ResourceProvider.GetString(credentials?.IsConfigured == true
+                ? "LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsConfiguredLabel"
+                : "LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsNotConfiguredLabel"));
+        }
+
+        private void UpdateEmuMoviesCredentialStatus(string status)
+        {
+            EmuMoviesCredentialStatus = status;
         }
 
         public void LoginToYoutube()

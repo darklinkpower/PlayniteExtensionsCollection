@@ -253,6 +253,13 @@
     <Compile Include="LogoProviders\GoogleProvider.cs" />
     <Compile Include="LogoProviders\SteamGridDBProvider.cs" />
     <Compile Include="LogoProviders\SteamProvider.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesCredentials.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesCredentialsStore.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesFtpClient.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesPlatformMapper.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesVideoFile.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesVideoMatch.cs" />
+    <Compile Include="MetadataProviders\EmuMovies\EmuMoviesVideoService.cs" />
     <Compile Include="Models\FfprobeVideoInfoOutput.cs" />
     <Compile Include="Models\GoogleImage.cs" />
     <Compile Include="Models\LogoControlThemeSettings.cs" />

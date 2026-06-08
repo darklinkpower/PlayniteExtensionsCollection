@@ -1,5 +1,6 @@
 ﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Models;
+using ExtraMetadataLoader.MetadataProviders;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -24,14 +25,20 @@ namespace ExtraMetadataLoader.Services
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly ExtraMetadataLoaderSettings settings;
         private readonly ExtraMetadataHelper extraMetadataHelper;
+        private readonly EmuMoviesVideoService emuMoviesVideoService;
         private const string steamMicrotrailerUrlTemplate = @"https://steamcdn-a.akamaihd.net/steam/apps/{0}/microtrailer.mp4";
         private readonly string tempDownloadPath = Path.Combine(Path.GetTempPath(), "VideoTemp.mp4");
 
-        public VideosDownloader(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings, ExtraMetadataHelper extraMetadataHelper)
+        public VideosDownloader(
+            IPlayniteAPI playniteApi,
+            ExtraMetadataLoaderSettings settings,
+            ExtraMetadataHelper extraMetadataHelper,
+            EmuMoviesCredentialsStore emuMoviesCredentialsStore)
         {
             this.playniteApi = playniteApi;
             this.settings = settings;
             this.extraMetadataHelper = extraMetadataHelper;
+            emuMoviesVideoService = new EmuMoviesVideoService(playniteApi, settings, emuMoviesCredentialsStore, logger);
         }
 
         public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, bool downloadVideo = false, bool downloadVideoMicro = false)
@@ -145,6 +152,24 @@ namespace ExtraMetadataLoader.Services
             }
 
             return true;
+        }
+
+        public bool DownloadEmuMoviesVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, bool selectAutomatically = false)
+        {
+            logger.Debug($"DownloadEmuMoviesVideo starting for game {game.Name}");
+            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            if (FileSystem.FileExists(videoPath) && !overwrite)
+            {
+                return true;
+            }
+
+            var videoSourcePath = emuMoviesVideoService.DownloadVideoToTempFile(game, isBackgroundDownload, selectAutomatically, cancelToken);
+            if (videoSourcePath.IsNullOrWhiteSpace() || !FileSystem.FileExists(videoSourcePath))
+            {
+                return false;
+            }
+
+            return ProcessVideo(videoSourcePath, videoPath, false, true);
         }
 
         private bool ProcessVideo(string videoPath, string destinationPath, bool copyOnly, bool deleteSource, string args = null)
