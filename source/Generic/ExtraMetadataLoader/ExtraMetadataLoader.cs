@@ -151,10 +151,14 @@ namespace ExtraMetadataLoader
             services.AddTransient<LogoProcessor>();
             services.AddTransient<VideoProcessor>();
             services.AddTransient(provider => provider.GetService<ExtraMetadataLoaderSettingsViewModel>().Settings);
+            services.AddSingleton(new EmuMoviesCredentialsStore(GetPluginUserDataPath(), _logger));
 
             services.AddTransient<SteamMetadataProvider>();
+            services.AddTransient<EmuMoviesVideoService>();
+            services.AddTransient<EmuMoviesVideoProvider>();
             services.AddTransient<ILogoProvider>(provider => provider.GetService<SteamMetadataProvider>());
             services.AddTransient<IVideoProvider>(provider => provider.GetService<SteamMetadataProvider>());
+            services.AddTransient<IVideoProvider>(provider => provider.GetService<EmuMoviesVideoProvider>());
 
             services.AddTransient<ILogoProvider, SteamMetadataProvider>();
             services.AddTransient<ILogoProvider, SteamGridDBProvider>();
@@ -509,6 +513,46 @@ namespace ExtraMetadataLoader
                 },
                 new GameMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadEmuMoviesVideosSelectedGames"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtDownloadIcon",
+                    Action = _ =>
+                    {
+                        if (!ValidateExecutablesSettings(true, false))
+                        {
+                            return;
+                        }
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
+                        var selectAutomatically = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectVideosAutomatically"));
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosEmuMovies");
+                        var metadataDownloadService = _serviceProvider.GetRequiredService<MetadataDownloadService>();
+                        var videoProvider = metadataDownloadService.GetVideoProviderById(EmuMoviesVideoService.ProviderId);
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
+                        progressOptions.IsIndeterminate = false;
+                        ClearVideoSources();
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            var games = args.Games.Distinct();
+                            a.ProgressMaxValue = games.Count() + 1;
+                            foreach (var game in games)
+                            {
+                                if (a.CancelToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
+
+                                a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
+                                metadataDownloadService.DownloadVideoAsync(videoProvider, game, false, overwrite, a.CancelToken, selectAutomatically).GetAwaiter().GetResult();
+                            };
+                        }, progressOptions);
+                        UpdatePlayersData();
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
                     Icon = "emtYoutubeIcon",
@@ -749,6 +793,18 @@ namespace ExtraMetadataLoader
             return gameMenuItems;
         }
 
+        private bool GetGameLogo(ILogoProvider logoProvider, Game game, bool isBackgroundDownload, bool overwrite, CancellationToken cancelToken = default)
+        {
+            var metadataDownloadService = _serviceProvider.GetRequiredService<MetadataDownloadService>();
+            return metadataDownloadService.DownloadLogoAsync(logoProvider, game, isBackgroundDownload, overwrite, cancelToken).GetAwaiter().GetResult();
+        }
+
+        private void ProcessLogoImage(string logoPath)
+        {
+            var logoProcessor = _serviceProvider.GetRequiredService<LogoProcessor>();
+            logoProcessor.ProcessLogoImage(logoPath);
+        }
+
         private string GetPlatformName(Game game, bool appendSpace = false)
         {
             if (!game.Platforms.HasItems())
@@ -901,7 +957,14 @@ namespace ExtraMetadataLoader
                 var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos");
                 var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
-                var downloadOptions = new VideoDownloadOptions(VideoType.Trailer,);
+                var emuMoviesVideoProvider = metadataDownloadService.GetVideoProviderById(EmuMoviesVideoService.ProviderId);
+                var automaticVideoDownloadSource = settings.Settings.AutomaticVideoDownloadSource;
+                var downloadSteamVideo = settings.Settings.DownloadVideosOnLibUpdate &&
+                                         (automaticVideoDownloadSource == AutomaticVideoDownloadSource.Steam ||
+                                          automaticVideoDownloadSource == AutomaticVideoDownloadSource.SteamThenEmuMovies);
+                var downloadEmuMoviesVideo = settings.Settings.DownloadVideosOnLibUpdate &&
+                                             (automaticVideoDownloadSource == AutomaticVideoDownloadSource.EmuMovies ||
+                                              automaticVideoDownloadSource == AutomaticVideoDownloadSource.SteamThenEmuMovies);
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var games = PlayniteApi.Database.Games.Where(x => x.Added.HasValue && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
@@ -915,7 +978,15 @@ namespace ExtraMetadataLoader
 
                         a.CurrentProgressValue++;
                         a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
-                        videosDownloader.DownloadSteamVideo(game, false, true, a.CancelToken, settings.Settings.DownloadVideosOnLibUpdate, settings.Settings.DownloadVideosMicroOnLibUpdate);
+                        if (downloadSteamVideo || settings.Settings.DownloadVideosMicroOnLibUpdate)
+                        {
+                            videosDownloader.DownloadSteamVideo(game, false, true, a.CancelToken, downloadSteamVideo, settings.Settings.DownloadVideosMicroOnLibUpdate);
+                        }
+
+                        if (downloadEmuMoviesVideo && !FileSystem.FileExists(ExtraMetadataHelper.GetGameVideoPath(game)))
+                        {
+                            metadataDownloadService.DownloadVideoAsync(emuMoviesVideoProvider, game, true, false, a.CancelToken).GetAwaiter().GetResult();
+                        }
                     };
                 }, progressOptions);
             }
