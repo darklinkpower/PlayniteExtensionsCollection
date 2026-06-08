@@ -1,6 +1,7 @@
 ﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Interfaces;
 using ExtraMetadataLoader.LogoProviders;
+using ExtraMetadataLoader.MetadataProviders;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
@@ -94,7 +95,8 @@ namespace ExtraMetadataLoader
             });
 
             extraMetadataHelper = new ExtraMetadataHelper(PlayniteApi);
-            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
+            var emuMoviesCredentialsStore = new EmuMoviesCredentialsStore(GetPluginUserDataPath(), logger);
+            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper, emuMoviesCredentialsStore);
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
                 foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
@@ -490,6 +492,44 @@ namespace ExtraMetadataLoader
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                                 videosDownloader.DownloadSteamVideo(game, overwrite, false, a.CancelToken, true, false);
+                            };
+                        }, progressOptions);
+                        UpdatePlayersData();
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadEmuMoviesVideosSelectedGames"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtDownloadIcon",
+                    Action = _ =>
+                    {
+                        if (!ValidateExecutablesSettings(true, false))
+                        {
+                            return;
+                        }
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
+                        var selectAutomatically = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectVideosAutomatically"));
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosEmuMovies");
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
+                        progressOptions.IsIndeterminate = false;
+                        ClearVideoSources();
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            var games = args.Games.Distinct();
+                            a.ProgressMaxValue = games.Count() + 1;
+                            foreach (var game in games)
+                            {
+                                if (a.CancelToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
+
+                                a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
+                                videosDownloader.DownloadEmuMoviesVideo(game, overwrite, false, a.CancelToken, selectAutomatically);
                             };
                         }, progressOptions);
                         UpdatePlayersData();
@@ -987,6 +1027,13 @@ namespace ExtraMetadataLoader
                 var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos");
                 var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
+                var automaticVideoDownloadSource = settings.Settings.AutomaticVideoDownloadSource;
+                var downloadSteamVideo = settings.Settings.DownloadVideosOnLibUpdate &&
+                                         (automaticVideoDownloadSource == AutomaticVideoDownloadSource.Steam ||
+                                          automaticVideoDownloadSource == AutomaticVideoDownloadSource.SteamThenEmuMovies);
+                var downloadEmuMoviesVideo = settings.Settings.DownloadVideosOnLibUpdate &&
+                                             (automaticVideoDownloadSource == AutomaticVideoDownloadSource.EmuMovies ||
+                                              automaticVideoDownloadSource == AutomaticVideoDownloadSource.SteamThenEmuMovies);
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var games = PlayniteApi.Database.Games.Where(x => x.Added.HasValue && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
@@ -1000,7 +1047,15 @@ namespace ExtraMetadataLoader
 
                         a.CurrentProgressValue++;
                         a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
-                        videosDownloader.DownloadSteamVideo(game, false, true, a.CancelToken, settings.Settings.DownloadVideosOnLibUpdate, settings.Settings.DownloadVideosMicroOnLibUpdate);
+                        if (downloadSteamVideo || settings.Settings.DownloadVideosMicroOnLibUpdate)
+                        {
+                            videosDownloader.DownloadSteamVideo(game, false, true, a.CancelToken, downloadSteamVideo, settings.Settings.DownloadVideosMicroOnLibUpdate);
+                        }
+
+                        if (downloadEmuMoviesVideo && !FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
+                        {
+                            videosDownloader.DownloadEmuMoviesVideo(game, false, true, a.CancelToken);
+                        }
                     };
                 }, progressOptions);
             }
