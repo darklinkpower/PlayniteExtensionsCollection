@@ -32,6 +32,7 @@ namespace WebViewCore.Application
         private readonly MethodInfo _disposeMethod;
         private bool _lastIsLoading = false;
         private string _lastAddress = string.Empty;
+        private string _pendingNavigationAddress;
         private int _currentAddressIndex = -1;
         private bool _disposed = false;
         private Func<object, bool> _isLoadingGetter;
@@ -108,6 +109,7 @@ namespace WebViewCore.Application
             }
 
             var isLoading = _isLoadingGetter(args);
+
             if (isLoading == _lastIsLoading)
             {
                 return;
@@ -116,15 +118,32 @@ namespace WebViewCore.Application
             var oldValue = _lastIsLoading;
             _lastIsLoading = isLoading;
 
-            _browserDispatcher.BeginInvoke(
-                new Action(() =>
+            _browserDispatcher.BeginInvoke(new Action(() =>
+            {
+                IsLoadingChanged?.Invoke(
+                    this,
+                    new IsLoadingChangedEventArgs(oldValue, isLoading));
+
+                if (!isLoading)
                 {
-                    IsLoadingChanged?.Invoke(
-                        this,
-                        new IsLoadingChangedEventArgs(
-                            oldValue,
-                            isLoading));
-                }));
+                    CommitPendingNavigation();
+                }
+            }));
+        }
+
+        private void CommitPendingNavigation()
+        {
+            if (string.IsNullOrWhiteSpace(_pendingNavigationAddress))
+            {
+                return;
+            }
+
+            if (!IsNavigatingInHistory(_pendingNavigationAddress))
+            {
+                AddToHistory(_pendingNavigationAddress);
+            }
+
+            _pendingNavigationAddress = null;
         }
 
         private Delegate CreateReflectedEventHandler(
@@ -230,38 +249,32 @@ namespace WebViewCore.Application
 
         private void ProcessAddressChange(string currentAddress)
         {
-            if (currentAddress == _lastAddress)
+            if (string.IsNullOrWhiteSpace(currentAddress) ||
+                currentAddress == _lastAddress)
             {
                 return;
             }
 
             if (currentAddress == _blankHtmlBase64Address)
             {
-                var oldAddress = _lastAddress;
+                var old = _lastAddress;
                 _lastAddress = currentAddress;
 
                 AddressChanged?.Invoke(
                     this,
-                    new AddressChangedEventArgs(
-                        oldAddress,
-                        string.Empty));
+                    new AddressChangedEventArgs(old, string.Empty));
 
                 return;
             }
 
-            var previousAddress = _lastAddress;
+            var oldAddress = _lastAddress;
             _lastAddress = currentAddress;
 
-            if (!IsLoading && !IsNavigatingInHistory(currentAddress))
-            {
-                AddToHistory(currentAddress);
-            }
+            _pendingNavigationAddress = currentAddress;
 
             AddressChanged?.Invoke(
                 this,
-                new AddressChangedEventArgs(
-                    previousAddress,
-                    currentAddress));
+                new AddressChangedEventArgs(oldAddress, currentAddress));
         }
 
         public Control GetWebViewControl() => _browserInstance as Control;
