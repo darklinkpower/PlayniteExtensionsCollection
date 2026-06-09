@@ -5,9 +5,6 @@ using SplashScreen.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SplashScreen
@@ -48,20 +45,20 @@ namespace SplashScreen
 
     public class SplashScreenSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly SplashScreen plugin;
-        private readonly string pluginUserDataPath;
-        private readonly IPlayniteAPI playniteApi;
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly SplashScreen _plugin;
+        private readonly string _pluginUserDataPath;
+        private readonly IPlayniteAPI _playniteApi;
+        private static readonly ILogger _logger = LogManager.GetLogger();
 
         private SplashScreenSettings editingClone { get; set; }
 
-        private SplashScreenSettings settings;
+        private SplashScreenSettings _settings;
         public SplashScreenSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
@@ -69,10 +66,10 @@ namespace SplashScreen
         public SplashScreenSettingsViewModel(SplashScreen plugin, IPlayniteAPI playniteApi, string pluginUserDataPath)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
+            this._plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<SplashScreenSettings>();
+            var savedSettings = _plugin.LoadPluginSettings<SplashScreenSettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
@@ -84,8 +81,8 @@ namespace SplashScreen
                 Settings = new SplashScreenSettings();
             }
 
-            this.pluginUserDataPath = pluginUserDataPath;
-            this.playniteApi = playniteApi;
+            this._pluginUserDataPath = pluginUserDataPath;
+            this._playniteApi = playniteApi;
             SetGlobalSplashImagePath();
         }
 
@@ -97,7 +94,7 @@ namespace SplashScreen
                 return;
             }
 
-            var globalSplashImagePath = Path.Combine(pluginUserDataPath, "CustomBackgrounds", Settings.GeneralSplashSettings.CustomBackgroundImage);
+            var globalSplashImagePath = Path.Combine(_pluginUserDataPath, "CustomBackgrounds", Settings.GeneralSplashSettings.CustomBackgroundImage);
             if (FileSystem.FileExists(globalSplashImagePath))
             {
                 Settings.GlobalSplashImagePath = globalSplashImagePath;
@@ -125,7 +122,7 @@ namespace SplashScreen
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            _plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -141,11 +138,11 @@ namespace SplashScreen
         {
             get => new RelayCommand(() =>
             {
-                var filePath = playniteApi.Dialogs.SelectImagefile();
+                var filePath = _playniteApi.Dialogs.SelectImagefile();
                 if (!filePath.IsNullOrEmpty() && RemoveGlobalImage())
                 {
                     var fileName = Guid.NewGuid() + Path.GetExtension(filePath);
-                    var globalSplashImagePath = Path.Combine(pluginUserDataPath, "CustomBackgrounds", fileName);
+                    var globalSplashImagePath = Path.Combine(_pluginUserDataPath, "CustomBackgrounds", fileName);
                     try
                     {
                         FileSystem.CopyFile(filePath, globalSplashImagePath);
@@ -154,7 +151,7 @@ namespace SplashScreen
                     }
                     catch (Exception e)
                     {
-                        logger.Error(e, $"Error copying global splash image from {filePath} to {globalSplashImagePath}");
+                        _logger.Error(e, $"Error copying global splash image from {filePath} to {globalSplashImagePath}");
                     }
                 }
             });
@@ -175,7 +172,7 @@ namespace SplashScreen
                 return true;
             }
 
-            var globalSplashImagePath = Path.Combine(pluginUserDataPath, "CustomBackgrounds", Settings.GeneralSplashSettings.CustomBackgroundImage);
+            var globalSplashImagePath = Path.Combine(_pluginUserDataPath, "CustomBackgrounds", Settings.GeneralSplashSettings.CustomBackgroundImage);
             FileSystem.DeleteFileSafe(globalSplashImagePath);
 
             Settings.GeneralSplashSettings.CustomBackgroundImage = null;
