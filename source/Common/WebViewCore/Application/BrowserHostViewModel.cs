@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using WebViewCore.Domain.Entities;
 using WebViewCore.Domain.Events;
@@ -35,13 +36,18 @@ namespace WebViewCore.Application
         public RelayCommand ReloadCommand { get; }
         public RelayCommand ClearHistoryCommand { get; }
         public RelayCommand OpenSettingsCommand { get; }
+        public RelayCommand CloseBrowserCommand { get; }
+        public Visibility OpenSettingsButtonVisibility { get; }
+        public Visibility CloseBrowserButtonVisibility { get; }
+
         public ObservableCollection<Bookmark> Bookmarks => _bookmarksManager.Bookmarks.ToObservable();
 
         public BrowserHostViewModel(
             CefSharpWebBrowserHost cefSharpWebBrowserHost,
             BookmarksManager bookmarksManager,
             WebBrowserUserInterfaceSettings uiSettings,
-            Action openSettingsAction = null)
+            Action openSettingsAction = null,
+            Action closeBrowserAction = null)
         {
             _cefSharpWebBrowserHost = cefSharpWebBrowserHost;
             _bookmarksManager = bookmarksManager;
@@ -57,6 +63,16 @@ namespace WebViewCore.Application
             OpenSettingsCommand = openSettingsAction != null
                 ? new RelayCommand(openSettingsAction)
                 : new RelayCommand(() => {}, () => false);
+            CloseBrowserCommand = closeBrowserAction != null
+                ? new RelayCommand(closeBrowserAction)
+                : new RelayCommand(() => { }, () => false);
+
+            OpenSettingsButtonVisibility = openSettingsAction != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+            CloseBrowserButtonVisibility = closeBrowserAction != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
 
             SubscribeToBrowserHostEvents(_cefSharpWebBrowserHost);
             SubscribeToBookmarksManagerEvents(_bookmarksManager);

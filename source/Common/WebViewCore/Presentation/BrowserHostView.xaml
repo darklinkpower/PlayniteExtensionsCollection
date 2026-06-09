@@ -15,14 +15,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Name="Header">
+        <Grid Name="Header" Margin="0,30,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
-            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="5,35,5,5"
+            <Button Margin="5,5,10,5"  Content="&#xEEE1;" FontFamily="{DynamicResource FontIcoFont}"
+                    Visibility="{Binding CloseBrowserButtonVisibility}"
+                    HorizontalAlignment="Right"
+                    Command="{Binding CloseBrowserCommand}" 
+                    Width="40" />
+            <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="5,5,5,5"
                        Visibility="{Binding UserInterfaceSettings.IsNavigationVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Button Content="&#xEA5C;" FontFamily="{DynamicResource FontIcoFont}"
                     DockPanel.Dock="Left"
@@ -34,9 +39,10 @@
                     Width="40" Margin="5" />
 
                 <Button Content="&#xEFE1;" FontFamily="{DynamicResource FontIcoFont}"
-                    DockPanel.Dock="Right"
-                    Command="{Binding OpenSettingsCommand}" 
-                    Width="40" Margin="5" />
+                        Visibility="{Binding OpenSettingsButtonVisibility}"
+                        DockPanel.Dock="Right"
+                        Command="{Binding OpenSettingsCommand}" 
+                        Width="40" Margin="5" />
 
                 <Button Content="&#xEF1F;" FontFamily="{DynamicResource FontIcoFont}"
                     DockPanel.Dock="Right"
@@ -92,7 +98,7 @@
                      KeyDown="AddressBar_KeyDown"
                      Margin="5" />
             </DockPanel>
-            <DockPanel Grid.Row="1" Margin="7,5,10,5"
+            <DockPanel Grid.Row="2" Margin="7,5,10,5"
                        Visibility="{Binding UserInterfaceSettings.IsBookmarksVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <ItemsControl ItemsSource="{Binding Bookmarks}" DockPanel.Dock="Top" Background="Transparent">
                     <ItemsControl.ItemsPanel>
@@ -118,7 +124,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </DockPanel>
-            <Border Height="1" Grid.Row="2" Background="#800c0c0d" />
+            <Border Height="1" Grid.Row="3" Background="#800c0c0d" />
         </Grid>
 
         <Grid x:Name="BrowserGrid" Grid.Row="1" >
