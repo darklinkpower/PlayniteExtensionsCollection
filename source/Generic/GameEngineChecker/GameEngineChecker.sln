@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngineChecker", "GameEngineChecker.csproj", "{CA1D0577-BE3D-422D-808F-262D77A627DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngineChecker.Tests", "..\..\GenericTests\GameEngineChecker.Tests\GameEngineChecker.Tests.csproj", "{AC1FED92-44D4-4527-8DE9-AF4120DB3EF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA1D0577-BE3D-422D-808F-262D77A627DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA1D0577-BE3D-422D-808F-262D77A627DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA1D0577-BE3D-422D-808F-262D77A627DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA1D0577-BE3D-422D-808F-262D77A627DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC1FED92-44D4-4527-8DE9-AF4120DB3EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC1FED92-44D4-4527-8DE9-AF4120DB3EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC1FED92-44D4-4527-8DE9-AF4120DB3EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC1FED92-44D4-4527-8DE9-AF4120DB3EF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {620DAE38-0360-4A4F-A05E-7FE07CD0E592}
+	EndGlobalSection
+EndGlobal

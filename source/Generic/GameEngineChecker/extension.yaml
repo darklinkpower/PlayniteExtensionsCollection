@@ -1,9 +1,9 @@
-Id: Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db
+﻿Id: Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db
 Name: Game Engine Checker
 Author: darklinkpower
-Version: 2.13
-Module: GameEngineChecker.psm1
-Type: Script
+Version: 3.0
+Module: GameEngineChecker.dll
+Type: GenericPlugin
 Icon: icon.jpg
 Links:
     - Name: GitHub
