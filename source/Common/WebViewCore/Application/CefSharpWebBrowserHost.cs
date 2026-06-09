@@ -1,10 +1,16 @@
-﻿using Playnite.SDK;
+﻿using Microsoft.Extensions.Logging;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,9 +24,9 @@ namespace WebViewCore.Application
     public class CefSharpWebBrowserHost : IDisposable
     {
         private readonly List<string> _addressHistory = new List<string>();
-        private readonly DispatcherTimer _checkTimer;
         private readonly string _blankHtmlBase64Address;
         private readonly object _browserInstance;
+        private readonly Dispatcher _browserDispatcher;
         private readonly PropertyInfo _addressProperty;
         private readonly PropertyInfo _isLoadingProperty;
         private readonly MethodInfo _disposeMethod;
@@ -28,6 +34,14 @@ namespace WebViewCore.Application
         private string _lastAddress = string.Empty;
         private int _currentAddressIndex = -1;
         private bool _disposed = false;
+        private Func<object, bool> _isLoadingGetter;
+        private Func<object, string> _addressChangedGetter;
+        private readonly EventInfo _addressEvent;
+        private readonly Delegate _addressHandler;
+        private readonly EventInfo _loadingEvent;
+        private readonly Delegate _loadingHandler;
+        private readonly EventInfo _loadErrorEvent;
+        private readonly Delegate _loadErrorHandler;
 
         public event EventHandler<AddressChangedEventArgs> AddressChanged;
         public event EventHandler<IsLoadingChangedEventArgs> IsLoadingChanged;
@@ -37,50 +51,217 @@ namespace WebViewCore.Application
 
         public CefSharpWebBrowserHost()
         {
-            var cefSharpWpfAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == "CefSharp.Wpf");
-            if (cefSharpWpfAssembly == null)
-            {
-                throw new Exception("CefSharp assembly is not loaded in the current AppDomain.");
-            }
+            var cefSharpWpfAssembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.GetName().Name == "CefSharp.Wpf")
+                    ?? throw new Exception("CefSharp assembly is not loaded in the current AppDomain.");
+            var browserType = cefSharpWpfAssembly.GetType("CefSharp.Wpf.ChromiumWebBrowser")
+                ?? throw new Exception("Unable to find ChromiumWebBrowser type in CefSharp assembly.");
 
-            var browserType = cefSharpWpfAssembly.GetType("CefSharp.Wpf.ChromiumWebBrowser");
-            if (browserType == null)
-            {
-                throw new Exception("Unable to find ChromiumWebBrowser type in CefSharp assembly.");
-            }
+            _addressProperty = browserType.GetProperty("Address", BindingFlags.Public | BindingFlags.Instance)
+                ?? throw new Exception("Unable to find Address property in ChromiumWebBrowser type.");  
 
-            _addressProperty = browserType.GetProperty("Address", BindingFlags.Public | BindingFlags.Instance);
-            if (_addressProperty == null)
-            {
-                throw new Exception("Unable to find Address property in ChromiumWebBrowser type.");
-            }
+            _isLoadingProperty = browserType.GetProperty("IsLoading", BindingFlags.Public | BindingFlags.Instance)
+                ?? throw new Exception("Unable to find IsLoading property in ChromiumWebBrowser type.");    
 
-            _isLoadingProperty = browserType.GetProperty("IsLoading", BindingFlags.Public | BindingFlags.Instance);
-            if (_isLoadingProperty == null)
-            {
-                throw new Exception("Unable to find IsLoading property in ChromiumWebBrowser type.");
-            }
-
-            _disposeMethod = browserType.GetMethod("Dispose", BindingFlags.Public | BindingFlags.Instance);
-            if (_disposeMethod == null)
-            {
-                throw new Exception("Unable to find Dispose method in ChromiumWebBrowser type.");
-            }
-
-            _browserInstance = Activator.CreateInstance(browserType);
-            _checkTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(450)
-            };
+            _disposeMethod = browserType.GetMethod("Dispose", BindingFlags.Public | BindingFlags.Instance)
+                ?? throw new Exception("Unable to find Dispose method in ChromiumWebBrowser type.");
 
             _blankHtmlBase64Address = "data:text/html;base64," + "<html><body/></html>".Base64Encode();
-            _checkTimer.Tick += CheckTimer_Tick;
-            _checkTimer.Start();
+
+            _browserInstance = Activator.CreateInstance(browserType);
+            _browserDispatcher = ((DispatcherObject)_browserInstance).Dispatcher;
+
+            _addressEvent = browserType.GetEvent("AddressChanged");
+            _addressHandler = CreateReflectedEventHandler(
+                _addressEvent,
+                BrowserAddressChanged);
+
+            _addressEvent.AddEventHandler(
+                _browserInstance,
+                _addressHandler);
+
+            _loadingEvent = browserType.GetEvent("LoadingStateChanged");
+            _loadingHandler = CreateReflectedEventHandler(
+                _loadingEvent,
+                BrowserLoadingStateChanged);
+
+            _loadingEvent.AddEventHandler(
+                _browserInstance,
+                _loadingHandler);
+
+            _loadErrorEvent = browserType.GetEvent("LoadError");
+            _loadErrorHandler = CreateReflectedEventHandler(
+                _loadErrorEvent,
+                BrowserLoadError);
+
+            _loadErrorEvent.AddEventHandler(
+                _browserInstance,
+                _loadErrorHandler);
         }
 
-        private void CheckTimer_Tick(object sender, EventArgs e)
+        private void BrowserLoadingStateChanged(object sender, object args)
         {
-            CheckState();
+            if (_isLoadingGetter is null)
+            {
+                var property = args.GetType().GetProperty("IsLoading");
+                _isLoadingGetter = obj => (bool)property.GetValue(obj);
+            }
+
+            var isLoading = _isLoadingGetter(args);
+            if (isLoading == _lastIsLoading)
+            {
+                return;
+            }
+
+            var oldValue = _lastIsLoading;
+            _lastIsLoading = isLoading;
+
+            _browserDispatcher.BeginInvoke(
+                new Action(() =>
+                {
+                    IsLoadingChanged?.Invoke(
+                        this,
+                        new IsLoadingChangedEventArgs(
+                            oldValue,
+                            isLoading));
+                }));
+        }
+
+        private Delegate CreateReflectedEventHandler(
+            EventInfo eventInfo,
+            Action<object, object> callback)
+        {
+            var handlerType = eventInfo.EventHandlerType;
+            var invokeMethod = handlerType.GetMethod("Invoke");
+
+            var parameters = invokeMethod
+                .GetParameters()
+                .Select(p => System.Linq.Expressions.Expression.Parameter(p.ParameterType))
+                .ToArray();
+
+            var callbackTarget = System.Linq.Expressions.Expression.Constant(callback);
+
+            var callbackCall = System.Linq.Expressions.Expression.Call(
+                callbackTarget,
+                callback.GetType().GetMethod(nameof(Action<object, object>.Invoke)),
+                System.Linq.Expressions.Expression.Convert(parameters[0], typeof(object)),
+                System.Linq.Expressions.Expression.Convert(parameters[1], typeof(object)));
+
+            var lambda = System.Linq.Expressions.Expression.Lambda(
+                handlerType,
+                callbackCall,
+                parameters);
+
+            return lambda.Compile();
+        }
+
+        private void BrowserLoadError(
+            object sender,
+            object args)
+        {
+            var argsType = args.GetType();
+
+            var failedUrl =
+                argsType.GetProperty("FailedUrl")
+                    ?.GetValue(args) as string;
+
+            var errorCode =
+                argsType.GetProperty("ErrorCode")
+                    ?.GetValue(args);
+
+            if (string.IsNullOrWhiteSpace(failedUrl))
+            {
+                return;
+            }
+
+            if (!Uri.TryCreate(failedUrl, UriKind.Absolute, out var uri))
+            {
+                return;
+            }
+
+            if (errorCode?.ToString() != "UnknownUrlScheme")
+            {
+                return;
+            }
+
+            try
+            {
+                Process.Start(new ProcessStartInfo(failedUrl)
+                {
+                    UseShellExecute = true
+                });
+
+                if (_currentAddressIndex >= 0 &&
+                    _currentAddressIndex < _addressHistory.Count)
+                {
+                    var previousAddress = _addressHistory[_currentAddressIndex];
+
+                    _browserDispatcher.Invoke(
+                        new Action(() =>
+                        {
+                            _addressProperty.SetValue(
+                                _browserInstance,
+                                _blankHtmlBase64Address);
+                            _addressProperty.SetValue(
+                                _browserInstance,
+                                previousAddress);
+                        }));
+                }
+            }
+            catch (Exception ex)
+            {
+                LogManager.GetLogger().Error(ex, $"Failed to launch URI: {failedUrl}");
+            }
+        }
+
+        private void BrowserAddressChanged(
+            object sender,
+            object args)
+        {
+            if (_addressChangedGetter is null)
+            {
+                var property = args.GetType().GetProperty("NewValue");
+                _addressChangedGetter = obj => (string)property.GetValue(obj);
+            }
+
+            var currentAddress = _addressChangedGetter(args);
+            ProcessAddressChange(currentAddress);
+        }
+
+        private void ProcessAddressChange(string currentAddress)
+        {
+            if (currentAddress == _lastAddress)
+            {
+                return;
+            }
+
+            if (currentAddress == _blankHtmlBase64Address)
+            {
+                var oldAddress = _lastAddress;
+                _lastAddress = currentAddress;
+
+                AddressChanged?.Invoke(
+                    this,
+                    new AddressChangedEventArgs(
+                        oldAddress,
+                        string.Empty));
+
+                return;
+            }
+
+            var previousAddress = _lastAddress;
+            _lastAddress = currentAddress;
+
+            if (!IsLoading && !IsNavigatingInHistory(currentAddress))
+            {
+                AddToHistory(currentAddress);
+            }
+
+            AddressChanged?.Invoke(
+                this,
+                new AddressChangedEventArgs(
+                    previousAddress,
+                    currentAddress));
         }
 
         public Control GetWebViewControl() => _browserInstance as Control;
@@ -92,13 +273,16 @@ namespace WebViewCore.Application
                 return string.Empty;
             }
 
-            var currentValue = _addressProperty.GetValue(_browserInstance) as string;
-            if (currentValue == _blankHtmlBase64Address)
+            return _browserDispatcher.Invoke(() =>
             {
-                return string.Empty;
-            }
+                 var currentValue = _addressProperty.GetValue(_browserInstance) as string;
+                 if (currentValue == _blankHtmlBase64Address)
+                 {
+                     return string.Empty;
+                 }
 
-            return currentValue;
+                 return currentValue;
+             });
         }
 
         private string GetCurrentAddressInternal()
@@ -108,7 +292,8 @@ namespace WebViewCore.Application
                 return string.Empty;
             }
 
-            return _addressProperty.GetValue(_browserInstance) as string;
+            return _browserDispatcher.Invoke(
+                () => _addressProperty.GetValue(_browserInstance) as string);
         }
 
         public void NavigateTo(string url)
@@ -160,33 +345,6 @@ namespace WebViewCore.Application
             _currentAddressIndex = -1;
         }
 
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                if (_browserInstance != null)
-                {
-                    _disposeMethod?.Invoke(_browserInstance, null);
-                }
-
-                _checkTimer.Tick -= CheckTimer_Tick;
-                _checkTimer.Stop();
-                _disposed = true;
-            }
-        }
-
-        private void WebView_LoadingChanged(object sender, WebViewLoadingChangedEventArgs e)
-        {
-            var currentIsLoading = e.IsLoading;
-            if (currentIsLoading != _lastIsLoading)
-            {
-                var oldIsLoading = _lastIsLoading;
-                _lastIsLoading = currentIsLoading;
-
-                IsLoadingChanged?.Invoke(this, new IsLoadingChangedEventArgs(oldIsLoading, currentIsLoading));
-            }
-        }
-
         private Control GetBrowserInstanceFromWebView(IWebView webView, Type browserType)
         {
             var window = webView.WindowHost;
@@ -229,60 +387,6 @@ namespace WebViewCore.Application
             return null;
         }
 
-        private void CheckState()
-        {
-            CheckAddress();
-            CheckIsLoading();
-        }
-
-        public bool GetIsLoading()
-        {
-            if (_browserInstance is null)
-            {
-                return false;
-            }
-
-            var currentValue = _isLoadingProperty.GetValue(_browserInstance);
-            return currentValue != null && Convert.ToBoolean(currentValue);
-        }
-
-        private void CheckIsLoading()
-        {
-            var currentIsLoading = GetIsLoading();
-            if (currentIsLoading != _lastIsLoading)
-            {
-                var oldIsLoading = _lastIsLoading;
-                _lastIsLoading = currentIsLoading;
-
-                IsLoadingChanged?.Invoke(this, new IsLoadingChangedEventArgs(oldIsLoading, currentIsLoading));
-            }
-        }
-
-        private void CheckAddress()
-        {
-            var currentAddress = GetCurrentAddressInternal();
-            if (currentAddress != _lastAddress)
-            {
-                if (currentAddress == _blankHtmlBase64Address)
-                {
-                    var oldAddress = _lastAddress;
-                    _lastAddress = currentAddress;
-                    AddressChanged?.Invoke(this, new AddressChangedEventArgs(oldAddress, string.Empty));
-                }
-                else
-                {
-                    var oldAddress = _lastAddress;
-                    _lastAddress = currentAddress;
-                    if (currentAddress != _blankHtmlBase64Address && !IsNavigatingInHistory(currentAddress))
-                    {
-                        AddToHistory(currentAddress);
-                    }
-
-                    AddressChanged?.Invoke(this, new AddressChangedEventArgs(oldAddress, currentAddress));
-                }
-            }
-        }
-
         private void AddToHistory(string newAddress)
         {
             if (_currentAddressIndex == -1 || newAddress != _addressHistory[_currentAddressIndex])
@@ -304,6 +408,33 @@ namespace WebViewCore.Application
             return _currentAddressIndex >= 0 && _currentAddressIndex < _addressHistory.Count
                    && _addressHistory[_currentAddressIndex] == address;
         }
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _addressEvent?.RemoveEventHandler(
+                     _browserInstance,
+                     _addressHandler);
+
+                _loadingEvent?.RemoveEventHandler(
+                    _browserInstance,
+                    _loadingHandler);
+
+                _loadErrorEvent?.RemoveEventHandler(
+                    _browserInstance,
+                    _loadErrorHandler);
+
+                if (_browserInstance != null)
+                {
+                    _disposeMethod?.Invoke(_browserInstance, null);
+                }
+
+                _disposed = true;
+            }
+        }
+
+
     }
 
 
