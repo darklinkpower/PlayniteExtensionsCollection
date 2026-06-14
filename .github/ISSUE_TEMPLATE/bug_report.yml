@@ -22,6 +22,8 @@ body:
           required: true
         - label: "I have modified the placeholder issue title according to this issue"
           required: true
+        - label: I have attached the requested logs, and I understand that issues submitted without logs may not be investigated and may even be closed
+          required: true
   - type: input
     attributes:
       label: Extension name
@@ -44,10 +46,13 @@ body:
     attributes:
       label: Logs
       description: |
-        If the issue caused Playnite to crash or is related to a theme error, please attach the **playnite.log** and **extensions.log** files. 
+        Please attach the **playnite.log** and **extensions.log** files.
 
         - For the portable version of Playnite, the files are located in the Playnite installation directory.
         - For the installed version, you can find them in **%AppData%\Playnite** (type this in the Explorer address bar).
+        
+        Please do not assume that logs are unnecessary because the issue appears obvious. Logs often contain information that is essential for diagnosing the root cause.
+        **Issues submitted without logs may not be investigated and may even be closed.**
     validations:
       required: true
   - type: textarea
