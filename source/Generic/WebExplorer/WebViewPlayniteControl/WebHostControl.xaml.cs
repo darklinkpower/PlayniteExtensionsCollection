@@ -64,7 +64,8 @@ namespace WebExplorer.WebViewPlayniteControl
             WebBrowserUserInterfaceSettings uiSettings,
             IBookmarksIconRepository bookmarksIconRepository,
             BookmarksManager globalBookmarksManager,
-            Action openSettingsAction)
+            Action openSettingsAction = null,
+            Action closeBrowserAction = null)
         {
             InitializeComponent();
             _playniteApi = playniteApi;
@@ -75,7 +76,13 @@ namespace WebExplorer.WebViewPlayniteControl
                 bookmarksIconRepository);
 
             var browserHost = new CefSharpWebBrowserHost();
-            _browserHostViewModel = new BrowserHostViewModel(browserHost, _controlBookmarksManager, uiSettings, openSettingsAction);
+            _browserHostViewModel = new BrowserHostViewModel(
+                browserHost,
+                _controlBookmarksManager,
+                uiSettings,
+                openSettingsAction,
+                closeBrowserAction);
+
             if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 _activeViewAtCreation = _playniteApi.MainView.ActiveDesktopView;

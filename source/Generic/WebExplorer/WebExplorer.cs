@@ -124,7 +124,8 @@ namespace WebExplorer
                             cefSharpWebView,
                             _sidebarBookmarksManager,
                             new WebBrowserUserInterfaceSettings(),
-                            () => OpenSettingsView());
+                            () => OpenSettingsView(),
+                            () => PlayniteApi.MainView.SwitchToLibraryView());
                         return new BrowserHostView(_sidebarViewModel);
                     }
                     catch (Exception ex)
