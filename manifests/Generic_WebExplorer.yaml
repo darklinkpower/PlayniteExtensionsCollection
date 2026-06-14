@@ -18,3 +18,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.02.06_eccba1db/WebExplorer_181ddd05-2168-4162-a116-b9c2a20c652c_1_2.pext
     Changelog:
     - 'Fixed: Cached data could persist longer than intended in some cases.'
+  - Version: 1.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-06-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.06.13_1c2db137/WebExplorer_181ddd05-2168-4162-a116-b9c2a20c652c_1_3.pext
+    Changelog:
+    - 'Added: Close button to sidebar view to return to Playnite library'
+    - 'Added: Support to launch URI addreses, such as the ones on Steam to launch or install games in their store pages'
