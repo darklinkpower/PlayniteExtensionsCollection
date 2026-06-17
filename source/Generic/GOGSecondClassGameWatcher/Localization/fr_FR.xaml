@@ -8,10 +8,10 @@
     <sys:String x:Key="LOC_GogSecondClass_NumberOfIssuesOnGog">Nombre de problèmes sur GOG</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_IssuesToNotify">Problèmes à notifier :</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_GeneralIssuesLabel">Problèmes généraux</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingUpdatesLabel">Missing updates</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingUpdatesLabel">Cette version du jeu n'est pas à jour</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingLanguagesLabel">Langues manquantes</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingFreeDlcLabel">DLC gratuit manquant</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingPaidDlcLabel">Missing paid DLC</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingPaidDlcLabel">Cette version du jeu n'inclut pas certains DLC</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingFeaturesLabel">Fonctionnalités manquantes</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingSoundtrackLabel">Bande sonore manquante</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_OtherIssuesLabel">Autres problèmes</sys:String>
@@ -21,8 +21,8 @@
     <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Source deux</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Année de sortie</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Problèmes de succès</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Missing all achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Missing some achievements</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Cette version du jeu n'inclut pas de succès</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Certains succès sont pas présents dans cette version du jeu</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Succès cassés</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Réponse du développeur sur les succès</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Source</sys:String>
