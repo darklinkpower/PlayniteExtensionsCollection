@@ -1,4 +1,5 @@
 ﻿using HoYoPlayLibrary.Application.Services;
+using HoYoPlayLibrary.Domain.Entities;
 using HoYoPlayLibrary.Infrastructure;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -48,13 +49,26 @@ namespace HoYoPlayLibrary
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
-            var installedHoyoPlayGames = _hoyoPlayClient.GetInstalledGames();
+            _logger.Info("Starting HoYoPlay game scan.");
+
+            var installedHoyoPlayGames = _hoyoPlayClient.GetInstalledGames()?.ToList() ?? new List<HoyoPlayGame>();
+
+            _logger.Info($"HoYoPlay returned {installedHoyoPlayGames.Count} installed game(s).");
+
             foreach (var game in installedHoyoPlayGames)
             {
+                _logger.Debug(
+                    $"Installed game detected: Name='{game.Name}', " +
+                    $"GameId='{game.Id}', " +
+                    $"InstallDirectory='{game.InstallDirectory}'");
+                
                 yield return new GameMetadata
                 {
                     Source = new MetadataNameProperty("HoYoPlay"),
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    Platforms = new HashSet<MetadataProperty>
+                    {
+                        new MetadataSpecProperty("pc_windows")
+                    },
                     Name = game.Name,
                     InstallDirectory = game.InstallDirectory,
                     GameId = game.Id,
@@ -65,22 +79,42 @@ namespace HoYoPlayLibrary
             // Playnite does not automatically mark previously imported games as uninstalled
             // if they are not returned by GetGames. To reflect the true state of the library,
             // we explicitly find such games and return them with IsInstalled = false.
-            var installedIds = new HashSet<string>(installedHoyoPlayGames.Select(g => g.Id));
+            var installedIds = new HashSet<string>(
+                installedHoyoPlayGames
+                    .Where(g => !string.IsNullOrEmpty(g.Id))
+                    .Select(g => g.Id));
+
+            _logger.Debug($"Installed game IDs: [{string.Join(", ", installedIds)}]");
 
             var previouslyImportedNotInstalled = PlayniteApi.Database.Games
-                .Where(g => g.PluginId == Id && !installedIds.Contains(g.GameId));
+                .Where(g => g.PluginId == Id && !installedIds.Contains(g.GameId))
+                .ToList();
+
+            _logger.Info(
+                $"Found {previouslyImportedNotInstalled.Count} previously imported game(s) " +
+                $"that are no longer installed.");
 
             foreach (var game in previouslyImportedNotInstalled)
             {
+                _logger.Debug(
+                    $"Marking game as uninstalled: Name='{game.Name}', " +
+                    $"GameId='{game.GameId}'," +
+                    $"InstallDirectory='{game.InstallDirectory}'");
+
                 yield return new GameMetadata
                 {
                     Source = new MetadataNameProperty("HoYoPlay"),
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    Platforms = new HashSet<MetadataProperty>
+                    {
+                        new MetadataSpecProperty("pc_windows")
+                    },
                     Name = game.Name,
                     GameId = game.GameId,
                     IsInstalled = false
                 };
             }
+
+            _logger.Info("Finished HoYoPlay game scan.");
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

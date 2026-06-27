@@ -8,6 +8,6 @@ namespace HoYoPlayLibrary.Domain.Interfaces
 {
     internal interface IRegistryVersionResolver
     {
-        string GetActiveRootKeyPath();
+        List<string> GetActiveRootKeyPaths();
     }
 }

@@ -20,7 +20,7 @@ namespace HoYoPlayLibrary.Infrastructure
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public string GetActiveRootKeyPath()
+        public List<string> GetActiveRootKeyPaths()
         {
             using (var hypKey = Registry.CurrentUser.OpenSubKey(BaseKey))
             {
@@ -41,11 +41,14 @@ namespace HoYoPlayLibrary.Infrastructure
                     return null;
                 }
 
-                var selected = candidates.First();
-                var path = $@"{BaseKey}\{selected}";
-                _logger.Info($"Using HoYoPlay registry version '{selected}' at '{path}'");
+                var paths = candidates.Select(selected => $@"{BaseKey}\{selected}").ToList();
+                foreach (var path in paths)
+                {
+                    _logger.Debug($"Found HoYoPlay registry version: '{path}'");
+                }
 
-                return path;
+                _logger.Info($"Using HoYoPlay registry versions: {string.Join(", ", paths)}");
+                return paths;
             }
         }
     }

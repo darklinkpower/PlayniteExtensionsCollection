@@ -24,29 +24,35 @@ namespace HoYoPlayLibrary.Infrastructure
 
         public HoyoPlayLauncherInfo FindLauncher()
         {
-            var rootKeyPath = _registryVersionResolver.GetActiveRootKeyPath();
-            if (rootKeyPath.IsNullOrEmpty())
+            var rootKeyPaths = _registryVersionResolver.GetActiveRootKeyPaths();
+            if (rootKeyPaths is null || rootKeyPaths.Count == 0)
             {
                 return null;
             }
 
-            using (var key = Registry.CurrentUser.OpenSubKey(rootKeyPath))
+            foreach (var rootKeyPath in rootKeyPaths)
             {
-                if (key is null)
+                using (var key = Registry.CurrentUser.OpenSubKey(rootKeyPath))
                 {
-                    _logger.Warn($"Failed to open HoYoPlay registry path: {rootKeyPath}");
-                    return null;
-                }
+                    if (key is null)
+                    {
+                        _logger.Warn($"Failed to open HoYoPlay registry path: \"{rootKeyPath}\"");
+                        return null;
+                    }
 
-                var installDirectory = key.GetValue(InstallPathKey) as string;
-                if (installDirectory.IsNullOrEmpty())
-                {
-                    _logger.Warn($"'{InstallPathKey}' not found or empty in {rootKeyPath}");
-                    return null;
-                }
+                    var installDirectory = key.GetValue(InstallPathKey) as string;
+                    if (installDirectory.IsNullOrEmpty())
+                    {
+                        _logger.Warn($"\"{InstallPathKey}\" not found or empty in \"{rootKeyPath}\"");
+                        return null;
+                    }
 
-                return new HoyoPlayLauncherInfo(installDirectory);
+                    _logger.Debug($"Found HoYoPlay install directory: \"{installDirectory}\" in rootkeypath \"{rootKeyPath}\"");
+                    return new HoyoPlayLauncherInfo(installDirectory);
+                }
             }
+
+            return null;
         }
 
     }

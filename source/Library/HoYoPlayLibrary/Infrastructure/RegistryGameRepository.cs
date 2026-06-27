@@ -28,76 +28,95 @@ namespace HoYoPlayLibrary.Infrastructure
         public IEnumerable<HoyoPlayGame> GetInstalledGames()
         {
             var games = new List<HoyoPlayGame>();
-            var rootKeyPath = _registryVersionResolver.GetActiveRootKeyPath();
-            if (rootKeyPath.IsNullOrEmpty())
+            var rootKeyPaths = _registryVersionResolver.GetActiveRootKeyPaths();
+            if (rootKeyPaths is null || rootKeyPaths.Count == 0)
             {
                 _logger.Warn("HoYoPlay registry not found; cannot locate games.");
                 return games;
             }
 
-            using (var root = Registry.CurrentUser.OpenSubKey(rootKeyPath))
+            foreach (var rootKeyPath in rootKeyPaths)
             {
-                if (root is null)
+                var gamesFoundInRoot = 0;
+                using (var root = Registry.CurrentUser.OpenSubKey(rootKeyPath))
                 {
-                    _logger.Warn($"Failed to open HoYoPlay registry path: {rootKeyPath}");
-                    return games;
-                }
-
-                var subkeyNames = root.GetSubKeyNames();
-                if (subkeyNames.Length == 0)
-                {
-                    _logger.Warn($"No subkeys found under HoYoPlay registry path: {rootKeyPath}");
-                    return games;
-                }
-
-                foreach (var subkeyName in subkeyNames)
-                {
-                    if (subkeyName.Equals("InstallPath", StringComparison.OrdinalIgnoreCase))
+                    if (root is null)
                     {
+                        _logger.Warn($"Failed to open HoYoPlay registry path: {rootKeyPath}");
                         continue;
                     }
 
-                    using (var gameKey = root.OpenSubKey(subkeyName))
+                    var subkeyNames = root.GetSubKeyNames();
+                    if (subkeyNames.Length == 0)
                     {
-                        if (gameKey is null)
+                        _logger.Warn($"No subkeys found under HoYoPlay registry path: {rootKeyPath}");
+                        continue;
+                    }
+
+                    foreach (var subkeyName in subkeyNames)
+                    {
+                        if (subkeyName.Equals("InstallPath", StringComparison.OrdinalIgnoreCase))
                         {
                             continue;
                         }
 
-                        var gameBiz = gameKey.GetValue("GameBiz") as string;
-                        if (gameBiz.IsNullOrEmpty())
+                        using (var gameKey = root.OpenSubKey(subkeyName))
                         {
-                            continue;
-                        }
+                            if (gameKey is null)
+                            {
+                                continue;
+                            }
 
-                        var installPath = gameKey.GetValue("GameInstallPath") as string;
-                        if (installPath.IsNullOrEmpty())
-                        {
-                            continue;
-                        }
+                            var gameBiz = gameKey.GetValue("GameBiz") as string;
+                            if (gameBiz.IsNullOrEmpty())
+                            {
+                                _logger.Warn($"GameBiz value is missing for subkey: {subkeyName}");
+                                continue;
+                            }
 
-                        if (!FileSystem.DirectoryExists(installPath))
-                        {
-                            _logger.Warn($"Install path does not exist for game '{gameBiz}': {installPath}");
-                            continue;
-                        }
+                            var installPath = gameKey.GetValue("GameInstallPath") as string;
+                            if (installPath.IsNullOrEmpty())
+                            {
+                                _logger.Warn($"GameInstallPath value is missing for game '{gameBiz}' in subkey: {subkeyName}");
+                                continue;
+                            }
 
-                        var exePath = FindGameExe(installPath);
-                        if (exePath.IsNullOrEmpty())
-                        {
-                            _logger.Warn($"No valid executable found for game '{gameBiz}' in '{installPath}'");
-                            continue;
-                        }
+                            if (!FileSystem.DirectoryExists(installPath))
+                            {
+                                _logger.Warn($"Install path does not exist for game '{gameBiz}': {installPath}");
+                                continue;
+                            }
 
-                        var name = GameNameResolver.Resolve(subkeyName);
-                        games.Add(new HoyoPlayGame(gameBiz, name, installPath, exePath));
+                            var exePath = FindGameExe(installPath);
+                            if (exePath.IsNullOrEmpty())
+                            {
+                                _logger.Warn($"No valid executable found for game '{gameBiz}' in '{installPath}'");
+                                continue;
+                            }
+
+                            var existingGame = games.FirstOrDefault(g => g.Id.Equals(gameBiz, StringComparison.OrdinalIgnoreCase));
+                            if (existingGame != null)
+                            {
+                                _logger.Warn($"Duplicate game entry found for '{gameBiz}'. Replacing duplicate.");
+                                games.Remove(existingGame);
+                            }
+
+                            var name = GameNameResolver.Resolve(subkeyName);
+                            games.Add(new HoyoPlayGame(gameBiz, name, installPath, exePath));
+                            gamesFoundInRoot++;
+                        }
+                    }
+
+                    if (gamesFoundInRoot == 0)
+                    {
+                        _logger.Warn($"No valid game entries found under HoYoPlay registry path: {rootKeyPath}");
                     }
                 }
+            }
 
-                if (!games.Any())
-                {
-                    _logger.Warn($"No valid game entries found under HoYoPlay registry path: {rootKeyPath}");
-                }
+            if (games.Count == 0)
+            {
+                _logger.Warn("No valid HoYoPlay game installations were found.");
             }
 
             return games;
