@@ -305,3 +305,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.05.25_b59b53a1/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_46.pext
     Changelog:
     - 'Fixed: Potentially not cleaning up temporary Special K installer executable after updating.'
+  - Version: 1.47
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-06-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.06.27_820886c2/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_47.pext
+    Changelog:
+    - 'Fixed: Special K services not being stopped when they are never injected into the game for any reason, even after game stops running.'
