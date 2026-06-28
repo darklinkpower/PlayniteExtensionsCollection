@@ -25,6 +25,8 @@ namespace SpecialKHelper.Core.Application
 
         private readonly Dictionary<Guid, SpecialKLaunchSession> _sessions
             = new Dictionary<Guid, SpecialKLaunchSession>();
+        private bool _started32Service = false;
+        private bool _started64Service = false;
 
         public SpecialKGameSessionCoordinator(
             SpecialKServiceManager serviceManager,
@@ -90,7 +92,7 @@ namespace SpecialKHelper.Core.Application
             {
                 _logger.Warn(
                     "Injection signal received but no waiting sessions found.");
-
+                StopServicesIfNotNeeded();
                 return;
             }
 
@@ -98,23 +100,7 @@ namespace SpecialKHelper.Core.Application
             session.MarkInjected();
 
             _logger.Info( $"Session '{session.GameId}' marked injected.");
-
-            var remainingWaiting =
-                _sessions.Values.Any(
-                    x => x.State ==
-                    SpecialKLaunchState.WaitingForInjection);
-
-            if (remainingWaiting)
-            {
-                _logger.Info(
-                    "Other sessions still waiting for injection. Keeping services running.");
-
-                return;
-            }
-
-            _logger.Info("No waiting sessions remain.");
-
-            StopAllOwnedSessions();
+            StopServicesIfNotNeeded();
         }
 
         public SpecialKLaunchSession Start(
@@ -130,17 +116,12 @@ namespace SpecialKHelper.Core.Application
                 return existing;
             }
 
-            SpecialKLaunchSession session = null;
-
-            var started32 = false;
-            var started64 = false;
-
             try
             {
                 if (_serviceManager.Service32BitsStatus
                     != SpecialKServiceStatus.Running)
                 {
-                    started32 =
+                    _started32Service =
                         _serviceManager.Start32BitsService();
 
                     _logger.Info(
@@ -150,18 +131,17 @@ namespace SpecialKHelper.Core.Application
                 if (_serviceManager.Service64BitsStatus
                     != SpecialKServiceStatus.Running)
                 {
-                    started64 =
+                    _started64Service =
                         _serviceManager.Start64BitsService();
 
                     _logger.Info(
                         "Started 64-bit service.");
                 }
 
-                session =
-                    new SpecialKLaunchSession(
-                        game.Id,
-                        started32,
-                        started64);
+                var session = new SpecialKLaunchSession(
+                    game.Id,
+                    _started32Service,
+                    _started64Service);
 
                 _sessions[game.Id] =
                     session;
@@ -181,69 +161,36 @@ namespace SpecialKHelper.Core.Application
             }
             catch
             {
-                if (session != null)
-                {
-                    CleanupPartialStartup(
-                        session);
-                }
-
+                StopServicesIfNotNeeded();
                 throw;
             }
 
             return null;
         }
 
-        public void Stop(
-            Game game)
+        public void RemoveSession(Game game)
         {
-            RemoveSession(
+            RemoveSessionInternal(
                 game.Id,
-                game.Name,
-                true);
+                game.Name);
         }
 
-        public void RemoveSession(
+        private void RemoveSessionInternal(
             Guid gameId,
-            string gameName = null,
-            bool applyStopPolicy = false)
+            string gameName = null)
         {
             if (!_sessions.TryGetValue(
                 gameId,
                 out var session))
             {
-                _logger.Info($"No session found for '{gameName ?? gameId.ToString()}'.");
-
+                _logger.Info($"No session found for '{gameName} - {gameId}'.");
                 return;
             }
 
-            try
-            {
-                session.MarkStopped();
-
-                if (applyStopPolicy &&
-                    _getServiceStopMode() ==
-                    SpecialKServiceStopMode.OnGameStop)
-                {
-                    StopSession(
-                        session);
-                }
-            }
-            catch (SpecialKFileNotFoundException e)
-            {
-                LogSkFileNotFound(e);
-            }
-            catch (SpecialKPathNotFoundException e)
-            {
-                LogSkPathNotFound(e);
-            }
-            finally
-            {
-                _sessions.Remove(
-                    gameId);
-
-                _logger.Info(
-                    $"Removed session '{gameName ?? gameId.ToString()}'.");
-            }
+            session.MarkStopped();
+            _sessions.Remove(gameId);
+            _logger.Info($"Removed session '{gameName} - {gameId}'");
+            StopServicesIfNotNeeded();
         }
 
         public void RemoveInvalidSessions(
@@ -258,7 +205,7 @@ namespace SpecialKHelper.Core.Application
 
             foreach (var gameId in invalidSessions)
             {
-                RemoveSession(gameId);
+                RemoveSessionInternal(gameId);
             }
         }
 
@@ -269,7 +216,6 @@ namespace SpecialKHelper.Core.Application
             {
                 try
                 {
-                    StopSession(session);
                     session.MarkStopped();
                 }
                 catch (Exception ex)
@@ -281,40 +227,62 @@ namespace SpecialKHelper.Core.Application
             }
 
             _sessions.Clear();
+            StopServicesIfNotNeeded();
         }
 
-        private void StopSession(
-            SpecialKLaunchSession session)
-        {
-            if (session.Started32BitService &&
-                _serviceManager.Service32BitsStatus ==
-                SpecialKServiceStatus.Running)
-            {
-                _logger.Info("Stopping plugin-owned 32-bit service.");
-                _serviceManager.Stop32BitsService();
-            }
-
-            if (session.Started64BitService &&
-                _serviceManager.Service64BitsStatus ==
-                SpecialKServiceStatus.Running)
-            {
-                _logger.Info("Stopping plugin-owned 64-bit service.");
-                _serviceManager.Stop64BitsService();
-            }
-        }
-
-        private void CleanupPartialStartup(
-            SpecialKLaunchSession session)
+        private void StopServicesIfNotNeeded()
         {
             try
             {
-                StopSession(session);
+                var stopMode = _getServiceStopMode();
+                var shouldStopServices = false;
+                if (stopMode == SpecialKServiceStopMode.OnGameStop)
+                {
+                    // Stop services if no sessions remain
+                    shouldStopServices = !_sessions.Values.Any();
+                }
+                else if (stopMode == SpecialKServiceStopMode.OnInjection)
+                {
+                    // Stop services if no sessions remain waiting for injection
+                    var anyRemainingWaiting =
+                        _sessions.Values.Any(
+                            x => x.State ==
+                            SpecialKLaunchState.WaitingForInjection);
+                    if (!anyRemainingWaiting)
+                    {
+                        _logger.Info("No waiting sessions remain.");
+                        shouldStopServices = true;
+                    }
+                }
+
+                if (shouldStopServices)
+                {
+                    if (_started32Service &&
+                        _serviceManager.Service32BitsStatus ==
+                        SpecialKServiceStatus.Running)
+                    {
+                        _logger.Info("Stopping plugin-owned 32-bit service.");
+                        var success = _serviceManager.Stop32BitsService();
+                        _started32Service = !success;
+                    }
+
+                    if (_started64Service &&
+                        _serviceManager.Service64BitsStatus ==
+                        SpecialKServiceStatus.Running)
+                    {
+                        _logger.Info("Stopping plugin-owned 64-bit service.");
+                        var success = _serviceManager.Stop64BitsService();
+                        _started64Service = !success;
+                    }
+                }
             }
-            catch (Exception ex)
+            catch (SpecialKFileNotFoundException e)
             {
-                _logger.Error(
-                    ex,
-                    "Failed cleanup after startup failure.");
+                LogSkFileNotFound(e);
+            }
+            catch (SpecialKPathNotFoundException e)
+            {
+                LogSkPathNotFound(e);
             }
         }
 

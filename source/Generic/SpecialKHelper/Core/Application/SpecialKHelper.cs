@@ -179,13 +179,13 @@ namespace SpecialKHelper
 
         public override void OnGameStartupCancelled(OnGameStartupCancelledEventArgs args)
         {
-            _gameCoordinator.RemoveSession(args.Game.Id, args.Game.Name, true);
+            _gameCoordinator.RemoveSession(args.Game);
         }
         
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             _steamEnvironmentHandler.OnGameStopped();
-            _gameCoordinator.Stop(args.Game);
+            _gameCoordinator.RemoveSession(args.Game);
         }
 
         private bool GetShouldStartService(Game game)
