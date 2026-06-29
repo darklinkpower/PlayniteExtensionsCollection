@@ -24,3 +24,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.06.29_5a575e63/GOGSecondClassGameWatcher_2661ddac-946a-4fee-ba80-3ece762cb64b_1_3.pext
     Changelog:
     - 'Changed: Data source changed to use the new "GOG customers as 2nd Class v3" list'
+  - Version: 1.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-06-29
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.06.29_c924faa8/GOGSecondClassGameWatcher_2661ddac-946a-4fee-ba80-3ece762cb64b_1_4.pext
+    Changelog:
+    - 'Changed dependency version to match Playnite version to fix incompatibilities'
