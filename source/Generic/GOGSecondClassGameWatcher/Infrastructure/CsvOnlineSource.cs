@@ -11,7 +11,7 @@ namespace GOGSecondClassGameWatcher.Infrastructure
 {
     public class CsvOnlineSource : ICsvDataSource
     {
-        private const string GeneralCsvDownloadUrl = @"https://docs.google.com/spreadsheets/d/1zjwUN1mtJdCkgtTDRB2IoFp7PP41fraY-oFNY00fEkI/gviz/tq?tqx=out:csv&headers=0";
+        private const string GeneralCsvDownloadUrl = @"https://docs.google.com/spreadsheets/d/14haGnU2kcY6wV6ssBeyW6_mMk6kkVqZX-QvMKlgXGu0/gviz/tq?tqx=out:csv&headers=0";
         private const string AchievementsCsvDownloadUrl = @"https://docs.google.com/spreadsheets/d/1pDO6WTHLHyrrtidQ1MAxW6u8j3BxUaGcFaJsVyWj2QY/gviz/tq?tqx=out:csv&headers=0";
 
         public CsvOnlineSource()
