@@ -18,27 +18,27 @@ namespace GOGSecondClassGameWatcher.Domain.ValueObjects
         [ProtoMember(3)]
         public string Publisher { get; set; }
         [ProtoMember(4)]
-        public IReadOnlyList<string> MissingUpdates { get; set; } = new List<string>();
+        public List<string> MissingUpdates { get; set; } = new List<string>();
         [ProtoMember(5)]
-        public IReadOnlyList<string> MissingLanguages { get; set; } = new List<string>();
+        public List<string> MissingLanguages { get; set; } = new List<string>();
         [ProtoMember(6)]
-        public IReadOnlyList<string> MissingFreeDlc { get; set; } = new List<string>();
+        public List<string> MissingFreeDlc { get; set; } = new List<string>();
         [ProtoMember(7)]
-        public IReadOnlyList<string> MissingPaidDlc { get; set; } = new List<string>();
+        public List<string> MissingPaidDlc { get; set; } = new List<string>();
         [ProtoMember(8)]
-        public IReadOnlyList<string> MissingFeatures { get; set; } = new List<string>();
+        public List<string> MissingFeatures { get; set; } = new List<string>();
         [ProtoMember(9)]
-        public IReadOnlyList<string> MissingSoundtrack { get; set; } = new List<string>();
+        public List<string> MissingSoundtrack { get; set; } = new List<string>();
         [ProtoMember(10)]
-        public IReadOnlyList<string> OtherIssues { get; set; } = new List<string>();
+        public List<string> OtherIssues { get; set; } = new List<string>();
         [ProtoMember(11)]
-        public IReadOnlyList<string> MissingBuilds { get; set; } = new List<string>();
+        public List<string> MissingBuilds { get; set; } = new List<string>();
         [ProtoMember(12)]
-        public IReadOnlyList<string> RegionLocking { get; set; } = new List<string>();
+        public List<string> RegionLocking { get; set; } = new List<string>();
         [ProtoMember(13)]
-        public IReadOnlyList<string> SourceOne { get; set; } = new List<string>();
+        public List<string> SourceOne { get; set; } = new List<string>();
         [ProtoMember(14)]
-        public IReadOnlyList<string> SourceTwo { get; set; } = new List<string>();
+        public List<string> SourceTwo { get; set; } = new List<string>();
         public GeneralIssues() { }
         public GeneralIssues(
             string title,
