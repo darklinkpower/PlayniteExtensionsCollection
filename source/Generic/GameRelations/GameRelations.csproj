@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Playnite.SDK, Version=6.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PlayniteSDK.6.9.0\lib\net462\Playnite.SDK.dll</HintPath>
+    <Reference Include="Playnite.SDK, Version=6.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PlayniteSDK.6.10.0\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -108,6 +108,7 @@
     <Compile Include="MatchedGamesUtilities.cs" />
     <Compile Include="Interfaces\IGameRelationsControlSettings.cs" />
     <Compile Include="Models\GameRelationsControlSettings.cs" />
+    <Compile Include="Models\GameRelationSnapshot.cs" />
     <Compile Include="Models\MatchedGameWrapper.cs" />
     <Compile Include="Models\SimilarGamesControlSettings.cs" />
     <Compile Include="PlayniteControls\GameRelationsBase.xaml.cs">

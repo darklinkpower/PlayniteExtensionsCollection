@@ -9,19 +9,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using TemporaryCache;
 
 namespace GameRelations.PlayniteControls
 {
@@ -36,6 +30,8 @@ namespace GameRelations.PlayniteControls
         private readonly DispatcherTimer _updateDataTimer;
         private readonly DesktopView _activeViewAtCreation;
         private static readonly ILogger _logger = LogManager.GetLogger();
+        private CancellationTokenSource _updateDataCancellationTokenSource;
+        private long _updateDataVersion;
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -107,6 +103,7 @@ namespace GameRelations.PlayniteControls
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             _updateDataTimer.Stop();
+            CancelPendingUpdate();
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
                 _activeViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
             {
@@ -134,9 +131,52 @@ namespace GameRelations.PlayniteControls
             ControlSettings.IsVisible = true;
         }
 
-        public virtual IEnumerable<Game> GetMatchingGames(Game game)
+        internal virtual object CreateMatchingSettingsSnapshot()
         {
-            return Enumerable.Empty<Game>();
+            return null;
+        }
+
+        internal virtual IEnumerable<GameRelationSnapshot> GetMatchingGames(GameRelationSnapshot game, List<GameRelationSnapshot> libraryGames, object matchingSettings)
+        {
+            return Enumerable.Empty<GameRelationSnapshot>();
+        }
+
+        internal static IEnumerable<GameRelationSnapshot> GetMatchingGamesByRelation(
+            GameRelationSnapshot game,
+            List<GameRelationSnapshot> libraryGames,
+            Func<GameRelationSnapshot, List<GameRelationValueSnapshot>> relationSelector)
+        {
+            var sourceRelations = relationSelector(game);
+            if (!sourceRelations.HasItems())
+            {
+                return Enumerable.Empty<GameRelationSnapshot>();
+            }
+
+            var sourceHashSet = sourceRelations.Select(x => x.Id).ToHashSet();
+            var similarGamesDict = new Dictionary<GameRelationSnapshot, string>();
+            foreach (var otherGame in libraryGames)
+            {
+                if (otherGame.Id == game.Id)
+                {
+                    continue;
+                }
+
+                if (!game.Hidden && otherGame.Hidden)
+                {
+                    continue;
+                }
+
+                var commonItem = relationSelector(otherGame).FirstOrDefault(x => sourceHashSet.Contains(x.Id));
+                if (commonItem != null)
+                {
+                    similarGamesDict.Add(otherGame, commonItem.Name);
+                }
+            }
+
+            return similarGamesDict
+                .OrderBy(pair => pair.Value)
+                .ThenBy(x => x.Key.SortName)
+                .Select(x => x.Key);
         }
 
         public async Task UpdateDataAsync()
@@ -147,25 +187,143 @@ namespace GameRelations.PlayniteControls
                 return;
             }
 
-            var contextGame = GameContext;
-            var matchedGames = GetMatchingGames(contextGame);
-            if (GameContext is null || GameContext.Id != contextGame.Id || !matchedGames.HasItems())
+            CancelPendingUpdate();
+            var updateVersion = Interlocked.Increment(ref _updateDataVersion);
+            var updateCancellationTokenSource = new CancellationTokenSource();
+            _updateDataCancellationTokenSource = updateCancellationTokenSource;
+            var cancellationToken = updateCancellationTokenSource.Token;
+            var controlName = GetType().Name;
+
+            GameRelationSnapshot contextGame;
+            List<GameRelationSnapshot> librarySnapshot;
+            GameRelationsUpdateSettings updateSettings;
+            try
             {
+                contextGame = CreateGameSnapshot(GameContext);
+                librarySnapshot = PlayniteApi.Database.Games.Select(CreateGameSnapshot).ToList();
+                updateSettings = new GameRelationsUpdateSettings
+                {
+                    MaxItems = ControlSettings.MaxItems,
+                    DisplayOnlyInstalled = ControlSettings.DisplayOnlyInstalled,
+                    CoversHeight = Settings.CoversHeight,
+                    MatchingSettings = CreateMatchingSettingsSnapshot()
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"GameRelations {controlName}: Failed to create game relation snapshot.");
+                ClearCompletedUpdate(updateCancellationTokenSource);
                 return;
             }
 
-            var filteredGames = matchedGames
-                .Where(g => g.IsInstalled || !ControlSettings.DisplayOnlyInstalled)
-                .Take(ControlSettings.MaxItems);
-
-            var gameWrappers = await MatchedGamesUtilities.GetGamesWrappersAsync(filteredGames, Settings);
-            if (GameContext is null || GameContext.Id != contextGame.Id || !gameWrappers.HasItems())
+            var contextGameId = contextGame.Id;
+            GameRelationsUpdateResult updateResult;
+            try
             {
+                updateResult = await Task.Run(async () =>
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    var matchedGames = GetMatchingGames(contextGame, librarySnapshot, updateSettings.MatchingSettings).ToList();
+
+                    cancellationToken.ThrowIfCancellationRequested();
+                    var filteredGames = matchedGames
+                        .Where(g => g.IsInstalled || !updateSettings.DisplayOnlyInstalled)
+                        .Take(updateSettings.MaxItems)
+                        .ToList();
+
+                    var gameWrappers = await MatchedGamesUtilities.GetGamesWrappersAsync(filteredGames, updateSettings.CoversHeight, cancellationToken);
+
+                    return new GameRelationsUpdateResult
+                    {
+                        GameWrappers = gameWrappers
+                    };
+                }, cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                ClearCompletedUpdate(updateCancellationTokenSource);
+                return;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"GameRelations {controlName}: Failed to prepare related games for {contextGame.Name}.");
+                ClearCompletedUpdate(updateCancellationTokenSource);
                 return;
             }
 
-            MatchedGames = gameWrappers;
+            if (cancellationToken.IsCancellationRequested ||
+                updateVersion != Interlocked.Read(ref _updateDataVersion) ||
+                GameContext is null ||
+                GameContext.Id != contextGameId ||
+                !updateResult.GameWrappers.HasItems())
+            {
+                ClearCompletedUpdate(updateCancellationTokenSource);
+                return;
+            }
+
+            MatchedGames = updateResult.GameWrappers;
             DisplayControl();
+            ClearCompletedUpdate(updateCancellationTokenSource);
+        }
+
+        private void CancelPendingUpdate()
+        {
+            Interlocked.Increment(ref _updateDataVersion);
+            var cancellationTokenSource = _updateDataCancellationTokenSource;
+            if (cancellationTokenSource is null)
+            {
+                return;
+            }
+
+            _updateDataCancellationTokenSource = null;
+            cancellationTokenSource.Cancel();
+        }
+
+        private void ClearCompletedUpdate(CancellationTokenSource updateCancellationTokenSource)
+        {
+            if (_updateDataCancellationTokenSource != updateCancellationTokenSource)
+            {
+                updateCancellationTokenSource.Dispose();
+                return;
+            }
+
+            _updateDataCancellationTokenSource = null;
+            updateCancellationTokenSource.Dispose();
+        }
+
+        private GameRelationSnapshot CreateGameSnapshot(Game game)
+        {
+            return new GameRelationSnapshot
+            {
+                Game = game,
+                Id = game.Id,
+                Name = game.Name,
+                SortingName = game.SortingName,
+                Hidden = game.Hidden,
+                IsInstalled = game.IsInstalled,
+                CoverImagePath = game.CoverImage.IsNullOrEmpty() ? null : PlayniteApi.Database.GetFullFilePath(game.CoverImage),
+                TagIds = game.TagIds?.ToList() ?? new List<Guid>(),
+                GenreIds = game.GenreIds?.ToList() ?? new List<Guid>(),
+                CategoryIds = game.CategoryIds?.ToList() ?? new List<Guid>(),
+                SeriesIds = game.SeriesIds?.ToList() ?? new List<Guid>(),
+                Series = SnapshotRelationValues(game.Series),
+                Developers = SnapshotRelationValues(game.Developers),
+                Publishers = SnapshotRelationValues(game.Publishers)
+            };
+        }
+
+        private static List<GameRelationValueSnapshot> SnapshotRelationValues<T>(IEnumerable<T> values) where T : DatabaseObject
+        {
+            if (values is null)
+            {
+                return new List<GameRelationValueSnapshot>();
+            }
+
+            return values.Select(x => new GameRelationValueSnapshot
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
         }
 
         private void ScrollGamesContainerToStart()
@@ -179,42 +337,6 @@ namespace GameRelations.PlayniteControls
 
                 gamesScrollViewer?.ScrollToHome();
             }
-        }
-
-        /// <summary>
-        /// Calculates the match value between a list of items and a HashSet by determining the percentage of common elements.
-        /// </summary>
-        /// <param name="listToMatch">The list of items to compare.</param>
-        /// <param name="hashSet">The HashSet to compare against.</param>
-        /// <returns>A match value between 0 and 1 representing the percentage of common elements.</returns>
-        protected static decimal CalculateListHashSetMatchPercentage<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
-        {
-            if (listToMatch is null || !listToMatch.Any())
-            {
-                if (hashSet.Count == 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-
-            if (hashSet.Count == 0)
-            {
-                return 0;
-            }
-
-            var commonCount = listToMatch.Count(item => hashSet.Contains(item));
-            if (commonCount == 0)
-            {
-                return 0;
-            }
-
-            // Rounding is done to prevent errors when doing arithmetic operations
-            var matchPercent = Math.Round(commonCount / (decimal)Math.Max(listToMatch.Count(), hashSet.Count), 3); 
-            return matchPercent;
         }
 
         /// <summary>
@@ -248,30 +370,6 @@ namespace GameRelations.PlayniteControls
             // Rounding is done to prevent errors when doing arithmetic operations
             var similarity = Math.Round((double)commonCount / uniqueCount, 3);
             return similarity;
-        }
-
-        /// <summary>
-        /// Checks if there is any common item between a list and a HashSet.
-        /// </summary>
-        /// <param name="listToMatch">The list to check for common items.</param>
-        /// <param name="hashSet">The HashSet to check against.</param>
-        /// <returns>Returns the common item if found, default value otherwise</returns>
-        protected static T GetAnyCommonItem<T>(List<T> listToMatch, HashSet<T> hashSet)
-        {
-            if (listToMatch is null || listToMatch.Count == 0 || hashSet.Count == 0)
-            {
-                return default;
-            }
-
-            foreach (var item in listToMatch)
-            {
-                if (hashSet.Contains(item))
-                {
-                    return item;
-                }
-            }
-
-            return default;
         }
 
         /// <summary>
