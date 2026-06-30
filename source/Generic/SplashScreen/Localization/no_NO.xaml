@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Åpne video-behandler</sys:String>
@@ -36,6 +36,20 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Nederst</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Bruk inntoningsanimasjon for splash screen-bilde</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Bruk inntoningsanimasjon for splash screen-logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingShowLoadingSpinnerLabel">Vis lastespinner</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSizeLabel">Spinnerstørrelse (piksler):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerOpacityLabel">Spinneropasitet:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSpeedLabel">Spinnerhastighet (sekunder per omdreining):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewLabel">Forhåndsvisning:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Forhåndsvisningsbakgrunn:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Tykkelse på spinner (piksler):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Antall streker i spinner:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Lengde på spinnerstrek (1-100%):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Bruk avrundede strekender</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Juster spinnerhastigheten automatisk basert på spinnerstørrelse</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_SettingSafeAreaPaddingLabel">Sikkerhetsmarg (piksler):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingBackgroundImageOpacityLabel">Opasitet for bakgrunnsbilde:</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Bruk et globalt bilde for alle spill</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Bruk spilllogo i globalt splashscreen-bilde hvis tilgjengelig</sys:String>
@@ -57,3 +71,4 @@
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Lagre innstillinger</sys:String>
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Innstillingene er lagret</sys:String>
 </ResourceDictionary>
+
