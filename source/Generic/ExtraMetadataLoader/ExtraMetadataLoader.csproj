@@ -81,6 +81,8 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -189,6 +191,9 @@
     <Compile Include="MetadataProviders\IVideoProvider.cs" />
     <Compile Include="MetadataProviders\ILogoProvider.cs" />
     <Compile Include="MetadataProviders\GoogleProvider.cs" />
+    <Compile Include="MetadataProviders\LaunchBox\LaunchBoxClearLogoProvider.cs" />
+    <Compile Include="MetadataProviders\LaunchBox\LaunchBoxMetadataCache.cs" />
+    <Compile Include="MetadataProviders\LaunchBox\LaunchBoxModels.cs" />
     <Compile Include="MetadataProviders\Result.cs" />
     <Compile Include="MetadataProviders\SteamGridDB\SteamGridDBProvider.cs" />
     <Compile Include="MetadataProviders\Steam\SteamMetadataProvider.cs" />
