@@ -115,7 +115,8 @@ namespace SteamShortcuts
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameGuidesDescription", SteamUrlType.Guides, steamId, '\uEF8B'),
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, steamId, '\uEDD7'),
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameNewsDescription", SteamUrlType.News, steamId, '\uEFA7'),
-                CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, steamId, '\uEFE7')
+                CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, steamId, '\uEFE7'),
+                CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameWorkshopDescription", SteamUrlType.Workshop, steamId, '\uE9C4')
             });
         }
 

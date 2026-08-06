@@ -31,6 +31,7 @@
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGameAchievementsDescription}" Click="OnAchievements"/>
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemComponentNewsDescription}" Click="OnNews"/>
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGamePointsShopDescription}" Click="OnPointsShop"/>
+                    <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGameWorkshopDescription}" Click="OnWorkshop"/>
 
                 </ContextMenu>
             </Button.ContextMenu>

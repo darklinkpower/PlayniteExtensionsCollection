@@ -138,6 +138,9 @@ namespace SteamShortcuts.Presentation
         private void OnPointsShop(object sender, RoutedEventArgs e)
             => _launcher.LaunchSteamWebUrl(SteamUrlType.PointsShop, _steamId);
 
+        private void OnWorkshop(object sender, RoutedEventArgs e)
+            => _launcher.LaunchSteamWebUrl(SteamUrlType.Workshop, _steamId);
+
         #endregion
 
         #region Global Steam
