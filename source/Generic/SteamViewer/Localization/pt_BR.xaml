@@ -14,7 +14,6 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">Notícias</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Conquistas</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Loja de Pontos</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameWorkshopDescription">Workshop</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Ver na Biblioteca Steam</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDetails">Details</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameSteamInput">Steam Input</sys:String>
