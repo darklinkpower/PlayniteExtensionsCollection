@@ -28,9 +28,10 @@
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGameCommunityHubDescription}" Click="OnCommunityHub"/>
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGameDiscussionsDescription}" Click="OnDiscussions"/>
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGameGuidesDescription}" Click="OnGuides"/>
-                    <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGameAchievementsDescription}" Click="OnAchievements"/>
                     <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemComponentNewsDescription}" Click="OnNews"/>
-                    <MenuItem Header="{DynamicResource LOCSteam_Viewer_MenuItemGamePointsShopDescription}" Click="OnPointsShop"/>
+                    <MenuItem x:Name="MenuItemGameAchievements" Visibility="Collapsed" Header="{DynamicResource LOCSteam_Viewer_MenuItemGameAchievementsDescription}" Click="OnAchievements"/>
+                    <MenuItem x:Name="MenuItemGamePointsShop" Visibility="Collapsed" Header="{DynamicResource LOCSteam_Viewer_MenuItemGamePointsShopDescription}" Click="OnPointsShop"/>
+                    <MenuItem x:Name="MenuItemGameWorkshop" Visibility="Collapsed" Header="{DynamicResource LOCSteam_Viewer_MenuItemGameWorkshopDescription}" Click="OnWorkshop"/>
 
                 </ContextMenu>
             </Button.ContextMenu>

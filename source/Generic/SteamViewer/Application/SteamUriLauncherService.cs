@@ -27,7 +27,8 @@ namespace SteamShortcuts.Application
             { SteamUrlType.Guides, "https://steamcommunity.com/app/{0}/guides/" },
             { SteamUrlType.Achievements, "https://steamcommunity.com/stats/{0}/achievements/" },
             { SteamUrlType.News, "https://store.steampowered.com/news/?appids={0}" },
-            { SteamUrlType.PointsShop, "https://store.steampowered.com/points/shop/app/{0}" }
+            { SteamUrlType.PointsShop, "https://store.steampowered.com/points/shop/app/{0}" },
+            { SteamUrlType.Workshop, "https://steamcommunity.com/app/{0}/workshop" }
         };
 
         private static readonly Dictionary<SteamComponentType, string> _steamComponentTemplates = new Dictionary<SteamComponentType, string>()
