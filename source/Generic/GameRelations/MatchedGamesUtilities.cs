@@ -1,12 +1,9 @@
 ﻿using GameRelations.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -16,10 +13,9 @@ namespace GameRelations
 {
     public static class MatchedGamesUtilities
     {
-        private static readonly IPlayniteAPI _playniteApi = API.Instance;
         private static readonly ILogger _logger = LogManager.GetLogger();
         private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>().WithItemLifetime(TimeSpan.FromSeconds(30));
-        private static readonly BitmapImage _defaultCover = new BitmapImage(new Uri("/GameRelations;component/Resources/DefaultCover.png", UriKind.Relative));
+        private static readonly BitmapImage _defaultCover = GetDefaultCover();
         private static SemaphoreSlim _bulkGetGamesWrappersLimiter = new SemaphoreSlim(1);
 
         public static BitmapImage CreateResizedBitmapImageFromPath(string filePath, int maxWidth, int maxHeight)
@@ -50,12 +46,26 @@ namespace GameRelations
             return bitmapImage;
         }
 
-        public static async Task<IEnumerable<MatchedGameWrapper>> GetGamesWrappersAsync(IEnumerable<Game> games, GameRelationsSettings settings)
+        private static BitmapImage GetDefaultCover()
         {
-            await _bulkGetGamesWrappersLimiter.WaitAsync();
+            var bitmapImage = new BitmapImage(new Uri("/GameRelations;component/Resources/DefaultCover.png", UriKind.Relative));
+            bitmapImage.Freeze();
+            return bitmapImage;
+        }
+
+        internal static async Task<List<MatchedGameWrapper>> GetGamesWrappersAsync(IEnumerable<GameRelationSnapshot> games, int coverHeight, CancellationToken cancellationToken)
+        {
+            await _bulkGetGamesWrappersLimiter.WaitAsync(cancellationToken);
             try
             {
-                return games.Select(g => GetGameWrapper(g, settings));
+                var gameWrappers = new List<MatchedGameWrapper>();
+                foreach (var game in games)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    gameWrappers.Add(GetGameWrapper(game, coverHeight));
+                }
+
+                return gameWrappers;
             }
             finally
             {
@@ -63,25 +73,23 @@ namespace GameRelations
             }
         }
 
-        public static MatchedGameWrapper GetGameWrapper(Game game, GameRelationsSettings settings)
+        private static MatchedGameWrapper GetGameWrapper(GameRelationSnapshot game, int coverHeight)
         {
-            var bitmapImage = GetGameCoverImage(game, settings);
-            return new MatchedGameWrapper(game, bitmapImage);
+            var bitmapImage = GetGameCoverImage(game.CoverImagePath, coverHeight);
+            return new MatchedGameWrapper(game.Game, bitmapImage);
         }
 
-        private static BitmapImage GetGameCoverImage(Game game, GameRelationsSettings settings)
+        private static BitmapImage GetGameCoverImage(string imagePath, int coverHeight)
         {
-            if (game.CoverImage.IsNullOrEmpty())
+            if (imagePath.IsNullOrEmpty())
             {
                 return _defaultCover;
             }
 
-            var imagePath = _playniteApi.Database.GetFullFilePath(game.CoverImage);
             if (FileSystem.FileExists(imagePath))
             {
                 try
                 {
-                    var coverHeight = settings.CoversHeight;
                     var cacheKey = $"{imagePath}_{coverHeight}";
                     if (_imagesCacheManager.TryGetValue(cacheKey, out var cachedBitmap))
                     {
