@@ -184,6 +184,8 @@
                         <StackPanel Margin="20,0,0,10" IsEnabled="{Binding ElementName=CbDownloadLogosOnLibUpdate, Path=IsChecked}" >
                             <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LibUpdateSelectLogosAutomatically}"
                                       Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel}" />
+                            <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.UseLaunchBoxForAutomaticLogoDownloads}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsUseLaunchBoxForAutomaticLogoDownloadsLabel}" />
                         </StackPanel>
                         <CheckBox Margin="0,0,0,10" Name="CbProcessLogosOnDownload"
                                   IsChecked="{Binding Settings.ProcessLogosOnDownload}"

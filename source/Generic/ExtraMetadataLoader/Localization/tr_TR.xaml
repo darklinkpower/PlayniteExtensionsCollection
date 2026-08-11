@@ -47,6 +47,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Kütüphane güncellemesinde yeni eklenen oyunların da videolarını indir</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Kütüphane güncellemesinde yeni eklenen oyunların da mikro videolarını indir</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Kütüphane güncellemesinde yeni eklenen oyunların da logolarını indir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseLaunchBoxForAutomaticLogoDownloadsLabel">Use LaunchBox for automatic logo downloads</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Kendiliğinden indirilecek logoları seç</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
@@ -65,6 +66,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Steam üzerinden videolar indiriliyor...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Steam üzerinden mikro videolar indiriliyor...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Steam üzerinden logolar indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosLaunchBox">Downloading logos from LaunchBox...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">SteamGridDB üzerinden logolar indiriliyor...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Youtube üzerinden video indiriliyor...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">YouTube üzerinden video indirilemedi.
@@ -86,6 +88,7 @@ Lütfen yt-dlp kurulumunuzun güncel olup olmadığını denetleyin.</sys:String
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Seçilen oyunlar için Steam'den videolar indirin</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Seçilen oyunlar için Steam'den mikro videolar indirin</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Seçilen oyunlar için Steam'den logo indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadLaunchBoxLogosSelectedGames">Download logos from LaunchBox for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Seçilen oyunlar için logoları SteamGridDB'den indirin</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Extra Metadata dizinini aç</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Seçilen oyunların logolarını sil</sys:String>

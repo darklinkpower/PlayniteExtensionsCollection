@@ -107,7 +107,7 @@ namespace ExtraMetadataLoader.MetadataProviders
                 videoUrl = string.Format(_steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
             }
 
-            var videoResult = VideoResult.FromFilePath(videoUrl);
+            var videoResult = VideoResult.FromUrl(videoUrl);
             return Result<VideoResult>.Success(videoResult);
 
 
