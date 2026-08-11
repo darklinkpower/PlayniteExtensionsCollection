@@ -40,6 +40,20 @@ namespace ExtraMetadataLoader
                 { VerticalAlignment.Top, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop") },
                 { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom") },
             };
+
+            cmbAutomaticVideoDownloadSource.ItemsSource = new Dictionary<AutomaticVideoDownloadSource, string>
+            {
+                { AutomaticVideoDownloadSource.Steam, ResourceProvider.GetString("LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceSteam") },
+                { AutomaticVideoDownloadSource.EmuMovies, ResourceProvider.GetString("LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceEmuMovies") },
+                { AutomaticVideoDownloadSource.SteamThenEmuMovies, ResourceProvider.GetString("LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceSteamThenEmuMovies") },
+            };
+
+            cmbEmuMoviesVideoQuality.ItemsSource = new Dictionary<EmuMoviesVideoQuality, string>
+            {
+                { EmuMoviesVideoQuality.HD, ResourceProvider.GetString("LOCExtra_Metadata_Loader_EmuMoviesVideoQualityHD") },
+                { EmuMoviesVideoQuality.HQ, ResourceProvider.GetString("LOCExtra_Metadata_Loader_EmuMoviesVideoQualityHQ") },
+                { EmuMoviesVideoQuality.SQ, ResourceProvider.GetString("LOCExtra_Metadata_Loader_EmuMoviesVideoQualitySQ") },
+            };
         }
     }
 }
