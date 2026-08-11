@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Open video manager</sys:String>
@@ -36,6 +36,20 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Bottom</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingShowLoadingSpinnerLabel">Prikaži indikator učitavanja</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSizeLabel">Veličina indikatora (pikseli):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerOpacityLabel">Neprozirnost indikatora:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerSpeedLabel">Brzina indikatora (sekunde po okretu):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewLabel">Pregled:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerPreviewBackgroundLabel">Pozadina pregleda:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerThicknessLabel">Debljina indikatora (pikseli):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashCountLabel">Broj crtica indikatora:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerDashLengthLabel">Duljina crtice indikatora (1-100%):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerRoundedDashesLabel">Koristi zaobljene završetke crtica</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSpinnerAutoSpeedLabel">Automatski prilagodi brzinu indikatora prema veličini</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_SettingSafeAreaPaddingLabel">Razmak sigurnog područja (pikseli):</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingBackgroundImageOpacityLabel">Neprozirnost pozadinske slike:</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Use a global splash image for all games</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Use game logo in global splash image if it's available</sys:String>
@@ -57,3 +71,4 @@
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
     <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
 </ResourceDictionary>
+

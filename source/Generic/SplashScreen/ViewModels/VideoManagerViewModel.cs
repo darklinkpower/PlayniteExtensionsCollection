@@ -6,10 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace SplashScreen.ViewModels
@@ -25,14 +22,14 @@ namespace SplashScreen.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         
-        private IPlayniteAPI PlayniteApi;
-        private ICollectionView videoItemsCollection;
+        private IPlayniteAPI _playniteApi;
+        private ICollectionView _videoItemsCollection;
         public ICollectionView VideoItemsCollection
         {
-            get => videoItemsCollection;
+            get => _videoItemsCollection;
             set
             {
-                videoItemsCollection = value;
+                _videoItemsCollection = value;
                 OnPropertyChanged();
             }
         }
@@ -46,13 +43,13 @@ namespace SplashScreen.ViewModels
             }
         }
 
-        private string searchString = string.Empty;
+        private string _searchString = string.Empty;
         public string SearchString
         {
-            get { return searchString; }
+            get { return _searchString; }
             set
             {
-                searchString = value;
+                _searchString = value;
                 OnPropertyChanged();
                 VideoItemsCollection.Refresh();
             }
@@ -70,25 +67,25 @@ namespace SplashScreen.ViewModels
             }
         }
 
-        private SourceCollection selectedSourceItem;
+        private SourceCollection _selectedSourceItem;
         public SourceCollection SelectedSourceItem
         {
-            get { return selectedSourceItem; }
+            get { return _selectedSourceItem; }
             set
             {
-                selectedSourceItem = value;
+                _selectedSourceItem = value;
                 VideoItemsCollection.Refresh();
             }
         }
 
-        private VideoManagerItem selectedItem;
+        private VideoManagerItem _selectedItem;
         public VideoManagerItem SelectedItem
         {
-            get { return selectedItem; }
+            get { return _selectedItem; }
             set
             {
-                selectedItem = value;
-                if (selectedItem != null)
+                _selectedItem = value;
+                if (_selectedItem != null)
                 {
                     VideoSource = new Uri(SelectedItem.VideoPath);
                 }
@@ -96,27 +93,27 @@ namespace SplashScreen.ViewModels
             }
         }
 
-        private bool AddButtonIsEnabled = false;
-        private bool RemoveButtonIsEnabled = false;
+        private bool _addButtonIsEnabled = false;
+        private bool _removeButtonIsEnabled = false;
 
         private void SetButtonsStatuses()
         {
             if (SelectedItem == null)
             {
-                AddButtonIsEnabled = false;
-                RemoveButtonIsEnabled = false;
+                _addButtonIsEnabled = false;
+                _removeButtonIsEnabled = false;
                 return;
             }
             
             if (FileSystem.FileExists(SelectedItem.VideoPath))
             {
-                RemoveButtonIsEnabled = true;
+                _removeButtonIsEnabled = true;
             }
             else
             {
-                RemoveButtonIsEnabled = false;
+                _removeButtonIsEnabled = false;
             }
-            AddButtonIsEnabled = true;
+            _addButtonIsEnabled = true;
         }
 
         public RelayCommand<VideoManagerItem> AddVideoCommand
@@ -124,14 +121,14 @@ namespace SplashScreen.ViewModels
             get => new RelayCommand<VideoManagerItem>((item) =>
             {
                 AddVideo(item);
-            }, (item) => AddButtonIsEnabled);
+            }, (item) => _addButtonIsEnabled);
         }
 
         private bool AddVideo(VideoManagerItem videoManagerItem)
         {
             VideoSource = null;
             var videoDestinationPath = videoManagerItem.VideoPath;
-            var videoSourcePath = PlayniteApi.Dialogs.SelectFile("mp4|*.mp4");
+            var videoSourcePath = _playniteApi.Dialogs.SelectFile("mp4|*.mp4");
             if (string.IsNullOrEmpty(videoSourcePath))
             {
                 return false;
@@ -151,7 +148,7 @@ namespace SplashScreen.ViewModels
 
             FileSystem.CopyFile(videoSourcePath, videoDestinationPath, true);
             VideoSource = new Uri(videoDestinationPath);
-            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_IntroVideoAddedMessage"), "Splash Screen");
+            _playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_IntroVideoAddedMessage"), "Splash Screen");
             return true;
         }
 
@@ -160,25 +157,25 @@ namespace SplashScreen.ViewModels
             get => new RelayCommand<VideoManagerItem>((item) =>
             {
                 RemoveVideo(item);
-            }, (item) => RemoveButtonIsEnabled);
+            }, (item) => _removeButtonIsEnabled);
         }
 
         private void RemoveVideo(VideoManagerItem videoManagerItem)
         {
             VideoSource = null;
             FileSystem.DeleteFileSafe(videoManagerItem.VideoPath);
-            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_IntroVideoRemovedMessage"), "Splash Screen");
+            _playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_IntroVideoRemovedMessage"), "Splash Screen");
         }
 
         public VideoManagerViewModel(IPlayniteAPI api)
         {
-            PlayniteApi = api;
+            _playniteApi = api;
 
-            string videoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4");
-            List<VideoManagerItem> videoItemsCollection = new List<VideoManagerItem>();
+            var videoPathTemplate = Path.Combine(_playniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4");
+            var videoItemsCollection = new List<VideoManagerItem>();
 
             // Games
-            foreach (Game game in PlayniteApi.MainView.SelectedGames)
+            foreach (var game in _playniteApi.MainView.SelectedGames)
             {
                 var item = new VideoManagerItem
                 {
@@ -190,7 +187,7 @@ namespace SplashScreen.ViewModels
             }
 
             // Sources
-            foreach (GameSource source in PlayniteApi.Database.Sources)
+            foreach (var source in _playniteApi.Database.Sources)
             {
                 var item = new VideoManagerItem
                 {
@@ -202,7 +199,7 @@ namespace SplashScreen.ViewModels
             }
 
             // Sources
-            foreach (Platform platform in PlayniteApi.Database.Platforms)
+            foreach (var platform in _playniteApi.Database.Platforms)
             {
                 var item = new VideoManagerItem
                 {
@@ -243,7 +240,7 @@ namespace SplashScreen.ViewModels
 
         private bool CollectionFilter(object item)
         {
-            VideoManagerItem videoManagerItem = item as VideoManagerItem;
+            var videoManagerItem = item as VideoManagerItem;
             if (videoManagerItem.SourceCollection != SelectedSourceItem)
             {
                 return false;

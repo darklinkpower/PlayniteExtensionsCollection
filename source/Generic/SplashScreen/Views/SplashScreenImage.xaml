@@ -7,13 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="Black" Cursor="None">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Image Name="BackgroundImage" Stretch="UniformToFill"
-               HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3">
+
+         <Image Name="BackgroundImage" Stretch="UniformToFill" Opacity="{Binding Settings.BackgroundImageOpacity}"
+             HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image.Style>
                 <Style TargetType="Image">
                     <Setter Property="Source" Value="{Binding SplashImagePath, Converter={StaticResource ImageStringToImageConverter}}" />
@@ -25,57 +21,87 @@
                 </Style>
             </Image.Style>
         </Image>
-        <Image Name="LogoImage" Stretch="Uniform" VerticalAlignment="{Binding Settings.LogoVerticalAlignment}"
-               HorizontalAlignment="Center" Grid.ColumnSpan="1" Margin="20">
-            <Image.Effect>
-                <DropShadowEffect Direction="0" Color="#FF000000" ShadowDepth="0" BlurRadius="40" />
-            </Image.Effect>
-            <Image.Style>
-                <Style TargetType="Image">
-                    <Setter Property="Source" Value="{x:Null}" />
-                    <Setter Property="Grid.Column" Value="0" />
-                    <Setter Property="Opacity" Value="1.0" />
-                    <Setter Property="Tag" Value="False" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding LogoPath, Converter={StaticResource NullToBoolConverter}}" Value="True">
-                            <Setter Property="Source" Value="{Binding LogoPath, Converter={StaticResource ImageStringToImageConverter}}" />
-                            <Setter Property="Tag" Value="True" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SplashImagePath}" Value="{x:Null}">
-                            <Setter Property="Source" Value="{x:Null}" />
-                            <Setter Property="Tag" Value="False" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Center">
-                            <Setter Property="Grid.Column" Value="1" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Right">
-                            <Setter Property="Grid.Column" Value="2" />
-                        </DataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
-                                <Condition Binding="{Binding Settings.EnableLogoFadeInAnimation}" Value="True" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Source, Converter={StaticResource NullToBoolConverter}}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:2.5" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiDataTrigger.EnterActions>
-                        </MultiDataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Image.Style>
-        </Image>
-        
-        <Border Background="Black" Grid.Column="0" Grid.ColumnSpan="3">
+
+        <Grid Margin="{Binding Settings.SafeAreaPadding, StringFormat={}{0}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Name="LogoImage" Stretch="Uniform" VerticalAlignment="{Binding Settings.LogoVerticalAlignment}"
+                   HorizontalAlignment="Center" Grid.ColumnSpan="1" Margin="20">
+                <Image.Effect>
+                    <DropShadowEffect Direction="0" Color="#FF000000" ShadowDepth="0" BlurRadius="40" />
+                </Image.Effect>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="{x:Null}" />
+                        <Setter Property="Grid.Column" Value="0" />
+                        <Setter Property="Opacity" Value="1.0" />
+                        <Setter Property="Tag" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding LogoPath, Converter={StaticResource NullToBoolConverter}}" Value="True">
+                                <Setter Property="Source" Value="{Binding LogoPath, Converter={StaticResource ImageStringToImageConverter}}" />
+                                <Setter Property="Tag" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SplashImagePath}" Value="{x:Null}">
+                                <Setter Property="Source" Value="{x:Null}" />
+                                <Setter Property="Tag" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Center">
+                                <Setter Property="Grid.Column" Value="1" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Right">
+                                <Setter Property="Grid.Column" Value="2" />
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
+                                    <Condition Binding="{Binding Settings.EnableLogoFadeInAnimation}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Source, Converter={StaticResource NullToBoolConverter}}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:2.5" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiDataTrigger.EnterActions>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+
+            <Grid Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,12,12">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Settings.EnableLoadingSpinner}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Path x:Name="SpinnerPath" Width="{Binding Settings.LoadingSpinnerSize}" Height="{Binding Settings.LoadingSpinnerSize}" Stroke="#FFFFFFFF" StrokeThickness="{Binding Settings.LoadingSpinnerThickness}" Opacity="{Binding Settings.LoadingSpinnerOpacity}" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                    <Path.Effect>
+                        <DropShadowEffect Direction="0" Color="#FF000000" ShadowDepth="0" BlurRadius="20"/>
+                    </Path.Effect>
+                    <Path.RenderTransform>
+                        <RotateTransform />
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+        </Grid>
+
+        <Border Background="Black">
             <Border.Style>
                 <Style TargetType="Border">
                     <Setter Property="Opacity" Value="0.0" />
                     <Style.Triggers>
-                        
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
@@ -90,7 +116,7 @@
                                 </BeginStoryboard>
                             </MultiDataTrigger.EnterActions>
                         </MultiDataTrigger>
-                        
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
@@ -105,7 +131,7 @@
                                 </BeginStoryboard>
                             </MultiDataTrigger.EnterActions>
                         </MultiDataTrigger>
-                        
+
                     </Style.Triggers>
                 </Style>
             </Border.Style>
