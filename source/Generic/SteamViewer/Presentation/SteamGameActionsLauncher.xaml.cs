@@ -4,6 +4,7 @@ using PluginsCommon;
 using SteamCommon;
 using SteamShortcuts.Application;
 using SteamShortcuts.Domain.Enums;
+using SteamShortcuts.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,17 +34,20 @@ namespace SteamShortcuts.Presentation
         public SteamShortcutsSettingsViewModel SettingsModel { get; }
 
         private readonly SteamUriLauncherService _launcher;
+        private readonly DiscoverSupportedFeaturesService _featuresService;
         private string _steamId = string.Empty;
         private bool _areBindingValuesDefault = true;
 
         public SteamGameActionsLauncher(
             SteamUriLauncherService steamUriLauncherService,
+            DiscoverSupportedFeaturesService discoverSupportedFeaturesSerivce,
             SteamShortcutsSettingsViewModel settingsViewModel,
             IPlayniteAPI playniteApi,
             ILogger logger) : base(playniteApi)
         {
             InitializeComponent();
             _launcher = steamUriLauncherService ?? throw new ArgumentNullException(nameof(steamUriLauncherService));
+            _featuresService = discoverSupportedFeaturesSerivce ?? throw new ArgumentNullException(nameof(discoverSupportedFeaturesSerivce));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             SettingsModel = settingsViewModel ?? throw new ArgumentNullException(nameof(settingsViewModel));
             DataContext = this;
@@ -83,6 +87,23 @@ namespace SteamShortcuts.Presentation
             }
             
             _steamId = foundSteamId;
+            _ = _featuresService.GetFeatures(foundSteamId).ContinueWith(task =>
+            {
+                var features = SupportedFeatures.All;
+
+                if (task.Status == TaskStatus.RanToCompletion)
+                {
+                    features = task.Result ?? SupportedFeatures.All;
+                }
+
+                PlayniteApi.MainView.UIDispatcher.Invoke(() =>
+                {
+                    MenuItemGameAchievements.Visibility = features.Achievements ? Visibility.Visible : Visibility.Collapsed;
+                    MenuItemGamePointsShop.Visibility = features.PointsShop ? Visibility.Visible : Visibility.Collapsed;
+                    MenuItemGameWorkshop.Visibility = features.Workshop ? Visibility.Visible : Visibility.Collapsed;
+                });
+            });
+            
             Visibility = Visibility.Visible;
             SettingsModel.Settings.IsControlVisible = true;
             _areBindingValuesDefault = false;

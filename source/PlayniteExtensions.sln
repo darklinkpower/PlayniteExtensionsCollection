@@ -406,6 +406,8 @@ Global
 		Common\FlowHttp\FlowHttp.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
 		Common\EventsCommon\EventsCommon.projitems*{a802a57c-64a5-40c2-8528-8c4c8fcbf77b}*SharedItemsImports = 4
 		Common\FlowHttp\FlowHttp.projitems*{abaf89bf-6b65-4091-b4bf-73fa058fea7a}*SharedItemsImports = 4
+		Common\FlowHttp\FlowHttp.projitems*{b362182c-0d36-4e85-94d6-2504ca50ed5a}*SharedItemsImports = 4
+		Common\SteamCommon\SteamCommon.projitems*{b362182c-0d36-4e85-94d6-2504ca50ed5a}*SharedItemsImports = 4
 		Common\ThrottlerSharp\ThrottlerSharp.projitems*{b3a1fefc-8c7f-4aa7-9993-b1d4f51222a9}*SharedItemsImports = 13
 		Common\FlowHttp\FlowHttp.projitems*{b572d4f6-ebdb-475e-a0d6-ce4ce050ab47}*SharedItemsImports = 4
 		Common\FlowHttp\FlowHttp.projitems*{bcb07ce2-d6e4-4c73-b133-cc5a6ad1bfc4}*SharedItemsImports = 4

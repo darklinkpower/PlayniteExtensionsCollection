@@ -7,6 +7,7 @@ using PluginsCommon;
 using SteamCommon;
 using SteamShortcuts.Application;
 using SteamShortcuts.Domain.Enums;
+using SteamShortcuts.Domain.ValueObjects;
 using SteamShortcuts.Presentation;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace SteamShortcuts
         public SteamShortcutsSettingsViewModel Settings { get; set; }
         private readonly List<GameMenuItem> _steamComponentMenuItems;
         private static readonly string _menuSection = ResourceProvider.GetString("LOCSteam_Viewer_SteamShortcutsLabel");
+        private readonly DiscoverSupportedFeaturesService _featuresService;
 
         public override Guid Id { get; } = Guid.Parse("0a3edabb-065f-4056-a294-d6bc0656e2ac");
 
@@ -35,6 +37,7 @@ namespace SteamShortcuts
             Properties = new GenericPluginProperties { HasSettings = true };
             _steamComponentMenuItems = GetSteamComponentMenuItems();
             _steamUriLauncherService.LaunchUrlsInSteamClient = Settings.Settings.LaunchUrlsInSteamClient;
+            _featuresService = new DiscoverSupportedFeaturesService();
 
             AddSettingsSupport(new AddSettingsSupportArgs
             {
@@ -53,7 +56,7 @@ namespace SteamShortcuts
         {
             if (args.Name == "SteamGameActionsLauncher")
             {
-                return new SteamGameActionsLauncher(_steamUriLauncherService, Settings, PlayniteApi, _logger);
+                return new SteamGameActionsLauncher(_steamUriLauncherService, _featuresService, Settings, PlayniteApi, _logger);
             }
 
             return null;
@@ -113,11 +116,25 @@ namespace SteamShortcuts
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameCommunityHubDescription", SteamUrlType.CommunityHub, steamId),
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameDiscussionsDescription", SteamUrlType.Discussions, steamId, '\uED44'),
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameGuidesDescription", SteamUrlType.Guides, steamId, '\uEF8B'),
-                CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, steamId, '\uEDD7'),
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameNewsDescription", SteamUrlType.News, steamId, '\uEFA7'),
-                CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, steamId, '\uEFE7'),
-                CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameWorkshopDescription", SteamUrlType.Workshop, steamId, '\uE9C4')
             });
+
+            var feature = _featuresService.GetCachedFeature(steamId) ?? SupportedFeatures.All;
+               
+            if (feature.Achievements)
+            {
+                menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, steamId, '\uEDD7'));
+            }
+
+            if (feature.PointsShop)
+            {
+                menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, steamId, '\uEFE7'));
+            }
+
+            if (feature.Workshop)
+            {
+                menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameWorkshopDescription", SteamUrlType.Workshop, steamId, '\uE9C4'));
+            }
         }
 
         private List<GameMenuItem> GetSteamComponentMenuItems()
@@ -175,6 +192,29 @@ namespace SteamShortcuts
         {
             return new SteamShortcutsSettingsView();
         }
-    }
 
+        public override void OnGameSelected(OnGameSelectedEventArgs args)
+        {
+            // Happens when transitioning to another layout (e.g., details to grid)
+            if (args.NewValue is null)
+            {
+                return;
+            }
+
+            if (args.NewValue.Count > 1)
+            {
+                return;
+            }
+
+            var game = args.NewValue[0];
+            string steamId = Steam.GetGameSteamId(game, Settings.Settings.AddWebLinksForNonSteam);
+
+            if (string.IsNullOrEmpty(steamId))
+            {
+                return;
+            }
+
+            _ = _featuresService.GetFeatures(steamId);
+        }
+    }
 }
