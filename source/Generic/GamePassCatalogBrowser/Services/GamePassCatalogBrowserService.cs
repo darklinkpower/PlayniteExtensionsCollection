@@ -260,7 +260,7 @@ namespace GamePassCatalogBrowser.Services
             DownloadGamePassGameCache(gamePassGame);
 
             var gameAdded = false;
-            if (addNewGames && gamePassGame.ProductType == ProductType.Game)
+            if (addNewGames && (gamePassGame.ProductType == ProductType.Game || gamePassGame.ProductType == ProductType.EaGame))
             {
                 xboxLibraryHelper.AddGameToLibrary(gamePassGame, false);
                 if (gameAdded)
