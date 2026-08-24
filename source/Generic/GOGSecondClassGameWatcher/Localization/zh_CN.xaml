@@ -23,7 +23,7 @@
     <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">成就问题</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">缺少所有成就</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">缺少部分成就</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Broken achievements</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">卡死的成就</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">开发者对成就的回应</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_SourceLabel">来源</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">打开信息窗口</sys:String>
