@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">レビュー</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">投稿日: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">おすすめ</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">おすすめしない</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">おすすめしません</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">レビュー投稿時点: {0} 時間 {1} 分</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">総プレイ時間: {0} 時間 {1} 分</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} 人がこのレビューが参考になったと投票しました</sys:String>
