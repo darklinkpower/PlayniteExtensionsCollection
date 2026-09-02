@@ -42,31 +42,43 @@ namespace PurchaseDateImporter.Services
         {
             var licensesList = new List<LicenseData>();
             var licensesRegex = @"(?:<td class=""license_date_col"">)(.*?(?=<\/td>))(?:<\/td>\s+<td>)(?:\s+<div class=""free_license_remove_link"">(?:[\s\S]*?(?=<\/div>))<\/div>)?(?:\s+)([^\t]+)";
-            var licensePageSource = GetLicensesPageContent();
-            if (licensePageSource.IsNullOrEmpty())
+            var continuationTokenRegex = @"license_paginator_next""\s+href=""\?continuationToken=([^""&]+)";
+            var continuationToken = string.Empty;
+            while (true)
             {
-                return licensesList;
-            }
+                var licensePageSource = GetLicensesPageContent(continuationToken, 0); // They don't care what the offset is
+                if (licensePageSource.IsNullOrEmpty())
+                {
+                    break;
+                }
 
-            var licenseMatches = Regex.Matches(licensePageSource, licensesRegex);
-            if (licenseMatches.Count == 0)
-            {
-                return licensesList;
-            }
+                var licenseMatches = Regex.Matches(licensePageSource, licensesRegex);
+                if (licenseMatches.Count == 0)
+                {
+                    break;
+                }
 
-            foreach (Match licenseMatch in licenseMatches)
-            {
-                licensesList.Add(new LicenseData(licenseMatch.Groups[2].Value.HtmlDecode(), DateTime.Parse(licenseMatch.Groups[1].Value)));
+                foreach (Match licenseMatch in licenseMatches)
+                {
+                    licensesList.Add(new LicenseData(licenseMatch.Groups[2].Value.HtmlDecode(), DateTime.Parse(licenseMatch.Groups[1].Value)));
+                }
+
+                var continuationTokenMatches = Regex.Match(licensePageSource, continuationTokenRegex);
+                if (!continuationTokenMatches.Success)
+                {
+                    break;
+                }
+                continuationToken = continuationTokenMatches.Groups[1].Value;
             }
 
             return licensesList;
         }
 
-        private static string GetLicensesPageContent()
+        private static string GetLicensesPageContent(string continuationToken, uint offset)
         {
             using (var webView = Playnite.SDK.API.Instance.WebViews.CreateOffscreenView())
             {
-                webView.NavigateAndWait("https://store.steampowered.com/account/licenses/?l=english");
+                webView.NavigateAndWait(string.Format("https://store.steampowered.com/account/licenses/?l=english&continuationToken={0}&offset={1}", continuationToken, offset));
                 return webView.GetPageSource();
             }
         }
