@@ -85,7 +85,9 @@ namespace NVIDIAGeForceNowEnabler
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Stove,
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Unknown,
                 [Guid.Parse("c2f038e5-8b92-4877-91f1-da9094155fc5")] = AppStore.Uplay,
-                [Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287")] = AppStore.Xbox
+                [Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287")] = AppStore.Xbox,
+                // Microsoft XCloud Importer (Joyrider3774): Game Pass catalog, matched by name like Xbox
+                [Guid.Parse("5befaf7a-a0af-4ce2-992c-bc048d94e71b")] = AppStore.Xbox
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Wargaming
             };
 
