@@ -37,7 +37,7 @@ namespace NVIDIAGeForceNowEnabler.Models
         public Guid Id { get; set; }
 
         [SerializationPropertyName("cmsId")]
-        public long CmsId { get; set; }
+        public long? CmsId { get; set; }
 
         [SerializationPropertyName("title")]
         public string Title { get; set; }
