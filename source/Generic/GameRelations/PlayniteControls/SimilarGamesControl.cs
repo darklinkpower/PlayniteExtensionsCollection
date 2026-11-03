@@ -1,14 +1,9 @@
 ﻿using GameRelations.Interfaces;
 using GameRelations.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using TemporaryCache;
 
 namespace GameRelations.PlayniteControls
 {
@@ -30,17 +25,28 @@ namespace GameRelations.PlayniteControls
             };
         }
 
-        public override IEnumerable<Game> GetMatchingGames(Game game)
+        internal override object CreateMatchingSettingsSnapshot()
         {
-            var tagsSet = GetItemsNotInHashSet(game.TagIds, _controlSettings.TagsToIgnore).ToHashSet();
-            var genresSet = GetItemsNotInHashSet(game.GenreIds, _controlSettings.GenresToIgnore).ToHashSet();
-            var categoriesSet = GetItemsNotInHashSet(game.CategoryIds, _controlSettings.CategoriesToIgnore).ToHashSet();
+            return new SimilarGamesMatchingSettings
+            {
+                TagsToIgnore = _controlSettings.TagsToIgnore.ToHashSet(),
+                CategoriesToIgnore = _controlSettings.CategoriesToIgnore.ToHashSet(),
+                GenresToIgnore = _controlSettings.GenresToIgnore.ToHashSet(),
+                ExcludeGamesSameSeries = _controlSettings.ExcludeGamesSameSeries
+            };
+        }
 
-            var seriesHashSet = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
+        internal override IEnumerable<GameRelationSnapshot> GetMatchingGames(GameRelationSnapshot game, List<GameRelationSnapshot> libraryGames, object matchingSettings)
+        {
+            var controlSettings = (SimilarGamesMatchingSettings)matchingSettings;
+            var tagsSet = GetItemsNotInHashSet(game.TagIds, controlSettings.TagsToIgnore).ToHashSet();
+            var genresSet = GetItemsNotInHashSet(game.GenreIds, controlSettings.GenresToIgnore).ToHashSet();
+            var categoriesSet = GetItemsNotInHashSet(game.CategoryIds, controlSettings.CategoriesToIgnore).ToHashSet();
+            var seriesHashSet = game.SeriesIds.ToHashSet();
 
             var minScoreThreshold = _propertiesWeights.Count * _minMatchValueFactor;
-            var similarityScores = new Dictionary<Game, double>();
-            foreach (var otherGame in PlayniteApi.Database.Games)
+            var similarityScores = new Dictionary<GameRelationSnapshot, double>();
+            foreach (var otherGame in libraryGames)
             {
                 if (otherGame.Id == game.Id)
                 {
@@ -52,14 +58,14 @@ namespace GameRelations.PlayniteControls
                     continue;
                 }
 
-                if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, seriesHashSet))
+                if (controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, seriesHashSet))
                 {
                     continue;
                 }
 
-                var tagsScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.TagIds, _controlSettings.TagsToIgnore), tagsSet) * _propertiesWeights["tags"];
-                var genresScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.GenreIds, _controlSettings.GenresToIgnore), genresSet) * _propertiesWeights["genres"];
-                var categoriesScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.CategoryIds, _controlSettings.CategoriesToIgnore), categoriesSet) * _propertiesWeights["categories"];
+                var tagsScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.TagIds, controlSettings.TagsToIgnore), tagsSet) * _propertiesWeights["tags"];
+                var genresScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.GenreIds, controlSettings.GenresToIgnore), genresSet) * _propertiesWeights["genres"];
+                var categoriesScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.CategoryIds, controlSettings.CategoriesToIgnore), categoriesSet) * _propertiesWeights["categories"];
 
                 var finalScore = tagsScore + genresScore + categoriesScore;
                 if (finalScore >= minScoreThreshold)
@@ -68,10 +74,8 @@ namespace GameRelations.PlayniteControls
                 }
             }
 
-            var similarGames = similarityScores.OrderByDescending(pair => pair.Value)
+            return similarityScores.OrderByDescending(pair => pair.Value)
                 .Select(pair => pair.Key);
-
-            return similarGames;
         }
     }
 }
