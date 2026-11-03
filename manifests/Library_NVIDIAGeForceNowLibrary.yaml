@@ -345,3 +345,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.04.10_d88fcb58/NVIDIA_GeForce_Now_Enabler_2_55.pext
     Changelog:
     - 'Fixed: Crash during obtaining of games database due to newly added unsupported store "GAIJIN"'
+  - Version: 2.56
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-11-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.11.03_8f8461b5/NVIDIA_GeForce_Now_Enabler_2_56.pext
+    Changelog:
+    - 'Fixed: Failing to process geforce database (By trunckz)'
+    - 'Added: Support for Microsoft XCloud Importer library plugin (By trunckz)'

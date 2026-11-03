@@ -105,3 +105,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.16_8bb45638/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_29.pext
     Changelog:
     - 'Fixed: Being unable to update dates for GOG Library'
+  - Version: 2.30
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-11-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.11.03_8f8461b5/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_30.pext
+    Changelog:
+    - 'Fixed: Failing to obtain data older than the last 100 purchases on Steam (By NamLe029)'
+    - 'Fixed: Failing to obtain data from the Epic Games Store games (By NamLe029)'
