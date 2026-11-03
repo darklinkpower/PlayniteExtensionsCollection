@@ -14,7 +14,7 @@ namespace ReviewViewer.Infrastructure
 {
     public class SteamReviewsService : ISteamReviewsProvider
     {
-        private const string BaseUrl = "https://store.steampowered.com/appreviews";
+        private const string BaseUrl = "https://store.steampowered.com/ajaxappreviews";
         private readonly TimeLimiter _requestLimiter;
         private static readonly Dictionary<SteamLanguage, string> _steamQueryMap = new Dictionary<SteamLanguage, string>
         {
