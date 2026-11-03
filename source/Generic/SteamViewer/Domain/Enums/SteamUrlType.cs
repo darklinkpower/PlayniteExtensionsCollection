@@ -14,6 +14,7 @@ namespace SteamShortcuts.Domain.Enums
         Guides,
         Achievements,
         News,
-        PointsShop
+        PointsShop,
+        Workshop
     }
 }
