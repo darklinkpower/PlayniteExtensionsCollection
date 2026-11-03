@@ -32,7 +32,7 @@ namespace PurchaseDateImporter.Services
         public static List<LicenseData> GetLicenses()
         {
             var licensesList = new List<LicenseData>();
-            var apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?sortDir=DESC&sortBy=DATE&locale=en-US&nextPageToken={0}";
+            var apiTemplate = "https://accounts.epicgames.com/account/v2/payment/ajaxGetOrderHistory?sortDir=DESC&sortBy=DATE&locale=en-US&nextPageToken={0}";
 
             var nextPageToken = DateTime.Now.ToString("u").Replace(" ", "T");
             using (var webView = Playnite.SDK.API.Instance.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = epicUserAgent }))
