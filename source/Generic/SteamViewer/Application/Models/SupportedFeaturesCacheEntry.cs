@@ -1,4 +1,4 @@
-﻿using SteamShortcuts.Domain.Models;
+﻿using SteamShortcuts.Domain.Enums;
 using SteamShortcuts.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,6 @@ using SteamCommon;
 using SteamShortcuts.Application;
 using SteamShortcuts.Application.Services;
 using SteamShortcuts.Domain.Enums;
-using SteamShortcuts.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,13 +116,13 @@ namespace SteamShortcuts.Presentation
                 }
 
                 MenuItemGameAchievements.Visibility =
-                    features.Achievements ? Visibility.Visible : Visibility.Collapsed;
+                    features.HasFlag(SupportedFeatures.Achievements) ? Visibility.Visible : Visibility.Collapsed;
 
                 MenuItemGamePointsShop.Visibility =
-                    features.PointsShop ? Visibility.Visible : Visibility.Collapsed;
+                    features.HasFlag(SupportedFeatures.PointsShop) ? Visibility.Visible : Visibility.Collapsed;
 
                 MenuItemGameWorkshop.Visibility =
-                    features.Workshop ? Visibility.Visible : Visibility.Collapsed;
+                    features.HasFlag(SupportedFeatures.Workshop) ? Visibility.Visible : Visibility.Collapsed;
             });
         }
 

@@ -1,6 +1,6 @@
 ﻿using SteamShortcuts.Application.Interfaces;
 using SteamShortcuts.Application.Models;
-using SteamShortcuts.Domain.Models;
+using SteamShortcuts.Domain.Enums;
 using SteamShortcuts.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -19,8 +19,8 @@ namespace SteamShortcuts.Application.Services
 
         private readonly object _lock = new object();
 
-        private readonly Dictionary<string, Task<SupportedFeatures>> _runningRequests =
-            new Dictionary<string, Task<SupportedFeatures>>();
+        private readonly Dictionary<string, Task<SupportedFeatures?>> _runningRequests =
+            new Dictionary<string, Task<SupportedFeatures?>>();
 
         public DiscoverSupportedFeaturesService(
             ISupportedFeaturesCacheRepository cacheRepository,
@@ -32,13 +32,13 @@ namespace SteamShortcuts.Application.Services
             _cacheExpiration = cacheExpiration;
         }
 
-        public SupportedFeatures GetCachedFeatures(string steamId)
+        public SupportedFeatures? GetCachedFeatures(string steamId)
         {
             var entry = _cacheRepository.Get(steamId);
-            return entry?.Features;
+            return entry?.Features ?? SupportedFeatures.None;
         }
 
-        public async Task<SupportedFeatures> GetFeaturesAsync(string steamId)
+        public async Task<SupportedFeatures?> GetFeaturesAsync(string steamId)
         {
             if (steamId.IsNullOrEmpty())
             {
@@ -64,15 +64,13 @@ namespace SteamShortcuts.Application.Services
             return DateTime.UtcNow - entry.CreatedAt >= _cacheExpiration;
         }
 
-        private Task<SupportedFeatures> GetOrStartRequestAsync(
+        private Task<SupportedFeatures?> GetOrStartRequestAsync(
             string steamId,
             SupportedFeaturesCacheEntry cachedEntry)
         {
             lock (_lock)
             {
-                Task<SupportedFeatures> runningTask;
-
-                if (_runningRequests.TryGetValue(steamId, out runningTask))
+                if (_runningRequests.TryGetValue(steamId, out var runningTask))
                 {
                     return runningTask;
                 }
@@ -85,7 +83,7 @@ namespace SteamShortcuts.Application.Services
             }
         }
 
-        private async Task<SupportedFeatures> RefreshFeaturesAsync(
+        private async Task<SupportedFeatures?> RefreshFeaturesAsync(
             string steamId,
             SupportedFeaturesCacheEntry cachedEntry)
         {
@@ -102,7 +100,7 @@ namespace SteamShortcuts.Application.Services
 
                 var entry = new SupportedFeaturesCacheEntry(
                     steamId,
-                    features);
+                    features ?? SupportedFeatures.None);
 
                 try
                 {

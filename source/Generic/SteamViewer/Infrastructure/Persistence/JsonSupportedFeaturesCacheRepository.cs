@@ -26,7 +26,7 @@ namespace SteamShortcuts.Infrastructure.Persistence
 
         public SupportedFeaturesCacheEntry Get(string steamId)
         {
-            if (string.IsNullOrEmpty(steamId))
+            if (steamId.IsNullOrEmpty())
             {
                 return null;
             }

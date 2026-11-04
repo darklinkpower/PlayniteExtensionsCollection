@@ -8,8 +8,6 @@ using SteamCommon;
 using SteamShortcuts.Application;
 using SteamShortcuts.Application.Services;
 using SteamShortcuts.Domain.Enums;
-using SteamShortcuts.Domain.Models;
-using SteamShortcuts.Domain.ValueObjects;
 using SteamShortcuts.Infrastructure;
 using SteamShortcuts.Infrastructure.Persistence;
 using SteamShortcuts.Presentation;
@@ -137,18 +135,18 @@ namespace SteamShortcuts
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameNewsDescription", SteamUrlType.News, steamId, '\uEFA7'),
             });
 
-            var feature = _featuresService.GetCachedFeatures(steamId) ?? SupportedFeatures.All;
-            if (feature.Achievements)
+            var features = _featuresService.GetCachedFeatures(steamId) ?? SupportedFeatures.All;
+            if (features.HasFlag(SupportedFeatures.Achievements))
             {
                 menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, steamId, '\uEDD7'));
             }
 
-            if (feature.PointsShop)
+            if (features.HasFlag(SupportedFeatures.PointsShop))
             {
                 menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, steamId, '\uEFE7'));
             }
 
-            if (feature.Workshop)
+            if (features.HasFlag(SupportedFeatures.Workshop))
             {
                 menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameWorkshopDescription", SteamUrlType.Workshop, steamId, '\uE9C4'));
             }

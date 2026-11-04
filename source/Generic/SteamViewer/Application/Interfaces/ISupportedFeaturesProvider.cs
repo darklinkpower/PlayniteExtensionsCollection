@@ -1,4 +1,4 @@
-﻿using SteamShortcuts.Domain.Models;
+﻿using SteamShortcuts.Domain.Enums;
 using SteamShortcuts.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace SteamShortcuts.Application.Interfaces
 {
     public interface ISupportedFeaturesProvider
     {
-        Task<SupportedFeatures> GetFeaturesAsync(
+        Task<SupportedFeatures?> GetFeaturesAsync(
             string steamId,
             CancellationToken cancellationToken);
     }

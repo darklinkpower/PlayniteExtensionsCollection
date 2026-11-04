@@ -226,8 +226,8 @@
     <Compile Include="Domain\Enums\SteamComponentType.cs" />
     <Compile Include="Domain\Enums\SteamUrlType.cs" />
     <Compile Include="Application\SteamUriLauncherService.cs" />
+    <Compile Include="Domain\Enums\SupportedFeatures.cs" />
     <Compile Include="Domain\ValueObjects\PointsShopCount.cs" />
-    <Compile Include="Domain\Models\SupportedFeatures.cs" />
     <Compile Include="Infrastructure\Persistence\JsonSupportedFeaturesCacheRepository.cs" />
     <Compile Include="Infrastructure\QueryRewardItems.cs" />
     <Compile Include="Infrastructure\SteamSupportedFeaturesProvider.cs" />
@@ -272,14 +272,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Domain\Models\" />
     <Folder Include="Shared\PluginsCommon\ControlBehaviors\" />
   </ItemGroup>
-  <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
-  <Import Project="..\..\Common\SteamCommon\SteamCommon.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\..\Common\FlowHttp\FlowHttp.projitems" Label="Shared" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
