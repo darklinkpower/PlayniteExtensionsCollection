@@ -177,7 +177,7 @@ namespace GamePassCatalogBrowser
                 return false;
             }
 
-            if (game.ProductType != ProductType.Game)
+            if (game.ProductType != ProductType.Game && game.ProductType != ProductType.EaGame)
             {
                 return false;
             }

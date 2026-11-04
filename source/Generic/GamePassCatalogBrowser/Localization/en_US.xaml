@@ -29,5 +29,6 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notify of Game Pass catalog updates</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Add expired tag to games removed from Game Pass</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Add newly added games when updating the Game Pass catalog to the Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto">Add newly added EA Play games to the Playnite library</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Remove removed games when updating the Game Pass catalog from the Playnite library if they have not been played</sys:String>
 </ResourceDictionary>

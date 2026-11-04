@@ -33,6 +33,7 @@ namespace GamePassCatalogBrowser.Services
         private readonly bool notifyCatalogUpdates;
         private readonly bool addExpiredTagToGames;
         private readonly bool addNewGames;
+        private readonly bool addNewEaGames;
         private readonly bool removeExpiredGames;
         public XboxLibraryHelper xboxLibraryHelper;
 
@@ -41,13 +42,14 @@ namespace GamePassCatalogBrowser.Services
             FileSystem.ClearDirectory(cachePath);
         }
 
-        public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, bool _addExpiredTagToGames, bool _addNewGames, bool _removeExpiredGames, string _countryCode, string _languageCode = "en-us")
+        public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, bool _addExpiredTagToGames, bool _addNewGames, bool _addNewEaGames, bool _removeExpiredGames, string _countryCode, string _languageCode = "en-us")
         {
             playniteApi = api;
             userDataPath = dataPath;
             notifyCatalogUpdates = _notifyCatalogUpdates;
             addExpiredTagToGames = _addExpiredTagToGames;
             addNewGames = _addNewGames;
+            addNewEaGames = _addNewEaGames;
             removeExpiredGames = _removeExpiredGames;
 
             cachePath = Path.Combine(userDataPath, "cache");
@@ -260,9 +262,10 @@ namespace GamePassCatalogBrowser.Services
             DownloadGamePassGameCache(gamePassGame);
 
             var gameAdded = false;
-            if (addNewGames && gamePassGame.ProductType == ProductType.Game)
+            if ((addNewGames && gamePassGame.ProductType == ProductType.Game) ||
+                (addNewEaGames && gamePassGame.ProductType == ProductType.EaGame))
             {
-                xboxLibraryHelper.AddGameToLibrary(gamePassGame, false);
+                gameAdded = xboxLibraryHelper.AddGameToLibrary(gamePassGame, false);
                 if (gameAdded)
                 {
                     playniteApi.Notifications.Add(new NotificationMessage(

@@ -22,6 +22,7 @@
         <CheckBox IsChecked="{Binding Settings.NotifyCatalogUpdates}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates}" Margin="0,10,0,0"/>
         <CheckBox IsChecked="{Binding Settings.AddExpiredTagToGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames}" Margin="0,10,0,0"/>
         <CheckBox IsChecked="{Binding Settings.AddNewGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto}" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.AddNewEaGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto}" Margin="0,10,0,0"/>
         <CheckBox IsChecked="{Binding Settings.RemoveExpiredGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>
