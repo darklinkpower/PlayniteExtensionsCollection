@@ -218,14 +218,19 @@
     <Compile Include="..\..\Common\SteamCommon\Web.cs">
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
-    <Compile Include="Application\DiscoverSupportedFeaturesService.cs" />
+    <Compile Include="Application\Interfaces\ISupportedFeaturesCacheRepository.cs" />
+    <Compile Include="Application\Interfaces\ISupportedFeaturesProvider.cs" />
+    <Compile Include="Application\Models\SupportedFeaturesCacheEntry.cs" />
+    <Compile Include="Application\Services\DiscoverSupportedFeaturesService.cs" />
     <Compile Include="Domain\Enums\SteamClientGameUriType.cs" />
     <Compile Include="Domain\Enums\SteamComponentType.cs" />
     <Compile Include="Domain\Enums\SteamUrlType.cs" />
     <Compile Include="Application\SteamUriLauncherService.cs" />
     <Compile Include="Domain\ValueObjects\PointsShopCount.cs" />
-    <Compile Include="Domain\ValueObjects\SupportedFeatures.cs" />
+    <Compile Include="Domain\Models\SupportedFeatures.cs" />
+    <Compile Include="Infrastructure\Persistence\JsonSupportedFeaturesCacheRepository.cs" />
     <Compile Include="Infrastructure\QueryRewardItems.cs" />
+    <Compile Include="Infrastructure\SteamSupportedFeaturesProvider.cs" />
     <Compile Include="Presentation\SteamGameActionsLauncher.xaml.cs">
       <DependentUpon>SteamGameActionsLauncher.xaml</DependentUpon>
     </Compile>

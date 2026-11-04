@@ -3,8 +3,9 @@ using Playnite.SDK.Models;
 using PluginsCommon;
 using SteamCommon;
 using SteamShortcuts.Application;
+using SteamShortcuts.Application.Services;
 using SteamShortcuts.Domain.Enums;
-using SteamShortcuts.Domain.ValueObjects;
+using SteamShortcuts.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,32 +88,52 @@ namespace SteamShortcuts.Presentation
             }
             
             _steamId = foundSteamId;
-            _ = _featuresService.GetFeatures(foundSteamId).ContinueWith(task =>
-            {
-                var features = SupportedFeatures.All;
+            _ = UpdateSupportedFeaturesAsync(foundSteamId);
 
-                if (task.Status == TaskStatus.RanToCompletion)
-                {
-                    features = task.Result ?? SupportedFeatures.All;
-                }
-
-                PlayniteApi.MainView.UIDispatcher.Invoke(() =>
-                {
-                    MenuItemGameAchievements.Visibility = features.Achievements ? Visibility.Visible : Visibility.Collapsed;
-                    MenuItemGamePointsShop.Visibility = features.PointsShop ? Visibility.Visible : Visibility.Collapsed;
-                    MenuItemGameWorkshop.Visibility = features.Workshop ? Visibility.Visible : Visibility.Collapsed;
-                });
-            });
-            
             Visibility = Visibility.Visible;
             SettingsModel.Settings.IsControlVisible = true;
             _areBindingValuesDefault = false;
+        }
+
+        private async Task UpdateSupportedFeaturesAsync(string steamId)
+        {
+            var features = SupportedFeatures.All;
+
+            try
+            {
+                features = await _featuresService.GetFeaturesAsync(steamId)
+                    ?? SupportedFeatures.All;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Failed to get supported features for Steam ID {steamId}. Defaulting to all features.");
+            }
+
+            PlayniteApi.MainView.UIDispatcher.Invoke(() =>
+            {
+                if (_steamId != steamId)
+                {
+                    return;
+                }
+
+                MenuItemGameAchievements.Visibility =
+                    features.Achievements ? Visibility.Visible : Visibility.Collapsed;
+
+                MenuItemGamePointsShop.Visibility =
+                    features.PointsShop ? Visibility.Visible : Visibility.Collapsed;
+
+                MenuItemGameWorkshop.Visibility =
+                    features.Workshop ? Visibility.Visible : Visibility.Collapsed;
+            });
         }
 
         private void ResetBindingValues()
         {
             _steamId = string.Empty;
             Visibility = Visibility.Collapsed;
+            MenuItemGameAchievements.Visibility = Visibility.Collapsed;
+            MenuItemGamePointsShop.Visibility = Visibility.Collapsed;
+            MenuItemGameWorkshop.Visibility = Visibility.Collapsed;
             SettingsModel.Settings.IsControlVisible = false;
             _areBindingValuesDefault = true;
         }

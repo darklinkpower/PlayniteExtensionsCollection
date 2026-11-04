@@ -1,6 +1,5 @@
-﻿using SteamCommon.Models;
-
-namespace SteamShortcuts.Domain.ValueObjects
+﻿
+namespace SteamShortcuts.Domain.Models
 {
     public class SupportedFeatures
     {

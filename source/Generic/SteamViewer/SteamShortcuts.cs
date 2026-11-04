@@ -6,11 +6,16 @@ using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using SteamCommon;
 using SteamShortcuts.Application;
+using SteamShortcuts.Application.Services;
 using SteamShortcuts.Domain.Enums;
+using SteamShortcuts.Domain.Models;
 using SteamShortcuts.Domain.ValueObjects;
+using SteamShortcuts.Infrastructure;
+using SteamShortcuts.Infrastructure.Persistence;
 using SteamShortcuts.Presentation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime;
 using System.Text;
@@ -37,7 +42,20 @@ namespace SteamShortcuts
             Properties = new GenericPluginProperties { HasSettings = true };
             _steamComponentMenuItems = GetSteamComponentMenuItems();
             _steamUriLauncherService.LaunchUrlsInSteamClient = Settings.Settings.LaunchUrlsInSteamClient;
-            _featuresService = new DiscoverSupportedFeaturesService();
+
+            var cachePath = Path.Combine(
+                this.GetPluginUserDataPath(),
+                "supportedFeaturesCache.json");
+
+            var cacheRepository = new JsonSupportedFeaturesCacheRepository(
+                cachePath);
+
+            var featuresProvider = new SteamSupportedFeaturesProvider();
+
+            _featuresService = new DiscoverSupportedFeaturesService(
+                cacheRepository,
+                featuresProvider,
+                TimeSpan.FromDays(30));
 
             AddSettingsSupport(new AddSettingsSupportArgs
             {
@@ -119,8 +137,7 @@ namespace SteamShortcuts
                 CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameNewsDescription", SteamUrlType.News, steamId, '\uEFA7'),
             });
 
-            var feature = _featuresService.GetCachedFeature(steamId) ?? SupportedFeatures.All;
-               
+            var feature = _featuresService.GetCachedFeatures(steamId) ?? SupportedFeatures.All;
             if (feature.Achievements)
             {
                 menuItems.Add(CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, steamId, '\uEDD7'));
@@ -214,7 +231,7 @@ namespace SteamShortcuts
                 return;
             }
 
-            _ = _featuresService.GetFeatures(steamId);
+            _ = _featuresService.GetFeaturesAsync(steamId);
         }
     }
 }
