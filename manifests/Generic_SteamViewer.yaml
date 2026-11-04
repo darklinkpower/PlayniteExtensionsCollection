@@ -127,3 +127,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.08.08_82cc5fd7/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_4.pext
     Changelog:
     - 'Fixed: Steam launch button displaying in cases where first displayed game after launching Playnite is not a Steam game'
+  - Version: 3.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2026-11-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.11.03_990fa9af/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_5.pext
+    Changelog:
+    - 'Added: Workshop shortcut for supported games (By CarrieForle)'
+    - 'Fixed: Achievements and Points shop shortcuts also showing for games that do not support these features (By CarrieForle)'
