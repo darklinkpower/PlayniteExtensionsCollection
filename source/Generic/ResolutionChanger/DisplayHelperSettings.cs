@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using DisplayHelper.Models;
+using DisplayHelper.Native;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,12 +18,31 @@ namespace DisplayHelper
         public bool ChangeResOnlyGamesNotRunning { get => changeResOnlyGamesNotRunning; set => SetValue(ref changeResOnlyGamesNotRunning, value); }
 
         [DontSerialize]
+        private bool moveWindowToTargetDisplay = true;
+        public bool MoveWindowToTargetDisplay { get => moveWindowToTargetDisplay; set => SetValue(ref moveWindowToTargetDisplay, value); }
+
+        [DontSerialize]
         private ModeDisplaySettings fullscreenModeDisplayInfo = new ModeDisplaySettings();
         public ModeDisplaySettings FullscreenModeDisplayInfo { get => fullscreenModeDisplayInfo; set => SetValue(ref fullscreenModeDisplayInfo, value); }
 
         [DontSerialize]
         private ModeDisplaySettings desktopModeDisplayInfo = new ModeDisplaySettings();
         public ModeDisplaySettings DesktopModeDisplayInfo { get => desktopModeDisplayInfo; set => SetValue(ref desktopModeDisplayInfo, value); }
+
+        // Monitor device path -> custom name
+        [DontSerialize]
+        private Dictionary<string, string> customMonitorNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, string> CustomMonitorNames { get => customMonitorNames; set => SetValue(ref customMonitorNames, value); }
+    }
+
+    public class MonitorNameEntry : ObservableObject
+    {
+        public string DevicePath { get; set; }
+        public string DisplayNumber { get; set; }
+        public string RealName { get; set; }
+
+        private string customName = string.Empty;
+        public string CustomName { get => customName; set => SetValue(ref customName, value); }
     }
 
     public class DisplayHelperSettingsViewModel : ObservableObject, ISettings
@@ -49,6 +69,9 @@ namespace DisplayHelper
                 OnPropertyChanged(nameof(SelectedGlobalSettings));
             }
         }
+
+        private ObservableCollection<MonitorNameEntry> monitorNameEntries = new ObservableCollection<MonitorNameEntry>();
+        public ObservableCollection<MonitorNameEntry> MonitorNameEntries { get => monitorNameEntries; set => SetValue(ref monitorNameEntries, value); }
 
         private List<DisplayInfo> availableDisplays = new List<DisplayInfo>();
         public List<DisplayInfo> AvailableDisplays { get => availableDisplays; set => SetValue(ref availableDisplays, value); }
@@ -129,12 +152,68 @@ namespace DisplayHelper
             {
                 Settings = new DisplayHelperSettings();
             }
+
+            ApplyCustomMonitorNames();
+        }
+
+        private void ApplyCustomMonitorNames()
+        {
+            MonitorNames.CustomNames = new Dictionary<string, string>(
+                Settings.CustomMonitorNames ?? new Dictionary<string, string>(),
+                StringComparer.OrdinalIgnoreCase);
+        }
+
+        private void LoadMonitorNameEntries()
+        {
+            var entries = new ObservableCollection<MonitorNameEntry>();
+            var saved = Settings.CustomMonitorNames ?? new Dictionary<string, string>();
+            foreach (var monitor in MonitorNames.GetMonitors())
+            {
+                if (entries.Any(x => string.Equals(x.DevicePath, monitor.DevicePath, StringComparison.OrdinalIgnoreCase)))
+                {
+                    continue;
+                }
+
+                saved.TryGetValue(monitor.DevicePath, out var custom);
+                entries.Add(new MonitorNameEntry
+                {
+                    DevicePath = monitor.DevicePath,
+                    DisplayNumber = monitor.GdiName.Replace(@"\\.\", string.Empty),
+                    RealName = string.IsNullOrEmpty(monitor.FriendlyName) ? "(no name reported)" : monitor.FriendlyName,
+                    CustomName = custom ?? string.Empty
+                });
+            }
+
+            MonitorNameEntries = entries;
+        }
+
+        private void SaveMonitorNameEntries()
+        {
+            // Keep names of monitors that are not connected right now.
+            var names = new Dictionary<string, string>(
+                Settings.CustomMonitorNames ?? new Dictionary<string, string>(),
+                StringComparer.OrdinalIgnoreCase);
+            foreach (var entry in MonitorNameEntries)
+            {
+                var value = entry.CustomName?.Trim();
+                if (string.IsNullOrEmpty(value))
+                {
+                    names.Remove(entry.DevicePath);
+                }
+                else
+                {
+                    names[entry.DevicePath] = value;
+                }
+            }
+
+            Settings.CustomMonitorNames = names;
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
+            LoadMonitorNameEntries();
             AvailableDisplays = DisplayUtilities.GetAvailableDisplaysInfo();
             SelectedDisplay = AvailableDisplays.FirstOrDefault();
             SelectedPlayniteMode = PlayniteModes.FirstOrDefault();
@@ -151,7 +230,10 @@ namespace DisplayHelper
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
+            SaveMonitorNameEntries();
             plugin.SavePluginSettings(Settings);
+            ApplyCustomMonitorNames();
+            plugin.RefreshGameMenuItems();
         }
 
         public bool VerifySettings(out List<string> errors)

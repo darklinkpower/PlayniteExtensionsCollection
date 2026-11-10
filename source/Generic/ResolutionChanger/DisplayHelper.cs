@@ -4,6 +4,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using DisplayHelper.Models;
+using DisplayHelper.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,13 @@ namespace DisplayHelper
         private const string menuItemsDeleteIconName = "rcDeleteIcon";
         private static readonly ILogger logger = LogManager.GetLogger();
         private List<GameMenuItem> gameMenuItems = new List<GameMenuItem>();
+        // Menu item -> game feature it sets, used to show a check mark on the active choice.
+        private readonly Dictionary<GameMenuItem, string> menuItemFeatures = new Dictionary<GameMenuItem, string>();
         private DisplayConfigChangeData displayRestoreData = null;
+        private WindowMover windowMover = null;
+        private const string windowModeBorderlessFeature = "[RC] Window mode: Move window (borderless)";
+        private const string windowModeSwitchPrimaryFeature = "[RC] Window mode: Switch primary display";
+        private const string windowModeFeatureRegex = @"^\[RC\] Window mode: .+";
 
         private DisplayHelperSettingsViewModel settings { get; set; }
 
@@ -47,7 +54,46 @@ namespace DisplayHelper
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            return gameMenuItems;
+            if (args.Games == null || args.Games.Count != 1)
+            {
+                return gameMenuItems;
+            }
+
+            var game = args.Games[0];
+            var gameFeatures = new HashSet<string>(
+                game.Features?.Where(x => !x.Name.IsNullOrEmpty()).Select(x => x.Name) ?? Enumerable.Empty<string>(),
+                StringComparer.OrdinalIgnoreCase);
+
+            var items = new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = "Show current settings",
+                    MenuSection = "Display Helper",
+                    Icon = menuItemsMonitorIconName,
+                    Action = a => ShowSettingsSummary(game)
+                }
+            };
+
+            foreach (var item in gameMenuItems)
+            {
+                if (menuItemFeatures.TryGetValue(item, out var feature) && gameFeatures.Contains(feature))
+                {
+                    items.Add(new GameMenuItem
+                    {
+                        Description = "\u2713 " + item.Description,
+                        MenuSection = item.MenuSection,
+                        Icon = item.Icon,
+                        Action = item.Action
+                    });
+                }
+                else
+                {
+                    items.Add(item);
+                }
+            }
+
+            return items;
         }
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
@@ -55,8 +101,17 @@ namespace DisplayHelper
             ApplyDisplayGameStartConfiguration(args);
         }
 
+        public override void OnGameStarted(OnGameStartedEventArgs args)
+        {
+            if (windowMover != null && args.StartedProcessId > 0)
+            {
+                windowMover.KnownProcessId = args.StartedProcessId;
+            }
+        }
+
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
+            StopWindowMover();
             RestoreDisplayData(args);
         }
 
@@ -103,6 +158,13 @@ namespace DisplayHelper
 
             var setAsPrimaryDisplay = currentPrimaryDisplayName != targetDisplayName &&
                                       !targetDisplay.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
+            var moveGameWindow = setAsPrimaryDisplay && ShouldMoveGameWindow(game);
+            if (moveGameWindow)
+            {
+                // Keep the current primary display and move the game window instead
+                setAsPrimaryDisplay = false;
+            }
+
             if (changeDisplaySettings || setAsPrimaryDisplay)
             {
                 // If the screen configuration was changed before, restore it before changing it again
@@ -113,6 +175,55 @@ namespace DisplayHelper
 
                 ApplyGameStartDisplayConfiguration(newWidth, newHeight, newRefreshRate, targetDisplayName, currentPrimaryDisplayName, setAsPrimaryDisplay);
             }
+
+            if (moveGameWindow)
+            {
+                StartWindowMover(game, targetDisplayName);
+            }
+        }
+
+        private bool ShouldMoveGameWindow(Game game)
+        {
+            if (game.Features.HasItems())
+            {
+                if (game.Features.Any(x => string.Equals(x.Name, windowModeBorderlessFeature, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return true;
+                }
+
+                if (game.Features.Any(x => string.Equals(x.Name, windowModeSwitchPrimaryFeature, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return false;
+                }
+            }
+
+            return settings.Settings.MoveWindowToTargetDisplay;
+        }
+
+        private void StartWindowMover(Game game, string targetDisplayName)
+        {
+            StopWindowMover();
+            string installDirectory = null;
+            try
+            {
+                if (!game.InstallDirectory.IsNullOrEmpty())
+                {
+                    installDirectory = PlayniteApi.ExpandGameVariables(game, game.InstallDirectory);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Failed to get game install directory");
+            }
+
+            windowMover = new WindowMover(installDirectory, targetDisplayName);
+            windowMover.Start();
+        }
+
+        private void StopWindowMover()
+        {
+            windowMover?.Stop();
+            windowMover = null;
         }
 
         private void ApplyGameStartDisplayConfiguration(int newWidth, int newHeight, int newRefreshRate, string targetDisplayName, string currentPrimaryDisplayName, bool setAsPrimaryDisplay)
@@ -124,7 +235,8 @@ namespace DisplayHelper
                 var restoreResolution = newWidth != 0 && newHeight != 0;
                 var restoreRefreshRate = newRefreshRate != 0;
 
-                displayRestoreData = new DisplayConfigChangeData(targetDisplayCurrentDevMode, targetDisplayName, currentPrimaryDisplayName, restoreResolution, restoreRefreshRate);
+                var primaryToRestore = setAsPrimaryDisplay ? currentPrimaryDisplayName : targetDisplayName;
+                displayRestoreData = new DisplayConfigChangeData(targetDisplayCurrentDevMode, targetDisplayName, primaryToRestore, restoreResolution, restoreRefreshRate);
                 logger.Info($"Stored restore display data. Screen: {currentPrimaryDisplayName}. Resolution {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}. Frequency: {displayRestoreData.DevMode.dmDisplayFrequency}");
             }
         }
@@ -243,6 +355,11 @@ namespace DisplayHelper
             }
         }
 
+        public void RefreshGameMenuItems()
+        {
+            CreateGameMenuItems();
+        }
+
         private void CreateGameMenuItems()
         {
             var mainDisplayInfo = DisplayUtilities.GetPrimaryDisplayDeviceInfo();
@@ -256,6 +373,7 @@ namespace DisplayHelper
             var refreshRateSection = ResourceProvider.GetString("LOCDisplayHelper_MenuSectionDisplayRefreshRate");
             var displaySection = ResourceProvider.GetString("LOCDisplayHelper_DisplayLabel").TrimEnd(':');
 
+            menuItemFeatures.Clear();
             gameMenuItems = new List<GameMenuItem>
             {
                 new GameMenuItem
@@ -285,7 +403,7 @@ namespace DisplayHelper
             var resolutions = GetUniqueResolutionsFromDisplayInfo(mainDisplayInfo);
             foreach (var resolution in resolutions)
             {
-                gameMenuItems.Add(
+                AddFeatureMenuItem($"[RC] {resolution.Value.Key}x{resolution.Value.Value}",
                     new GameMenuItem
                     {
                         Description = string.Format("{0}x{1} ({2})", resolution.Value.Key, resolution.Value.Value, resolution.Key),
@@ -303,7 +421,7 @@ namespace DisplayHelper
 
             foreach (var displayFrequency in mainDisplayInfo.DisplayModes.Select(x => x.DisplayFrenquency).Distinct())
             {
-                gameMenuItems.Add(
+                AddFeatureMenuItem($"[RC] {displayFrequency}Hz",
                     new GameMenuItem
                     {
                         Description = string.Format("{0}Hz", displayFrequency),
@@ -319,12 +437,40 @@ namespace DisplayHelper
                 );
             }
 
+            var windowModeSection = "Window mode";
+            AddFeatureMenuItem(windowModeBorderlessFeature, CreateWindowModeMenuItem("Move window to chosen display (borderless)", windowModeBorderlessFeature, $"{menuSection}|{windowModeSection}"));
+            AddFeatureMenuItem(windowModeSwitchPrimaryFeature, CreateWindowModeMenuItem("Switch primary display", windowModeSwitchPrimaryFeature, $"{menuSection}|{windowModeSection}"));
+            gameMenuItems.Add(new GameMenuItem
+            {
+                Description = "Use global setting",
+                MenuSection = $"{menuSection}|{windowModeSection}",
+                Icon = menuItemsDeleteIconName,
+                Action = a =>
+                {
+                    RemoveGamesRegexMatchingFeatures(windowModeFeatureRegex, a.Games);
+                    PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                }
+            });
+
+            gameMenuItems.Add(new GameMenuItem
+            {
+                Description = "Clear display (use global setting)",
+                MenuSection = $"{menuSection}|{displaySection}",
+                Icon = menuItemsDeleteIconName,
+                Action = a =>
+                {
+                    RemoveGamesRegexMatchingFeatures(@"^\[RC\] Display: .+", a.Games);
+                    PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                }
+            });
+
+            var monitorFriendlyNames = MonitorNames.GetMonitorFriendlyNames();
             foreach (var displayDevice in DisplayUtilities.GetAvailableDisplayDevices())
             {
-                gameMenuItems.Add(
+                AddFeatureMenuItem($"[RC] Display: {displayDevice.DeviceName}",
                     new GameMenuItem
                     {
-                        Description = $"{displayDevice.DeviceName} ({displayDevice.DeviceString})",
+                        Description = MonitorNames.GetLabel(displayDevice.DeviceName, displayDevice.DeviceString, monitorFriendlyNames),
                         MenuSection = $"{menuSection}|{displaySection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
@@ -336,6 +482,181 @@ namespace DisplayHelper
                     }
                 );
             }
+        }
+
+        private void AddFeatureMenuItem(string featureName, GameMenuItem item)
+        {
+            gameMenuItems.Add(item);
+            menuItemFeatures[item] = featureName;
+        }
+
+        private void ShowSettingsSummary(Game game)
+        {
+            int? gameWidth = null, gameHeight = null, gameRefresh = null;
+            string gameDisplay = null;
+            bool? gameMoveWindow = null;
+            if (game.Features.HasItems())
+            {
+                foreach (var feature in game.Features.Where(x => !x.Name.IsNullOrEmpty()))
+                {
+                    var res = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
+                    var hz = Regex.Match(feature.Name, @"^\[RC\] (\d+)Hz$", RegexOptions.IgnoreCase);
+                    var disp = Regex.Match(feature.Name, @"^\[RC\] Display: (.+)", RegexOptions.IgnoreCase);
+                    if (res.Success && gameWidth == null)
+                    {
+                        gameWidth = int.Parse(res.Groups[1].Value);
+                        gameHeight = int.Parse(res.Groups[2].Value);
+                    }
+                    else if (hz.Success && gameRefresh == null)
+                    {
+                        gameRefresh = int.Parse(hz.Groups[1].Value);
+                    }
+                    else if (disp.Success && gameDisplay == null)
+                    {
+                        gameDisplay = disp.Groups[1].Value;
+                    }
+                    else if (string.Equals(feature.Name, windowModeBorderlessFeature, StringComparison.OrdinalIgnoreCase))
+                    {
+                        gameMoveWindow = true;
+                    }
+                    else if (string.Equals(feature.Name, windowModeSwitchPrimaryFeature, StringComparison.OrdinalIgnoreCase))
+                    {
+                        gameMoveWindow = false;
+                    }
+                }
+            }
+
+            var isDesktop = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop;
+            var global = isDesktop ? settings.Settings.DesktopModeDisplayInfo : settings.Settings.FullscreenModeDisplayInfo;
+            var modeName = isDesktop ? "Desktop mode" : "Fullscreen mode";
+            const string fromGame = "set for this game";
+            var fromGlobal = $"global setting, {modeName}";
+
+            var devices = DisplayUtilities.GetAvailableDisplayDevices();
+            var friendlyNames = MonitorNames.GetMonitorFriendlyNames();
+            var primaryName = DisplayUtilities.GetPrimaryScreenName(devices);
+            string Label(string deviceName)
+            {
+                var device = devices.FirstOrDefault(x => x.DeviceName == deviceName);
+                return device.DeviceName.IsNullOrEmpty()
+                    ? $"{deviceName} (NOT CONNECTED)"
+                    : MonitorNames.GetLabel(device.DeviceName, device.DeviceString, friendlyNames);
+            }
+
+            string targetDisplay = null, displaySource = null;
+            if (!gameDisplay.IsNullOrEmpty())
+            {
+                targetDisplay = gameDisplay;
+                displaySource = fromGame;
+            }
+            else if (global != null && global.TargetSpecificDisplay && !global.TargetDisplayName.IsNullOrEmpty())
+            {
+                targetDisplay = global.TargetDisplayName;
+                displaySource = fromGlobal;
+            }
+
+            string resolution = null, resolutionSource = null;
+            if (gameWidth.HasValue)
+            {
+                resolution = $"{gameWidth}x{gameHeight}";
+                resolutionSource = fromGame;
+            }
+            else if (global != null && global.ChangeResolution && global.Width.HasValue && global.Height.HasValue)
+            {
+                resolution = $"{global.Width}x{global.Height}";
+                resolutionSource = fromGlobal;
+            }
+
+            string refresh = null, refreshSource = null;
+            if (gameRefresh.HasValue)
+            {
+                refresh = $"{gameRefresh}Hz";
+                refreshSource = fromGame;
+            }
+            else if (global != null && global.ChangeRefreshRate && global.RefreshRate.HasValue)
+            {
+                refresh = $"{global.RefreshRate}Hz";
+                refreshSource = fromGlobal;
+            }
+
+            var moveWindow = gameMoveWindow ?? settings.Settings.MoveWindowToTargetDisplay;
+            var windowModeSource = gameMoveWindow.HasValue ? fromGame : "global setting";
+
+            SummaryRow Row(string label, string value, string source, bool warning = false)
+            {
+                var kind = source == null ? SummarySource.None : (source == fromGame ? SummarySource.Game : SummarySource.Global);
+                return new SummaryRow
+                {
+                    Label = label,
+                    Value = value,
+                    Source = kind,
+                    SourceText = kind == SummarySource.None ? "Default" : (kind == SummarySource.Game ? "This game" : "Global"),
+                    IsWarning = warning
+                };
+            }
+
+            var targetConnected = targetDisplay != null && devices.Any(x => x.DeviceName == targetDisplay);
+            var rows = new List<SummaryRow>
+            {
+                Row("Display", targetDisplay == null ? "Not set (primary display)" : Label(targetDisplay), displaySource, targetDisplay != null && !targetConnected),
+                Row("Window mode", moveWindow ? "Move window (borderless)" : "Switch primary display", gameMoveWindow.HasValue ? fromGame : fromGlobal),
+                Row("Resolution", resolution ?? "Not changed", resolutionSource),
+                Row("Refresh rate", refresh ?? "Not changed", refreshSource),
+                new SummaryRow { Label = "Primary display now", Value = Label(primaryName), Source = SummarySource.Global, SourceText = "Windows" }
+            };
+
+            var notes = new List<SummaryNote>();
+            var effectiveTarget = targetDisplay == null ? primaryName : targetDisplay;
+            if (targetDisplay != null && !targetConnected)
+            {
+                notes.Add(new SummaryNote(SummaryNoteKind.Warning, "The chosen display is not connected, so Display Helper will do nothing."));
+            }
+            else
+            {
+                if (effectiveTarget == primaryName)
+                {
+                    notes.Add(new SummaryNote(SummaryNoteKind.Action, "The game opens on the primary display as usual."));
+                }
+                else if (moveWindow)
+                {
+                    notes.Add(new SummaryNote(SummaryNoteKind.Action, $"The game window is moved to {Label(effectiveTarget)} as a borderless window."));
+                    notes.Add(new SummaryNote(SummaryNoteKind.Info, "Primary display, taskbar and desktop icons stay as they are."));
+                    notes.Add(new SummaryNote(SummaryNoteKind.Warning, "Set the game to windowed or borderless in its own video options. Exclusive fullscreen can't be moved."));
+                }
+                else
+                {
+                    notes.Add(new SummaryNote(SummaryNoteKind.Action, $"{Label(effectiveTarget)} becomes the primary display while the game runs, then it's restored."));
+                }
+
+                if (resolution != null || refresh != null)
+                {
+                    var changes = string.Join(" @ ", new[] { resolution, refresh }.Where(x => x != null));
+                    notes.Add(new SummaryNote(SummaryNoteKind.Action, $"{Label(effectiveTarget)} is set to {changes} while the game runs, then it's restored."));
+                }
+
+                if (settings.Settings.ChangeResOnlyGamesNotRunning)
+                {
+                    notes.Add(new SummaryNote(SummaryNoteKind.Info, "Nothing is changed if another game is already running."));
+                }
+            }
+
+            SettingsSummaryWindow.Show(PlayniteApi, game.Name, rows, notes);
+        }
+
+        private GameMenuItem CreateWindowModeMenuItem(string description, string featureName, string section)
+        {
+            return new GameMenuItem
+            {
+                Description = description,
+                MenuSection = section,
+                Icon = menuItemsMonitorIconName,
+                Action = a =>
+                {
+                    RemoveGamesRegexMatchingFeatures(windowModeFeatureRegex, a.Games);
+                    PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games, featureName);
+                    PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                }
+            };
         }
 
         private IEnumerable<KeyValuePair<string, KeyValuePair<int, int>>> GetUniqueResolutionsFromDisplayInfo(DisplayInfo displayInfo)

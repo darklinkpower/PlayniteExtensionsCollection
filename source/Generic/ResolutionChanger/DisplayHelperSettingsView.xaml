@@ -16,6 +16,9 @@
                 </Hyperlink>
             </TextBlock>
             <CheckBox IsChecked="{Binding Settings.ChangeResOnlyGamesNotRunning}" Content="{DynamicResource LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning}"/>
+            <CheckBox IsChecked="{Binding Settings.MoveWindowToTargetDisplay}" Margin="0,10,0,0"
+                      Content="When a game targets another display, move its window there as borderless instead of changing the primary display"
+                      ToolTip="Keeps your taskbar and desktop icons in place. The game must be set to windowed or borderless mode in its own options. Can be overridden per game from the game menu: Display Helper > Window mode."/>
 
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
@@ -43,6 +46,37 @@
                       DisplayMemberPath="DisplayName"
                       SelectedItem="{Binding SelectedDisplayMode}" />
             </Grid>
+
+            <TextBlock Text="Monitor names" Margin="0,15,0,0"/>
+            <Separator Margin="0,5,0,0" />
+            <TextBlock Text="Give monitors your own names. Leave a box empty to use the name the monitor reports. Names follow the monitor even if its DISPLAY number changes."
+                       TextWrapping="Wrap" Opacity="0.7" Margin="0,8,0,8" />
+            <Grid Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="220" />
+                    <ColumnDefinition Width="260" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="DISPLAY" Opacity="0.6" FontSize="11" />
+                <TextBlock Grid.Column="1" Text="REAL NAME" Opacity="0.6" FontSize="11" />
+                <TextBlock Grid.Column="2" Text="CUSTOM NAME" Opacity="0.6" FontSize="11" />
+            </Grid>
+            <ItemsControl ItemsSource="{Binding MonitorNameEntries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,3,0,3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="260" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding DisplayNumber}" VerticalAlignment="Center" Foreground="{DynamicResource TextBrushDarker}" />
+                            <TextBlock Grid.Column="1" Text="{Binding RealName}" VerticalAlignment="Center" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource TextBrush}" />
+                            <TextBox Grid.Column="2" Text="{Binding CustomName, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding DevicePath}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
             <TextBlock Text="{DynamicResource LOCDisplayHelper_GlobalSettingsLabel}" Margin="0,15,0,0"/>
             <Separator Margin="0,5,0,0" />

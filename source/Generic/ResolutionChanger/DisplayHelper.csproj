@@ -93,9 +93,12 @@
     <Compile Include="Models\DisplayConfigChangeData.cs" />
     <Compile Include="Models\DisplayInfo.cs" />
     <Compile Include="Models\ModeDisplaySettings.cs" />
+    <Compile Include="Native\MonitorNames.cs" />
     <Compile Include="Native\User32.cs" />
+    <Compile Include="Native\WindowMover.cs" />
     <Compile Include="DisplayHelper.cs" />
     <Compile Include="DisplayHelperSettings.cs" />
+    <Compile Include="SettingsSummaryWindow.cs" />
     <Compile Include="DisplayHelperSettingsView.xaml.cs">
       <DependentUpon>DisplayHelperSettingsView.xaml</DependentUpon>
     </Compile>

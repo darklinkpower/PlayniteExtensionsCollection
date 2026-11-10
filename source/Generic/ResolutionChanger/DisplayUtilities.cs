@@ -309,7 +309,7 @@ namespace DisplayHelper
                 .ThenByDescending(x => x.Height)
                 .ThenByDescending(x => x.DisplayFrenquency)
                 .ToList();
-            var displayInfo = new DisplayInfo(displayDevice.DeviceName, displayDevice.DeviceString, displayDevice.DeviceID, displayDevice.DeviceKey, displayModes);
+            var displayInfo = new DisplayInfo(displayDevice.DeviceName, displayDevice.DeviceString, displayDevice.DeviceID, displayDevice.DeviceKey, displayModes, MonitorNames.GetLabel(displayDevice.DeviceName, displayDevice.DeviceString));
             return displayInfo;
         }
     }

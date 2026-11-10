@@ -93,11 +93,13 @@ namespace DisplayHelper.Models
         public readonly string DeviceString;
         public readonly string DeviceID;
         public readonly string DeviceKey;
+        public readonly string MonitorLabel;
         public readonly List<DisplayMode> DisplayModes = new List<DisplayMode>();
-        public string DisplayName => $"{DeviceString} - {DeviceName}";
+        public string DisplayName => MonitorLabel;
 
-        public DisplayInfo(string deviceName, string deviceString, string deviceID, string deviceKey, List<DisplayMode> displayModes)
+        public DisplayInfo(string deviceName, string deviceString, string deviceID, string deviceKey, List<DisplayMode> displayModes, string monitorLabel = null)
         {
+            MonitorLabel = string.IsNullOrEmpty(monitorLabel) ? $"{deviceString} - {deviceName}" : monitorLabel;
             DeviceName = deviceName;
             DeviceString = deviceString;
             DeviceID = deviceID;
