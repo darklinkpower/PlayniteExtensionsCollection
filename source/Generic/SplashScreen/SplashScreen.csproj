@@ -89,6 +89,9 @@
     <Compile Include="..\..\common\pluginscommon\native\Processthreadsapi.cs">
       <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\User32.cs">
+      <Link>Shared\PluginsCommon\Native\User32.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\native\WinBase.cs">
       <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
     </Compile>
