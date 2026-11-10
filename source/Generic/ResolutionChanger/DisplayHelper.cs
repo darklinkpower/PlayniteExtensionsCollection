@@ -50,6 +50,36 @@ namespace DisplayHelper
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             CreateGameMenuItems();
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
+        }
+
+        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
+        {
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
+        }
+
+        // Monitor turned on/off or layout changed: rebuild menus so names and numbers stay current.
+        private void OnDisplaySettingsChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                PlayniteApi.MainView.UIDispatcher.BeginInvoke(new Action(() =>
+                {
+                    try
+                    {
+                        CreateGameMenuItems();
+                        logger.Info("Display configuration changed, menus refreshed");
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, "Failed to refresh menus after display change");
+                    }
+                }));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to schedule menu refresh");
+            }
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

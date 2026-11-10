@@ -1,6 +1,7 @@
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace DisplayHelper.Native
@@ -137,6 +138,47 @@ namespace DisplayHelper.Native
             public string FriendlyName { get; set; }
             // \\?\DISPLAY#HPN3698#5&...#{e6f07b5f-...}, stable id used for custom names
             public string DevicePath { get; set; }
+            public uint AdapterLow { get; set; }
+            public int AdapterHigh { get; set; }
+            public uint TargetId { get; set; }
+        }
+
+        /// <summary>
+        /// Numbers monitors the way Windows Settings (Display > Identify) does:
+        /// ordered by graphics adapter, then by the adapter's output (target) id.
+        /// Returns GDI name ("\\.\DISPLAY1") -> number (1-based).
+        /// </summary>
+        public static Dictionary<string, int> GetWindowsNumbers(List<MonitorInfo> monitors = null)
+        {
+            monitors = monitors ?? GetMonitors();
+            var result = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            var ordered = monitors
+                .GroupBy(x => x.DevicePath, StringComparer.OrdinalIgnoreCase)
+                .Select(x => x.First())
+                .OrderBy(x => x.AdapterHigh)
+                .ThenBy(x => x.AdapterLow)
+                .ThenBy(x => x.TargetId)
+                .ToList();
+            for (var i = 0; i < ordered.Count; i++)
+            {
+                if (!result.ContainsKey(ordered[i].GdiName))
+                {
+                    result[ordered[i].GdiName] = i + 1;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>"Display 3" (Windows number), or "DISPLAY1" if unknown.</summary>
+        public static string GetDisplayNumberText(string gdiName, Dictionary<string, int> windowsNumbers)
+        {
+            if (gdiName != null && windowsNumbers != null && windowsNumbers.TryGetValue(gdiName, out var number))
+            {
+                return $"Display {number}";
+            }
+
+            return (gdiName ?? string.Empty).Replace(@"\\.\", string.Empty);
         }
 
         /// <summary>
@@ -200,7 +242,10 @@ namespace DisplayHelper.Native
                     {
                         GdiName = source.viewGdiDeviceName,
                         FriendlyName = target.monitorFriendlyDeviceName?.Trim() ?? string.Empty,
-                        DevicePath = string.IsNullOrEmpty(target.monitorDevicePath) ? source.viewGdiDeviceName : target.monitorDevicePath
+                        DevicePath = string.IsNullOrEmpty(target.monitorDevicePath) ? source.viewGdiDeviceName : target.monitorDevicePath,
+                        AdapterLow = path.targetInfo.adapterId.LowPart,
+                        AdapterHigh = path.targetInfo.adapterId.HighPart,
+                        TargetId = path.targetInfo.id
                     });
                 }
             }
@@ -214,8 +259,8 @@ namespace DisplayHelper.Native
 
         /// <summary>
         /// Returns a map of GDI device name ("\\.\DISPLAY1") to its full label:
-        /// "Custom name (Real name, DISPLAY1)" when a custom name is set,
-        /// otherwise "Real name (DISPLAY1)". Monitors with no name are left out.
+        /// "Custom name (Real name, Display 1)" when a custom name is set,
+        /// otherwise "Real name (Display 1)", using the Windows Settings number. Monitors with no name are left out.
         /// Never throws; returns an empty map on failure.
         /// </summary>
         public static Dictionary<string, string> GetMonitorFriendlyNames()
@@ -223,7 +268,9 @@ namespace DisplayHelper.Native
             var customByGdi = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             var realByGdi = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             var customNames = CustomNames;
-            foreach (var monitor in GetMonitors())
+            var monitors = GetMonitors();
+            var windowsNumbers = GetWindowsNumbers(monitors);
+            foreach (var monitor in monitors)
             {
                 string custom = null;
                 if (customNames != null &&
@@ -243,7 +290,7 @@ namespace DisplayHelper.Native
                 // Cloned displays share one source; join their names.
                 var custom = string.Join(" + ", customByGdi[gdi]);
                 var real = string.Join(" + ", realByGdi[gdi]);
-                var shortName = gdi.Replace(@"\\.\", string.Empty);
+                var shortName = GetDisplayNumberText(gdi, windowsNumbers);
                 if (custom.Length > 0)
                 {
                     result[gdi] = real.Length > 0 && !string.Equals(custom, real, StringComparison.OrdinalIgnoreCase)
@@ -273,7 +320,7 @@ namespace DisplayHelper.Native
             }
         }
         /// <summary>
-        /// Builds a readable label such as "Left Gaming Monitor (LG ULTRAGEAR, DISPLAY1)" or "LG ULTRAGEAR (DISPLAY1)".
+        /// Builds a readable label such as "Left Gaming Monitor (LG ULTRAGEAR, Display 1)" or "LG ULTRAGEAR (Display 1)".
         /// Falls back to "DISPLAY1 (adapter name)" when no monitor name is available.
         /// </summary>
         public static string GetLabel(string gdiDeviceName, string adapterDeviceString, Dictionary<string, string> friendlyNames = null)

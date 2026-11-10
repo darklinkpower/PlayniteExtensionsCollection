@@ -93,6 +93,8 @@
     <Compile Include="Models\DisplayConfigChangeData.cs" />
     <Compile Include="Models\DisplayInfo.cs" />
     <Compile Include="Models\ModeDisplaySettings.cs" />
+    <Compile Include="Native\MonitorIdentifier.cs" />
+    <Compile Include="Native\MonitorLayout.cs" />
     <Compile Include="Native\MonitorNames.cs" />
     <Compile Include="Native\User32.cs" />
     <Compile Include="Native\WindowMover.cs" />

@@ -39,6 +39,8 @@ namespace DisplayHelper
     {
         public string DevicePath { get; set; }
         public string DisplayNumber { get; set; }
+        public int WindowsNumber { get; set; }
+        public string WindowsNumberText => WindowsNumber > 0 ? WindowsNumber.ToString() : "?";
         public string RealName { get; set; }
 
         private string customName = string.Empty;
@@ -167,21 +169,31 @@ namespace DisplayHelper
         {
             var entries = new ObservableCollection<MonitorNameEntry>();
             var saved = Settings.CustomMonitorNames ?? new Dictionary<string, string>();
-            foreach (var monitor in MonitorNames.GetMonitors())
+            var monitors = MonitorNames.GetMonitors();
+            var numbers = MonitorNames.GetWindowsNumbers(monitors);
+            var list = new List<MonitorNameEntry>();
+            foreach (var monitor in monitors)
             {
-                if (entries.Any(x => string.Equals(x.DevicePath, monitor.DevicePath, StringComparison.OrdinalIgnoreCase)))
+                if (list.Any(x => string.Equals(x.DevicePath, monitor.DevicePath, StringComparison.OrdinalIgnoreCase)))
                 {
                     continue;
                 }
 
                 saved.TryGetValue(monitor.DevicePath, out var custom);
-                entries.Add(new MonitorNameEntry
+                numbers.TryGetValue(monitor.GdiName, out var windowsNumber);
+                list.Add(new MonitorNameEntry
                 {
                     DevicePath = monitor.DevicePath,
+                    WindowsNumber = windowsNumber,
                     DisplayNumber = monitor.GdiName.Replace(@"\\.\", string.Empty),
                     RealName = string.IsNullOrEmpty(monitor.FriendlyName) ? "(no name reported)" : monitor.FriendlyName,
                     CustomName = custom ?? string.Empty
                 });
+            }
+
+            foreach (var entry in list.OrderBy(x => x.WindowsNumber == 0 ? int.MaxValue : x.WindowsNumber))
+            {
+                entries.Add(entry);
             }
 
             MonitorNameEntries = entries;
@@ -243,6 +255,11 @@ namespace DisplayHelper
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        public RelayCommand IdentifyDisplaysCommand
+        {
+            get => new RelayCommand(() => MonitorIdentifier.Show());
         }
 
         public RelayCommand SetDisplayCommand
