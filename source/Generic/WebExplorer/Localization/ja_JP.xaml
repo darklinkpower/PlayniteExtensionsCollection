@@ -7,16 +7,16 @@
 Changes require restart.</sys:String>
     <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Desktop Mode (Details View)</sys:String>
     <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Desktop Mode (Grid View)</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCWebExplorer_GeneralSettings">General settings</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">フルスクリーンモード</sys:String>
+    <sys:String x:Key="LOCWebExplorer_GeneralSettings">一般設定</sys:String>
     <sys:String x:Key="LOCWebExplorer_SidebarWebView">Sidebar web view</sys:String>
     <sys:String x:Key="LOCWebExplorer_ThemesWebView">Themes integration web view</sys:String>
-    <sys:String x:Key="LOCWebExplorer_Bookmarks">Bookmarks</sys:String>
+    <sys:String x:Key="LOCWebExplorer_Bookmarks">ブックマーク</sys:String>
     <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Restore defaults</sys:String>
     <sys:String x:Key="LOCWebExplorer_AddBookmark">追加</sys:String>
     <sys:String x:Key="LOCWebExplorer_RemoveSelected">Remove Selected</sys:String>
     <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Bookmarks added here will be made available alongside the game links in the web browser.</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">Name:</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">Address:</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Icon:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">名前:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">アドレス:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">アイコン:</sys:String>
 </ResourceDictionary>
