@@ -7,7 +7,7 @@
 もう一度拡張機能を実行して、正しい場所に設定してください。</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">画像処理が完了しました。 結果:
 
-処理された画像 : {0}
+処理された画像: {0}
 
 サイズが縮小された画像 : {1}
 エラー: {2}
