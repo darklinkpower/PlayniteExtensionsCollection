@@ -2,8 +2,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOC_GogSecondClass_NotifyOnGameInstalling">Notify about issues when installing a game</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_AddStatusTagOnLibraryUpdate">Tag games with issues during library updates</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_DeveloperLabel">Developer</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_PublisherLabel">Publisher</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_DeveloperLabel">開発元</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_PublisherLabel">発売元</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_NumberOfIssues">Number of issues</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_NumberOfIssuesOnGog">Number of issues on GOG</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_IssuesToNotify">Issues to notify:</sys:String>
@@ -25,6 +25,6 @@
     <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Missing some achievements</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Broken achievements</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Developer response on achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Source</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">ソース</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Open information window</sys:String>
 </ResourceDictionary>
