@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="PlayNotes_NewNoteLabel">New note</sys:String>
-    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notes for {0} saved.</sys:String>
-    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Title:</sys:String>
-    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Note:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam Guide Importer</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importing Steam guide…</sys:String>
-    <sys:String x:Key="PlayNotes_InvalidUrlMessage">Url is invalid.</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Failed to obtain guide.</sys:String>
+    <sys:String x:Key="PlayNotes_NewNoteLabel">新しいメモ</sys:String>
+    <sys:String x:Key="PlayNotes_SavedNotesMessage">{0} のメモを保存しました。</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">タイトル:</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">メモ:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam ガイドインポーター</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Steam ガイドをインポート中...</sys:String>
+    <sys:String x:Key="PlayNotes_InvalidUrlMessage">URL が無効です。</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">ガイドの取得に失敗しました。</sys:String>
     <sys:String x:Key="PlayNotes_ImportLabel">インポート</sys:String>
-    <sys:String x:Key="PlayNotes_UrlInputLabel">Url:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Import each section as a separate note</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Clear existing notes</sys:String>
-    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Import Playnite notes</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Enter the title to be used in the imported notes:</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importing notes…</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notes import finished.</sys:String>
+    <sys:String x:Key="PlayNotes_UrlInputLabel">URL:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">各セクションを別々のメモとしてインポート</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">既存のメモを消去</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Playnite メモをインポート</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">インポートしたメモで使用するタイトルを入力:</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">メモをインポート中...</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">メモのインポートが完了しました。</sys:String>
 </ResourceDictionary>
