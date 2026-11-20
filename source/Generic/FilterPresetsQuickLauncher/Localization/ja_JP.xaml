@@ -9,12 +9,12 @@
     <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Filter preset &quot;{0}&quot; not found</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filter Preset: {0}</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* 変更を適用するには再起動が必要です</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Image</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">画像</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">画像を追加</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Remove image</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Filter preset name</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Display name</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">表示名</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Text to display instead of the name acronym if an image has not been configured.</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Show in top panel</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">Show in sidebar</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">トップパネルに表示</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">サイドバーに表示</sys:String>
 </ResourceDictionary>
