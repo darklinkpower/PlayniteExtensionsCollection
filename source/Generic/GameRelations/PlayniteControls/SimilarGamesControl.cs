@@ -1,70 +1,61 @@
-﻿using GameRelations.Interfaces;
-using GameRelations.Models;
+﻿using GameRelations.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using TemporaryCache;
 
 namespace GameRelations.PlayniteControls
 {
     public partial class SimilarGamesControl : GameRelationsBase
     {
-        private readonly Dictionary<string, double> _propertiesWeights;
-        private const double _minMatchValueFactor = 0.73;
+        private class GameToMatchInfo
+        {
+            public Game Game { get; set; }
+            public Dictionary<GameField, HashSet<Guid>> FilteredValues { get; set; }
+            public HashSet<Guid> SeriesIds { get; set; }
+
+            public GameToMatchInfo(Game game)
+            {
+                Game = game;
+                SeriesIds = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
+                FilteredValues = new Dictionary<GameField, HashSet<Guid>>();
+            }
+        }
+
         private readonly SimilarGamesControlSettings _controlSettings;
 
         public SimilarGamesControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
             : base(playniteApi, settings, controlSettings)
         {
             _controlSettings = controlSettings;
-            _propertiesWeights = new Dictionary<string, double>
-            {
-                {"tags", 1 },
-                {"genres", 1.2 },
-                {"categories", 1.3 }
-            };
         }
 
         public override IEnumerable<Game> GetMatchingGames(Game game)
         {
-            var tagsSet = GetItemsNotInHashSet(game.TagIds, _controlSettings.TagsToIgnore).ToHashSet();
-            var genresSet = GetItemsNotInHashSet(game.GenreIds, _controlSettings.GenresToIgnore).ToHashSet();
-            var categoriesSet = GetItemsNotInHashSet(game.CategoryIds, _controlSettings.CategoriesToIgnore).ToHashSet();
+            var gameToMatchInfo = GetGameToMatchInfo(game);
 
-            var seriesHashSet = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
-
-            var minScoreThreshold = _propertiesWeights.Count * _minMatchValueFactor;
             var similarityScores = new Dictionary<Game, double>();
             foreach (var otherGame in PlayniteApi.Database.Games)
             {
-                if (otherGame.Id == game.Id)
+                if (otherGame.Id == gameToMatchInfo.Game.Id)
                 {
                     continue;
                 }
 
-                if (!game.Hidden && otherGame.Hidden)
+                if (!gameToMatchInfo.Game.Hidden && otherGame.Hidden)
                 {
                     continue;
                 }
 
-                if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, seriesHashSet))
+                if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, gameToMatchInfo.SeriesIds))
                 {
                     continue;
                 }
 
-                var tagsScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.TagIds, _controlSettings.TagsToIgnore), tagsSet) * _propertiesWeights["tags"];
-                var genresScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.GenreIds, _controlSettings.GenresToIgnore), genresSet) * _propertiesWeights["genres"];
-                var categoriesScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.CategoryIds, _controlSettings.CategoriesToIgnore), categoriesSet) * _propertiesWeights["categories"];
-
-                var finalScore = tagsScore + genresScore + categoriesScore;
-                if (finalScore >= minScoreThreshold)
+                if (GamesAreSimilar(gameToMatchInfo, otherGame, out double similarity))
                 {
-                    similarityScores.Add(otherGame, finalScore);
+                    similarityScores.Add(otherGame, similarity);
                 }
             }
 
@@ -72,6 +63,71 @@ namespace GameRelations.PlayniteControls
                 .Select(pair => pair.Key);
 
             return similarGames;
+        }
+
+        private GameToMatchInfo GetGameToMatchInfo(Game game)
+        {
+            var gameToMatchInfo = new GameToMatchInfo(game);
+            foreach (var field in _controlSettings.FieldSettings)
+            {
+                if (field.Enabled)
+                {
+                    gameToMatchInfo.FilteredValues[field.Field] = GetFilteredValue(game, field.Field).ToHashSet();
+                }
+            }
+            return gameToMatchInfo;
+        }
+
+        protected HashSet<Guid> GetItemsToIgnore(GameField field)
+        {
+            switch (field)
+            {
+                case GameField.TagIds: return _controlSettings.TagsToIgnore;
+                case GameField.GenreIds: return _controlSettings.GenresToIgnore;
+                case GameField.CategoryIds: return _controlSettings.CategoriesToIgnore;
+                default: return new HashSet<Guid>();
+            }
+        }
+
+        private static List<Guid> GetFieldValue(Game game, GameField field)
+        {
+            switch (field)
+            {
+                case GameField.TagIds: return game.TagIds;
+                case GameField.GenreIds: return game.GenreIds;
+                case GameField.CategoryIds: return game.CategoryIds;
+                default: return new List<Guid>();
+            }
+        }
+
+        private IEnumerable<Guid> GetFilteredValue(Game game, GameField field)
+        {
+            return GetItemsNotInHashSet(GetFieldValue(game, field), GetItemsToIgnore(field));
+        }
+
+        private bool GamesAreSimilar(GameToMatchInfo gameToMatch, Game otherGame, out double similarity)
+        {
+            double matchThreshold = 0;
+            similarity = 0;
+
+            foreach (var field in _controlSettings.FieldSettings)
+            {
+                if (!field.Enabled || !gameToMatch.FilteredValues.TryGetValue(field.Field, out var propertyValues))
+                {
+                    continue;
+                }
+
+                var otherValues = GetFilteredValue(otherGame, field.Field);
+                if (!propertyValues.Any() && !otherValues.Any())
+                {
+                    continue;
+                }
+
+                matchThreshold += _controlSettings.JacardSimilarityPerField;
+                similarity += CalculateJaccardSimilarity(otherValues, propertyValues) * field.Weight;
+            }
+
+            return matchThreshold > 0 && similarity > matchThreshold;
         }
     }
 }
