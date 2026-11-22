@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Aide</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Parcourir le catalogue Game Pass</sys:String>
@@ -28,5 +28,6 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notifier les mises à jour du catalogue Game Pass</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Ajouter un tag expiré aux jeux retirés du Game Pass</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Ajouter les jeux récemment ajoutés lors de la mise à jour du catalogue Game Pass à la bibliothèque Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto">Ajouter les jeux EA Play récemment ajoutés à la bibliothèque Playnite</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Enlever les jeux supprimés lors de la mise à jour du catalogue Game Pass de la bibliothèque Playnite s'ils n'ont pas été joués</sys:String>
 </ResourceDictionary>

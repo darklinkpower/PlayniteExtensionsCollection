@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Bla gjennom Game Pass-katalogen</sys:String>
@@ -28,5 +28,6 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Varsle om oppdateringer i Game Pass</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Tilfør utløpt-tag til spill som er fjernet fra Game Pass</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Legg til nye Game Pass-spill i Playnite-biblioteket ved oppdatering av katalogen</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto">Legg til nye EA Play-spill i Playnite-biblioteket ved oppdatering av katalogen</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Fjern uspilte spill som er fjernet fra Game Pass fra Playnite-biblioteket ved oppdatering av katalogen</sys:String>
 </ResourceDictionary>

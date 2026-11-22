@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Yardım</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Game Pass kataloğuna göz atın</sys:String>
@@ -28,5 +28,6 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Game Pass katalog güncellemelerini bildir</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Game Pass'ten kaldırılan oyunlara süresi dolmuş etiketi ekle</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Game Pass kataloğunu Playnite kütüphanesine güncellerken yeni eklenen oyunlarıda ekleyin</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto">Playnite kütüphanesine yeni eklenen EA Play oyunlarını ekleyin</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Game Pass kataloğunu Playnite kütüphanesinden güncellerken, henüz oynanmamışsa kaldırılan oyunları kaldır</sys:String>
 </ResourceDictionary>

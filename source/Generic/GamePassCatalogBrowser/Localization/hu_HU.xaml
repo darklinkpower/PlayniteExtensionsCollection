@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Súgó</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Böngészés a Game Pass katalógusban</sys:String>
@@ -28,5 +28,6 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Értesítés a Game Pass katalógus frissítéseiről</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Lejárt címke hozzáadása a Game Passból eltávolított játékokhoz</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Újonnan hozzáadott játékok hozzáadása a Game Pass katalógus frissítésekor a Playnite könyvtárhoz</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto">Újonnan hozzáadott EA Play játékok hozzáadása a Playnite könyvtárhoz</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Az eltávolított játékok eltávolítása a Game Pass katalógus frissítésekor a Playnite könyvtárból, ha még nem játszották le őket</sys:String>
 </ResourceDictionary>

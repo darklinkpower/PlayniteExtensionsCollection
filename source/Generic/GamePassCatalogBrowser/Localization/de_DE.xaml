@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Durchsuche Game Pass Spiele</sys:String>
@@ -28,5 +28,6 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Über Game Pass Katalog Updates benachrichtigen</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Spiele, die aus dem Game Pass entfernt wurden, mit dem Tag &quot;Abgelaufen&quot; versehen</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Füge neu hinzugefügte Spiele beim Aktualisieren des Game Pass Katalogs zur Playnite Bibliothek hinzu</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewEaCatalogGamesAuto">Füge neu hinzugefügte EA Play-Spiele zur Playnite-Bibliothek hinzu</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Entfernte Spiele werden beim Aktualisieren des Game Pass Katalogs aus der Playnite Bibliothek entfernt, falls diese noch nicht gespielt wurden</sys:String>
 </ResourceDictionary>
