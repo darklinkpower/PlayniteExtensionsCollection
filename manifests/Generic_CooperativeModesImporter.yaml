@@ -174,3 +174,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.10.16_8bb45638/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_26.pext
     Changelog:
     - 'Fixed: Being unable to correctly match games with the extension database when a game has multiple platforms assigned'
+  - Version: 1.27
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2026-11-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2026.11.21_90fcf698/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_27.pext
+    Changelog:
+    - 'Added: Support for Nintedo Switch 2 platform'
+    - 'Changed: Updated database to latest information available in Co-Optimus (By VelocityRa)'
