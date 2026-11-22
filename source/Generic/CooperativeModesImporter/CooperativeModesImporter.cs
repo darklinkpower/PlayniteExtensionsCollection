@@ -90,6 +90,7 @@ namespace CooperativeModesImporter
                 { "nintendo_nes", "NES" },
                 { "nintendo_super_nes", "SNES" },
                 { "nintendo_switch", "NSWI" },
+                { "nintendo_switch2", "SWI2" },
                 { "nintendo_wii", "Wii" },
                 { "nintendo_wiiu", "WIIU" },
                 { "pc_dos", "DOS" },
