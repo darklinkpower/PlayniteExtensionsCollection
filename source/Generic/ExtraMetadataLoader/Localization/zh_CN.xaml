@@ -47,6 +47,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">在库更新时下载新添加游戏的视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">在库更新时下载新添加游戏的精简视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">在库更新时下载新添加游戏的徽标</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseLaunchBoxForAutomaticLogoDownloadsLabel">Use LaunchBox for automatic logo downloads</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">自动选择要下载的徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">视频</sys:String>
 
@@ -65,6 +66,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">正在从 Steam 下载视频...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">正在从 Steam 下载精简视频...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">正在从 Steam 下载徽标...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosLaunchBox">Downloading logos from LaunchBox...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">正在从 SteamGridDB 下载徽标...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">正在从 YouTube 下载视频...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Failed to download video from YouTube.
@@ -86,6 +88,7 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">从 Steam 下载所选游戏的视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">从 Steam 下载所选游戏的精简视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">从 Steam 下载所选游戏的徽标</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadLaunchBoxLogosSelectedGames">Download logos from LaunchBox for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">从 SteamGridDB 下载所选游戏的徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">打开 Extra Metadata 目录</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">删除所选游戏的徽标</sys:String>

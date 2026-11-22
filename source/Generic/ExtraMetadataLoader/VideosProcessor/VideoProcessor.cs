@@ -20,7 +20,7 @@ namespace ExtraMetadataLoader.VideosProcessor
         private readonly ExtraMetadataLoaderSettings _settings;
         private readonly ILogger _logger;
 
-        internal VideoProcessor(
+        public VideoProcessor(
             IPlayniteAPI playniteApi,
             ILogger logger,
             ExtraMetadataLoaderSettings settings)

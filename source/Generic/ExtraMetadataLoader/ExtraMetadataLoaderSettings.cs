@@ -434,6 +434,18 @@ namespace ExtraMetadataLoader
             }
         }
 
+        [DontSerialize]
+        private bool useLaunchBoxForAutomaticLogoDownloads = false;
+        public bool UseLaunchBoxForAutomaticLogoDownloads
+        {
+            get => useLaunchBoxForAutomaticLogoDownloads;
+            set
+            {
+                useLaunchBoxForAutomaticLogoDownloads = value;
+                OnPropertyChanged();
+            }
+        }
+
         public DateTime LastAutoLibUpdateAssetsDownload = DateTime.MinValue;
 
         [DontSerialize]

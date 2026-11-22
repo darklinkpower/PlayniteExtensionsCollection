@@ -1,19 +1,12 @@
-﻿using ExtraMetadataLoader.Helpers;
-using ExtraMetadataLoader.Models;
-using Newtonsoft.Json;
+using ExtraMetadataLoader.Helpers;
+using ExtraMetadataLoader.MetadataProviders;
+using ExtraMetadataLoader.VideosProcessor;
+using FlowHttp;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using FlowHttp;
-using SteamCommon;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 
 namespace ExtraMetadataLoader.Services
@@ -23,28 +16,80 @@ namespace ExtraMetadataLoader.Services
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly ExtraMetadataLoaderSettings settings;
-        
+        private readonly VideoProcessor videoProcessor;
+
         private readonly string tempDownloadPath = Path.Combine(Path.GetTempPath(), "VideoTemp.mp4");
 
         public VideosDownloader(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings)
         {
             this.playniteApi = playniteApi;
             this.settings = settings;
+            videoProcessor = new VideoProcessor(playniteApi, logger, settings);
         }
 
         public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, bool downloadVideo = false, bool downloadVideoMicro = false)
         {
+            var success = false;
+            if (downloadVideo)
+            {
+                success |= DownloadSteamVideo(game, overwrite, isBackgroundDownload, cancelToken, VideoType.Trailer);
+            }
 
+            if (downloadVideoMicro)
+            {
+                success |= DownloadSteamVideo(game, overwrite, isBackgroundDownload, cancelToken, VideoType.Microtrailer);
+            }
+
+            return success;
+        }
+
+        private bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, VideoType videoType)
+        {
+            var videoPath = videoType == VideoType.Trailer
+                ? ExtraMetadataHelper.GetGameVideoPath(game, true)
+                : ExtraMetadataHelper.GetGameVideoMicroPath(game, true);
+            if (!overwrite && FileSystem.FileExists(videoPath))
+            {
+                return true;
+            }
+
+            var steamProvider = new SteamMetadataProvider(playniteApi, settings);
+            var getResult = steamProvider.GetVideo(game, new VideoDownloadOptions(videoPath, isBackgroundDownload, videoType), cancelToken);
+            if (!getResult.IsSuccess)
+            {
+                return false;
+            }
+
+            var result = getResult.Value;
+            var sourcePath = result.FilePath;
+            var deleteSource = false;
+            if (result.IsUrl)
+            {
+                FileSystem.DeleteFile(tempDownloadPath, true);
+                var downloadResult = HttpRequestFactory.GetHttpFileRequest()
+                    .WithUrl(result.Url)
+                    .WithDownloadTo(tempDownloadPath)
+                    .DownloadFile(cancelToken);
+                if (!downloadResult.IsSuccess)
+                {
+                    return false;
+                }
+
+                sourcePath = tempDownloadPath;
+                deleteSource = true;
+            }
+
+            return videoProcessor.ProcessVideo(sourcePath, videoPath, false, deleteSource);
         }
 
         public bool SelectedDialogFileToVideo(Game game)
         {
             logger.Debug($"SelectedDialogFileToVideo starting for game {game.Name}");
-            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            var videoPath = ExtraMetadataHelper.GetGameVideoPath(game, true);
             var selectedVideoPath = playniteApi.Dialogs.SelectFile("Video file|*.mp4;*.avi;*.mkv;*.webm;*.flv;*.wmv;*.mov;*.m4v");
             if (!selectedVideoPath.IsNullOrEmpty())
             {
-                return ProcessVideo(selectedVideoPath, videoPath, true, false);
+                return videoProcessor.ProcessVideo(selectedVideoPath, videoPath, true, false);
             }
             else
             {
@@ -54,11 +99,11 @@ namespace ExtraMetadataLoader.Services
 
         public bool DownloadYoutubeVideoById(Game game, string videoId, bool overwrite)
         {
-            var youtubeDlPath = extraMetadataHelper.ExpandVariables(game, settings.YoutubeDlPath);
-            var ffmpegPath = extraMetadataHelper.ExpandVariables(game, settings.FfmpegPath);
-            var youtubeCookiesPath = extraMetadataHelper.ExpandVariables(game, settings.YoutubeCookiesPath);
+            var youtubeDlPath = ExtraMetadataHelper.ExpandVariables(game, settings.YoutubeDlPath);
+            var ffmpegPath = ExtraMetadataHelper.ExpandVariables(game, settings.FfmpegPath);
+            var youtubeCookiesPath = ExtraMetadataHelper.ExpandVariables(game, settings.YoutubeCookiesPath);
 
-            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            var videoPath = ExtraMetadataHelper.GetGameVideoPath(game, true);
             if (FileSystem.FileExists(videoPath) && !overwrite)
             {
                 return false;
@@ -69,6 +114,7 @@ namespace ExtraMetadataLoader.Services
             {
                 args = string.Format("-v --force-overwrites -o \"{0}\" --cookies \"{1}\" -f \"mp4\" \"{2}\"", tempDownloadPath, youtubeCookiesPath, $"https://www.youtube.com/watch?v={videoId}");
             }
+
             var result = ProcessStarter.StartProcessWait(youtubeDlPath, args, Path.GetDirectoryName(ffmpegPath), true, out var stdOut, out var stdErr);
             if (result != 0)
             {
@@ -82,9 +128,13 @@ namespace ExtraMetadataLoader.Services
             }
             else
             {
-                return ProcessVideo(tempDownloadPath, videoPath, false, false);
+                return videoProcessor.ProcessVideo(tempDownloadPath, videoPath, false, false);
             }
         }
 
+        public bool ConvertVideoToMicro(Game game, bool overwrite)
+        {
+            return videoProcessor.ConvertVideoToMicro(game, overwrite);
+        }
     }
 }

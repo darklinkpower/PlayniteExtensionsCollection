@@ -47,6 +47,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Herunterladen von Videos von neu hinzugefügten Spielen bei Bibliotheksupdate</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Herunterladen von Mikro Videos von neu hinzugefügten Spielen bei Bibliotheksupdate</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Logos von neu hinzugefügten Spielen bei Bibliotheksupdate herunterladen</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseLaunchBoxForAutomaticLogoDownloadsLabel">Use LaunchBox for automatic logo downloads</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Wählen Sie Logos zum automatischen Download aus</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
@@ -65,6 +66,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Videos von Steam herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Mikro Videos von Steam herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Logos von Steam herunterladen...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosLaunchBox">Downloading logos from LaunchBox...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Logos von SteamGridDB herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Video von YouTube herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Download des Videos von YouTube fehlgeschlagen.
@@ -86,6 +88,7 @@ Bitte überprüfe, ob die Installatierte yt-dlp auf dem neuesten Stand ist.</sys
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Videos von Steam für ausgewählte Spiele herunterladen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Mikro Videos von Steam für ausgewählte Spiele herunterladen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Logo von Steam für ausgewählte Spiele herunterladen</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadLaunchBoxLogosSelectedGames">Download logos from LaunchBox for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Logo von SteamGridDB für ausgewählte Spiele herunterladen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Metadatenverzeichnis öffnen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Logos von ausgewählten Spielen löschen</sys:String>
