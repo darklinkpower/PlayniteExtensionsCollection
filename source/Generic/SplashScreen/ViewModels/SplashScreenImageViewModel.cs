@@ -1,46 +1,48 @@
 ﻿using PluginsCommon;
 using SplashScreen.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace SplashScreen.ViewModels
 {
-    public class SplashScreenImageViewModel : ObservableObject
+    public class SplashScreenImageViewModel : INotifyPropertyChanged
     {
-        private string splashImagePath = null;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string _splashImagePath = null;
         public string SplashImagePath
         {
-            get => splashImagePath;
+            get => _splashImagePath;
             set
             {
-                splashImagePath = value;
+                _splashImagePath = value;
                 OnPropertyChanged();
             }
         }
 
-        private string logoPath = null;
+        private string _logoPath = null;
         public string LogoPath
         {
-            get => logoPath;
+            get => _logoPath;
             set
             {
-                logoPath = value;
+                _logoPath = value;
                 OnPropertyChanged();
             }
         }
 
-        private GeneralSplashSettings settings;
+        private GeneralSplashSettings _settings;
         public GeneralSplashSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
@@ -48,12 +50,12 @@ namespace SplashScreen.ViewModels
         public SplashScreenImageViewModel(GeneralSplashSettings settings, string splashImagePath, string logoPath)
         {
             Settings = settings;
-            if (!splashImagePath.IsNullOrEmpty() && FileSystem.FileExists(splashImagePath))
+            if (!string.IsNullOrEmpty(splashImagePath) && FileSystem.FileExists(splashImagePath))
             {
                 SplashImagePath = splashImagePath;
             }
 
-            if (!logoPath.IsNullOrEmpty() && FileSystem.FileExists(logoPath))
+            if (!string.IsNullOrEmpty(logoPath) && FileSystem.FileExists(logoPath))
             {
                 LogoPath = logoPath;
             }
