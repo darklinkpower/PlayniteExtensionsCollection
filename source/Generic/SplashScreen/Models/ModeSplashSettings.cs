@@ -29,7 +29,8 @@ namespace SplashScreen.Models
         bool EnableMicroTrailerVideos { get; set; }
 
         /// <summary>
-        /// Gets or sets if Splashscreen window should be closed automatically on game start.
+        /// Gets or sets if Splashscreen window should be closed automatically during game startup.
+        /// When disabled, the window stays open until two seconds after the game stops.
         /// </summary>
         bool CloseSplashscreenAutomatic { get; set; }
     }
