@@ -33,6 +33,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel">Brightness</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel">Maximum luminance</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">Video download settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelEmuMovies">EmuMovies</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">Details View player settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">Grid View player settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView">Other views player settings</sys:String>
@@ -47,6 +48,26 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Include assets marked as "Adult Content" in searches</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Download videos of newly added games on library update</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Download Micro videos of newly added games on library update</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceLabel">Automatic full-video source:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceSteam">Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceEmuMovies">EmuMovies</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsAutomaticVideoDownloadSourceSteamThenEmuMovies">Steam, then EmuMovies</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesUsernameLabel">Username:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesPasswordLabel">Password:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesSaveCredentialsLabel">Save</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesTestConnectionLabel">Test</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesClearCredentialsLabel">Clear</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsConfiguredLabel">EmuMovies credentials are saved.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsNotConfiguredLabel">EmuMovies credentials are not configured.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsSavedMessage">EmuMovies credentials saved.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesCredentialsClearedMessage">EmuMovies credentials cleared.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesConnectionSuccessMessage">EmuMovies connection succeeded.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesConnectionFailureMessage">EmuMovies connection failed.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesQualityLabel">Video quality:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsEmuMoviesPreferBestAvailableVideoQualityLabel">Prefer best available video quality (HD, HQ, SQ)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EmuMoviesVideoQualityHD">HD</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EmuMoviesVideoQualityHQ">HQ</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EmuMoviesVideoQualitySQ">SQ</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Download logos of newly added games on library update</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Select logos to download automatically</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
@@ -64,6 +85,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Overwrite logos of games that already have them?</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">Overwrite videos of games that already have them?</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Downloading videos from Steam...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosEmuMovies">Downloading videos from EmuMovies...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Downloading Micro videos from Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Downloading logos from Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Downloading logos from SteamGridDB...</sys:String>
@@ -82,9 +104,11 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Extra Metadata: ffprobe executable was not found in the configured location</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: yt-dlp executable path has not been configured in the extension settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp executable was not found in the configured location</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageEmuMoviesCredentialsMissing">Extra Metadata: EmuMovies credentials have not been configured in settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: Error deleting file in {0}. Error: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: Error deleting directory in {0}. Error: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Download videos from Steam for selected games</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadEmuMoviesVideosSelectedGames">Download videos from EmuMovies for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Download Micro videos from Steam for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Download logos from Steam for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Download logos from SteamGridDB for selected games</sys:String>
@@ -155,6 +179,10 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     
 Select "Yes" to automatically select the logos to download without any user interaction.
 Select "No" to manually make selections when necessary.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectVideosAutomatically" xml:space="preserve">Select videos to download automatically?
+
+Select &quot;Yes&quot; to automatically select the videos to download without any user interaction.
+Select &quot;No&quot; to manually make selections when necessary.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
 Failed to get video information: {0}, {1}, {2}.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
