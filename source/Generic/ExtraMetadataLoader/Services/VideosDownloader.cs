@@ -223,9 +223,9 @@ namespace ExtraMetadataLoader.Services
                 logger.Debug($"Video PixFmt is null");
                 return VideoActionNeeded.Invalid;
             }
-            else if (stream.PixFmt != "yuv420p")
+            else if (stream.PixFmt != "yuv420p" || stream.CodecName != "h264")
             {
-                logger.Debug($"Video conversion needed, PixFmt is {stream.PixFmt}");
+                logger.Debug($"Video conversion needed, PixFmt is {stream.PixFmt} and CodecName is {stream.CodecName}");
                 return VideoActionNeeded.Conversion;
             }
 
@@ -237,7 +237,7 @@ namespace ExtraMetadataLoader.Services
             var ffprobePath = extraMetadataHelper.ExpandVariables(settings.FfprobePath);
 
             logger.Debug($"Obtaining video information: {videoPath}");
-            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name_name,pix_fmt,duration -of json \"{videoPath}\"";
+            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name,pix_fmt,duration -of json \"{videoPath}\"";
             var result = ProcessStarter.StartProcessWait(ffprobePath, args, Path.GetDirectoryName(ffprobePath), true, out var stdOut, out var stdErr);
             if (result != 0)
             {
