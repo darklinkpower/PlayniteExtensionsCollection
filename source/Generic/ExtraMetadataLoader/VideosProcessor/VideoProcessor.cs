@@ -1,5 +1,6 @@
 ﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -106,9 +107,21 @@ namespace ExtraMetadataLoader.VideosProcessor
                 _logger.Debug($"Video PixFmt is null");
                 return VideoActionNeeded.Invalid;
             }
-            else if (stream.PixFmt != "yuv420p")
+            else if (stream.PixFmt != "yuv420p" || stream.CodecName != "h264")
             {
-                _logger.Debug($"Video conversion needed, PixFmt is {stream.PixFmt}");
+                _logger.Debug($"Video conversion needed, PixFmt is {stream.PixFmt} and CodecName is {stream.CodecName}");
+                return VideoActionNeeded.Conversion;
+            }
+
+            var format = videoInformation.Format;
+            if (format == null || format.Tags == null || string.IsNullOrEmpty(format.Tags.MajorBrand))
+            {
+                _logger.Debug($"Video format or tags or major brand not obtained");
+                return VideoActionNeeded.Invalid;
+            }
+            else if (format.Tags.MajorBrand != "mp42" && format.Tags.MajorBrand != "isom")
+            {
+                _logger.Debug($"Video conversion needed, MajorBrand is {format.Tags.MajorBrand}");
                 return VideoActionNeeded.Conversion;
             }
 
@@ -120,7 +133,7 @@ namespace ExtraMetadataLoader.VideosProcessor
             var ffprobePath = ExtraMetadataHelper.ExpandVariables(_settings.FfprobePath);
 
             _logger.Debug($"Obtaining video information: {videoPath}");
-            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name_name,pix_fmt,duration -of json \"{videoPath}\"";
+            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name,pix_fmt,duration:format=format_name:format_tags=major_brand -of json \"{videoPath}\"";
             var result = ProcessStarter.StartProcessWait(ffprobePath, args, Path.GetDirectoryName(ffprobePath), true, out var stdOut, out var stdErr);
             if (result != 0)
             {
