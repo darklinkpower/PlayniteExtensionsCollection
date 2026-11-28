@@ -133,7 +133,7 @@ namespace ExtraMetadataLoader.VideosProcessor
             var ffprobePath = ExtraMetadataHelper.ExpandVariables(_settings.FfprobePath);
 
             _logger.Debug($"Obtaining video information: {videoPath}");
-            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name,pix_fmt,duration -of json \"{videoPath}\"";
+            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name,pix_fmt,duration:format=format_name:format_tags=major_brand -of json \"{videoPath}\"";
             var result = ProcessStarter.StartProcessWait(ffprobePath, args, Path.GetDirectoryName(ffprobePath), true, out var stdOut, out var stdErr);
             if (result != 0)
             {
