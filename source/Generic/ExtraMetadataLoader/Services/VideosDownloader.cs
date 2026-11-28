@@ -213,7 +213,6 @@ namespace ExtraMetadataLoader.Services
             }
 
             var stream = videoInformation.Streams[0];
-            logger.Debug($"Checking if video conversion is needed CodeName: {stream.CodecName}, PixFmt: {stream.PixFmt}");
             if (stream.Width == 0 || stream.Height == 0)
             {
                 logger.Debug($"Video width and height not obtained");
