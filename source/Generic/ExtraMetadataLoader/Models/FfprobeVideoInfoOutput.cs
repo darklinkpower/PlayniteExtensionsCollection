@@ -14,10 +14,25 @@ namespace ExtraMetadataLoader.Models
 
         [JsonProperty("streams", NullValueHandling = NullValueHandling.Include)]
         public VideoStream[] Streams { get; set; }
+
+        [JsonProperty("format", NullValueHandling = NullValueHandling.Ignore)]
+        public VideoFormat Format { get; set; }
     }
 
     public class Program
     {
+    }
+
+    public class VideoFormat
+    {
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Include)]
+        public FormatTags Tags { get; set; }
+    }
+
+    public class FormatTags
+    {
+        [JsonProperty("major_brand", NullValueHandling = NullValueHandling.Include)]
+        public string MajorBrand { get; set; }
     }
 
     public class VideoStream

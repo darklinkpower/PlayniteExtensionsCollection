@@ -213,6 +213,7 @@ namespace ExtraMetadataLoader.Services
             }
 
             var stream = videoInformation.Streams[0];
+            logger.Debug($"Checking if video conversion is needed CodeName: {stream.CodecName}, PixFmt: {stream.PixFmt}");
             if (stream.Width == 0 || stream.Height == 0)
             {
                 logger.Debug($"Video width and height not obtained");
@@ -229,6 +230,18 @@ namespace ExtraMetadataLoader.Services
                 return VideoActionNeeded.Conversion;
             }
 
+            var format = videoInformation.Format;
+            if (format == null || format.Tags == null || string.IsNullOrEmpty(format.Tags.MajorBrand))
+            {
+                logger.Debug($"Video format or tags or major brand not obtained");
+                return VideoActionNeeded.Invalid;
+            }
+            else if (format.Tags.MajorBrand != "mp42" && format.Tags.MajorBrand != "isom")
+            {
+                logger.Debug($"Video conversion needed, MajorBrand is {format.Tags.MajorBrand}");
+                return VideoActionNeeded.Conversion;
+            }
+
             return VideoActionNeeded.Nothing;
         }
 
@@ -237,7 +250,7 @@ namespace ExtraMetadataLoader.Services
             var ffprobePath = extraMetadataHelper.ExpandVariables(settings.FfprobePath);
 
             logger.Debug($"Obtaining video information: {videoPath}");
-            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name,pix_fmt,duration -of json \"{videoPath}\"";
+            var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name,pix_fmt,duration:format=format_name:format_tags=major_brand -of json \"{videoPath}\"";
             var result = ProcessStarter.StartProcessWait(ffprobePath, args, Path.GetDirectoryName(ffprobePath), true, out var stdOut, out var stdErr);
             if (result != 0)
             {
