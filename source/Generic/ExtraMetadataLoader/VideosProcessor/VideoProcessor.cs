@@ -1,5 +1,6 @@
 ﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -109,6 +110,18 @@ namespace ExtraMetadataLoader.VideosProcessor
             else if (stream.PixFmt != "yuv420p" || stream.CodecName != "h264")
             {
                 _logger.Debug($"Video conversion needed, PixFmt is {stream.PixFmt} and CodecName is {stream.CodecName}");
+                return VideoActionNeeded.Conversion;
+            }
+
+            var format = videoInformation.Format;
+            if (format == null || format.Tags == null || string.IsNullOrEmpty(format.Tags.MajorBrand))
+            {
+                _logger.Debug($"Video format or tags or major brand not obtained");
+                return VideoActionNeeded.Invalid;
+            }
+            else if (format.Tags.MajorBrand != "mp42" && format.Tags.MajorBrand != "isom")
+            {
+                _logger.Debug($"Video conversion needed, MajorBrand is {format.Tags.MajorBrand}");
                 return VideoActionNeeded.Conversion;
             }
 
